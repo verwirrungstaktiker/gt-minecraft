@@ -1,4 +1,4 @@
-package lastgnome;
+package general;
 
 public class Inventory {
 
@@ -9,13 +9,13 @@ public class Inventory {
 		return activeItem;
 	}
 
-
 	public void setActiveItem(Item activeItem) {
 		this.activeItem = activeItem;
 	}
 	
-	public boolean dropActiveItem() {
-		return activeItem.dropable;
+	
+	public boolean activeItemDropable() {
+		return activeItem.isDropable();
 	}
 	
 

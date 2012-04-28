@@ -1,5 +1,7 @@
 package lastgnome;
 
+import general.Item;
+
 public class Gnome extends Item {
 
 	public Gnome() {

@@ -1,4 +1,4 @@
-package lastgnome;
+package general;
 
 public class Item {
 	protected static String name;
