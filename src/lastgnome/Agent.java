@@ -24,12 +24,12 @@ public class Agent {
 
 
 	public float getSpeed() {
-		return Speed;
+		return speed;
 	}
 
 
 	public void setSpeed(float speed) {
-		Speed = speed;
+		this.speed = speed;
 	}
 	
 }
