@@ -6,7 +6,7 @@ import java.awt.Point; //temporary until clear what kind of coordinates are need
 public class Agent {
 
 	protected Point position;
-	protected float Speed; //factor for speed
+	protected float speed; //factor for speed
 	
 	public Agent(Point position) {
 		super();	 
