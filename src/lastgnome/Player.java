@@ -7,7 +7,7 @@ import java.util.Vector;
 public class Player extends Agent{
 
 
-	protected int Endurance;
+	protected int endurance;
 	protected Team team;
 	public Inventory inventory;	
 	public Vector<Aura> aurae;
@@ -36,12 +36,12 @@ public class Player extends Agent{
 	
 
 	public int getEndurance() {
-		return Endurance;
+		return endurance;
 	}
 
 
 	public void setEndurance(int endurance) {
-		Endurance = endurance;
+		this.endurance = endurance;
 	}
 
 

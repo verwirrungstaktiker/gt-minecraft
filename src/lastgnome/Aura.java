@@ -6,7 +6,7 @@ import java.awt.Point; import java.util.Vector;
 public abstract class Aura {
 	
 
-	protected int Radius;
+	protected int radius;
 	protected Point position;
 	protected boolean permanent; //if Aura is permanent or one
 	
