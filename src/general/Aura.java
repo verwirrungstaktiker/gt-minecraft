@@ -19,14 +19,15 @@ public abstract class Aura {
 	}
 	
 	/**
-	 * picks those agents who are in the Area of Effect
+	 * filters those agents who are in the Area of Effect
 	 * 
-	 * @param agentList List of all agents
+	 * @param agentList Vector of all agents
 	 * @return agents in Area of Effect
 	 */
 	protected Vector<Agent> getAgentsInAOE(Vector<Agent> agentList) {
 		Vector<Agent> affectedAgents = new Vector<Agent>();
 		
+		//filter the agents that are in range of the aura
 		Iterator<Agent> it = agentList.iterator();
 		while (it.hasNext()) {
 			if(agentInAOE(it.next())) {

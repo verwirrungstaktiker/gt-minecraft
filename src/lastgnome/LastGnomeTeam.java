@@ -13,11 +13,11 @@ public class LastGnomeTeam extends Team {
 		this.gnomeBearer = gnomeBearer;
 	}
 	
-	public void setGnomeCarrier(LastGnomePlayer gnomeCarrier) {
-		this.gnomeBearer = gnomeCarrier;
+	public void setGnomeBearer(LastGnomePlayer gnomeBearer) {
+		this.gnomeBearer = gnomeBearer;
 	}
 	
-	public LastGnomePlayer getGnomeCarrier() {
+	public LastGnomePlayer getGnomeBearer() {
 		return gnomeBearer;
 	}
 

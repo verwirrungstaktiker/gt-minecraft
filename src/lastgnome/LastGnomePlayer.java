@@ -30,7 +30,8 @@ public class LastGnomePlayer extends Player{
 	 * @return false if gnome cannot be taken
 	 */
 	public boolean takeGnomeFrom(LastGnomePlayer player) {
-		return false;
+		// TODO: so far there are no other items, so each player should be able to take the gnome
+		return true;
 	}
 	
 	/**
@@ -40,7 +41,13 @@ public class LastGnomePlayer extends Player{
 	 * @return false if gnome cannot be given to the player (e.g. oneself does not have the gnome)
 	 */
 	public boolean giveGnomeTo(LastGnomePlayer player) {
-		return player.takeGnomeFrom(this);
+		if (this.isGnomeBearer()) {
+			if (player.takeGnomeFrom(this)) {
+				this.team.setGnomeBearer(player);
+				return true;
+			}
+		}
+		return false;
 	}
 	
 	
