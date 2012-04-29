@@ -12,7 +12,10 @@ public class LastGnomePlayer extends Player{
 
 	protected int maxStamina;
 	protected int currentStamina;
+	
 	protected LastGnomeTeam team;
+	protected boolean hasGnome;
+	
 	public Inventory inventory;	
 	public Vector<Aura> auras;
 	
@@ -40,6 +43,18 @@ public class LastGnomePlayer extends Player{
 		return player.takeGnomeFrom(this);
 	}
 	
+	
+	/**
+	 * checks if a Player is the GnomeBearer
+	 * 
+	 * @return true if the player carries the gnome
+	 */
+	public boolean isGnomeBearer() {
+		if (this.inventory.getActiveItem().getName() == "Gnome") {
+			return true;
+		}
+		return false;
+	}
 
 	public int getMaxStamina() {
 		return maxStamina;

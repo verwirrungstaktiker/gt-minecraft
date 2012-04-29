@@ -5,20 +5,20 @@ import general.Team;
 public class LastGnomeTeam extends Team {
 
 	LastGnomePlayer[] players;
-	LastGnomePlayer gnomeCarrier; //so that e.g. Zombies know who the Gnome-Carrier is
+	LastGnomePlayer gnomeBearer; //so that e.g. Zombies know who the Gnome-Bearer is
 
-	public LastGnomeTeam(LastGnomePlayer[] players, LastGnomePlayer gnomeCarrier) {
+	public LastGnomeTeam(LastGnomePlayer[] players, LastGnomePlayer gnomeBearer) {
 		super(players);
 
-		this.gnomeCarrier = gnomeCarrier;
+		this.gnomeBearer = gnomeBearer;
 	}
 	
 	public void setGnomeCarrier(LastGnomePlayer gnomeCarrier) {
-		this.gnomeCarrier = gnomeCarrier;
+		this.gnomeBearer = gnomeCarrier;
 	}
 	
 	public LastGnomePlayer getGnomeCarrier() {
-		return gnomeCarrier;
+		return gnomeBearer;
 	}
 
 }
