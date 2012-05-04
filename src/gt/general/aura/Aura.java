@@ -1,20 +1,23 @@
-package gt.general;
+package gt.general.aura;
 
-import java.awt.Point;	//temporary until clear what kind of coordinates are needed
+import gt.general.Character;
+
 import java.util.Iterator;
 import java.util.Vector;
 
+import org.bukkit.Location;
+
 public abstract class Aura {
 	
-	protected Point position;
+	protected Location location;
 	protected int radius;
 	protected boolean permanent;	//permanent (de)buff if true
 	
-	public Aura(int radius, Point position, boolean permanent) {
+	public Aura(int radius, Location location, boolean permanent) {
 		super();
 		
 		this.radius = radius;
-		this.position = position;
+		this.location = location;
 		this.permanent = permanent;
 	}
 	
@@ -24,11 +27,11 @@ public abstract class Aura {
 	 * @param agentList Vector of all agents
 	 * @return agents in Area of Effect
 	 */
-	protected Vector<Agent> getAgentsInAOE(Vector<Agent> agentList) {
-		Vector<Agent> affectedAgents = new Vector<Agent>();
+	protected Vector<Character> getAgentsInAOE(Vector<Character> agentList) {
+		Vector<Character> affectedAgents = new Vector<Character>();
 		
 		//filter the agents that are in range of the aura
-		Iterator<Agent> it = agentList.iterator();
+		Iterator<Character> it = agentList.iterator();
 		while (it.hasNext()) {
 			if(agentInAOE(it.next())) {
 				affectedAgents.addElement(it.next());
@@ -45,8 +48,8 @@ public abstract class Aura {
 	 * @param agent Player or Mob
 	 * @return true if Agent is in Area of Effect
 	 */
-	private boolean agentInAOE(Agent agent) {
-		if (radius >= position.distance(agent.getPosition())) {
+	private boolean agentInAOE(Character agent) {
+		if (radius >= location.distance(agent.getLocation())) {
 			return true;
 		}
 		return false;
@@ -57,7 +60,7 @@ public abstract class Aura {
 	 * 
 	 * @param agentList List of all agents
 	 */
-	abstract public void takeEffect(Vector<Agent> agentList);
+	abstract public void takeEffect(Vector<Character> agentList);
 		
 	
 

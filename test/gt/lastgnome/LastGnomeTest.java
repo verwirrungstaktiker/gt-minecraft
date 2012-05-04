@@ -9,7 +9,7 @@ public class LastGnomeTest {
 	@Test
 	public void StaminaTest() {
 		//Initialisation
-		LastGnomePlayer lgp = new LastGnomePlayer(new Point(0,0), new Point(1,1), 1);
+		LastGnomePlayer lgp = new LastGnomePlayer();
 		//Getter and Setter of Maximal Stamina
 		lgp.setMaxStamina(200);
 		Assert.assertEquals(200,lgp.getMaxStamina());
@@ -32,8 +32,8 @@ public class LastGnomeTest {
 	@Test
 	public void GnomeSwitchingTest() {
 		//Some initialization
-		LastGnomePlayer player1 = new LastGnomePlayer(new Point(0,0), new Point(1,1), 1);
-		LastGnomePlayer player2 = new LastGnomePlayer(new Point(0,0), new Point(1,1), 1);
+		LastGnomePlayer player1 = new LastGnomePlayer();
+		LastGnomePlayer player2 = new LastGnomePlayer();
 		LastGnomePlayer[] players = {player1,player2};
 		LastGnomeTeam team = new LastGnomeTeam(players,null);
 

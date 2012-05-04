@@ -1,11 +1,12 @@
 package gt.lastgnome;
 
-import gt.general.Aura;
 import gt.general.Inventory;
 import gt.general.Player;
+import gt.general.aura.Aura;
 
-import java.awt.Point; //temporary until clear what kind of coordinates are needed
 import java.util.Vector;
+
+import org.bukkit.Location;
 
 
 public class LastGnomePlayer extends Player{
@@ -18,10 +19,6 @@ public class LastGnomePlayer extends Player{
 	
 	public Inventory inventory;	
 	public Vector<Aura> auras;
-	
-	public LastGnomePlayer(Point position, Point orientation, float defaultSpeed) {
-		super(position, orientation, defaultSpeed);
-	}	
 
 	/**
 	 * method to take gnome from other player

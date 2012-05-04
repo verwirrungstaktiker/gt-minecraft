@@ -1,29 +1,34 @@
 package gt.general;
 
-import java.awt.Point; //temporary until clear what kind of coordinates are needed
+import gt.general.aura.Aura;
+import gt.general.aura.Effect;
 
-public class Character extends Agent {
+import java.awt.Point;
+import java.util.HashSet;
+import java.util.Set;
+import java.util.Vector;
+
+import org.bukkit.Location;
+
+public class Character {
 	
-	protected Point orientation;	//line of sight
 	protected float defaultSpeed;
 	protected float currentSpeed;	//speed after (de)buff
 	
-	public Character(Point position, Point orientation, float defaultSpeed) {
+	private final Vector<Aura> auras = new Vector<Aura>();
+	private final Vector<Effect> effects = new Vector<Effect>();
+	
+	/**
+	 * creates a new Character
+	 * 
+	 * @param defaultSpeed
+	 */
+	public Character(float defaultSpeed) {
 		super();
 		
-		this.orientation = orientation;
 		this.defaultSpeed = defaultSpeed;
 		this.currentSpeed = defaultSpeed;
 	}	
-	
-	public Point getOrientation() {
-		return orientation;
-	}
-	
-	public void setOrientation(Point orientation) {
-		this.orientation = orientation;
-	}
-	
 
 	public float getCurrentSpeed() {
 		return currentSpeed;
@@ -40,5 +45,13 @@ public class Character extends Agent {
 	
 	public void setDefaultSpeed(float speed) {
 		this.defaultSpeed = speed;
+	}
+
+	/**
+	 * @return the current Location of this Character
+	 */
+	public Location getLocation() {
+		// TODO this should be read directly from bukket
+		return null;
 	}
 }
