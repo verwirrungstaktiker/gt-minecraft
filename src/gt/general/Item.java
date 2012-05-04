@@ -1,4 +1,4 @@
-package general;
+package gt.general;
 
 public class Item {
 	protected static String name;

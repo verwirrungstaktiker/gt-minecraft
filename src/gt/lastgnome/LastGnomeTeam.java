@@ -1,6 +1,6 @@
-package lastgnome;
+package gt.lastgnome;
 
-import general.Team;
+import gt.general.Team;
 
 public class LastGnomeTeam extends Team {
 

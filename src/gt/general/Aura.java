@@ -1,4 +1,4 @@
-package general;
+package gt.general;
 
 import java.awt.Point;	//temporary until clear what kind of coordinates are needed
 import java.util.Iterator;

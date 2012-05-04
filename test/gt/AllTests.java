@@ -1,4 +1,7 @@
-package tests;
+package gt;
+
+import gt.general.GeneralTest;
+import gt.lastgnome.LastGnomeTest;
 
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;

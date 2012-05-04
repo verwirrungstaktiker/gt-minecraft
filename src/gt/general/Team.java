@@ -1,4 +1,4 @@
-package general;
+package gt.general;
 
 public class Team {
 

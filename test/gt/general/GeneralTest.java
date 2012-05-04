@@ -1,11 +1,9 @@
-package tests;
+package gt.general;
 
 import java.awt.Point;
 
 import junit.framework.Assert;
 import org.junit.Test;
-
-import general.*;
 
 public class GeneralTest {
 	

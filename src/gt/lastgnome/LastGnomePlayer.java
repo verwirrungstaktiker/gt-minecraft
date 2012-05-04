@@ -1,8 +1,8 @@
-package lastgnome;
+package gt.lastgnome;
 
-import general.Aura;
-import general.Inventory;
-import general.Player;
+import gt.general.Aura;
+import gt.general.Inventory;
+import gt.general.Player;
 
 import java.awt.Point; //temporary until clear what kind of coordinates are needed
 import java.util.Vector;

@@ -1,6 +1,6 @@
-package lastgnome;
+package gt.lastgnome;
 
-import general.Item;
+import gt.general.Item;
 
 public class Gnome extends Item {
 

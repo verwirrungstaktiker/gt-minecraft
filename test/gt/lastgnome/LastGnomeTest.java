@@ -1,10 +1,8 @@
-package tests;
+package gt.lastgnome;
 import java.awt.Point;
 
 import junit.framework.Assert;
 import org.junit.Test;
-
-import lastgnome.*;
 
 public class LastGnomeTest {
 	//Some Testing of Stamina Mechanics
