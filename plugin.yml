@@ -1,0 +1,6 @@
+name: HelloWorld
+main: gt.plugin.helloworld.HelloWorld
+version: 0.1
+description: >
+             Hello World!
+commands:
