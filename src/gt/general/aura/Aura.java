@@ -2,66 +2,80 @@ package gt.general.aura;
 
 import gt.general.Character;
 
-import java.util.Iterator;
-import java.util.Vector;
+import java.util.List;
 
-import org.bukkit.Location;
+import org.bukkit.entity.Entity;
 
-public abstract class Aura {
+public class Aura {
+
+	private Character owner;
+	private final EffectFactory effectFactory;
+
+	private int distance;
+	private int duration;
 	
-	protected Location location;
-	protected int radius;
-	protected boolean permanent;	//permanent (de)buff if true
-	
-	public Aura(int radius, Location location, boolean permanent) {
-		super();
-		
-		this.radius = radius;
-		this.location = location;
-		this.permanent = permanent;
+	public static int INFINITE_DURATION = Integer.MIN_VALUE;
+
+	/**
+	 * generates a new Aura with infinite duration
+	 * 
+	 * @see Aura#Aura(EffectFactory, int, int)
+	 */
+	public Aura(final EffectFactory effect, int distance) {
+		this(effect, distance, INFINITE_DURATION);
+	}
+
+	/**
+	 * generates a new Aura
+	 * 
+	 * @param effectFactory
+	 *            a factory for the Effect to be spread
+	 * @param distance
+	 *            the distance in which the Effect is applied to Entities
+	 * @param duration
+	 *            after duration Ticks the Aura is discarded
+	 */
+	public Aura(final EffectFactory effectFactory, int distance, int duration) {
+		this.owner = null;
+		this.effectFactory = effectFactory;
+		this.distance = distance;
+		this.duration = duration;
+	}
+
+	/**
+	 * @param owner
+	 *            the owner of this Aura
+	 */
+	public void setOwner(Character owner) {
+		if (this.owner != null) {
+			throw new RuntimeException("Cannot reassign owner");
+		}
+		this.owner = owner;
+	}
+
+	/**
+	 *  performs one tick - duration management and Effect spreading
+	 */
+	public void performTick() {		
+		if (duration == INFINITE_DURATION || duration-- > 0) {
+			spreadEffect();
+		}
+		else {
+			owner.getAuras().remove(this);
+		}
 	}
 	
 	/**
-	 * filters those agents who are in the Area of Effect
-	 * 
-	 * @param agentList Vector of all agents
-	 * @return agents in Area of Effect
+	 * spreads the effect of this aura to all Characters in distance
 	 */
-	protected Vector<Character> getAgentsInAOE(Vector<Character> agentList) {
-		Vector<Character> affectedAgents = new Vector<Character>();
+	private void spreadEffect() {
+		List<Entity> nearbyEntities = owner.getNearbyEntities(distance,
+				distance, distance);
 		
-		//filter the agents that are in range of the aura
-		Iterator<Character> it = agentList.iterator();
-		while (it.hasNext()) {
-			if(agentInAOE(it.next())) {
-				affectedAgents.addElement(it.next());
+		for(Entity entity : nearbyEntities) {
+			if (entity instanceof Character) {
+				((Character)entity).addEffect(effectFactory.getEffect());
 			}
 		}
-		
-		return affectedAgents;
 	}
-	
-	
-	/**
-	 * Checks if an agent is in Area of Effect
-	 * 
-	 * @param agent Player or Mob
-	 * @return true if Agent is in Area of Effect
-	 */
-	private boolean agentInAOE(Character agent) {
-		if (radius >= location.distance(agent.getLocation())) {
-			return true;
-		}
-		return false;
-	}
-	
-	/**
-	 * Method to be called by "Aura-Manager" to let the Aura take effect
-	 * 
-	 * @param agentList List of all agents
-	 */
-	abstract public void takeEffect(Vector<Character> agentList);
-		
-	
-
 }
