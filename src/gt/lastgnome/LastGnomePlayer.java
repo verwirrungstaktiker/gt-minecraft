@@ -17,7 +17,6 @@ public class LastGnomePlayer extends Player{
 	protected LastGnomeTeam team;
 	protected boolean hasGnome;
 	
-	public Inventory inventory;	
 	public Vector<Aura> auras;
 
 	/**
@@ -26,8 +25,19 @@ public class LastGnomePlayer extends Player{
 	 * @param player player to take the gnome from
 	 * @return false if gnome cannot be taken
 	 */
-	public boolean takeGnomeFrom(LastGnomePlayer player) {
-		// TODO: so far there are no other items, so each player should be able to take the gnome
+	public boolean takeGnomeFrom(LastGnomePlayer player) {		
+		//Fail-safe if player has no Gnome
+		if (!player.isGnomeBearer()) return false;
+		//Try to take Gnome
+		if (!this.inventory.setActiveItem(player.inventory.getActiveItem())) {
+			//If Gnome cannot be taken, try to drop current Item
+			if (this.inventory.dropActiveItem()) {
+				this.inventory.setActiveItem(player.inventory.getActiveItem());
+			} else return false;
+		}
+		player.inventory.setActiveItem(null);
+		team.setGnomeBearer(this);
+		
 		return true;
 	}
 	
@@ -40,7 +50,7 @@ public class LastGnomePlayer extends Player{
 	public boolean giveGnomeTo(LastGnomePlayer player) {
 		if (this.isGnomeBearer()) {
 			if (player.takeGnomeFrom(this)) {
-				this.team.setGnomeBearer(player);
+				//this.team.setGnomeBearer(player);
 				return true;
 			}
 		}
@@ -54,6 +64,7 @@ public class LastGnomePlayer extends Player{
 	 * @return true if the player carries the gnome
 	 */
 	public boolean isGnomeBearer() {
+		if (this.inventory.getActiveItem() == null) return false; 
 		if (this.inventory.getActiveItem().getName() == "Gnome") {
 			return true;
 		}

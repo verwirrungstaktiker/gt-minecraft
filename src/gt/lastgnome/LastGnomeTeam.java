@@ -9,7 +9,9 @@ public class LastGnomeTeam extends Team {
 
 	public LastGnomeTeam(LastGnomePlayer[] players, LastGnomePlayer gnomeBearer) {
 		super(players);
-
+		for (int i=0; i<players.length;++i) {
+			players[i].setTeam(this);
+		}
 		this.gnomeBearer = gnomeBearer;
 	}
 	

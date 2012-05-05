@@ -1,9 +1,11 @@
 package gt.general;
 
 public class Item {
-	protected static String name;
+	protected String name;
 
-	protected boolean dropable; 
+	private boolean dropable;
+	private boolean tool; 
+	
 	
 	public String getName() {
 		return name;
@@ -12,6 +14,20 @@ public class Item {
 
 	public boolean isDropable() {
 		return dropable;
+	}
+	//primary for tests
+	public boolean isTool() {
+		return tool;
+	}
+
+	//primary for tests
+	public void setTool(boolean tool) {
+		this.tool = tool;
+	}
+
+
+	public void setDropable(boolean dropable) {
+		this.dropable = dropable;
 	}
 	
 	

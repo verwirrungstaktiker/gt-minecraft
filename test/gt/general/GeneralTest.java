@@ -12,10 +12,10 @@ public class GeneralTest {
 	public void InventoryTest() {
 		//Initialization
 		Item item1 = new Item();
-		item1.dropable = false;
+		item1.setDropable(false);
 		
 		Item item2 = new Item();
-		item2.dropable = true;
+		item2.setTool(true);
 		
 		Inventory inventory = new Inventory();
 		
@@ -25,7 +25,9 @@ public class GeneralTest {
 		
 		inventory.setActiveItem(item1);
 		Assert.assertEquals(item1, inventory.getActiveItem());
+		Assert.assertEquals(item2, inventory.getPassivItem());
 		Assert.assertEquals(false, inventory.activeItemDropable());
+		
 	}
 	
 

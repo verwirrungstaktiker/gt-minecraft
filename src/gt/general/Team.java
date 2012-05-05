@@ -9,6 +9,9 @@ public class Team {
 	public Team(Player[] players) {
 		super();
 		this.players = players;
+		for (int i=0; i<players.length;++i) {
+			players[i].setTeam(this);
+		}
 	}
 
 }

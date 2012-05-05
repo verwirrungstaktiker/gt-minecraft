@@ -1,6 +1,8 @@
 package gt.lastgnome;
-import java.awt.Point;
+import gt.general.Item;
 
+import java.awt.Point;
+import static org.junit.Assert.*;
 import junit.framework.Assert;
 import org.junit.Test;
 
@@ -38,6 +40,7 @@ public class LastGnomeTest {
 		LastGnomeTeam team = new LastGnomeTeam(players,null);
 
 		Gnome gnome = new Gnome();
+		
 		//give Gnome to player1 and check current status
 		player1.inventory.setActiveItem(gnome);
 		Assert.assertEquals(true, player1.isGnomeBearer());
@@ -66,6 +69,34 @@ public class LastGnomeTest {
 		Assert.assertEquals(true, player2.giveGnomeTo(player1));
 		Assert.assertEquals(true, player1.isGnomeBearer());
 		Assert.assertEquals(false, player2.isGnomeBearer());
+		Assert.assertEquals(player1,team.getGnomeBearer());
+		
+		//Now we give player2 a Tool-Item and see if it works then
+		Item item1 = new Item();
+		item1.setTool(true);
+		Assert.assertEquals(true,player2.inventory.setActiveItem(item1));
+		Assert.assertEquals(true, player2.takeGnomeFrom(player1));
+		Assert.assertEquals(false, player1.isGnomeBearer());
+		Assert.assertEquals(true, player2.isGnomeBearer());
+		Assert.assertEquals(player2,team.getGnomeBearer());
+		
+		//Now we give player1 a dropable Item
+		Item item2 = new Item();
+		item2.setDropable(true);
+		Assert.assertEquals(true,player1.inventory.setActiveItem(item2));
+		Assert.assertEquals(true, player2.giveGnomeTo(player1));
+		Assert.assertEquals(true, player1.isGnomeBearer());
+		Assert.assertEquals(false, player2.isGnomeBearer());
+		Assert.assertEquals(player1,team.getGnomeBearer());
+		
+		//Now we give player2 an undropbable Item
+		Item item3 = new Item();
+		item3.setTool(false);
+		item3.setDropable(false);
+		Assert.assertEquals(true,player2.inventory.setActiveItem(item3));
+		Assert.assertEquals(false, player2.takeGnomeFrom(player1));
+		Assert.assertEquals(true, player1.isGnomeBearer());
+		Assert.assertEquals(false, player2.isGnomeBearer());		
 		Assert.assertEquals(player1,team.getGnomeBearer());
 	}
 }
