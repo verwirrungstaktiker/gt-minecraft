@@ -23,7 +23,7 @@ import org.bukkit.event.player.PlayerTeleportEvent.TeleportCause;
 import org.bukkit.metadata.MetadataValue;
 import org.bukkit.plugin.Plugin;
 
-public class Character {
+public abstract class Character {
 	
 	protected float defaultSpeed;
 	protected float currentSpeed;	//speed after (de)buff
@@ -63,10 +63,7 @@ public class Character {
 	/**
 	 * @return the current Location of this Character
 	 */
-	public Location getLocation() {
-		// TODO this should be read directly from bukket
-		return null;
-	}
+	public abstract Location getLocation();
 
 	/**
 	 * @return the auras

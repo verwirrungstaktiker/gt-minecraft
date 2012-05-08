@@ -1,5 +1,6 @@
 package gt.lastgnome;
 import static org.mockito.Mockito.mock;
+import gt.general.Hero;
 import gt.general.Item;
 import junit.framework.Assert;
 
@@ -26,7 +27,7 @@ public class LastGnomeTest {
 		Assert.assertEquals(200,lgp.getCurrentStamina());
 		//If Stamina is 0, Speed should be 0 too
 		lgp.setCurrentStamina(0);
-		Assert.assertEquals(0,lgp.getCurrentSpeed());
+		Assert.assertEquals(0, lgp.getCurrentSpeed());
 		//After Stamina refill, Speed should get back to "normal"
 		lgp.setCurrentStamina(200);
 		Assert.assertEquals(1,lgp.getCurrentSpeed());

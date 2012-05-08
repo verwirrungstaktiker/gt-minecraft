@@ -13,9 +13,9 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerLoginEvent;
 
 
-public class Hero extends Character{
+public class Hero extends Character implements Listener{
 
-	private static final float DEFAULT_HERO_SPEED = 100;
+	public static final float DEFAULT_HERO_SPEED = 100;
 	
 	protected Team team;
 	public Inventory inventory;	
@@ -38,6 +38,11 @@ public class Hero extends Character{
 		return player;
 	}
 
+	@Override
+	public Location getLocation() {
+		return player.getLocation();
+	}
+	
 	/**
 	 * @return the team
 	 */
@@ -50,6 +55,5 @@ public class Hero extends Character{
 	 */
 	public void setTeam(Team team) {
 		this.team = team;
-	}
-	
+	}	
 }
