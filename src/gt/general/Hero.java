@@ -2,15 +2,11 @@ package gt.general;
 
 import gt.general.aura.Aura;
 
-import java.awt.Point; //temporary until clear what kind of coordinates are needed
 import java.util.Vector;
 
-import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
-import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.event.player.PlayerLoginEvent;
 
 
 public class Hero extends Character implements Listener{
