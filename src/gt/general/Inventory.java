@@ -30,13 +30,13 @@ public class Inventory {
 	 * @return true if Item can be dropped, otherwise false
 	 */
 	public boolean dropActiveItem() {
-		//ToDo: Dropping the Item
+		//TODO: Dropping the Item
 		return activeItemDropable();
 	}
 	
 	
 	public boolean activeItemDropable() {
-		//ToDo: Real dropping
+		//TODO: Real dropping
 		if (activeItem.isDropable()){
 			activeItem = null;
 			return true;

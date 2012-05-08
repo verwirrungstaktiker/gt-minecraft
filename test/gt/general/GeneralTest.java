@@ -19,6 +19,7 @@ public class GeneralTest {
 		
 		Item item2 = new Item();
 		item2.setTool(true);
+		item2.setDropable(true);
 		
 		Inventory inventory = new Inventory();
 		
@@ -34,16 +35,16 @@ public class GeneralTest {
 	}
 	
 
-	//Test of remaining Player Mechanics
+	//Test of remaining Hero Mechanics
 	@Test
-	public void newPlayerTest() {
-		// Create player and see if he has an inventory
+	public void newHeroTest() {
+		// Create hero and see if he has an inventory
 		
 		Player mockPlayer = mock(Player.class);
 		
-		Hero player = new Hero(mockPlayer);
-		assertNotNull(player.inventory);
-		assertEquals(100, player.defaultSpeed, 0);
+		Hero hero = new Hero(mockPlayer);
+		assertNotNull(hero.inventory);
+		assertEquals(100, hero.defaultSpeed, 0);
 		
 		//TODO Aura Test
 	}
