@@ -6,7 +6,12 @@ import java.util.Vector;
 
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
+import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.block.BlockPlaceEvent;
+import org.bukkit.event.player.PlayerDropItemEvent;
+import org.bukkit.event.player.PlayerMoveEvent;
+import org.bukkit.event.player.PlayerPickupItemEvent;
 
 
 public class Hero extends Character implements Listener{
@@ -56,4 +61,36 @@ public class Hero extends Character implements Listener{
 	public void setTeam(Team team) {
 		this.team = team;
 	}	
+	
+	@EventHandler
+	public void handleSpeed(PlayerMoveEvent event) {
+		if (event.getPlayer().equals(this.player)) {
+			player.setVelocity(player.getVelocity().multiply(currentSpeed/100));
+		}
+	}
+	
+	@EventHandler
+	public void handleItemDrop(PlayerDropItemEvent event) {
+		if (event.getPlayer().equals(this.player)) {
+			event.setCancelled(!inventory.dropActiveItem());
+		}
+	}
+	
+	@EventHandler
+	public void handleItemPickup(PlayerPickupItemEvent event) {
+		if (event.getPlayer().equals(this.player)) {
+			Item newItem = new Item(event.getItem().getItemStack());
+			event.setCancelled(!inventory.setActiveItem(newItem));
+		}
+	}
+	
+	@EventHandler
+	public void handleBlockPlace(BlockPlaceEvent event) {
+		if (event.getPlayer().equals(this.player)) {
+			event.setCancelled(!inventory.dropActiveItem());
+			//ToDo: Enforce our inventory state in Minecraft
+		}		
+	}
+	
+	
 }

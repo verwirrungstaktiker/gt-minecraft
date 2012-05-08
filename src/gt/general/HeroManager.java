@@ -26,7 +26,7 @@ public class HeroManager implements Listener {
 		
 		Hero hero = new Hero(ple.getPlayer());
 		registerListener(hero);
-		
+		hero.getPlayer().getInventory().setMaxStackSize(1);
 		heros.add(hero);
 	}
 	

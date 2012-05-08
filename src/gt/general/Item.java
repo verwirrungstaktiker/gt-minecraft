@@ -1,11 +1,19 @@
 package gt.general;
 
+import org.bukkit.inventory.ItemStack;
+
 public class Item {
 	protected String name;
-
-	private boolean dropable;
-	private boolean tool; 
+	protected ItemStack mcItem;  
+	protected boolean dropable;
+	protected boolean tool; 
 	
+	public Item(ItemStack itemstack) {
+		mcItem = itemstack;
+		//ToDo: block type dependend values 
+		dropable = true;
+		tool = false;
+	}
 	
 	public String getName() {
 		return name;
