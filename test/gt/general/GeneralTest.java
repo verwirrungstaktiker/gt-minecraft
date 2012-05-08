@@ -1,8 +1,11 @@
 package gt.general;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.mockito.Mockito.mock;
 import junit.framework.Assert;
 
+import org.bukkit.entity.Player;
 import org.junit.Test;
 
 public class GeneralTest {
@@ -36,11 +39,13 @@ public class GeneralTest {
 	public void newPlayerTest() {
 		// Create player and see if he has an inventory
 		
-		Player player = new Player();
+		Player mockPlayer = mock(Player.class);
+		
+		Hero player = new Hero(mockPlayer);
 		assertNotNull(player.inventory);
 		assertEquals(100, player.defaultSpeed, 0);
 		
-		//ToDo: Aura Test
+		//TODO Aura Test
 	}
 
 }

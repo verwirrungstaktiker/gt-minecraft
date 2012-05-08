@@ -10,5 +10,6 @@
 			<attribute name="javadoc_location" value="http://jd.bukkit.org/apidocs/"/>
 		</attributes>
 	</classpathentry>
+	<classpathentry kind="lib" path="lib/mockito-all-1.9.0.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

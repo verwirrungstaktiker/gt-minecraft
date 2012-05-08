@@ -2,11 +2,11 @@ package gt.general;
 
 public class Team {
 
-	public static Team NOTEAM = new Team(new Player[]{});
+	public static Team NOTEAM = new Team(new Hero[]{});
 	
-	Player[] players;
+	Hero[] players;
 
-	public Team(Player[] players) {
+	public Team(Hero[] players) {
 		super();
 		this.players = players;
 		for (int i=0; i<players.length;++i) {

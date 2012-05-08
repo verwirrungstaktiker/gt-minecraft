@@ -1,17 +1,20 @@
 package gt.lastgnome;
+import static org.mockito.Mockito.mock;
 import gt.general.Item;
-
-import java.awt.Point;
-import static org.junit.Assert.*;
 import junit.framework.Assert;
+
+import org.bukkit.entity.Player;
 import org.junit.Test;
 
 public class LastGnomeTest {
 	//Some Testing of Stamina Mechanics
 	@Test
 	public void StaminaTest() {
+		
+		Player mockPlayer = mock(Player.class);
+		
 		//Initialisation
-		LastGnomePlayer lgp = new LastGnomePlayer();
+		LastGnomeHero lgp = new LastGnomeHero(mockPlayer);
 		//Getter and Setter of Maximal Stamina
 		lgp.setMaxStamina(200);
 		Assert.assertEquals(200,lgp.getMaxStamina());
@@ -33,10 +36,14 @@ public class LastGnomeTest {
 	//Test for giving and taking Gnome
 	@Test
 	public void GnomeSwitchingTest() {
+		
+		Player mockPlayer1 = mock(Player.class);
+		Player mockPlayer2 = mock(Player.class);
+		
 		//Some initialization
-		LastGnomePlayer player1 = new LastGnomePlayer();
-		LastGnomePlayer player2 = new LastGnomePlayer();
-		LastGnomePlayer[] players = {player1,player2};
+		LastGnomeHero player1 = new LastGnomeHero(mockPlayer1);
+		LastGnomeHero player2 = new LastGnomeHero(mockPlayer2);
+		LastGnomeHero[] players = {player1,player2};
 		LastGnomeTeam team = new LastGnomeTeam(players,null);
 
 		Gnome gnome = new Gnome();

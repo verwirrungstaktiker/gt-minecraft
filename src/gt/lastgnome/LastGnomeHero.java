@@ -1,15 +1,16 @@
 package gt.lastgnome;
 
 import gt.general.Inventory;
-import gt.general.Player;
+import gt.general.Hero;
 import gt.general.aura.Aura;
 
 import java.util.Vector;
 
 import org.bukkit.Location;
+import org.bukkit.entity.Player;
 
 
-public class LastGnomePlayer extends Player{
+public class LastGnomeHero extends Hero{
 
 	protected int maxStamina;
 	protected int currentStamina;
@@ -19,13 +20,17 @@ public class LastGnomePlayer extends Player{
 	
 	public Vector<Aura> auras;
 
+	public LastGnomeHero(Player player) {
+		super(player);
+	}
+	
 	/**
 	 * method to take gnome from other player
 	 * 
 	 * @param player player to take the gnome from
 	 * @return false if gnome cannot be taken
 	 */
-	public boolean takeGnomeFrom(LastGnomePlayer player) {		
+	public boolean takeGnomeFrom(LastGnomeHero player) {		
 		//Fail-safe if player has no Gnome
 		if (!player.isGnomeBearer()) return false;
 		//Try to take Gnome
@@ -47,7 +52,7 @@ public class LastGnomePlayer extends Player{
 	 * @param player player the gnome should be given to
 	 * @return false if gnome cannot be given to the player (e.g. oneself does not have the gnome)
 	 */
-	public boolean giveGnomeTo(LastGnomePlayer player) {
+	public boolean giveGnomeTo(LastGnomeHero player) {
 		if (this.isGnomeBearer()) {
 			if (player.takeGnomeFrom(this)) {
 				//this.team.setGnomeBearer(player);
