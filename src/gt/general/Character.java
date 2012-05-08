@@ -25,8 +25,8 @@ import org.bukkit.plugin.Plugin;
 
 public abstract class Character {
 	
-	protected float defaultSpeed;
-	protected float currentSpeed;	//speed after (de)buff
+	protected double defaultSpeed;
+	protected double currentSpeed;	//speed after (de)buff
 	
 	private final Vector<Aura> auras = new Vector<Aura>();
 	private final Vector<EffectFactory> effects = new Vector<EffectFactory>();
@@ -34,29 +34,29 @@ public abstract class Character {
 	/**
 	 * creates a new Character
 	 * 
-	 * @param defaultSpeed
+	 * @param defaultHeroSpeed
 	 */
-	public Character(float defaultSpeed) {
+	public Character(double defaultHeroSpeed) {
 		super();
 		
-		this.defaultSpeed = defaultSpeed;
-		this.currentSpeed = defaultSpeed;
+		this.defaultSpeed = defaultHeroSpeed;
+		this.currentSpeed = defaultHeroSpeed;
 	}	
 
-	public float getCurrentSpeed() {
+	public double getCurrentSpeed() {
 		return currentSpeed;
 	}
 
-	public void setCurrentSpeed(float speed) {
+	public void setCurrentSpeed(double speed) {
 		this.currentSpeed = speed;
 	}
 	
 	
-	public float getDefaultSpeed() {
+	public double getDefaultSpeed() {
 		return defaultSpeed;
 	}
 	
-	public void setDefaultSpeed(float speed) {
+	public void setDefaultSpeed(double speed) {
 		this.defaultSpeed = speed;
 	}
 

@@ -6,11 +6,11 @@ public class Team {
 	
 	Hero[] players;
 
-	public Team(Hero[] players) {
+	public Team(Hero[] heroes) {
 		super();
-		this.players = players;
-		for (int i=0; i<players.length;++i) {
-			players[i].setTeam(this);
+		this.players = heroes;
+		for (int i=0; i<heroes.length;++i) {
+			heroes[i].setTeam(this);
 		}
 	}
 

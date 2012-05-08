@@ -14,8 +14,12 @@ import org.bukkit.event.player.PlayerLoginEvent;
 
 
 public class Hero extends Character implements Listener{
-
-	public static final float DEFAULT_HERO_SPEED = 100;
+	
+	
+	/** unbuffed default value **/
+	public static final double DEFAULT_HERO_SPEED = 100;
+	/** unbuffed default value, range 0-100 **/
+	public static final double DEFAULT_HERO_STAMINA = 100;
 	
 	protected Team team;
 	public Inventory inventory;	
