@@ -15,10 +15,10 @@ public class HeroManager implements Listener {
 	private final JavaPlugin plugin;
 
 	public HeroManager(JavaPlugin plugin) {
+		this.plugin = plugin;
 		
 		heros = new HashSet<Hero>();
 		registerListener(this);
-		this.plugin = plugin;
 	}
 	
 	@EventHandler
