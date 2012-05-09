@@ -6,13 +6,23 @@ public class Item {
 	protected String name;
 	protected ItemStack mcItem;  
 	protected boolean dropable;
-	protected boolean tool; 
+	protected boolean tool;
+	protected boolean placable;
 	
+	public boolean isPlacable() {
+		return placable;
+	}
+
+	public void setPlacable(boolean placable) {
+		this.placable = placable;
+	}
+
 	public Item(ItemStack itemstack) {
 		mcItem = itemstack;
 		//ToDo: block type dependend values 
 		dropable = true;
 		tool = false;
+		placable = true;
 	}
 	
 	public String getName() {

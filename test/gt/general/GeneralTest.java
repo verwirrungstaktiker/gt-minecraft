@@ -6,6 +6,7 @@ import static org.mockito.Mockito.mock;
 import junit.framework.Assert;
 
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
 import org.junit.Test;
 
 public class GeneralTest {
@@ -14,10 +15,10 @@ public class GeneralTest {
 	@Test
 	public void InventoryTest() {
 		//Initialization
-		Item item1 = new Item();
+		Item item1 = new Item(mock(ItemStack.class));
 		item1.setDropable(false);
 		
-		Item item2 = new Item();
+		Item item2 = new Item(mock(ItemStack.class));
 		item2.setTool(true);
 		item2.setDropable(true);
 		

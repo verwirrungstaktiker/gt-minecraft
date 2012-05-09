@@ -62,6 +62,10 @@ public class Hero extends Character implements Listener{
 		this.team = team;
 	}	
 	
+	/**
+	 * Sets player's velocity according to hero's speed
+	 * @param event a PlayerMoveEvent
+	 */
 	@EventHandler
 	public void handleSpeed(PlayerMoveEvent event) {
 		if (event.getPlayer().equals(this.player)) {
@@ -69,6 +73,10 @@ public class Hero extends Character implements Listener{
 		}
 	}
 	
+	/**
+	 * Implements the Inventory function of not-dropping undropable Items
+	 * @param event a PlayerDropItemEvent
+	 */
 	@EventHandler
 	public void handleItemDrop(PlayerDropItemEvent event) {
 		if (event.getPlayer().equals(this.player)) {
@@ -76,18 +84,30 @@ public class Hero extends Character implements Listener{
 		}
 	}
 	
+	/**
+	 * Handles the Inventory mechanics on picking up an item
+	 * @param event PlayerPickupItemEvent
+	 */
 	@EventHandler
 	public void handleItemPickup(PlayerPickupItemEvent event) {
 		if (event.getPlayer().equals(this.player)) {
 			Item newItem = new Item(event.getItem().getItemStack());
 			event.setCancelled(!inventory.setActiveItem(newItem));
+			//ToDo: implement passivItem mechanics
 		}
 	}
 	
+	/**
+	 * Handles Placing of Blocks/Items
+	 * @param event BlockPlaceEvent
+	 */
 	@EventHandler
 	public void handleBlockPlace(BlockPlaceEvent event) {
 		if (event.getPlayer().equals(this.player)) {
-			event.setCancelled(!inventory.dropActiveItem());
+			if (!inventory.getActiveItem().isPlacable()){
+				event.setCancelled(true);				
+			} else inventory.setActiveItem(null);
+			
 			//ToDo: Enforce our inventory state in Minecraft
 		}		
 	}

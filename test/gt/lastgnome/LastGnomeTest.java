@@ -6,6 +6,7 @@ import static org.mockito.Mockito.mock;
 import gt.general.Item;
 
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -50,7 +51,7 @@ public class LastGnomeTest {
 		LastGnomeHero[] heroes = {hero1,hero2};
 		LastGnomeTeam team = new LastGnomeTeam(heroes,null);
 
-		Gnome gnome = new Gnome();
+		Gnome gnome = new Gnome(mock(ItemStack.class));
 		
 		//give Gnome to hero1 and check current status
 		hero1.inventory.setActiveItem(gnome);
@@ -83,7 +84,7 @@ public class LastGnomeTest {
 		assertEquals(hero1,team.getGnomeBearer());
 		
 		//Now we give hero2 a Tool-Item and see if it works then
-		Item item1 = new Item();
+		Item item1 = new Item(mock(ItemStack.class));
 		item1.setTool(true);
 		assertTrue(hero2.inventory.setActiveItem(item1));
 		assertTrue(hero2.takeGnomeFrom(hero1));
@@ -92,7 +93,7 @@ public class LastGnomeTest {
 		assertEquals(hero2,team.getGnomeBearer());
 		
 		//Now we give hero1 a dropable Item
-		Item item2 = new Item();
+		Item item2 = new Item(mock(ItemStack.class));
 		item2.setDropable(true);
 		assertTrue(hero1.inventory.setActiveItem(item2));
 		assertTrue(hero2.giveGnomeTo(hero1));
@@ -101,7 +102,7 @@ public class LastGnomeTest {
 		assertEquals(hero1,team.getGnomeBearer());
 		
 		//Now we give hero2 an undropbable Item
-		Item item3 = new Item();
+		Item item3 = new Item(mock(ItemStack.class));
 		item3.setTool(false);
 		item3.setDropable(false);
 		assertTrue(hero2.inventory.setActiveItem(item3));
