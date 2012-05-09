@@ -1,12 +1,10 @@
 package gt.lastgnome;
 
-import gt.general.Inventory;
 import gt.general.Hero;
 import gt.general.aura.Aura;
 
 import java.util.Vector;
 
-import org.bukkit.Location;
 import org.bukkit.entity.Player;
 
 
@@ -34,13 +32,13 @@ public class LastGnomeHero extends Hero{
 		//Fail-safe if hero has no Gnome
 		if (!hero.isGnomeBearer()) return false;
 		//Try to take Gnome
-		if (!this.inventory.setActiveItem(hero.inventory.getActiveItem())) {
+		if (!this.getInventory().setActiveItem(hero.getInventory().getActiveItem())) {
 			//If Gnome cannot be taken, try to drop current Item
-			if (this.inventory.dropActiveItem()) {
-				this.inventory.setActiveItem(hero.inventory.getActiveItem());
+			if (this.getInventory().dropActiveItem()) {
+				this.getInventory().setActiveItem(hero.getInventory().getActiveItem());
 			} else return false;
 		}
-		hero.inventory.setActiveItem(null);
+		hero.getInventory().setActiveItem(null);
 		team.setGnomeBearer(this);
 		
 		return true;
@@ -69,8 +67,8 @@ public class LastGnomeHero extends Hero{
 	 * @return true if the Hero carries the Gnome
 	 */
 	public boolean isGnomeBearer() {
-		if (this.inventory.getActiveItem() == null) return false; 
-		if (this.inventory.getActiveItem().getName() == "Gnome") {
+		if (this.getInventory().getActiveItem() == null) return false; 
+		if (this.getInventory().getActiveItem().getName() == "Gnome") {
 			return true;
 		}
 		return false;

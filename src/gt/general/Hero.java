@@ -23,10 +23,9 @@ public class Hero extends Character implements Listener{
 	public static final double DEFAULT_HERO_STAMINA = 100;
 	
 	protected Team team;
-	public Inventory inventory;	
-	public Vector<Aura> auras;
 	
-	final private Player player;
+	private final Inventory inventory;		
+	private final Player player;
 	
 	public Hero(Player player) {
 		super(DEFAULT_HERO_SPEED);
@@ -48,6 +47,13 @@ public class Hero extends Character implements Listener{
 		return player.getLocation();
 	}
 	
+	/**
+	 * @return the inventory
+	 */
+	public Inventory getInventory() {
+		return inventory;
+	}
+
 	/**
 	 * @return the team
 	 */

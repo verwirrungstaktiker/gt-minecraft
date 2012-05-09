@@ -4,26 +4,13 @@ import gt.general.aura.Aura;
 import gt.general.aura.Effect;
 import gt.general.aura.EffectFactory;
 
-import java.awt.Point;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
-import java.util.UUID;
 import java.util.Vector;
 
-import org.bukkit.EntityEffect;
 import org.bukkit.Location;
-import org.bukkit.Server;
-import org.bukkit.World;
 import org.bukkit.entity.Entity;
-import org.bukkit.entity.EntityType;
-import org.bukkit.event.block.EntityBlockFormEvent;
-import org.bukkit.event.entity.EntityDamageEvent;
-import org.bukkit.event.player.PlayerTeleportEvent.TeleportCause;
-import org.bukkit.metadata.MetadataValue;
-import org.bukkit.plugin.Plugin;
 
-public abstract class Character {
+public class Character {
 	
 	protected double defaultSpeed;
 	protected double currentSpeed;	//speed after (de)buff
@@ -63,7 +50,9 @@ public abstract class Character {
 	/**
 	 * @return the current Location of this Character
 	 */
-	public abstract Location getLocation();
+	public Location getLocation() {
+		return null;
+	}
 
 	/**
 	 * @return the auras
