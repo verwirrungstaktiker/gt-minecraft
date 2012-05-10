@@ -44,7 +44,7 @@ public class GeneralTest {
 		Player mockPlayer = mock(Player.class);
 		
 		Hero hero = new Hero(mockPlayer);
-		assertNotNull(hero.inventory);
+		assertNotNull(hero.getInventory());
 		assertEquals(100, hero.defaultSpeed, 0);
 		
 		//TODO Aura Test
