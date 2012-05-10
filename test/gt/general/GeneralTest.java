@@ -30,6 +30,7 @@ public class GeneralTest {
 		
 		inventory.setActiveItem(item1);
 		Assert.assertEquals(item1, inventory.getActiveItem());
+		//TODO: Item Swap is not possible in current version
 		Assert.assertEquals(item2, inventory.getPassivItem());
 		Assert.assertEquals(false, inventory.activeItemDropable());
 		
