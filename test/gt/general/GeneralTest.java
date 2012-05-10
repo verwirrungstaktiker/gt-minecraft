@@ -30,6 +30,7 @@ public class GeneralTest {
 		
 		inventory.setActiveItem(item1);
 		Assert.assertEquals(item1, inventory.getActiveItem());
+		//TODO: Item Swap is not possible in current version
 		Assert.assertEquals(item2, inventory.getPassivItem());
 		Assert.assertEquals(false, inventory.activeItemDropable());
 		
@@ -44,7 +45,7 @@ public class GeneralTest {
 		Player mockPlayer = mock(Player.class);
 		
 		Hero hero = new Hero(mockPlayer);
-		assertNotNull(hero.inventory);
+		assertNotNull(hero.getInventory());
 		assertEquals(100, hero.defaultSpeed, 0);
 		
 		//TODO Aura Test

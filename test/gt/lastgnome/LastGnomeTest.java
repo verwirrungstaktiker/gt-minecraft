@@ -54,7 +54,7 @@ public class LastGnomeTest {
 		Gnome gnome = new Gnome(mock(ItemStack.class));
 		
 		//give Gnome to hero1 and check current status
-		hero1.inventory.setActiveItem(gnome);
+		hero1.getInventory().setActiveItem(gnome);
 		assertTrue(hero1.isGnomeBearer());
 		assertFalse(hero2.isGnomeBearer());
 		//Set (and get) GnomeBearer of the Team TODO: gnomeBearer should be set automatically later
@@ -86,7 +86,7 @@ public class LastGnomeTest {
 		//Now we give hero2 a Tool-Item and see if it works then
 		Item item1 = new Item(mock(ItemStack.class));
 		item1.setTool(true);
-		assertTrue(hero2.inventory.setActiveItem(item1));
+		assertTrue(hero2.getInventory().setActiveItem(item1));
 		assertTrue(hero2.takeGnomeFrom(hero1));
 		assertFalse(hero1.isGnomeBearer());
 		assertTrue(hero2.isGnomeBearer());
@@ -95,7 +95,7 @@ public class LastGnomeTest {
 		//Now we give hero1 a dropable Item
 		Item item2 = new Item(mock(ItemStack.class));
 		item2.setDropable(true);
-		assertTrue(hero1.inventory.setActiveItem(item2));
+		assertTrue(hero1.getInventory().setActiveItem(item2));
 		assertTrue(hero2.giveGnomeTo(hero1));
 		assertTrue(hero1.isGnomeBearer());
 		assertFalse(hero2.isGnomeBearer());
@@ -105,7 +105,7 @@ public class LastGnomeTest {
 		Item item3 = new Item(mock(ItemStack.class));
 		item3.setTool(false);
 		item3.setDropable(false);
-		assertTrue(hero2.inventory.setActiveItem(item3));
+		assertTrue(hero2.getInventory().setActiveItem(item3));
 		assertFalse(hero2.takeGnomeFrom(hero1));
 		assertTrue(hero1.isGnomeBearer());
 		assertFalse(hero2.isGnomeBearer());		
