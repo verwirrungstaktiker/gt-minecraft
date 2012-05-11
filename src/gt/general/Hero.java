@@ -10,6 +10,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.player.PlayerDropItemEvent;
+import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.event.player.PlayerPickupItemEvent;
 
@@ -108,15 +109,17 @@ public class Hero extends Character implements Listener{
 	 * @param event BlockPlaceEvent
 	 */
 	@EventHandler
-	public void handleBlockPlace(BlockPlaceEvent event) {
+	public void handleBlockPlacing(BlockPlaceEvent event) {
 		if (event.getPlayer().equals(this.player)) {
 			if (!inventory.getActiveItem().isPlacable()){
 				event.setCancelled(true);				
 			} else inventory.setActiveItem(null);
 			
-			//ToDo: Enforce our inventory state in Minecraft
+			//ToDo: Enforce our inventory state in Minecraft if necessary
 		}		
 	}
+	
+
 	
 	
 }
