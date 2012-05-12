@@ -1,7 +1,5 @@
 package gt.general;
 
-import gt.general.aura.Aura;
-
 import java.util.HashSet;
 import java.util.Set;
 
