@@ -1,9 +1,5 @@
 package gt.general;
 
-import gt.general.aura.Aura;
-
-import java.util.Vector;
-
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -19,7 +15,7 @@ public class Hero extends Character implements Listener{
 	
 	
 	/** unbuffed default value **/
-	public static final double DEFAULT_HERO_SPEED = 100;
+	public static final double DEFAULT_HERO_SPEED = 1.0;
 	/** unbuffed default value, range 0-100 **/
 	public static final double DEFAULT_HERO_STAMINA = 100;
 	
@@ -29,7 +25,9 @@ public class Hero extends Character implements Listener{
 	private final Player player;
 	
 	public Hero(Player player) {
-		super(DEFAULT_HERO_SPEED);
+		super();
+		
+		setAttribute(CharacterAttributes.SPEED, DEFAULT_HERO_SPEED);
 		
 		team = Team.NOTEAM;
 		this.player = player;
@@ -76,7 +74,7 @@ public class Hero extends Character implements Listener{
 	@EventHandler
 	public void handleSpeed(PlayerMoveEvent event) {
 		if (event.getPlayer().equals(this.player)) {
-			player.setVelocity(player.getVelocity().multiply(currentSpeed/100));
+			player.setVelocity(player.getVelocity().multiply(Math.max(getCurrentSpeed(), 0.0)));
 		}
 	}
 	

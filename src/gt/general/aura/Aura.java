@@ -1,29 +1,24 @@
 package gt.general.aura;
 
 import gt.general.Character;
+import gt.plugin.helloworld.HelloWorld;
 
-import java.util.List;
+import org.bukkit.Bukkit;
 
-import org.bukkit.entity.Entity;
+public class Aura implements Runnable {
 
-public class Aura {
-
-	private Character owner;
+	private Character owner = null;
 	private final EffectFactory effectFactory;
 
-	private int distance;
+	private final int distance;
+	private final int rate;
 	private int duration;
-	
-	public static int INFINITE_DURATION = Integer.MIN_VALUE;
 
-	/**
-	 * generates a new Aura with infinite duration
-	 * 
-	 * @see Aura#Aura(EffectFactory, int, int)
-	 */
-	public Aura(final EffectFactory effect, int distance) {
-		this(effect, distance, INFINITE_DURATION);
-	}
+	private int taskId = -1;
+
+	public static final int INFINITE_DURATION = Integer.MIN_VALUE;
+	public static final int EACH_TICK = 1;
+	public static final int OWNER_ONLY = 0;
 
 	/**
 	 * generates a new Aura
@@ -34,48 +29,79 @@ public class Aura {
 	 *            the distance in which the Effect is applied to Entities
 	 * @param duration
 	 *            after duration Ticks the Aura is discarded
+	 * @param rate
+	 *            n-th tick which should spread the effect
 	 */
-	public Aura(final EffectFactory effectFactory, int distance, int duration) {
+	public Aura(final EffectFactory effectFactory, final int distance,
+			final int duration, final int rate) {
 		this.owner = null;
 		this.effectFactory = effectFactory;
 		this.distance = distance;
 		this.duration = duration;
+		this.rate = rate;
 	}
 
 	/**
+	 * sets the newowner and starts scheduling of the aura
+	 * 
 	 * @param owner
 	 *            the owner of this Aura
 	 */
-	public void setOwner(Character owner) {
-		if (this.owner != null) {
-			throw new RuntimeException("Cannot reassign owner");
-		}
+	public void setOwner(final Character owner) {
+		ensureUnlinked();
+
 		this.owner = owner;
+
+		taskId = Bukkit.getScheduler().scheduleAsyncRepeatingTask(
+				HelloWorld.getPlugin(), this, 0, rate);
 	}
 
 	/**
-	 *  performs one tick - duration management and Effect spreading
+	 * ensures that this is not simulated currently and there is no owner
 	 */
-	public void performTick() {		
-		if (duration == INFINITE_DURATION || duration-- > 0) {
-			spreadEffect();
+	private void ensureUnlinked() {
+		if (taskId != -1) {
+			Bukkit.getScheduler().cancelTask(taskId);
 		}
-		else {
+
+		if (owner != null) {
 			owner.getAuras().remove(this);
 		}
 	}
-	
+
+	@Override
+	public void run() {
+		if (dead()) {
+			ensureUnlinked();
+		}
+
+		if (owner != null) {
+			spreadEffect();
+		}
+	}
+
+	/**
+	 * @return true if this aura should be dismissed
+	 */
+	private boolean dead() {
+		if (duration == INFINITE_DURATION) {
+			return false;
+		} else {
+			duration = -rate;
+			return duration < 0;
+		}
+	}
+
 	/**
 	 * spreads the effect of this aura to all Characters in distance
 	 */
 	private void spreadEffect() {
-		List<Entity> nearbyEntities = owner.getNearbyEntities(distance,
-				distance, distance);
-		
-		for(Entity entity : nearbyEntities) {
-			if (entity instanceof Character) {
-				((Character)entity).addEffect(effectFactory.getEffect());
-			}
+
+		if (distance == OWNER_ONLY) {
+			owner.addEffect(effectFactory.getEffect());
+		} else {
+			// TODO spead auras
+			throw new RuntimeException("not implemented yet");
 		}
 	}
 }

@@ -2,49 +2,41 @@ package gt.general;
 
 import gt.general.aura.Aura;
 import gt.general.aura.Effect;
-import gt.general.aura.EffectFactory;
 
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Vector;
 
 import org.bukkit.Location;
-import org.bukkit.entity.Entity;
 
 public class Character {
-	
-	protected double defaultSpeed;
-	protected double currentSpeed;	//speed after (de)buff
-	
+
 	private final Vector<Aura> auras = new Vector<Aura>();
-	private final Vector<EffectFactory> effects = new Vector<EffectFactory>();
-	
+	private final Vector<Effect> effects = new Vector<Effect>();
+
+	// is double really enough for
+	private final Map<CharacterAttributes, Double> baseAttributes = new HashMap<CharacterAttributes, Double>();
+	private final Map<CharacterAttributes, Double> computedAttributes = new HashMap<CharacterAttributes, Double>();
+
+	private boolean computedAttributesTainted = true;
+
 	/**
 	 * creates a new Character
 	 * 
 	 * @param defaultHeroSpeed
 	 */
-	public Character(double defaultHeroSpeed) {
-		super();
-		
-		this.defaultSpeed = defaultHeroSpeed;
-		this.currentSpeed = defaultHeroSpeed;
-	}	
+	public Character() {
+
+		setAttribute(CharacterAttributes.HEALTH, 1.0);
+		setAttribute(CharacterAttributes.SPEED, 100.0);
+	}
 
 	public double getCurrentSpeed() {
-		return currentSpeed;
+		return computedAttributes.get(CharacterAttributes.SPEED);
 	}
 
-	public void setCurrentSpeed(double speed) {
-		this.currentSpeed = speed;
-	}
-	
-	
 	public double getDefaultSpeed() {
-		return defaultSpeed;
-	}
-	
-	public void setDefaultSpeed(double speed) {
-		this.defaultSpeed = speed;
+		return baseAttributes.get(CharacterAttributes.SPEED);
 	}
 
 	/**
@@ -60,30 +52,113 @@ public class Character {
 	public Vector<Aura> getAuras() {
 		return auras;
 	}
-	
+
 	/**
-	 * @param aura the aura to be added to this character
+	 * @return the effects
 	 */
-	public void addAura(Aura aura) {
+	public Vector<Effect> getEffects() {
+		return effects;
+	}
+
+	/**
+	 * @param aura
+	 *            the aura to be added to this character
+	 */
+	public void addAura(final Aura aura) {
 		aura.setOwner(this);
 		auras.add(aura);
 	}
 
 	/**
-	 * @return the effects
+	 * @param effect
+	 *            The effect to be added to this character
 	 */
-	public Vector<EffectFactory> getEffects() {
-		return effects;
-	}
-	
-	public void addEffect(Effect effect) {
-		// TODO Auto-generated method stub
-		
+	public void addEffect(final Effect effect) {
+		computedAttributesTainted = true;
+		effects.add(effect);
 	}
 
-	public List<Entity> getNearbyEntities(int distance, int distance2,
-			int distance3) {
-		// TODO Auto-generated method stub
-		return null;
+	/**
+	 * adds an attribute to the collection of attributes of this character
+	 * 
+	 * @param attribute
+	 *            Type of the Attribute
+	 * @param base
+	 *            Immutable base value of the attribute
+	 */
+	protected void setAttribute(final CharacterAttributes attribute,
+			final double base) {
+		baseAttributes.put(attribute, base);
+		computedAttributes.put(attribute, base);
 	}
+
+	/**
+	 * @param attribute
+	 *            Type of the attribute
+	 * @return Immutable base value
+	 */
+	public double getBaseAttribute(final CharacterAttributes attribute) {
+		return baseAttributes.get(attribute);
+	}
+
+	/**
+	 * the value must be calculated on base of the baseAttribute - not on the
+	 * current computed value
+	 * 
+	 * @param attribute
+	 *            the attribute to be modified
+	 * @param value
+	 *            the value to be added to the attribute
+	 */
+	public void addToAttribute(final CharacterAttributes attribute,
+			final double value) {
+		computedAttributes.put(attribute, computedAttributes.get(attribute)
+				+ value);
+	}
+
+	/**
+	 * @param attribute
+	 *            the attribute to be modified
+	 * @param value
+	 *            the value which is multiplied to the current value
+	 */
+	public void scaleAttribute(final CharacterAttributes attribute,
+			final double value) {
+		computedAttributes.put(attribute, computedAttributes.get(attribute)
+				* value);
+	}
+
+	/**
+	 * performs the attribute updates on a tick
+	 */
+	public void applyEffects() {
+
+		for (Effect effect : effects) {
+			if (effect.remainingTicks() == 0) {
+				effects.remove(effect);
+				computedAttributesTainted = true;
+			} else {
+				effect.performTick();
+			}
+		}
+
+		if (computedAttributesTainted) {
+			calculateAttributes();
+			computedAttributesTainted = false;
+		}
+	}
+	
+	/**
+	 * calculates the attribute values on base of the current effects
+	 */
+	private void calculateAttributes() {
+		for (CharacterAttributes attribute : baseAttributes.keySet()) {
+			computedAttributes.put(attribute, baseAttributes.get(attribute));
+		}
+
+		for (Effect effect : effects) {
+			effect.takeEffect(this);
+		}
+	}
+	
 }

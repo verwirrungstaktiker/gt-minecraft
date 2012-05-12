@@ -1,5 +1,7 @@
 package gt.general;
 
+import gt.general.aura.Aura;
+
 import java.util.HashSet;
 import java.util.Set;
 
@@ -8,7 +10,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerLoginEvent;
 import org.bukkit.plugin.java.JavaPlugin;
 
-public class HeroManager implements Listener {
+public class HeroManager implements Listener, Runnable {
 
 	private final Set<Hero> heros;
 	
@@ -19,6 +21,13 @@ public class HeroManager implements Listener {
 		
 		heros = new HashSet<Hero>();
 		registerListener(this);
+		
+		// simulate on each tick (?)
+		plugin
+			.getServer()
+			.getScheduler()
+			.scheduleSyncRepeatingTask(plugin, this, 0, 1);
+			
 	}
 	
 	@EventHandler
@@ -38,5 +47,12 @@ public class HeroManager implements Listener {
 			  .getPluginManager()
 			  .registerEvents(listener, plugin);
 	}
-	
+
+	// TODO redo this complete simumlation business - only quick and dirty for now
+	@Override
+	public void run() {
+		for(Hero hero : heros) {
+			hero.applyEffects();
+		}
+	}
 }

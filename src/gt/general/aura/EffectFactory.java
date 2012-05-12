@@ -2,5 +2,8 @@ package gt.general.aura;
 
 public interface EffectFactory {
 	
-	public Effect getEffect();
+	/**
+	 * @return a new instance of Effect, to be added to the owner of a aura
+	 */
+	Effect getEffect();
 }
