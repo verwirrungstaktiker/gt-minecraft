@@ -6,6 +6,7 @@ import gt.lastgnome.GnomeItem;
 
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.getspout.spoutapi.SpoutManager;
 
 
 /**
@@ -22,10 +23,9 @@ public class HelloWorld extends JavaPlugin {
 	private static JavaPlugin plugin;
 	
 	public void onEnable() {
-		
 		HelloWorld.setPlugin(this);
 		
-		gnome = new GnomeItem(this);
+		setupGnome();
 		
 		heroManager = new HeroManager(this);
 		
@@ -35,6 +35,14 @@ public class HelloWorld extends JavaPlugin {
 		
 		getServer().getScheduler().scheduleSyncRepeatingTask(this, heroManager, 0, 10);
 	}
+	
+	/**
+	 * instantiate gnome block and precache it's texture
+	 */
+	private void setupGnome() {
+		gnome = new GnomeItem(this);
+		SpoutManager.getFileManager().addToPreLoginCache(plugin, "res/textures/gnome_16x16.png");
+	}
 
 	public static JavaPlugin getPlugin() {
 		return plugin;
@@ -43,5 +51,7 @@ public class HelloWorld extends JavaPlugin {
 	private static void setPlugin(JavaPlugin plugin) {
 		HelloWorld.plugin = plugin;
 	}
+	
+	
 	
 }
