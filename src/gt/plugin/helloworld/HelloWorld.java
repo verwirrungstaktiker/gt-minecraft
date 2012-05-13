@@ -2,6 +2,7 @@ package gt.plugin.helloworld;
 
 import gt.general.Hero;
 import gt.general.HeroManager;
+import gt.lastgnome.GnomeItem;
 
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -15,6 +16,7 @@ import org.bukkit.plugin.java.JavaPlugin;
  */
 public class HelloWorld extends JavaPlugin {
 	
+	public static GnomeItem gnome;
 	private HeroManager heroManager;
 	
 	private static JavaPlugin plugin;
@@ -22,6 +24,8 @@ public class HelloWorld extends JavaPlugin {
 	public void onEnable() {
 		
 		HelloWorld.setPlugin(this);
+		
+		gnome = new GnomeItem(this);
 		
 		heroManager = new HeroManager(this);
 		

@@ -15,5 +15,6 @@
 	<classpathentry kind="lib" path="lib/junit-4.8.2.jar"/>
 	<classpathentry kind="lib" path="lib/objenesis-1.2.jar"/>
 	<classpathentry kind="lib" path="lib/powermock-mockito-1.4.12-full.jar"/>
+	<classpathentry kind="lib" path="lib/spoutpluginapi-dev-607.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
