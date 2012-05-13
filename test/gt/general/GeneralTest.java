@@ -3,36 +3,38 @@ package gt.general;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.mockito.Mockito.mock;
+import gt.BaseTest;
 import junit.framework.Assert;
 
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
+import org.junit.Before;
 import org.junit.Test;
 
-public class GeneralTest {
+public class GeneralTest  extends BaseTest {
 	
 	// Test of Inventory Mechanics
 	@Test
 	public void InventoryTest() {
 		//Initialization
-		Item item1 = new Item(mock(ItemStack.class));
+		PortableItem item1 = new PortableItem(null, null, null);
 		item1.setDropable(false);
 		
-		Item item2 = new Item(mock(ItemStack.class));
+		PortableItem item2 = new PortableItem(null, null, null);
 		item2.setTool(true);
 		item2.setDropable(true);
 		
-		Inventory inventory = new Inventory();
+		Hero hero = new Hero(mock(Player.class));
 		
-		inventory.setActiveItem(item2);
-		Assert.assertEquals(item2, inventory.getActiveItem());
-		Assert.assertEquals(true, inventory.activeItemDropable());
+		hero.setActiveItem(item2);
+		Assert.assertEquals(item2, hero.getActiveItem());
+		Assert.assertEquals(true, hero.activeItemDropable());
 		
-		inventory.setActiveItem(item1);
-		Assert.assertEquals(item1, inventory.getActiveItem());
+		hero.setActiveItem(item1);
+		Assert.assertEquals(item1, hero.getActiveItem());
 		//TODO: Item Swap is not possible in current version
-		Assert.assertEquals(item2, inventory.getPassivItem());
-		Assert.assertEquals(false, inventory.activeItemDropable());
+		Assert.assertEquals(item2, hero.getPassivItem());
+		Assert.assertEquals(false, hero.activeItemDropable());
 		
 	}
 	
@@ -45,7 +47,6 @@ public class GeneralTest {
 		Player mockPlayer = mock(Player.class);
 		
 		Hero hero = new Hero(mockPlayer);
-		assertNotNull(hero.getInventory());
 		assertEquals(1, hero.getDefaultSpeed(), 0);
 		
 		//TODO Aura Test

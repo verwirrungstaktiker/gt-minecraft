@@ -1,8 +1,10 @@
 package gt.general;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Map.Entry;
 
+import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerLoginEvent;
@@ -10,14 +12,13 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 public class HeroManager implements Listener, Runnable {
 
-	private final Set<Hero> heros;
+	private static final Map<Player, Hero> heros = new HashMap<Player, Hero>();
 	
 	private final JavaPlugin plugin;
 
 	public HeroManager(JavaPlugin plugin) {
 		this.plugin = plugin;
 		
-		heros = new HashSet<Hero>();
 		registerListener(this);
 		
 		// simulate on each tick (?)
@@ -31,10 +32,12 @@ public class HeroManager implements Listener, Runnable {
 	@EventHandler
 	public void playerLogin(PlayerLoginEvent ple) {
 		
-		Hero hero = new Hero(ple.getPlayer());
+		Player player = ple.getPlayer();
+		
+		Hero hero = new Hero(player);
 		registerListener(hero);
 		hero.getPlayer().getInventory().setMaxStackSize(1);
-		heros.add(hero);
+		heros.put(player, hero);
 	}
 	
 	/**
@@ -46,11 +49,16 @@ public class HeroManager implements Listener, Runnable {
 			  .registerEvents(listener, plugin);
 	}
 
-	// TODO redo this complete simumlation business - only quick and dirty for now
 	@Override
 	public void run() {
-		for(Hero hero : heros) {
+		
+		for(Hero hero : heros.values()) {
 			hero.applyEffects();
 		}
+		
+	}
+	
+	public static Hero getHero(Player player) {
+		return heros.get(player);
 	}
 }

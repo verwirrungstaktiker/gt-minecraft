@@ -8,10 +8,10 @@ import org.bukkit.Server;
 
 public class TeamLostTrigger extends Trigger{
 
-	protected LastGnomeTeam team;
+	protected LastGnomeGame team;
 	protected TriggerManager tm;
 	
-	public TeamLostTrigger (LastGnomeTeam team, Runnable callback, TriggerManager tm) {
+	public TeamLostTrigger (LastGnomeGame team, Runnable callback, TriggerManager tm) {
 		super(false, callback, tm);
 		this.team = team;
 	}
