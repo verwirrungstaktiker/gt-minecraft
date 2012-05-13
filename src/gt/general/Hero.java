@@ -6,32 +6,32 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.player.PlayerDropItemEvent;
-import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.event.player.PlayerPickupItemEvent;
 
 
 public class Hero extends Character implements Listener{
-	
-	
+		
 	/** unbuffed default value **/
 	public static final double DEFAULT_HERO_SPEED = 1.0;
-	/** unbuffed default value, range 0-100 **/
-	public static final double DEFAULT_HERO_STAMINA = 100;
 	
 	private Team team;
 	
-	private final Inventory inventory;		
 	private final Player player;
 	
-	public Hero(Player player) {
+	private PortableItem activeItem;
+	private PortableItem passivItem;
+	
+	/**
+	 * @param player the player to be wrapped
+	 */
+	public Hero(final Player player) {
 		super();
 		
 		setAttribute(CharacterAttributes.SPEED, DEFAULT_HERO_SPEED);
 		
 		team = Team.NOTEAM;
 		this.player = player;
-		inventory = new Inventory();
 	}
 	
 	/**
@@ -45,13 +45,6 @@ public class Hero extends Character implements Listener{
 	public Location getLocation() {
 		return player.getLocation();
 	}
-	
-	/**
-	 * @return the inventory
-	 */
-	public Inventory getInventory() {
-		return inventory;
-	}
 
 	/**
 	 * @return the team
@@ -63,9 +56,80 @@ public class Hero extends Character implements Listener{
 	/**
 	 * @param team the team to set
 	 */
-	public void setTeam(Team team) {
+	public void setTeam(final Team team) {
 		this.team = team;
-	}	
+	}
+	
+	/**
+	 * @return the current Item in the active slot
+	 */
+	public PortableItem getActiveItem() {
+		return activeItem;
+	}
+	
+	/**
+	 * @return the current Item in the passive slot
+	 */
+	public PortableItem getPassivItem() {
+		return passivItem;
+	}
+	
+	/**
+	 * @return if true, the Hero can pick up another item
+	 */
+	public boolean canRecieveItem() {
+		
+		// TODO check if space, or swappable or dropable
+		return false;
+	}
+	
+	/**
+	 * picks up a new item
+	 * 
+	 * @param item the new avtive item
+	 */
+	public void setActiveItem(final PortableItem item) {
+		// TODO implement this
+		
+		// if active empty -> take
+		// else if secondary empty -> swap
+		// else if droppable drop active item
+		// else RuntimeException
+	}
+	
+	
+	/**
+	 * transfers the current active item into another inventory
+	 * 
+	 * @param target where to put the inventory
+	 */
+	public void transferActiveItem(final Hero target) {
+		if (activeItem.isTransferable() && target.canRecieveItem()) {
+			target.setActiveItem(activeItem);
+			
+			// send to minecraft core
+			activeItem = null;
+		}		
+	}
+	
+	/**
+	 * Method to drop the active Item
+	 * TODO real dropping
+	 */
+	public void dropActiveItem() {
+		if (activeItemDropable()) {
+			activeItem = null;
+		}
+		// TODO debug in else branch
+	}
+	
+	/**
+	 * @return true if the currently active item is droppable
+	 */
+	public boolean activeItemDropable() {
+		return activeItem.isDropable();
+	}
+	
 	
 	/**
 	 * Sets player's velocity according to hero's speed
@@ -73,9 +137,10 @@ public class Hero extends Character implements Listener{
 	 */
 	@EventHandler
 	public void handleSpeed(PlayerMoveEvent event) {
+		/*
 		if (event.getPlayer().equals(this.player)) {
 			player.setVelocity(player.getVelocity().multiply(Math.max(getCurrentSpeed(), 0.0)));
-		}
+		}*/
 	}
 	
 	/**
@@ -84,12 +149,13 @@ public class Hero extends Character implements Listener{
 	 */
 	@EventHandler
 	public void handleItemDrop(PlayerDropItemEvent event) {
+		/*
 		if (event.getPlayer().equals(this.player)) {
 			if(inventory.activeItemDropable()) {
 				inventory.dropActiveItem();
 				event.setCancelled(true);
 			}
-		}
+		}*/
 	}
 	
 	/**
@@ -98,11 +164,12 @@ public class Hero extends Character implements Listener{
 	 */
 	@EventHandler
 	public void handleItemPickup(PlayerPickupItemEvent event) {
+		/*
 		if (event.getPlayer().equals(this.player)) {
-			Item newItem = new Item(event.getItem().getItemStack());
+			PortableItem newItem = new PortableItem(event.getItem().getItemStack());
 			event.setCancelled(!inventory.setActiveItem(newItem));
 			//ToDo: implement passivItem mechanics
-		}
+		}*/
 	}
 	
 	/**
@@ -111,16 +178,13 @@ public class Hero extends Character implements Listener{
 	 */
 	@EventHandler
 	public void handleBlockPlacing(BlockPlaceEvent event) {
-		if (event.getPlayer().equals(this.player)) {
+		/*if (event.getPlayer().equals(this.player)) {
 			if (!inventory.getActiveItem().isPlacable()){
 				event.setCancelled(true);				
 			} else inventory.setActiveItem(null);
 			
 			//ToDo: Enforce our inventory state in Minecraft if necessary
-		}		
+		}*/
 	}
-	
-
-	
 	
 }

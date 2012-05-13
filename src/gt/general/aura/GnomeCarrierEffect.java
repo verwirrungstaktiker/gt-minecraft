@@ -2,7 +2,7 @@ package gt.general.aura;
 
 import gt.general.Character;
 import gt.general.CharacterAttributes;
-import gt.lastgnome.LastGnomeHero;
+import gt.general.Hero;
 
 public class GnomeCarrierEffect implements Effect {
 
@@ -19,8 +19,8 @@ public class GnomeCarrierEffect implements Effect {
 	public void takeEffect(final Character character) {
 		
 		// lowers the speed by 1/8
-		if(character instanceof LastGnomeHero) {
-			LastGnomeHero hero = (LastGnomeHero)character;
+		if(character instanceof Hero) {
+			Hero hero = (Hero)character;
 			hero.addToAttribute(CharacterAttributes.SPEED,
 								hero.getBaseAttribute(CharacterAttributes.SPEED) * -0.0625);
 		}
