@@ -2,14 +2,15 @@ package gt.general.trigger;
 
 import java.util.Vector;
 
-
-
-
 public class TriggerManager implements Runnable {
 
-	protected int i;
-	protected Vector<Trigger> triggers = new Vector<Trigger>();
+	private int i;
+	private Vector<Trigger> triggers = new Vector<Trigger>();
 	
+	public Vector<Trigger> getTriggers() {
+		return triggers;
+	}
+
 	public void registerTrigger(Trigger t) {
 		triggers.add(t);
 	}

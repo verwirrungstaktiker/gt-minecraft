@@ -20,18 +20,27 @@ public class AreaTrigger extends Trigger{
 		super(repeat,callback,tm);
 		this.cube = cube;
 		this.loc = loc;
-		
 	}
 	
-	public void changeLocation(Location loc) {
+	public void setLocation(Location loc) {
 		this.loc = loc;
 	}
 	
-	protected boolean between (int min,int val,int max) {
-		if (val>=min && val <= max)
+	/**
+	 * Checks if a number is between two other numbers.
+	 * 
+	 * @param border1 threshold number 1
+	 * @param val number that is checked
+	 * @param border2 threshold number 2
+	 * @return true if val is between the other to numbers
+	 */
+	private boolean between (int border1, int val, int border2) {
+		if ( (val >= border1 && val <= border2) || (val <= border1 && val >= border2) ) {
 			return true;
-		else 
+		}
+		else {
 			return false;
+		}
 	}
 	
 	@Override
@@ -39,10 +48,12 @@ public class AreaTrigger extends Trigger{
 	 * Checks if Location is in Cube
 	 */
 	public void checkTrigger() {
-		if (between(cube[0].getBlockX(),loc.getBlockX(),cube[1].getBlockX())) {
-			if (between(cube[0].getBlockY(),loc.getBlockY(),cube[1].getBlockY())) {
-				if (between(cube[0].getBlockZ(),loc.getBlockZ(),cube[1].getBlockZ())) {
-					if (!repeat) tm.deregisterTrigger(this);
+		if (between(cube[0].getBlockX(), loc.getBlockX(), cube[1].getBlockX())) {
+			if (between(cube[0].getBlockY(), loc.getBlockY(), cube[1].getBlockY())) {
+				if (between(cube[0].getBlockZ(), loc.getBlockZ(), cube[1].getBlockZ())) {
+					if (!repeat) {
+						tm.deregisterTrigger(this);
+					}
 					callback.run();
 				}
 			}
