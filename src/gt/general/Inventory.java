@@ -2,48 +2,61 @@ package gt.general;
 
 public class Inventory {
 
-	protected Item activeItem;
-	protected Item passivItem;
-
+	private Item activeItem;
+	private Item passivItem;
 	
+	/**
+	 * @return the current Item in the active slot
+	 */
 	public Item getActiveItem() {
 		return activeItem;
 	}
 	
+	/**
+	 * @return the current Item in the passive slot
+	 */
 	public Item getPassivItem() {
 		return passivItem;
 	}
 
-	public boolean setActiveItem(Item activeItem) {
+	/**
+	 * picks up a new item
+	 * 
+	 * @param newItem the new item
+	 * @return TODO explain why this returns boolean
+	 */
+	public boolean setActiveItem(final Item newItem) {
 		//always allow to override with null
-		if (this.activeItem != null && activeItem != null){
-			if ( this.activeItem.isTool())  {
-				this.passivItem = this.activeItem;
-			} else return false;
+		
+		// TODO clarify this
+		if (activeItem != null && newItem != null){
+			if ( activeItem.isTool())  {
+				// TODO redo swapping properly
+				passivItem = activeItem;
+			} else {
+				return false;
+			}
 		}
-		this.activeItem = activeItem;
+		this.activeItem = newItem;
 		return true;
 	}
 	
 	/**
 	 * Method to drop the active Item
-	 * @return true if Item can be dropped, otherwise false
+	 * TODO real dropping
 	 */
-	public boolean dropActiveItem() {
-		//TODO: Dropping the Item
-		return activeItemDropable();
-	}
-	
-	
-	public boolean activeItemDropable() {
-		//TODO: Real dropping
-		if (activeItem.isDropable()){
+	public void dropActiveItem() {
+		if (activeItemDropable()) {
 			activeItem = null;
-			return true;
 		}
-		return false;
-			
+		// TODO debug in else branch
 	}
 	
+	/**
+	 * @return true if the currently active item is droppable
+	 */
+	public boolean activeItemDropable() {
+		return activeItem.isDropable();
+	}
 
 }

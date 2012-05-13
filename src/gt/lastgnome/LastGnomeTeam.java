@@ -11,8 +11,8 @@ import org.bukkit.inventory.ItemStack;
 
 public class LastGnomeTeam extends Team implements Listener {
 
-	LastGnomeHero[] players;
-	LastGnomeHero gnomeBearer; // so that e.g. Zombies know who the Gnome-Bearer
+	private LastGnomeHero[] players;
+	private LastGnomeHero gnomeBearer; // so that e.g. Zombies know who the Gnome-Bearer
 								// is
 
 	private final Gnome gnome;
@@ -20,13 +20,13 @@ public class LastGnomeTeam extends Team implements Listener {
 	public LastGnomeTeam(LastGnomeHero[] players, LastGnomeHero gnomeBearer) {
 		super(players);
 
-		/*
-		 * TODO initialze the ItemStack Correctly
-		 */
+		this.setPlayers(players);
+		
+		// TODO initialze the ItemStack Correctly
 		gnome = new Gnome(new ItemStack(Material.CAKE, 1));
 
 		for (int i = 0; i < players.length; ++i) {
-			players[i].setTeam(this);
+			getPlayers()[i].setTeam(this);
 		}
 		this.gnomeBearer = gnomeBearer;
 	}
@@ -39,17 +39,17 @@ public class LastGnomeTeam extends Team implements Listener {
 		return gnomeBearer;
 	}
 
-	private LastGnomeHero playerToHero(Player player) {
-		for (int i = 0; i < players.length; ++i) {
-			if (players[i].getPlayer().equals(player)) {
-				return players[i];
+	private LastGnomeHero playerToHero(final Player player) {
+		for (int i = 0; i < getPlayers().length; ++i) {
+			if (getPlayers()[i].getPlayer().equals(player)) {
+				return getPlayers()[i];
 			}
 		}
 		return null;
 	}
 
 	@EventHandler
-	public void handleGnomGiving(PlayerInteractEntityEvent event) {
+	public void handleGnomGiving(final PlayerInteractEntityEvent event) {
 		if (!gnomeBearer.getPlayer().equals(event.getPlayer())) {
 			return;
 		}
@@ -76,6 +76,14 @@ public class LastGnomeTeam extends Team implements Listener {
 	 */
 	public Gnome getGnome() {
 		return gnome;
+	}
+
+	public LastGnomeHero[] getPlayers() {
+		return players;
+	}
+
+	public void setPlayers(LastGnomeHero[] players) {
+		this.players = players;
 	}
 
 }

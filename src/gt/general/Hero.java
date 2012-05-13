@@ -19,7 +19,7 @@ public class Hero extends Character implements Listener{
 	/** unbuffed default value, range 0-100 **/
 	public static final double DEFAULT_HERO_STAMINA = 100;
 	
-	protected Team team;
+	private Team team;
 	
 	private final Inventory inventory;		
 	private final Player player;
@@ -85,7 +85,10 @@ public class Hero extends Character implements Listener{
 	@EventHandler
 	public void handleItemDrop(PlayerDropItemEvent event) {
 		if (event.getPlayer().equals(this.player)) {
-			event.setCancelled(!inventory.dropActiveItem());
+			if(inventory.activeItemDropable()) {
+				inventory.dropActiveItem();
+				event.setCancelled(true);
+			}
 		}
 	}
 	

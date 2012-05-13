@@ -78,6 +78,7 @@ public class LastGnomeTest {
 		hero1.getInventory().setActiveItem(gnome);
 		assertTrue(hero1.isGnomeBearer());
 		assertFalse(hero2.isGnomeBearer());
+		
 		//Set (and get) GnomeBearer of the Team TODO gnomeBearer should be set automatically later
 		team.setGnomeBearer(hero1);
 		assertEquals(hero1,team.getGnomeBearer());

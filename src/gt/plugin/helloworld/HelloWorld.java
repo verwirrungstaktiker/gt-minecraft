@@ -15,7 +15,7 @@ import org.bukkit.plugin.java.JavaPlugin;
  */
 public class HelloWorld extends JavaPlugin {
 	
-	HeroManager heroManager;
+	private HeroManager heroManager;
 	
 	private static JavaPlugin plugin;
 	

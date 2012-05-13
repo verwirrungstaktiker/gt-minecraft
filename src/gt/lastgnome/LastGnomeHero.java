@@ -1,7 +1,6 @@
 package gt.lastgnome;
 
 import gt.general.Hero;
-import gt.general.aura.Aura;
 import gt.general.aura.Effect;
 import gt.general.aura.GnomeCarrierEffect;
 
@@ -9,15 +8,20 @@ import java.util.Vector;
 
 import org.bukkit.entity.Player;
 
+
 public class LastGnomeHero extends Hero {
 
 	protected double maxStamina;
 	protected double currentStamina;
 
-	protected LastGnomeTeam team;
+	private LastGnomeTeam team;
 	protected boolean hasGnome;
 
-	public LastGnomeHero(Player player) {
+	/**
+	 * generates a new LastGnomeHero
+	 * @param player the Minecraft-Core player representation
+	 */
+	public LastGnomeHero(final Player player) {
 		super(player);
 	}
 
@@ -33,11 +37,13 @@ public class LastGnomeHero extends Hero {
 		if (!hero.isGnomeBearer()) {
 			return false;
 		}
+		
 		// Try to take Gnome
 		if (!getInventory().setActiveItem(
 				hero.getInventory().getActiveItem())) {
 			// If Gnome cannot be taken, try to drop current Item
-			if (getInventory().dropActiveItem()) {
+			if (getInventory().activeItemDropable()) {
+				getInventory().dropActiveItem();
 				getInventory().setActiveItem(
 						hero.getInventory().getActiveItem());
 			} else {
@@ -74,7 +80,6 @@ public class LastGnomeHero extends Hero {
 			}
 
 			// TODO add post gnome effect
-			
 			return true;
 		}
 		return false;
@@ -93,7 +98,7 @@ public class LastGnomeHero extends Hero {
 		return maxStamina;
 	}
 
-	public void setMaxStamina(double stamina) {
+	public void setMaxStamina(final double stamina) {
 		this.maxStamina = stamina;
 	}
 
@@ -101,13 +106,13 @@ public class LastGnomeHero extends Hero {
 		return currentStamina;
 	}
 
-	public void setCurrentStamina(double stamina) {
+	public void setCurrentStamina(final double stamina) {
 		if (stamina <= this.maxStamina) {
 			this.currentStamina = stamina;
 		}
 	}
 
-	public void setTeam(LastGnomeTeam team) {
+	public void setTeam(final LastGnomeTeam team) {
 		this.team = team;
 	}
 
