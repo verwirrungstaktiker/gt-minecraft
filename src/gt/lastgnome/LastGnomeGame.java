@@ -13,17 +13,20 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
 
+/**
+ * Game Controller for a Last-Gnome-Scenario
+ */
 public class LastGnomeGame implements Listener {
 
 	private final Team team;
 	private final GnomeItem gnome;
 
 	/** so that e.g. Zombies know who the Gnome-Bearer is */
-	private Hero gnomeBearer; 
+	private Hero gnomeBearer;
 
 	/**
 	 * initiates a new Last Gnome Game
-	 * 
+	 *
 	 * @param team the Team playing the game
 	 */
 	public LastGnomeGame(final Team team) {
@@ -33,7 +36,7 @@ public class LastGnomeGame implements Listener {
 
 	/**
 	 * handles passing of the gnome to another player, as triggered by minecraft
-	 * 
+	 *
 	 * @param event fired by minecraft
 	 */
 	@EventHandler
@@ -54,7 +57,7 @@ public class LastGnomeGame implements Listener {
 
 	/**
 	 * <b>WARNING</b> does not perform any checks
-	 * 
+	 *
 	 * @param newBearer the new gnomeBearer
 	 */
 	void giveGnomeTo(final Hero newBearer) {
@@ -83,7 +86,7 @@ public class LastGnomeGame implements Listener {
 
 	/**
 	 * <b>WARNING</b> does not perform any checks
-	 * 
+	 *
 	 * @param hero
 	 *            the new gnome bearer
 	 */
@@ -98,7 +101,7 @@ public class LastGnomeGame implements Listener {
 	public GnomeItem getGnome() {
 		return gnome;
 	}
-	
+
 	/**
 	 * @return the current gnome bearer
 	 */

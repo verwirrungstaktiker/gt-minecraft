@@ -5,24 +5,34 @@ import gt.plugin.helloworld.HelloWorld;
 
 import org.bukkit.Bukkit;
 
+/**
+ * Class for auras, which distribute effects
+ */
 public class Aura implements Runnable {
-
+	/**Owner from which the Aura originates*/
 	private Character owner = null;
+	/**Factory which produces the Effect*/
 	private final EffectFactory effectFactory;
 
+	/**radius of area of effect*/
 	private final int distance;
+	/**every rate ticks the Aura spreads its Effect*/
 	private final int rate;
+	/**Duration of ticks, which the Aura lasts*/
 	private int duration;
 
 	private int taskId = -1;
 
+	/**Constant for infinite duration*/
 	public static final int INFINITE_DURATION = Integer.MIN_VALUE;
+	/**Constant for a rate of 1/Tick*/
 	public static final int EACH_TICK = 1;
+	/**Constant for distance, to only affect owner*/
 	public static final int OWNER_ONLY = 0;
 
 	/**
 	 * generates a new Aura
-	 * 
+	 *
 	 * @param effectFactory
 	 *            a factory for the Effect to be spread
 	 * @param distance
@@ -43,7 +53,7 @@ public class Aura implements Runnable {
 
 	/**
 	 * sets the newowner and starts scheduling of the aura
-	 * 
+	 *
 	 * @param owner
 	 *            the owner of this Aura
 	 */

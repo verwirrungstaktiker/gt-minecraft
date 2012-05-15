@@ -9,20 +9,26 @@ import java.util.Vector;
 
 import org.bukkit.Location;
 
+/**
+ * our representation of Minecraft's LivingEntity
+ */
 public class Character {
 
+	/**Auras originating from the player*/
 	private final Vector<Aura> auras = new Vector<Aura>();
+	/**Effects affecting the player*/
 	private final Vector<Effect> effects = new Vector<Effect>();
 
-	// is double really enough for
+	/**unmodified Attributes*/
 	private final Map<CharacterAttributes, Double> baseAttributes = new HashMap<CharacterAttributes, Double>();
+	/**modified Attributes*/
 	private final Map<CharacterAttributes, Double> computedAttributes = new HashMap<CharacterAttributes, Double>();
 
 	private boolean computedAttributesTainted = true;
 
 	/**
 	 * creates a new Character
-	 * 
+	 *
 	 * @param defaultHeroSpeed
 	 */
 	public Character() {
@@ -31,10 +37,16 @@ public class Character {
 		setAttribute(CharacterAttributes.SPEED, 100.0);
 	}
 
+	/**
+	 * @return character's current speed
+	 */
 	public double getCurrentSpeed() {
 		return computedAttributes.get(CharacterAttributes.SPEED);
 	}
 
+	/**
+	 * @return character's default speed
+	 */
 	public double getDefaultSpeed() {
 		return baseAttributes.get(CharacterAttributes.SPEED);
 	}
@@ -80,7 +92,7 @@ public class Character {
 
 	/**
 	 * adds an attribute to the collection of attributes of this character
-	 * 
+	 *
 	 * @param attribute
 	 *            Type of the Attribute
 	 * @param base
@@ -104,7 +116,7 @@ public class Character {
 	/**
 	 * the value must be calculated on base of the baseAttribute - not on the
 	 * current computed value
-	 * 
+	 *
 	 * @param attribute
 	 *            the attribute to be modified
 	 * @param value
@@ -147,7 +159,7 @@ public class Character {
 			computedAttributesTainted = false;
 		}
 	}
-	
+
 	/**
 	 * calculates the attribute values on base of the current effects
 	 */
@@ -160,5 +172,5 @@ public class Character {
 			effect.takeEffect(this);
 		}
 	}
-	
+
 }

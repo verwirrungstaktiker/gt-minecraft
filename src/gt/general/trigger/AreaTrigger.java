@@ -1,34 +1,40 @@
 package gt.general.trigger;
 
 import org.bukkit.Location;
-
+/**
+ * Trigger which checks if a location is in a cube
+ */
 public class AreaTrigger extends Trigger{
 
-	//Areas which describe the 8 Points of the Trigger-Cube
+	/**The two locations describing the cube*/
 	protected Location[] cube;
-	//Location to be monitored
+	/**The location to be observed*/
 	protected Location loc;
-	
+
 	/**
-	 * 
+	 *
 	 * @param cube Array with 2 Points defining the Cube, first being the "lower" point
 	 * @param loc Location to be Monitored
-	 * @param repeat true if the trigger should be repeatable
-	 * @param tm the TriggerManager
+	 * @param repeat false, if the Trigger should only be triggered once
+	 * @param callback runnable to be called
+	 * @param tm the TriggerManager for this trigger
 	 */
 	public AreaTrigger (Location[] cube, Location loc, boolean repeat, Runnable callback, TriggerManager tm) {
 		super(repeat,callback,tm);
 		this.cube = cube;
 		this.loc = loc;
 	}
-	
+	/**
+	 * Sets the location to be observed
+	 * @param loc new location to be observed
+	 */
 	public void setLocation(Location loc) {
 		this.loc = loc;
 	}
-	
+
 	/**
 	 * Checks if a number is between two other numbers.
-	 * 
+	 *
 	 * @param border1 threshold number 1
 	 * @param val number that is checked
 	 * @param border2 threshold number 2
@@ -42,8 +48,8 @@ public class AreaTrigger extends Trigger{
 			return false;
 		}
 	}
-	
-	@Override
+
+
 	/**
 	 * Checks if Location is in Cube
 	 */
@@ -57,13 +63,10 @@ public class AreaTrigger extends Trigger{
 					callback.run();
 				}
 			}
-					
+
 		}
-			
-		
-		
 	}
 
-	
+
 
 }

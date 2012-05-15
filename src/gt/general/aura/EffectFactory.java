@@ -1,7 +1,10 @@
 package gt.general.aura;
 
+/**
+ * Interface for Effect-producing classes
+ */
 public interface EffectFactory {
-	
+
 	/**
 	 * @return a new instance of Effect, to be added to the owner of a aura
 	 */

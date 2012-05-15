@@ -3,27 +3,33 @@ package gt.lastgnome;
 import gt.general.trigger.Trigger;
 import gt.general.trigger.TriggerManager;
 
-import org.bukkit.ChatColor;
-import org.bukkit.Server;
-
+/**
+ * triggers when the gnome is caught
+ */
 public class TeamLostTrigger extends Trigger{
-
-	protected LastGnomeGame team;
+	/** the observed game*/
+	protected LastGnomeGame game;
+	/**the TiggerManager the trigger belongs to*/
 	protected TriggerManager tm;
-	
-	public TeamLostTrigger (LastGnomeGame team, Runnable callback, TriggerManager tm) {
+
+	/**
+	 * @param game the game to be observed
+	 * @param callback runnable to be called
+	 * @param tm the TriggerManager for this trigger
+	 */
+	public TeamLostTrigger (LastGnomeGame game, Runnable callback, TriggerManager tm) {
 		super(false, callback, tm);
-		this.team = team;
+		this.game = game;
 	}
-	
+
 	@Override
 	public void checkTrigger() {
-		if (team.getGnomeBearer() == null) return;
-		if (team.getGnomeBearer().getPlayer().getHealth() <= 0) {
+		if (game.getGnomeBearer() == null) return;
+		if (game.getGnomeBearer().getPlayer().getHealth() <= 0) {
 			callback.run();
 			tm.deregisterTrigger(this);
 		}
-				
+
 	}
 
 }

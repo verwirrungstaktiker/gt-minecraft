@@ -11,31 +11,34 @@ import org.getspout.spoutapi.SpoutManager;
 
 /**
  * Basic Bukkit Plugin to test stuff
- * 
+ *
  * @author Roman
  *
  */
 public class HelloWorld extends JavaPlugin {
-	
+
 	public static GnomeItem gnome;
 	private HeroManager heroManager;
-	
+
 	private static JavaPlugin plugin;
-	
+
+	/**
+	 * Initialization of our plugin
+	 */
 	public void onEnable() {
 		HelloWorld.setPlugin(this);
-		
+
 		setupGnome();
-		
+
 		heroManager = new HeroManager(this);
-		
+
 		PluginManager pm = getServer().getPluginManager();
 		pm.registerEvents(new BlockListener(), this);
 		pm.registerEvents(heroManager, this);
-		
+
 		getServer().getScheduler().scheduleSyncRepeatingTask(this, heroManager, 0, 10);
 	}
-	
+
 	/**
 	 * instantiate gnome block and precache it's texture
 	 */
@@ -51,7 +54,5 @@ public class HelloWorld extends JavaPlugin {
 	private static void setPlugin(JavaPlugin plugin) {
 		HelloWorld.plugin = plugin;
 	}
-	
-	
-	
+
 }
