@@ -9,8 +9,6 @@ import gt.general.trigger.TriggerManager;
 public class TeamLostTrigger extends Trigger{
 	/** the observed game*/
 	private LastGnomeGame game;
-	/**the TiggerManager the trigger belongs to*/
-	private TriggerManager tm;
 
 	/**
 	 * @param game the game to be observed

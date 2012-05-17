@@ -20,13 +20,15 @@ import static org.mockito.Mockito.*;
 public class TriggerTest {
 	private TriggerManager tm;
 	private Runnable runMock;
+	
+	private AreaTrigger areaTriggerNonRepeat, areaTriggerRepeat;
+	private Location loc1, loc2, loc3, loc4;
+	private Location[] cube;
+	
+	private TeamLostTrigger teamLostTrigger;
 	private LastGnomeGame gameMock;
 	private Hero gnomeBearer;
 	private Player playerMock;
-	private AreaTrigger areaTriggerNonRepeat, areaTriggerRepeat;
-	private TeamLostTrigger teamLostTrigger;
-	private Location loc1, loc2, loc3, loc4;
-	private Location[] cube;
 
 	/**
 	 * Setup
@@ -91,9 +93,8 @@ public class TriggerTest {
 	@Test
 	public void checkTeamListTriggerSuccess() {
 		teamLostTrigger = new TeamLostTrigger(gameMock, runMock, tm);
-		assertTrue(tm.getTriggers().contains(teamLostTrigger));
 		
-		assertEquals(1, tm.getTriggers().size());
+		assertTrue(tm.getTriggers().contains(teamLostTrigger));
 		//test if the mock is working
 		assertEquals(0, gameMock.getGnomeBearer().getPlayer().getHealth());
 		
