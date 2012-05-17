@@ -39,7 +39,7 @@ public class TriggerManager implements Runnable {
 	@Override
 	public void run() {
 
-		for (i=0;i<triggers.capacity();++i) {
+		for (i=0;i<triggers.size();++i) {
 			triggers.get(i).checkTrigger();
 		}
 

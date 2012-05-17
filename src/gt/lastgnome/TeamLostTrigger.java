@@ -8,9 +8,9 @@ import gt.general.trigger.TriggerManager;
  */
 public class TeamLostTrigger extends Trigger{
 	/** the observed game*/
-	protected LastGnomeGame game;
+	private LastGnomeGame game;
 	/**the TiggerManager the trigger belongs to*/
-	protected TriggerManager tm;
+	private TriggerManager tm;
 
 	/**
 	 * @param game the game to be observed
@@ -26,8 +26,8 @@ public class TeamLostTrigger extends Trigger{
 	public void checkTrigger() {
 		if (game.getGnomeBearer() == null) return;
 		if (game.getGnomeBearer().getPlayer().getHealth() <= 0) {
-			callback.run();
 			tm.deregisterTrigger(this);
+			callback.run();
 		}
 
 	}
