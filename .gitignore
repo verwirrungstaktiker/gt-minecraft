@@ -1,4 +1,4 @@
 bin
 res/CraftBukkit/server.log*
 res/CraftBukkit/world*
- res/CraftBukkit/plugins/HelloWorld.jar
+res/CraftBukkit/plugins/HelloWorld.jar
