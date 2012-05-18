@@ -3,6 +3,7 @@ package gt.general;
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.mock;
 import gt.BaseTest;
+import gt.plugin.helloworld.HelloWorld;
 import junit.framework.Assert;
 
 import org.bukkit.Bukkit;
@@ -21,11 +22,12 @@ public class GeneralTest  extends BaseTest {
 	 */
 	@Test
 	public void simpleInventoryTest() {
+		
 		//Initialization
-		PortableItem item1 = new PortableItem(null, null, null);
+		PortableItem item1 = new PortableItem(HelloWorld.getPlugin(), "", "");
 		item1.setDropable(false);
 
-		PortableItem item2 = new PortableItem(null, null, null);
+		PortableItem item2 = new PortableItem(HelloWorld.getPlugin(), "", "");
 		item2.setTool(true);
 		item2.setDropable(true);
 

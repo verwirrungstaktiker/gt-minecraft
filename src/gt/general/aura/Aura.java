@@ -116,7 +116,7 @@ public class Aura implements Runnable {
 			
 			owner.addEffect(effectFactory.getEffect());
 		} else {
-			// TODO spead auras
+			// TODO spread auras
 			throw new RuntimeException("not implemented yet");
 		}
 	}

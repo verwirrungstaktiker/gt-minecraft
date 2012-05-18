@@ -20,7 +20,7 @@ public class GnomeCarrierEffect implements Effect {
 	@Override
 	public void takeEffect(final Character character) {
 
-		// lowers the speed by 1/8
+		// lowers the speed by 1/16
 		if(character instanceof Hero) {
 			Hero hero = (Hero)character;
 			hero.addToAttribute(CharacterAttributes.SPEED,
