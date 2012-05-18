@@ -8,7 +8,9 @@ import gt.general.aura.GnomeCarrierEffect;
 import gt.general.aura.GnomeSlowEffect;
 import gt.plugin.helloworld.HelloWorld;
 
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.Plugin;
+import org.getspout.spoutapi.inventory.SpoutItemStack;
 
 /**
  * Item-class for Gnome
@@ -20,6 +22,8 @@ public class GnomeItem extends PortableItem {
 
 	/** Effect associated with Gnome --> e.g. cannot jump */
 	private final Effect gnomeEffect;
+	
+	private final ItemStack itemStack;
 	
 	/**
 	 * Creates a new Gnome
@@ -42,6 +46,9 @@ public class GnomeItem extends PortableItem {
 		20);
 		
 		gnomeEffect = new GnomeCarrierEffect();
+		itemStack = new SpoutItemStack(this);
+		
+		setTransferable(true);
 	}
 
 	/**
@@ -71,6 +78,11 @@ public class GnomeItem extends PortableItem {
 	 */
 	public Effect getGnomeEffect() {
 		return gnomeEffect;
+	}
+
+	@Override
+	public ItemStack getItemStack() {
+		return itemStack;
 	}
 
 

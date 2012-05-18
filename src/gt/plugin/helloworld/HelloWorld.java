@@ -74,15 +74,18 @@ public class HelloWorld extends JavaPlugin {
 	 */
 	@Override
 	public boolean onCommand(final CommandSender sender, final Command cmd, final  String label, final String[] args) {
-		if (sender instanceof Player && cmd.getName().equalsIgnoreCase("gnome_game")) {
+		if (sender instanceof Player && cmd.getName().equalsIgnoreCase("gg")) {
 			Player player = (Player) sender;
 			player.sendMessage("starting gnome game");
 			
 			// TODO this should be a factory once we have more than one game mode
 			Hero starter = HeroManager.getHero(player);
 			Team team = new Team(HeroManager.getAllHeros());
-			runningGames.add(new LastGnomeGame(team, starter));
+			LastGnomeGame lgg = new LastGnomeGame(team, starter);
 			
+			getServer().getPluginManager().registerEvents(lgg, this);
+			
+			runningGames.add(lgg);
 			return true;
 		}
 		return false;

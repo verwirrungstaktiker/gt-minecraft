@@ -111,21 +111,21 @@ public class Hero extends Character implements Listener{
 	public void setActiveItem(final PortableItem item) {
 		if (activeItem == null) {
 			activeItem = item;
-			getPlayer().getInventory().addItem(new SpoutItemStack(item));
+			getPlayer().getInventory().addItem(item.getItemStack());
 			return;
 		}
 
 		if (activeItem.isTool() && passivItem == null) {
 			passivItem = activeItem;
 			activeItem = item;
-			getPlayer().getInventory().addItem(new SpoutItemStack(item));
+			getPlayer().getInventory().addItem(item.getItemStack());
 			return;
 		}
 
 		if (activeItem.isDropable()) {
 			dropActiveItem();
 			activeItem = item;
-			getPlayer().getInventory().addItem(new SpoutItemStack(item));
+			getPlayer().getInventory().addItem(item.getItemStack());
 			return;
 		}
 
@@ -139,10 +139,15 @@ public class Hero extends Character implements Listener{
 	 * @param target where to put the inventory
 	 */
 	public void transferActiveItem(final Hero target) {
+		
+		
+		
 		if (activeItem.isTransferable() && target.canRecieveItem()) {
+			
 			target.setActiveItem(activeItem);
 
 			// send to minecraft core
+			getPlayer().getInventory().remove(activeItem.getItemStack());
 			activeItem = null;
 		}
 	}

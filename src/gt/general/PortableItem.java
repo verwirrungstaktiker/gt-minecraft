@@ -1,12 +1,13 @@
 package gt.general;
 
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.Plugin;
 import org.getspout.spoutapi.material.item.GenericCustomItem;
 
 /**
  * class for portable items
  */
-public class PortableItem extends GenericCustomItem{
+public abstract class PortableItem extends GenericCustomItem{
 	/**dropable items can be dropped to the floor*/
 	private boolean dropable;
 
@@ -26,8 +27,9 @@ public class PortableItem extends GenericCustomItem{
 		super(plugin, name, texture);
 
 		//TODO: block type dependend values
-		dropable = true;
+		dropable = false;
 		tool = false;
+		transferable = false;
 	}
 
 	/**
@@ -72,5 +74,7 @@ public class PortableItem extends GenericCustomItem{
 	public void setTransferable(final boolean transferable) {
 		this.transferable = transferable;
 	}
+	
+	public abstract ItemStack getItemStack();
 
 }

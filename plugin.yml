@@ -3,5 +3,5 @@ main: gt.plugin.helloworld.HelloWorld
 version: 0.1
 
 commands:
-  gnome_game:
+  gg:
     description: Starts a new Last Gnome Game.

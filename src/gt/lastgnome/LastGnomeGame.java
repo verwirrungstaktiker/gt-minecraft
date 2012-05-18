@@ -5,18 +5,15 @@ import gt.general.Hero;
 import gt.general.HeroManager;
 import gt.general.Team;
 import gt.general.aura.Effect;
-import gt.general.aura.GnomeCarrierEffect;
 import gt.general.aura.GnomeSlowEffect;
 
-import java.util.Vector;
+import java.util.Iterator;
 
+import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
-import org.getspout.commons.inventory.ItemStack;
-import org.getspout.spoutapi.inventory.SpoutItemStack;
-import org.getspout.spoutapi.player.SpoutPlayer;
 
 /**
  * Game Controller for a Last-Gnome-Scenario
@@ -47,6 +44,7 @@ public class LastGnomeGame implements Listener, Game {
 	public LastGnomeGame(final Team team, final Hero initialBearer) {
 		this(team);
 		
+		initialBearer.setActiveItem(gnome);
 		setGnomeBearer(initialBearer);
 	}
 	
@@ -58,16 +56,17 @@ public class LastGnomeGame implements Listener, Game {
 	@EventHandler
 	public void handleGnomPassing(final PlayerInteractEntityEvent event) {
 
+		System.out.println(gnomeBearer.getPlayer());
+		System.out.println(event.getPlayer());
+		
 		if (!gnomeBearer.getPlayer().equals(event.getPlayer())) {
 			return;
 		}
 
-		if (event.getRightClicked() instanceof Player) {
-
-			Hero newBearer = HeroManager.getHero((Player) event
-					.getRightClicked());
-
-			giveGnomeTo(newBearer);
+		Entity target = event.getRightClicked();
+		
+		if (target instanceof Player) {
+			giveGnomeTo(HeroManager.getHero((Player) target));
 		}
 	}
 
@@ -77,42 +76,42 @@ public class LastGnomeGame implements Listener, Game {
 	 * @param newBearer the new gnomeBearer
 	 */
 	void giveGnomeTo(final Hero newBearer) {
+		
 		// If Player does not belong to the Team, stop here.
 		if (team.isMember(newBearer)
 				&& newBearer.canRecieveItem()) {
-
-			// switch aura
-			gnome.getGnomeAura().setOwner(newBearer);
-
-			// free from slow
-			Vector<Effect> effects = gnomeBearer.getEffects();
-			for (Effect effect : effects) {
-				if (effect instanceof GnomeSlowEffect ||
-					effect instanceof GnomeCarrierEffect) {
-					effects.remove(effect);
-				}
-			}			
-			// TODO add post gnome slow
+			
+			Hero oldBearer = gnomeBearer;			
 
 			// pass the gnome
-			gnomeBearer.transferActiveItem(newBearer);
-			gnomeBearer = newBearer;
+			oldBearer.transferActiveItem(newBearer);
+			
+			
+			setGnomeBearer(newBearer);
+			
+			// remove effects
+			for (Iterator<Effect> it = oldBearer.getEffects().iterator(); it.hasNext(); ) {
+		        if (it instanceof GnomeSlowEffect) {
+		            it.remove();
+		        }
+			}			
+			
+			
+			oldBearer.removeEffect(gnome.getGnomeEffect());
 		}
 	}
 
 	/**
 	 * <b>WARNING</b> does not perform any checks
 	 *
-	 * @param hero
+	 * @param newBearer
 	 *            the new gnome bearer
 	 */
-	void setGnomeBearer(final Hero hero) {
-		gnomeBearer = hero;
-		gnomeBearer.setActiveItem(gnome);
-		gnomeBearer.addEffect(gnome.getGnomeEffect());
+	void setGnomeBearer(final Hero newBearer) {
+		newBearer.addEffect(gnome.getGnomeEffect());
+		gnome.getGnomeAura().setOwner(newBearer);
 		
-		gnome.getGnomeAura().setOwner(gnomeBearer);
-		
+		gnomeBearer = newBearer;
 	}
 
 	/**

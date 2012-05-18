@@ -4,6 +4,7 @@ import gt.general.aura.Aura;
 import gt.general.aura.Effect;
 
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
 import java.util.Vector;
 
@@ -91,6 +92,12 @@ public abstract class Character {
 		effects.add(effect);
 	}
 
+	
+	public void removeEffect(final Effect effect) {
+		computedAttributesTainted = true;
+		effects.remove(effect);
+	}
+	
 	/**
 	 * adds an attribute to the collection of attributes of this character
 	 *
