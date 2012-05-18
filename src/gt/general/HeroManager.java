@@ -1,8 +1,9 @@
 package gt.general;
 
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
-import java.util.Map.Entry;
+import java.util.Set;
 
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -77,4 +78,10 @@ public class HeroManager implements Listener, Runnable {
 	public static Hero getHero(Player player) {
 		return heros.get(player);
 	}
+	
+	
+	public static Set<Hero> getAllHeros() {
+		return new HashSet<Hero>(heros.values());
+	}
+	
 }

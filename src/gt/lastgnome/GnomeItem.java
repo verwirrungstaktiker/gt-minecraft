@@ -22,7 +22,7 @@ public class GnomeItem extends PortableItem {
 	 * @param name the name of the gnome
 	 * @param texture texture for the gnome
 	 */
-	public GnomeItem(Plugin plugin, String name, String texture) {
+	public GnomeItem(final Plugin plugin, final String name, final String texture) {
 		super(plugin, name, texture);
 
 		gnomeAura = new Aura(new EffectFactory() {
@@ -41,7 +41,7 @@ public class GnomeItem extends PortableItem {
 	 * Creates a new Gnome
 	 * @param plugin the plugin we run
 	 */
-	public GnomeItem(Plugin plugin) {
+	public GnomeItem(final Plugin plugin) {
 		this(plugin, "GnomeItem", "res/textures/gnome_16x16.png");
 	}
 

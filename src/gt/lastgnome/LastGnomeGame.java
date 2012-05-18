@@ -1,5 +1,6 @@
 package gt.lastgnome;
 
+import gt.general.Game;
 import gt.general.Hero;
 import gt.general.HeroManager;
 import gt.general.Team;
@@ -16,7 +17,7 @@ import org.bukkit.event.player.PlayerInteractEntityEvent;
 /**
  * Game Controller for a Last-Gnome-Scenario
  */
-public class LastGnomeGame implements Listener {
+public class LastGnomeGame implements Listener, Game {
 
 	private final Team team;
 	private final GnomeItem gnome;
@@ -34,6 +35,17 @@ public class LastGnomeGame implements Listener {
 		gnome = new GnomeItem();
 	}
 
+	/**
+	 * initiates a new Last Gome Game with an initial GnomeBearer
+	 * @param team the Team playing the game
+	 * @param initialBearer the hero bearing the gnome from the start
+	 */
+	public LastGnomeGame(final Team team, final Hero initialBearer) {
+		this(team);
+		
+		
+	}
+	
 	/**
 	 * handles passing of the gnome to another player, as triggered by minecraft
 	 *

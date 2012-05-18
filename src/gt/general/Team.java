@@ -1,40 +1,34 @@
 package gt.general;
 
-import org.apache.commons.lang.ArrayUtils;
+import java.util.HashSet;
+import java.util.Set;
+
 /**
  * Team which manages a group of four players
  */
 public class Team {
 	/**The empty team, assigned to all teamless heros*/
-	public static final Team NOTEAM = new Team(new Hero[]{});
+	public static final Team NOTEAM = new Team(new HashSet<Hero>());
 
 	/**Array of heros belonging to this team*/
-	private Hero[] members;
+	private Set<Hero> members;
 
 	/**
-	 * @param heroes the initial members of this team
+	 * @param members the initial members of this team
 	 */
-	public Team(final Hero[] heroes) {
-		super();
-		this.setPlayers(heroes);
+	public Team(final Set<Hero> members) {		
+		this.members = members;
 
-		for (int i=0; i<heroes.length;++i) {
-			heroes[i].setTeam(this);
+		for(Hero member : members) {
+			member.setTeam(this);
 		}
 	}
-
+	
 	/**
 	 * @return the players of this team
 	 */
-	public Hero[] getPlayers() {
+	public Set<Hero> getPlayers() {
 		return members;
-	}
-
-	/**
-	 * @param players the members of this team
-	 */
-	public void setPlayers(final Hero[] players) {
-		this.members = players;
 	}
 
 	/**
@@ -42,6 +36,6 @@ public class Team {
 	 * @return true if hero is a member of this team
 	 */
 	public boolean isMember(final Hero hero) {
-		return ArrayUtils.contains(members, hero);
+		return members.contains(hero);
 	}
 }
