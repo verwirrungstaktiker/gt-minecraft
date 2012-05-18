@@ -25,9 +25,6 @@ public class GnomeSlowEffect implements Effect {
 			Hero hero = (Hero)character;
 			hero.addToAttribute(CharacterAttributes.SPEED,
 								hero.getBaseAttribute(CharacterAttributes.SPEED) * -0.0625);
-			
-			hero.scaleAttribute(CharacterAttributes.JUMPMULTIPLIER, 0.0);
-			hero.addToAttribute(CharacterAttributes.JUMPMULTIPLIER, -1);
 		}
 
 	}

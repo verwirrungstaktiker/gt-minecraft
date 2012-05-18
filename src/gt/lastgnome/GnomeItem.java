@@ -4,6 +4,7 @@ import gt.general.PortableItem;
 import gt.general.aura.Aura;
 import gt.general.aura.Effect;
 import gt.general.aura.EffectFactory;
+import gt.general.aura.GnomeCarrierEffect;
 import gt.general.aura.GnomeSlowEffect;
 import gt.plugin.helloworld.HelloWorld;
 
@@ -13,9 +14,13 @@ import org.bukkit.plugin.Plugin;
  * Item-class for Gnome
  */
 public class GnomeItem extends PortableItem {
-	/**Aura associated with Gnome*/
+	
+	/** Aura associated with Gnome --> adds the slow stacks */
 	private final Aura gnomeAura;
 
+	/** Effect associated with Gnome --> e.g. cannot jump */
+	private final Effect gnomeEffect;
+	
 	/**
 	 * Creates a new Gnome
 	 * @param plugin  the plugin we run
@@ -35,6 +40,8 @@ public class GnomeItem extends PortableItem {
 		Aura.OWNER_ONLY,
 		Aura.INFINITE_DURATION,
 		20);
+		
+		gnomeEffect = new GnomeCarrierEffect();
 	}
 
 	/**
@@ -53,10 +60,17 @@ public class GnomeItem extends PortableItem {
 	}
 
 	/**
-	 * @return the gnomes aura
+	 * @return the Gnome aura
 	 */
 	public Aura getGnomeAura() {
 		return gnomeAura;
+	}
+
+	/**
+	 * @return the Gnome effect
+	 */
+	public Effect getGnomeEffect() {
+		return gnomeEffect;
 	}
 
 
