@@ -1,21 +1,18 @@
 package gt.lastgnome;
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.mock;
 import gt.BaseTest;
 import gt.general.Hero;
-import gt.general.PortableItem;
 import gt.general.Team;
+
+import java.util.HashSet;
+import java.util.Set;
 
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
-import org.bukkit.inventory.ItemStack;
-import org.bukkit.scheduler.BukkitScheduler;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.powermock.api.mockito.PowerMockito;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
 
@@ -38,8 +35,10 @@ public class LastGnomeTest extends BaseTest {
 
 		hero1 = new Hero(mockPlayer1);
 		hero2 = new Hero(mockPlayer2);
-
-		Hero[] heroes = {hero1,hero2};
+		
+		Set<Hero> heroes = new HashSet<Hero>();
+		heroes.add(hero1);
+		heroes.add(hero2);
 
 		team = new Team(heroes);
 		game = new LastGnomeGame(team);
