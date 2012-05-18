@@ -19,7 +19,7 @@ public class GnomeCarrierEffect implements Effect {
 
 	@Override
 	public void takeEffect(final Character character) {
-
+		
 		if(character instanceof Hero) {
 			Hero hero = (Hero)character;
 			
