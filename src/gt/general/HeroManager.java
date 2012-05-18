@@ -62,9 +62,7 @@ public class HeroManager implements Listener, Runnable {
 
 	@Override
 	public void run() {
-
-		System.out.println("TEST");
-		
+	
 		for(Hero hero : heros.values()) {
 			hero.simulateEffects();
 		}

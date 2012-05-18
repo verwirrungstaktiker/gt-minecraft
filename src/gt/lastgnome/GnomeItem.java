@@ -4,7 +4,7 @@ import gt.general.PortableItem;
 import gt.general.aura.Aura;
 import gt.general.aura.Effect;
 import gt.general.aura.EffectFactory;
-import gt.general.aura.GnomeCarrierEffect;
+import gt.general.aura.GnomeSlowEffect;
 import gt.plugin.helloworld.HelloWorld;
 
 import org.bukkit.plugin.Plugin;
@@ -29,7 +29,7 @@ public class GnomeItem extends PortableItem {
 			@Override
 			public Effect getEffect() {
 				System.out.println("one more stack of gnome slow");
-				return new GnomeCarrierEffect();
+				return new GnomeSlowEffect();
 			}
 		},
 		Aura.OWNER_ONLY,

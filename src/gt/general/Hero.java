@@ -7,6 +7,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.player.PlayerDropItemEvent;
 import org.bukkit.event.player.PlayerPickupItemEvent;
+import org.getspout.spoutapi.SpoutManager;
 import org.getspout.spoutapi.inventory.SpoutItemStack;
 import org.getspout.spoutapi.player.SpoutPlayer;
 
@@ -46,6 +47,10 @@ public class Hero extends Character implements Listener{
 		return player;
 	}
 
+	public SpoutPlayer getSpoutPlayer() {
+		return SpoutManager.getPlayer(getPlayer());
+	}
+	
 	@Override
 	public Location getLocation() {
 		return player.getLocation();
@@ -162,10 +167,8 @@ public class Hero extends Character implements Listener{
 
 	@Override
 	public void applyEffects() {
-		
-		
-		// TODO GET SPOUT PLAYER
-		SpoutPlayer sPlayer = (SpoutPlayer) getPlayer();
+
+		SpoutPlayer sPlayer = getSpoutPlayer();
 		
 		sPlayer.sendMessage("speed" + getCurrentSpeed());
 		

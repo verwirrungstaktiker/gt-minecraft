@@ -6,7 +6,7 @@ import gt.general.Hero;
 /**
  * Effect for slowing down gnome bearer, and draining his stamina
  */
-public class GnomeCarrierEffect implements Effect {
+public class GnomeSlowEffect implements Effect {
 
 	@Override
 	public void performTick() {
@@ -20,10 +20,12 @@ public class GnomeCarrierEffect implements Effect {
 	@Override
 	public void takeEffect(final Character character) {
 
+		// lowers the speed by 1/8
 		if(character instanceof Hero) {
 			Hero hero = (Hero)character;
+			hero.addToAttribute(CharacterAttributes.SPEED,
+								hero.getBaseAttribute(CharacterAttributes.SPEED) * -0.0625);
 			
-			// cannot jump anymore
 			hero.scaleAttribute(CharacterAttributes.JUMPMULTIPLIER, 0.0);
 			hero.addToAttribute(CharacterAttributes.JUMPMULTIPLIER, -1);
 		}

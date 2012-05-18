@@ -5,7 +5,7 @@ import gt.general.Hero;
 import gt.general.HeroManager;
 import gt.general.Team;
 import gt.general.aura.Effect;
-import gt.general.aura.GnomeCarrierEffect;
+import gt.general.aura.GnomeSlowEffect;
 
 import java.util.Vector;
 
@@ -86,7 +86,7 @@ public class LastGnomeGame implements Listener, Game {
 			// free from slow
 			Vector<Effect> effects = gnomeBearer.getEffects();
 			for (Effect effect : effects) {
-				if (effect instanceof GnomeCarrierEffect) {
+				if (effect instanceof GnomeSlowEffect) {
 					effects.remove(effect);
 				}
 			}
