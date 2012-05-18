@@ -6,8 +6,9 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.player.PlayerDropItemEvent;
-import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.event.player.PlayerPickupItemEvent;
+import org.getspout.spoutapi.inventory.SpoutItemStack;
+import org.getspout.spoutapi.player.SpoutPlayer;
 
 /**
  * Our backend and wrapper for a Minecraft-Player
@@ -105,18 +106,21 @@ public class Hero extends Character implements Listener{
 	public void setActiveItem(final PortableItem item) {
 		if (activeItem == null) {
 			activeItem = item;
+			getPlayer().getInventory().addItem(new SpoutItemStack(item));
 			return;
 		}
 
 		if (activeItem.isTool() && passivItem == null) {
 			passivItem = activeItem;
 			activeItem = item;
+			getPlayer().getInventory().addItem(new SpoutItemStack(item));
 			return;
 		}
 
 		if (activeItem.isDropable()) {
 			dropActiveItem();
 			activeItem = item;
+			getPlayer().getInventory().addItem(new SpoutItemStack(item));
 			return;
 		}
 
@@ -156,17 +160,17 @@ public class Hero extends Character implements Listener{
 		return activeItem.isDropable();
 	}
 
-
-	/**
-	 * Sets player's velocity according to hero's speed
-	 * @param event a PlayerMoveEvent
-	 */
-	@EventHandler
-	public void handleSpeed(PlayerMoveEvent event) {
-		/*
-		if (event.getPlayer().equals(this.player)) {
-			player.setVelocity(player.getVelocity().multiply(Math.max(getCurrentSpeed(), 0.0)));
-		}*/
+	@Override
+	public void applyEffects() {
+		
+		
+		// TODO GET SPOUT PLAYER
+		SpoutPlayer sPlayer = (SpoutPlayer) getPlayer();
+		
+		sPlayer.sendMessage("speed" + getCurrentSpeed());
+		
+		sPlayer.setWalkingMultiplier(getCurrentSpeed());
+		sPlayer.setJumpingMultiplier(getAttribute(CharacterAttributes.JUMPMULTIPLIER));
 	}
 
 	/**
@@ -212,5 +216,7 @@ public class Hero extends Character implements Listener{
 			//ToDo: Enforce our inventory state in Minecraft if necessary
 		}*/
 	}
+
+
 
 }

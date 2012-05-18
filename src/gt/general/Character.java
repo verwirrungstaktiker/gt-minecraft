@@ -12,7 +12,7 @@ import org.bukkit.Location;
 /**
  * our representation of Minecraft's LivingEntity
  */
-public class Character {
+public abstract class Character {
 
 	/**Auras originating from the player*/
 	private final Vector<Aura> auras = new Vector<Aura>();
@@ -35,13 +35,14 @@ public class Character {
 
 		setAttribute(CharacterAttributes.HEALTH, 1.0);
 		setAttribute(CharacterAttributes.SPEED, 100.0);
+		setAttribute(CharacterAttributes.JUMPMULTIPLIER, 1.0);
 	}
 
 	/**
 	 * @return character's current speed
 	 */
 	public double getCurrentSpeed() {
-		return computedAttributes.get(CharacterAttributes.SPEED);
+		return Math.max(computedAttributes.get(CharacterAttributes.SPEED), 0);
 	}
 
 	/**
@@ -143,7 +144,7 @@ public class Character {
 	/**
 	 * performs the attribute updates on a tick
 	 */
-	public void applyEffects() {
+	public void simulateEffects() {
 
 		for (Effect effect : effects) {
 			if (effect.remainingTicks() == 0) {
@@ -156,6 +157,7 @@ public class Character {
 
 		if (computedAttributesTainted) {
 			calculateAttributes();
+			applyEffects();
 			computedAttributesTainted = false;
 		}
 	}
@@ -171,6 +173,21 @@ public class Character {
 		for (Effect effect : effects) {
 			effect.takeEffect(this);
 		}
+		
+		
+	}
+	
+	public abstract void applyEffects();
+
+	/**
+	 * returns the computed value of the attribute
+	 * 
+	 * @param attr the attribute to be retrieved
+	 * @return the value of the attribute
+	 */
+	public double getAttribute(final CharacterAttributes attr) {
+		return computedAttributes.get(attr);
 	}
 
+	
 }

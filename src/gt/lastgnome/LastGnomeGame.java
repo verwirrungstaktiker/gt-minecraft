@@ -13,6 +13,9 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
+import org.getspout.commons.inventory.ItemStack;
+import org.getspout.spoutapi.inventory.SpoutItemStack;
+import org.getspout.spoutapi.player.SpoutPlayer;
 
 /**
  * Game Controller for a Last-Gnome-Scenario
@@ -43,7 +46,7 @@ public class LastGnomeGame implements Listener, Game {
 	public LastGnomeGame(final Team team, final Hero initialBearer) {
 		this(team);
 		
-		
+		setGnomeBearer(initialBearer);
 	}
 	
 	/**
@@ -88,6 +91,10 @@ public class LastGnomeGame implements Listener, Game {
 				}
 			}
 
+			SpoutPlayer sPlayer = (SpoutPlayer) gnomeBearer.getPlayer();
+			sPlayer.setWalkingMultiplier(1);
+			sPlayer.setJumpingMultiplier(1);
+			
 			// TODO add post gnome slow
 
 			// pass the gnome
@@ -103,8 +110,10 @@ public class LastGnomeGame implements Listener, Game {
 	 *            the new gnome bearer
 	 */
 	void setGnomeBearer(final Hero hero) {
-		gnomeBearer.setActiveItem(gnome);
 		gnomeBearer = hero;
+		gnomeBearer.setActiveItem(gnome);
+		
+		gnome.getGnomeAura().setOwner(gnomeBearer);
 	}
 
 	/**

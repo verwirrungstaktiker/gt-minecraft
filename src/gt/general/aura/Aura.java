@@ -1,6 +1,7 @@
 package gt.general.aura;
 
 import gt.general.Character;
+import gt.general.Hero;
 import gt.plugin.helloworld.HelloWorld;
 
 import org.bukkit.Bukkit;
@@ -108,6 +109,11 @@ public class Aura implements Runnable {
 	private void spreadEffect() {
 
 		if (distance == OWNER_ONLY) {
+			
+			if(owner instanceof Hero) {
+				((Hero)owner).getPlayer().sendMessage("adding aura stack");
+			}
+			
 			owner.addEffect(effectFactory.getEffect());
 		} else {
 			// TODO spead auras
