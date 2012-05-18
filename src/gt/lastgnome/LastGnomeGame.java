@@ -5,6 +5,7 @@ import gt.general.Hero;
 import gt.general.HeroManager;
 import gt.general.Team;
 import gt.general.aura.Effect;
+import gt.general.aura.GnomeCarrierEffect;
 import gt.general.aura.GnomeSlowEffect;
 
 import java.util.Vector;
@@ -86,15 +87,11 @@ public class LastGnomeGame implements Listener, Game {
 			// free from slow
 			Vector<Effect> effects = gnomeBearer.getEffects();
 			for (Effect effect : effects) {
-				if (effect instanceof GnomeSlowEffect) {
+				if (effect instanceof GnomeSlowEffect ||
+					effect instanceof GnomeCarrierEffect) {
 					effects.remove(effect);
 				}
-			}
-
-			SpoutPlayer sPlayer = (SpoutPlayer) gnomeBearer.getPlayer();
-			sPlayer.setWalkingMultiplier(1);
-			sPlayer.setJumpingMultiplier(1);
-			
+			}			
 			// TODO add post gnome slow
 
 			// pass the gnome
@@ -112,8 +109,10 @@ public class LastGnomeGame implements Listener, Game {
 	void setGnomeBearer(final Hero hero) {
 		gnomeBearer = hero;
 		gnomeBearer.setActiveItem(gnome);
+		gnomeBearer.addEffect(gnome.getGnomeEffect());
 		
 		gnome.getGnomeAura().setOwner(gnomeBearer);
+		
 	}
 
 	/**
