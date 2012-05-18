@@ -29,6 +29,8 @@ public class GnomeCarrierEffectTest {
 		assertEquals(Hero.DEFAULT_HERO_SPEED, hero.getDefaultSpeed(), delta);
 		assertTrue(hero.getEffects().isEmpty());
 		assertTrue(hero.getAuras().isEmpty());
+		
+		hero.applyEffects();
 	}
 	
 	@Test
@@ -36,9 +38,12 @@ public class GnomeCarrierEffectTest {
 		hero.addEffect(effect);
 		assertTrue(hero.getEffects().contains(effect));
 		
-		hero.applyEffects();
-		
-		assertEquals(hero.getDefaultSpeed()-(hero.getDefaultSpeed()*0.0625), hero.getCurrentSpeed(), delta);
+		double currentSpeed = hero.getCurrentSpeed();
+		while (hero.getCurrentSpeed() >= 0) {
+			hero.applyEffects();
+			currentSpeed -= currentSpeed*GnomeCarrierEffect.SLOWRATE;
+			assertEquals(currentSpeed, hero.getCurrentSpeed(), delta);
+		}
 	}
 
 }

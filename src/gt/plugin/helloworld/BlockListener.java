@@ -19,10 +19,8 @@ public class BlockListener implements Listener {
 	public void stopGoldBlockBreak(BlockBreakEvent event) {
 		if (event.getBlock().getType() == Material.GOLD_BLOCK) {
 			event.setCancelled(true);
-			event.getPlayer().sendMessage(ChatColor.GREEN + "Obtained a Gnome!");
-			
-			ItemStack items = new SpoutItemStack(HelloWorld.gnome, 1);
-			event.getPlayer().getInventory().addItem(items);
+			event.getPlayer().sendMessage(ChatColor.GREEN + "Cleaned up your inventory!");
+			event.getPlayer().getInventory().clear();
 		}
 	}
 
