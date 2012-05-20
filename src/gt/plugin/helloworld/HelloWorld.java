@@ -39,7 +39,7 @@ public class HelloWorld extends JavaPlugin {
 	public void onEnable() {
 		HelloWorld.setPlugin(this);
 
-		setupGnome();
+		//setupGnome();
 
 		heroManager = new HeroManager(this);
 		runningGames = new HashSet<Game>();
@@ -54,6 +54,7 @@ public class HelloWorld extends JavaPlugin {
 	/**
 	 * instantiate gnome block and precache it's texture
 	 */
+	@SuppressWarnings("unused")
 	private void setupGnome() {
 		gnome = new GnomeItem(this);
 		SpoutManager.getFileManager().addToPreLoginCache(plugin, "res/textures/gnome_16x16.png");
