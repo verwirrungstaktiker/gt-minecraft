@@ -85,18 +85,15 @@ public class LastGnomeGame implements Listener, Game {
 
 			// pass the gnome
 			oldBearer.transferActiveItem(newBearer);
-			
-			
 			setGnomeBearer(newBearer);
 			
-			// remove effects
-			for (Iterator<Effect> it = oldBearer.getEffects().iterator(); it.hasNext(); ) {
-		        if (it instanceof GnomeSlowEffect) {
+			// remove effects - slow and misc
+			Iterator<Effect> it = oldBearer.getEffects().iterator();
+			while(it.hasNext()) {
+		        if (it.next() instanceof GnomeSlowEffect) {
 		            it.remove();
 		        }
-			}			
-			
-			
+			}
 			oldBearer.removeEffect(gnome.getGnomeEffect());
 		}
 	}
