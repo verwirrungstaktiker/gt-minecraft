@@ -1,6 +1,7 @@
 package gt.lastgnome;
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 import gt.BaseTest;
 import gt.general.Hero;
 import gt.general.Team;
@@ -9,7 +10,9 @@ import java.util.HashSet;
 import java.util.Set;
 
 import org.bukkit.Bukkit;
+import org.bukkit.World;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.PlayerInventory;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -30,13 +33,25 @@ public class LastGnomeTest extends BaseTest {
 	 */
 	@Before
 	public void setup() {
+		super.setup();
 		setupForItems();
+		
+		
 		
 		mockPlayer1 = mock(Player.class);
 		mockPlayer2 = mock(Player.class);
 
 		hero1 = new Hero(mockPlayer1);
 		hero2 = new Hero(mockPlayer2);
+		
+		PlayerInventory mockInventory1 = mock(PlayerInventory.class);
+		when(mockPlayer1.getInventory()).thenReturn(mockInventory1);
+		PlayerInventory mockInventory2 = mock(PlayerInventory.class);
+		when(mockPlayer2.getInventory()).thenReturn(mockInventory2);
+		
+		World world = mock(World.class);
+		when(mockPlayer1.getWorld()).thenReturn(world);
+		when(mockPlayer2.getWorld()).thenReturn(world);
 		
 		Set<Hero> heroes = new HashSet<Hero>();
 		heroes.add(hero1);
@@ -61,34 +76,37 @@ public class LastGnomeTest extends BaseTest {
 
 	@Test
 	public void complexGnomeSwitchingTest(){
-		/* TODO check if this is still valid
-		//Now we give hero2 a Tool-Item and see if it works then
-		PortableItem item1 = new PortableItem(mock(ItemStack.class));
+		GnomeItem item1 = new GnomeItem();
 		item1.setTool(true);
-		assertTrue(hero2.getInventory().setActiveItem(item1));
-		assertTrue(hero2.takeGnomeFrom(hero1));
-		assertFalse(hero1.isGnomeBearer());
-		assertTrue(hero2.isGnomeBearer());
-		assertEquals(hero2,team.getGnomeBearer());
-
-		//Now we give hero1 a dropable Item
-		PortableItem item2 = new PortableItem(mock(ItemStack.class));
+		item1.setName("Item1");
+		
+		GnomeItem item2 = new GnomeItem();
 		item2.setDropable(true);
-		assertTrue(hero1.getInventory().setActiveItem(item2));
-		assertTrue(hero2.giveGnomeTo(hero1));
-		assertTrue(hero1.isGnomeBearer());
-		assertFalse(hero2.isGnomeBearer());
-		assertEquals(hero1,team.getGnomeBearer());
-
+		item2.setName("Item2");
+		
+		GnomeItem item3 = new GnomeItem();
+		item3.setName("Item3");
+		
+		game.setGnomeBearer(hero1);
+		assertEquals(hero1,game.getGnomeBearer());
+		
+		//Now we give hero2 a Tool-Item and see if it works then
+		hero2.setActiveItem(item1);
+		game.giveGnomeTo(hero2);
+		assertEquals(hero2,game.getGnomeBearer());
+		assertEquals(item1,hero2.getPassivItem());
+		
+		//Now we give hero1 a dropable Item
+		hero1.setActiveItem(item2);
+		game.giveGnomeTo(hero1);
+		assertEquals(hero1,game.getGnomeBearer());
+		assertEquals(null,hero1.getPassivItem());
+		
 		//Now we give hero2 an undropbable Item
-		PortableItem item3 = new PortableItem(mock(ItemStack.class));
-		item3.setTool(false);
-		item3.setDropable(false);
-		assertTrue(hero2.getInventory().setActiveItem(item3));
-		assertFalse(hero2.takeGnomeFrom(hero1));
-		assertTrue(hero1.isGnomeBearer());
-		assertFalse(hero2.isGnomeBearer());
-		assertEquals(hero1,team.getGnomeBearer());
-		*/
+		hero2.setActiveItem(item3);
+		game.giveGnomeTo(hero2);
+		assertEquals(hero1,game.getGnomeBearer());
+		assertEquals(item3,hero2.getActiveItem());
+
 	}
 }
