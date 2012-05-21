@@ -34,16 +34,16 @@ public class HeroManager implements Listener, Runnable {
 			.getScheduler()
 			.scheduleSyncRepeatingTask(plugin, this, 0, 1);
 	}
-	
+
 	/**
 	 * creates a hero for every player on login
 	 * @param ple a PlayerLoginEvent
 	 */
 	@EventHandler
 	public void playerLogin(final PlayerLoginEvent ple) {
-		
+
 		Player player = ple.getPlayer();
-		
+
 		Hero hero = new Hero(player);
 		registerListener(hero);
 		hero.getPlayer().getInventory().setMaxStackSize(1);
@@ -55,14 +55,14 @@ public class HeroManager implements Listener, Runnable {
 	 */
 	private void registerListener(final Listener listener) {
 		plugin.getServer()
-			  .getPluginManager()
+				  .getPluginManager()
 			  .registerEvents(listener, plugin);
 	}
 
 	@Override
 	public void run() {
-	
-		for(Hero hero : HEROS.values()) {
+
+		for (Hero hero : HEROS.values()) {
 			hero.simulateEffects();
 		}
 
@@ -78,12 +78,12 @@ public class HeroManager implements Listener, Runnable {
 		return HEROS.get(player);
 	}
 	
-	
+
 	/**
 	 * @return all currently online heros
 	 */
 	public static Set<Hero> getAllHeros() {
 		return new HashSet<Hero>(HEROS.values());
 	}
-	
+
 }

@@ -66,7 +66,7 @@ public class HelloWorld extends JavaPlugin {
 		return plugin;
 	}
 
-	private static void setPlugin(JavaPlugin plugin) {
+	public static void setPlugin(JavaPlugin plugin) {
 		HelloWorld.plugin = plugin;
 	}
 	

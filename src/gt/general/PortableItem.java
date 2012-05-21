@@ -74,7 +74,7 @@ public abstract class PortableItem extends GenericCustomItem{
 	public void setTransferable(final boolean transferable) {
 		this.transferable = transferable;
 	}
-	
+
 	public abstract ItemStack getItemStack();
 
 }

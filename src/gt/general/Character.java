@@ -91,12 +91,12 @@ public abstract class Character {
 		effects.add(effect);
 	}
 
-	
+
 	public void removeEffect(final Effect effect) {
 		computedAttributesTainted = true;
 		effects.remove(effect);
 	}
-	
+
 	/**
 	 * adds an attribute to the collection of attributes of this character
 	 *
@@ -131,8 +131,8 @@ public abstract class Character {
 	 */
 	public void addToAttribute(final CharacterAttributes attribute,
 			final double value) {
-		computedAttributes.put(attribute, computedAttributes.get(attribute)
-				+ value);
+		computedAttributes.put(attribute,
+				computedAttributes.get(attribute) + value);
 	}
 
 	/**
@@ -143,8 +143,8 @@ public abstract class Character {
 	 */
 	public void scaleAttribute(final CharacterAttributes attribute,
 			final double value) {
-		computedAttributes.put(attribute, computedAttributes.get(attribute)
-				* value);
+		computedAttributes.put(attribute,
+				computedAttributes.get(attribute) * value);
 	}
 
 	/**
@@ -173,21 +173,21 @@ public abstract class Character {
 	 */
 	private void calculateAttributes() {
 		for (CharacterAttributes attribute : baseAttributes.keySet()) {
-			computedAttributes.put(attribute, baseAttributes.get(attribute));
+			computedAttributes.put(attribute,
+					baseAttributes.get(attribute));
 		}
 
 		for (Effect effect : effects) {
 			effect.takeEffect(this);
 		}
-		
-		
+
 	}
-	
+
 	public abstract void applyEffects();
 
 	/**
 	 * returns the computed value of the attribute
-	 * 
+	 *
 	 * @param attr the attribute to be retrieved
 	 * @return the value of the attribute
 	 */
@@ -195,5 +195,5 @@ public abstract class Character {
 		return computedAttributes.get(attr);
 	}
 
-	
+
 }

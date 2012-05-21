@@ -30,6 +30,8 @@ public class LastGnomeTest extends BaseTest {
 	 */
 	@Before
 	public void setup() {
+		setupForItems();
+		
 		mockPlayer1 = mock(Player.class);
 		mockPlayer2 = mock(Player.class);
 

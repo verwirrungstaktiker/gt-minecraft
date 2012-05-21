@@ -1,12 +1,15 @@
 package gt.general;
 
 import org.bukkit.Location;
+import org.bukkit.World;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.player.PlayerDropItemEvent;
 import org.bukkit.event.player.PlayerPickupItemEvent;
+import org.bukkit.inventory.Inventory;
+import org.bukkit.inventory.ItemStack;
 import org.getspout.spoutapi.SpoutManager;
 import org.getspout.spoutapi.inventory.SpoutItemStack;
 import org.getspout.spoutapi.player.SpoutPlayer;
@@ -50,7 +53,7 @@ public class Hero extends Character implements Listener{
 	public SpoutPlayer getSpoutPlayer() {
 		return SpoutManager.getPlayer(getPlayer());
 	}
-	
+
 	@Override
 	public Location getLocation() {
 		return player.getLocation();
@@ -139,15 +142,13 @@ public class Hero extends Character implements Listener{
 	 * @param target where to put the inventory
 	 */
 	public void transferActiveItem(final Hero target) {
-		
-		
-		
 		if (activeItem.isTransferable() && target.canRecieveItem()) {
-			
+
 			target.setActiveItem(activeItem);
 
 			// send to minecraft core
-			getPlayer().getInventory().remove(activeItem.getItemStack());
+			Inventory inventory = getPlayer().getInventory();
+			inventory.remove(activeItem.getItemStack());
 			activeItem = null;
 		}
 	}
@@ -158,6 +159,12 @@ public class Hero extends Character implements Listener{
 	 */
 	public void dropActiveItem() {
 		if (activeItemDropable()) {
+			//creates a new Item, with ItemStack where player stands
+			World world = getPlayer().getWorld();
+			ItemStack item = activeItem.getItemStack();
+			world.dropItem(getLocation(), item);
+			//remove Item from MC-Player's inventory
+			getPlayer().setItemInHand(null);
 			activeItem = null;
 		}
 		// TODO debug in else branch
@@ -174,9 +181,9 @@ public class Hero extends Character implements Listener{
 	public void applyEffects() {
 
 		SpoutPlayer sPlayer = getSpoutPlayer();
-		
+
 		sPlayer.sendMessage("speed" + getCurrentSpeed());
-		
+
 		sPlayer.setWalkingMultiplier(getCurrentSpeed());
 		sPlayer.setJumpingMultiplier(getAttribute(CharacterAttributes.JUMPMULTIPLIER));
 	}
@@ -220,8 +227,6 @@ public class Hero extends Character implements Listener{
 			if (!inventory.getActiveItem().isPlacable()){
 				event.setCancelled(true);
 			} else inventory.setActiveItem(null);
-
-			//ToDo: Enforce our inventory state in Minecraft if necessary
 		}*/
 	}
 
