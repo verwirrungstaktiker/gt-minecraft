@@ -5,6 +5,7 @@ import gt.general.Hero;
 import gt.general.HeroManager;
 import gt.general.Team;
 import gt.lastgnome.GnomeItem;
+import gt.lastgnome.GnomeSocket;
 import gt.lastgnome.LastGnomeGame;
 
 import java.util.HashSet;
@@ -27,6 +28,7 @@ import org.getspout.spoutapi.SpoutManager;
 public class HelloWorld extends JavaPlugin {
 
 	public static GnomeItem gnome;
+	public static GnomeSocket gnomeSocket;
 	private HeroManager heroManager;
 
 	private static JavaPlugin plugin;
@@ -39,7 +41,7 @@ public class HelloWorld extends JavaPlugin {
 	public void onEnable() {
 		HelloWorld.setPlugin(this);
 
-		//setupGnome();
+		setupGnome();
 
 		heroManager = new HeroManager(this);
 		runningGames = new HashSet<Game>();
@@ -57,10 +59,9 @@ public class HelloWorld extends JavaPlugin {
 	@SuppressWarnings("unused")
 	private void setupGnome() {
 		gnome = new GnomeItem(this);
+		gnomeSocket = new GnomeSocket(this);
 		SpoutManager.getFileManager().addToPreLoginCache(plugin, "res/textures/gnome_16x16.png");
 	}
-	
-	
 
 	public static JavaPlugin getPlugin() {
 		return plugin;
