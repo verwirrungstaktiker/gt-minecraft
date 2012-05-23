@@ -67,6 +67,7 @@ public class LastGnomeTest extends BaseTest {
 	@Test
 	public void simpleGnomeSwitchingTest() {
 		//Set (and get) GnomeBearer of the Team TODO gnomeBearer should be set automatically later
+		hero1.setActiveItem(game.getGnome());
 		game.setGnomeBearer(hero1);
 		assertEquals(hero1,game.getGnomeBearer());
 
@@ -87,6 +88,7 @@ public class LastGnomeTest extends BaseTest {
 		GnomeItem item3 = new GnomeItem();
 		item3.setName("Item3");
 		
+		hero1.setActiveItem(game.getGnome());
 		game.setGnomeBearer(hero1);
 		assertEquals(hero1,game.getGnomeBearer());
 		

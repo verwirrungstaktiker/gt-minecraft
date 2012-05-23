@@ -1,10 +1,11 @@
 package gt.general.aura;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.fail;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 import org.junit.Before;
 import org.junit.Test;
-import static org.mockito.Mockito.*;
 
 public class AuraTest {
 	private Aura aura;
@@ -21,6 +22,7 @@ public class AuraTest {
 
 	@Test
 	public void test() {
+		// TODO implement this?
 		fail("Not yet implemented");
 	}
 

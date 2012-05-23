@@ -108,11 +108,6 @@ public class LastGnomeGame implements Listener, Game {
 		newBearer.addEffect(gnome.getGnomeEffect());
 		gnome.getGnomeAura().setOwner(newBearer);
 		
-		//failsafe and for tests: if there is no gnome bearer,
-		// give the new one the gnome
-		if (gnomeBearer == null) {
-			newBearer.setActiveItem(gnome);
-		}
 		gnomeBearer = newBearer;
 	}
 
