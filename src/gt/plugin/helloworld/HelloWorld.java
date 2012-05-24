@@ -60,7 +60,7 @@ public class HelloWorld extends JavaPlugin {
 	private void setupGnome() {
 		gnome = new GnomeItem(this);
 		gnomeSocket = new GnomeSocket(this);
-		SpoutManager.getFileManager().addToPreLoginCache(plugin, "res/textures/gnome_16x16.png");
+		SpoutManager.getFileManager().addToPreLoginCache(plugin, "http://blogs.msdn.com/blogfiles/dawate/WindowsLiveWriter/WritingMy1stZuneHDGameInertia_DDC7/block_2.png");
 	}
 
 	public static JavaPlugin getPlugin() {
