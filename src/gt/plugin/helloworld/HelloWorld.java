@@ -5,7 +5,7 @@ import gt.general.Hero;
 import gt.general.HeroManager;
 import gt.general.Team;
 import gt.lastgnome.GnomeItem;
-import gt.lastgnome.GnomeSocket;
+import gt.lastgnome.GnomeSocketStart;
 import gt.lastgnome.LastGnomeGame;
 
 import java.util.HashSet;
@@ -14,9 +14,11 @@ import java.util.Set;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.getspout.spoutapi.SpoutManager;
+import org.getspout.spoutapi.inventory.SpoutItemStack;
 
 
 /**
@@ -28,7 +30,7 @@ import org.getspout.spoutapi.SpoutManager;
 public class HelloWorld extends JavaPlugin {
 
 	public static GnomeItem gnome;
-	public static GnomeSocket gnomeSocket;
+	public static GnomeSocketStart gnomeSocketStart;
 	private HeroManager heroManager;
 
 	private static JavaPlugin plugin;
@@ -59,7 +61,7 @@ public class HelloWorld extends JavaPlugin {
 	@SuppressWarnings("unused")
 	private void setupGnome() {
 		gnome = new GnomeItem(this);
-		gnomeSocket = new GnomeSocket(this);
+		gnomeSocketStart = new GnomeSocketStart(this);
 		SpoutManager.getFileManager().addToPreLoginCache(plugin, "http://dl.dropbox.com/u/29386658/gt/textures/gnome_socket_16x16.png");
 	}
 
@@ -88,6 +90,11 @@ public class HelloWorld extends JavaPlugin {
 			getServer().getPluginManager().registerEvents(lgg, this);
 			
 			runningGames.add(lgg);
+			return true;
+		}
+		else if (cmd.getName().equalsIgnoreCase("socket")) {
+			ItemStack gnomeSockets = new SpoutItemStack(HelloWorld.gnomeSocketStart, 2);
+			getServer().getPlayer(sender.getName()).getInventory().addItem(gnomeSockets);
 			return true;
 		}
 		return false;

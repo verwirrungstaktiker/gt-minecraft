@@ -5,3 +5,5 @@ version: 0.1
 commands:
   gg:
     description: Starts a new Last Gnome Game.
+  socket:
+    description: Hands over 2 Gnome Sockets.
