@@ -5,3 +5,7 @@ version: 0.1
 commands:
   gg:
     description: Starts a new Last Gnome Game.
+  end:
+    description: Ends the Last Gnome Game.
+  gc:
+    description: Runs the GC.

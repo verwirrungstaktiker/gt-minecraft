@@ -134,6 +134,11 @@ public class Hero extends Character implements Listener{
 
 		throw new RuntimeException();
 	}
+	
+	public void removeActiveItem() {
+		getPlayer().getInventory().remove(activeItem.getItemStack());
+		activeItem = null;
+	}
 
 
 	/**

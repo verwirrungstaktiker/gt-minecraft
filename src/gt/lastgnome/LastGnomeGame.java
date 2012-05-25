@@ -47,6 +47,7 @@ public class LastGnomeGame implements Listener, Game {
 		initialBearer.setActiveItem(gnome);
 		setGnomeBearer(initialBearer);
 	}
+
 	
 	/**
 	 * handles passing of the gnome to another player, as triggered by minecraft
@@ -87,15 +88,22 @@ public class LastGnomeGame implements Listener, Game {
 			oldBearer.transferActiveItem(newBearer);
 			setGnomeBearer(newBearer);
 			
-			// remove effects - slow and misc
-			Iterator<Effect> it = oldBearer.getEffects().iterator();
-			while(it.hasNext()) {
-		        if (it.next() instanceof GnomeSlowEffect) {
-		            it.remove();
-		        }
-			}
-			oldBearer.removeEffect(gnome.getGnomeEffect());
+			removeGnomeEffects(oldBearer);
 		}
+	}
+
+	/**
+	 * @param hero the hero to be cleaned up
+	 */
+	private void removeGnomeEffects(final Hero hero) {
+		// remove effects - slow and misc
+		Iterator<Effect> it = hero.getEffects().iterator();
+		while(it.hasNext()) {
+		    if (it.next() instanceof GnomeSlowEffect) {
+		        it.remove();
+		    }
+		}
+		hero.removeEffect(gnome.getGnomeEffect());
 	}
 
 	/**
@@ -123,5 +131,18 @@ public class LastGnomeGame implements Listener, Game {
 	 */
 	public Hero getGnomeBearer() {
 		return gnomeBearer;
+	}
+
+	@Override
+	public void dispose() {
+		gnome.getGnomeAura().setOwner(null);
+		removeGnomeEffects(gnomeBearer);
+		gnomeBearer.removeActiveItem();
+		
+	}
+	
+	@Override
+	public void finalize() {
+		System.out.println("finalizing a gnome game");
 	}
 }
