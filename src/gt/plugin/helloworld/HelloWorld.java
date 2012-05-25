@@ -91,6 +91,19 @@ public class HelloWorld extends JavaPlugin {
 			
 			runningGames.add(lgg);
 			return true;
+		} else if (cmd.getName().equalsIgnoreCase("end")) {
+			
+			System.out.println("ending games");
+			
+			for(Game g : runningGames) {
+				g.dispose();
+			}
+			
+			runningGames.clear();
+			
+		} else if (cmd.getName().equalsIgnoreCase("gc")) {
+			System.gc();
+			return true;
 		}
 		else if (cmd.getName().equalsIgnoreCase("socket")) {
 			ItemStack gnomeSockets = new SpoutItemStack(HelloWorld.gnomeSocketStart, 2);
