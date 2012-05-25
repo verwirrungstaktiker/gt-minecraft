@@ -11,3 +11,5 @@ commands:
     description: Runs the GC.
   socket:
     description: Hands over 2 Gnome Sockets.
+  test:
+    description: XXX test

@@ -1,12 +1,16 @@
 package gt.lastgnome;
 
+import gt.general.Hero;
 import gt.general.PortableItem;
 import gt.general.aura.Aura;
 import gt.general.aura.Effect;
 import gt.general.aura.EffectFactory;
 import gt.general.aura.GnomeCarrierEffect;
 import gt.general.aura.GnomeSlowEffect;
+import gt.lastgnome.gui.SpeedBar;
 import gt.plugin.helloworld.HelloWorld;
+
+import java.util.Iterator;
 
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.Plugin;
@@ -24,6 +28,8 @@ public class GnomeItem extends PortableItem {
 	private final Effect gnomeEffect;
 	
 	private final ItemStack itemStack;
+	
+	private final SpeedBar speedBar;
 	
 	/**
 	 * Creates a new Gnome
@@ -48,6 +54,8 @@ public class GnomeItem extends PortableItem {
 		gnomeEffect = new GnomeCarrierEffect();
 		itemStack = new SpoutItemStack(this);
 		
+		speedBar = new SpeedBar();
+
 		setTransferable(true);
 	}
 
@@ -85,5 +93,31 @@ public class GnomeItem extends PortableItem {
 		return itemStack;
 	}
 
+	@Override
+	public void onAttachHero(final Hero hero) {
+		System.out.println("attach gnome");
+		
+		hero.addEffect(getGnomeEffect());
+		getGnomeAura().setOwner(hero);	
+		
+		speedBar.attach(hero);
+	}
+
+	@Override
+	public void onDetachHero(final Hero hero) {
+		getGnomeAura().setOwner(null);
+		
+		// remove effects - slow and misc
+		Iterator<Effect> it = hero.getEffects().iterator();
+		while(it.hasNext()) {
+		    if (it.next() instanceof GnomeSlowEffect) {
+		        it.remove();
+		    }
+		}
+		
+		hero.removeEffect(getGnomeEffect());
+		
+		speedBar.detach();
+	}
 
 }

@@ -4,10 +4,6 @@ import gt.general.Game;
 import gt.general.Hero;
 import gt.general.HeroManager;
 import gt.general.Team;
-import gt.general.aura.Effect;
-import gt.general.aura.GnomeSlowEffect;
-
-import java.util.Iterator;
 
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
@@ -56,18 +52,13 @@ public class LastGnomeGame implements Listener, Game {
 	 */
 	@EventHandler
 	public void handleGnomPassing(final PlayerInteractEntityEvent event) {
-
-		System.out.println(gnomeBearer.getPlayer());
-		System.out.println(event.getPlayer());
 		
-		if (!gnomeBearer.getPlayer().equals(event.getPlayer())) {
-			return;
-		}
-
-		Entity target = event.getRightClicked();
-		
-		if (target instanceof Player) {
-			giveGnomeTo(HeroManager.getHero((Player) target));
+		if (gnomeBearer.getPlayer().equals(event.getPlayer())) {	
+			Entity target = event.getRightClicked();
+			
+			if (target instanceof Player) {
+				giveGnomeTo(HeroManager.getHero((Player) target));
+			}
 		}
 	}
 
@@ -81,29 +72,11 @@ public class LastGnomeGame implements Listener, Game {
 		// If Player does not belong to the Team, stop here.
 		if (team.isMember(newBearer)
 				&& newBearer.canRecieveItem()) {
-			
-			Hero oldBearer = gnomeBearer;			
 
 			// pass the gnome
-			oldBearer.transferActiveItem(newBearer);
+			gnomeBearer.transferActiveItem(newBearer);
 			setGnomeBearer(newBearer);
-			
-			removeGnomeEffects(oldBearer);
 		}
-	}
-
-	/**
-	 * @param hero the hero to be cleaned up
-	 */
-	private void removeGnomeEffects(final Hero hero) {
-		// remove effects - slow and misc
-		Iterator<Effect> it = hero.getEffects().iterator();
-		while(it.hasNext()) {
-		    if (it.next() instanceof GnomeSlowEffect) {
-		        it.remove();
-		    }
-		}
-		hero.removeEffect(gnome.getGnomeEffect());
 	}
 
 	/**
@@ -113,9 +86,6 @@ public class LastGnomeGame implements Listener, Game {
 	 *            the new gnome bearer
 	 */
 	void setGnomeBearer(final Hero newBearer) {
-		newBearer.addEffect(gnome.getGnomeEffect());
-		gnome.getGnomeAura().setOwner(newBearer);
-		
 		gnomeBearer = newBearer;
 	}
 
@@ -135,10 +105,7 @@ public class LastGnomeGame implements Listener, Game {
 
 	@Override
 	public void dispose() {
-		gnome.getGnomeAura().setOwner(null);
-		removeGnomeEffects(gnomeBearer);
 		gnomeBearer.removeActiveItem();
-		
 	}
 	
 	@Override

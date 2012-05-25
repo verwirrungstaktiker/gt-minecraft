@@ -18,7 +18,10 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.getspout.spoutapi.SpoutManager;
+import org.getspout.spoutapi.gui.GenericLabel;
+import org.getspout.spoutapi.gui.WidgetAnchor;
 import org.getspout.spoutapi.inventory.SpoutItemStack;
+import org.getspout.spoutapi.player.SpoutPlayer;
 
 
 /**
@@ -104,8 +107,10 @@ public class HelloWorld extends JavaPlugin {
 		} else if (cmd.getName().equalsIgnoreCase("gc")) {
 			System.gc();
 			return true;
-		}
-		else if (cmd.getName().equalsIgnoreCase("socket")) {
+		} else if (sender instanceof Player && cmd.getName().equalsIgnoreCase("test")) {
+			System.out.println("TEST");
+			
+		} else if (cmd.getName().equalsIgnoreCase("socket")) {
 			ItemStack gnomeSockets = new SpoutItemStack(HelloWorld.gnomeSocketStart, 2);
 			getServer().getPlayer(sender.getName()).getInventory().addItem(gnomeSockets);
 			return true;
