@@ -9,3 +9,5 @@ commands:
     description: Ends the Last Gnome Game.
   gc:
     description: Runs the GC.
+  socket:
+    description: Hands over 2 Gnome Sockets.

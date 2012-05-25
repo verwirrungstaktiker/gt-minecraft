@@ -9,14 +9,14 @@ import org.getspout.spoutapi.material.block.GenericCubeCustomBlock;
 /**
  * Item-class for GnomeSocket
  */
-public class GnomeSocket extends GenericCubeCustomBlock {
+public class GnomeSocketStart extends GenericCubeCustomBlock {
 	/**
 	 * Creates a new GnomeSocket
 	 * @param plugin  the plugin we run
 	 * @param name the name of the gnomeSocket
 	 * @param texture texture for the gnomeSocket
 	 */
-	public GnomeSocket(final Plugin plugin, final String name, final String texture) {
+	public GnomeSocketStart(final Plugin plugin, final String name, final String texture) {
 		// 91 is blockID of overwritten block
 		// 16 is texture size
 		// last parameter is "rotatetility"
@@ -27,7 +27,7 @@ public class GnomeSocket extends GenericCubeCustomBlock {
 	 * Creates a new GnomeSocket
 	 * @param plugin the plugin we run
 	 */
-	public GnomeSocket(final Plugin plugin) {
+	public GnomeSocketStart(final Plugin plugin) {
 		this(plugin, "GnomeSocket", "http://dl.dropbox.com/u/29386658/gt/textures/gnome_socket_16x16.png");
 		
 	}
@@ -35,7 +35,7 @@ public class GnomeSocket extends GenericCubeCustomBlock {
 	/**
 	 * Creates a new GnomeSocket
 	 */
-	public GnomeSocket() {
+	public GnomeSocketStart() {
 		this(HelloWorld.getPlugin());
 	}
 
