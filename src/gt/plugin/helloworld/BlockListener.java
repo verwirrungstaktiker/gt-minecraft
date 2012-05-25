@@ -48,7 +48,7 @@ public class BlockListener implements Listener {
 		if (event.getBlock().getType() == Material.DIAMOND_BLOCK) {
 			event.setCancelled(true);
 			event.getPlayer().sendMessage(ChatColor.GREEN + "Gave a gnomeSocket!");
-			ItemStack gnomeSockets = new SpoutItemStack(HelloWorld.gnomeSocket);
+			ItemStack gnomeSockets = new SpoutItemStack(HelloWorld.gnomeSocketStart);
 			
 			event.getPlayer().getInventory().addItem(gnomeSockets);
 		}
