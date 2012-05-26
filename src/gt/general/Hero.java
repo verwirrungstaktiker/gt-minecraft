@@ -147,7 +147,11 @@ public class Hero extends Character implements Listener{
 	public PortableItem removeActiveItem() {
 		PortableItem toRemove = activeItem;
 		
-		getPlayer().getInventory().remove(activeItem.getItemStack());
+		//getPlayer().getInventory().remove(activeItem.getItemStack());
+		getSpoutPlayer()
+			.getInventory()
+			.remove(activeItem.getItemStack());
+		
 		activeItem.onDetachHero(this);
 		activeItem = null;
 		

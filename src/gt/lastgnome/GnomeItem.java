@@ -105,6 +105,7 @@ public class GnomeItem extends PortableItem {
 
 	@Override
 	public void onDetachHero(final Hero hero) {
+		System.out.println("detach gnome");
 		getGnomeAura().setOwner(null);
 		
 		// remove effects - slow and misc

@@ -4,12 +4,14 @@ import gt.general.Game;
 import gt.general.Hero;
 import gt.general.HeroManager;
 import gt.general.Team;
+import gt.plugin.helloworld.HelloWorld;
 
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
+import org.bukkit.plugin.java.JavaPlugin;
 
 /**
  * Game Controller for a Last-Gnome-Scenario
@@ -57,7 +59,8 @@ public class LastGnomeGame implements Listener, Game {
 			Entity target = event.getRightClicked();
 			
 			if (target instanceof Player) {
-				giveGnomeTo(HeroManager.getHero((Player) target));
+				Hero hero = HeroManager.getHero((Player) target);
+				giveGnomeTo(hero);
 			}
 		}
 	}
@@ -67,12 +70,14 @@ public class LastGnomeGame implements Listener, Game {
 	 *
 	 * @param newBearer the new gnomeBearer
 	 */
-	void giveGnomeTo(final Hero newBearer) {
+	synchronized void giveGnomeTo(final Hero newBearer) {
 		
 		// If Player does not belong to the Team, stop here.
 		if (team.isMember(newBearer)
 				&& newBearer.canRecieveItem()) {
 
+			System.out.println("gnome to: " + newBearer.getPlayer().getName());
+			
 			// pass the gnome
 			gnomeBearer.transferActiveItem(newBearer);
 			setGnomeBearer(newBearer);
@@ -106,6 +111,7 @@ public class LastGnomeGame implements Listener, Game {
 	@Override
 	public void dispose() {
 		gnomeBearer.removeActiveItem();
+		
 	}
 	
 	@Override
