@@ -33,10 +33,7 @@ public class LastGnomeTest extends BaseTest {
 	 */
 	@Before
 	public void setup() {
-		super.setup();
-		setupForItems();
-		
-		
+		super.setup();		
 		
 		mockPlayer1 = mock(Player.class);
 		mockPlayer2 = mock(Player.class);
@@ -58,7 +55,6 @@ public class LastGnomeTest extends BaseTest {
 		heroes.add(hero2);
 
 		team = new Team(heroes);
-		game = new LastGnomeGame(team);
 	}
 
 	/**
@@ -67,8 +63,8 @@ public class LastGnomeTest extends BaseTest {
 	@Test
 	public void simpleGnomeSwitchingTest() {
 		//Set (and get) GnomeBearer of the Team TODO gnomeBearer should be set automatically later
-		hero1.setActiveItem(game.getGnome());
-		game.setGnomeBearer(hero1);
+		
+		game = new LastGnomeGame(team, hero1);
 		assertEquals(hero1,game.getGnomeBearer());
 
 		game.giveGnomeTo(hero2);

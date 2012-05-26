@@ -6,10 +6,12 @@ import static org.mockito.Mockito.*;
 
 import gt.BaseTest;
 import gt.lastgnome.GnomeItem;
+import gt.plugin.helloworld.HelloWorld;
 import junit.framework.Assert;
 
 import org.bukkit.World;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
 import org.getspout.spoutapi.SpoutManager;
 
@@ -23,21 +25,31 @@ import org.powermock.modules.junit4.PowerMockRunner;
 
 public class GeneralTest  extends BaseTest {
 
-	@Before
-	public void setup() {
-		setupForItems();
+	private PortableItem getDummyPortableItem() {
+		return new PortableItem(HelloWorld.getPlugin(), "", "") {
+			
+			@Override
+			public void onDetachHero(Hero hero) {}
+			
+			@Override
+			public void onAttachHero(Hero hero) {}
+			
+			@Override
+			public ItemStack getItemStack() {return null;}
+		};
 	}
-
+	
 	/**
 	 * Tests Inventory Mechanics of hero
 	 */
 	@Test
 	public void simpleInventoryTest() {
-
-		//Initialization
-		GnomeItem item1 = new GnomeItem();
 		
-		GnomeItem item2 = new GnomeItem();
+		//Initialization		
+		PortableItem item1 = getDummyPortableItem();
+		item1.setDropable(false);
+		
+		PortableItem item2 = getDummyPortableItem();
 		item2.setDropable(true);
 		item2.setTool(true);
 		
@@ -63,15 +75,15 @@ public class GeneralTest  extends BaseTest {
 	 */
 	@Test
 	public void complexInventoryTest() {
-		GnomeItem item1 = new GnomeItem();
+		PortableItem item1 = getDummyPortableItem();
 		item1.setTool(true);
 		item1.setName("Item1");
 		
-		GnomeItem item2 = new GnomeItem();
+		PortableItem item2 = getDummyPortableItem();
 		item2.setDropable(true);
 		item2.setName("Item2");
 		
-		GnomeItem item3 = new GnomeItem();
+		PortableItem item3 = getDummyPortableItem();
 		item3.setName("Item3");
 		
 		Player player = mock(Player.class);
