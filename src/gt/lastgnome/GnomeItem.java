@@ -64,7 +64,7 @@ public class GnomeItem extends PortableItem {
 	 * @param plugin the plugin we run
 	 */
 	public GnomeItem(final Plugin plugin) {
-		this(plugin, "GnomeItem", "http://dl.dropbox.com/u/29386658/gt/textures/gnome_16x16.png");
+		this(plugin, "GnomeItem", "http://dl.dropbox.com/u/29386658/gt/textures/gnome2_16x16.png");
 	}
 
 	/**
