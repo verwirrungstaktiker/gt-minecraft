@@ -1,20 +1,18 @@
 package gt.general;
 
-import gt.general.gui.GuiElement;
+import gt.general.gui.HeroGui;
 
 import java.util.HashSet;
 import java.util.Set;
 
 import org.bukkit.Location;
 import org.bukkit.World;
-import org.bukkit.entity.Item;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.player.PlayerDropItemEvent;
 import org.bukkit.event.player.PlayerPickupItemEvent;
-import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.getspout.spoutapi.SpoutManager;
 import org.getspout.spoutapi.player.SpoutPlayer;
@@ -36,6 +34,16 @@ public class Hero extends Character implements Listener{
 	/**Passiv-Slot for tools*/
 	private PortableItem passivItem;
 
+	private final HeroGui gui;
+	
+	public enum Notification {
+		INVENTORY,
+		ATTRIBUTES,
+		UNSPECIFIED
+	}
+	
+	private final Set<HeroObserver> observers;
+	
 	/**
 	 * @param player the player to be wrapped
 	 */
@@ -47,6 +55,8 @@ public class Hero extends Character implements Listener{
 		team = Team.NOTEAM;
 		this.player = player;
 		
+		observers = new HashSet<HeroObserver>();
+		gui = new HeroGui(this);
 	}
 
 	/**
@@ -119,30 +129,33 @@ public class Hero extends Character implements Listener{
 	 */
 	public void setActiveItem(final PortableItem item) {
 		if (activeItem == null) {
-			activeItem = item;
-			getPlayer().getInventory().addItem(item.getItemStack());
-			activeItem.onAttachHero(this);
+			innerSetActiveItem(item);
 			return;
 		}
 
 		if (activeItem.isTool() && passivItem == null) {
 			passivItem = activeItem;
-			activeItem = item;
-			getPlayer().getInventory().addItem(item.getItemStack());
-			activeItem.onAttachHero(this);
+			innerSetActiveItem(item);
 			return;
 		}
 
 		if (activeItem.isDropable()) {
 			dropActiveItem();
-			activeItem = item;
-			getPlayer().getInventory().addItem(item.getItemStack());
-			activeItem.onAttachHero(this);
+			innerSetActiveItem(item);
 			return;
 		}
 
 		throw new RuntimeException();
 	}
+
+	private void innerSetActiveItem(final PortableItem item) {
+		activeItem = item;
+		getPlayer().getInventory().addItem(item.getItemStack());
+		
+		activeItem.onAttachHero(this);
+		notifyChanged(Notification.INVENTORY);
+	}
+	
 	
 	public PortableItem removeActiveItem() {
 		PortableItem toRemove = activeItem;
@@ -152,8 +165,10 @@ public class Hero extends Character implements Listener{
 			.getInventory()
 			.remove(activeItem.getItemStack());
 		
-		activeItem.onDetachHero(this);
 		activeItem = null;
+		
+		toRemove.onDetachHero(this);
+		notifyChanged(Notification.INVENTORY);
 		
 		return toRemove;
 	}
@@ -198,6 +213,13 @@ public class Hero extends Character implements Listener{
 		return activeItem.isDropable();
 	}
 
+	
+	@Override
+	protected void calculateAttributes() {
+		super.calculateAttributes();
+		notifyChanged(Notification.ATTRIBUTES);
+	}
+	
 	@Override
 	public void applyEffects() {
 
@@ -249,5 +271,26 @@ public class Hero extends Character implements Listener{
 				event.setCancelled(true);
 			} else inventory.setActiveItem(null);
 		}*/
+	}
+
+	/**
+	 * @return the gui associated with this Hero
+	 */
+	public HeroGui getGui() {
+		return gui;
+	}
+	
+	public void addObserver(HeroObserver heroObserver) {
+		observers.add(heroObserver);
+	}
+	
+	public void removeObserver(HeroObserver heroObserver) {
+		observers.remove(heroObserver);
+	}
+	
+	public void notifyChanged(Notification notification) {
+		for(HeroObserver observer : observers) {
+			observer.update(this, notification);
+		}
 	}
 }

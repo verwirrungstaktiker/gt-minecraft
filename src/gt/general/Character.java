@@ -171,7 +171,7 @@ public abstract class Character {
 	/**
 	 * calculates the attribute values on base of the current effects
 	 */
-	private void calculateAttributes() {
+	protected void calculateAttributes() {
 		for (CharacterAttributes attribute : baseAttributes.keySet()) {
 			computedAttributes.put(attribute,
 					baseAttributes.get(attribute));

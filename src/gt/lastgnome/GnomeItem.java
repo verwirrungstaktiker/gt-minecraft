@@ -7,7 +7,6 @@ import gt.general.aura.Effect;
 import gt.general.aura.EffectFactory;
 import gt.general.aura.GnomeCarrierEffect;
 import gt.general.aura.GnomeSlowEffect;
-import gt.lastgnome.gui.SpeedBar;
 import gt.plugin.helloworld.HelloWorld;
 
 import java.util.Iterator;
@@ -19,7 +18,7 @@ import org.getspout.spoutapi.inventory.SpoutItemStack;
 /**
  * Item-class for Gnome
  */
-public class GnomeItem extends PortableItem {
+public final class GnomeItem extends PortableItem {
 	
 	/** Aura associated with Gnome --> adds the slow stacks */
 	private final Aura gnomeAura;
@@ -28,8 +27,6 @@ public class GnomeItem extends PortableItem {
 	private final Effect gnomeEffect;
 	
 	private final ItemStack itemStack;
-	
-	private final SpeedBar speedBar;
 	
 	/**
 	 * Creates a new Gnome
@@ -53,8 +50,6 @@ public class GnomeItem extends PortableItem {
 		
 		gnomeEffect = new GnomeCarrierEffect();
 		itemStack = new SpoutItemStack(this);
-		
-		speedBar = new SpeedBar();
 
 		setTransferable(true);
 	}
@@ -98,9 +93,7 @@ public class GnomeItem extends PortableItem {
 		System.out.println("attach gnome");
 		
 		hero.addEffect(getGnomeEffect());
-		getGnomeAura().setOwner(hero);	
-		
-		speedBar.attach(hero);
+		getGnomeAura().setOwner(hero);
 	}
 
 	@Override
@@ -117,8 +110,6 @@ public class GnomeItem extends PortableItem {
 		}
 		
 		hero.removeEffect(getGnomeEffect());
-		
-		speedBar.detach();
 	}
 
 }
