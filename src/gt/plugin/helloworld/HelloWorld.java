@@ -5,6 +5,7 @@ import gt.general.Hero;
 import gt.general.HeroManager;
 import gt.general.Team;
 import gt.lastgnome.GnomeItem;
+import gt.lastgnome.GnomeSocketEnd;
 import gt.lastgnome.GnomeSocketStart;
 import gt.lastgnome.LastGnomeGame;
 
@@ -34,10 +35,10 @@ public class HelloWorld extends JavaPlugin {
 
 	public static GnomeItem gnome;
 	public static GnomeSocketStart gnomeSocketStart;
+	public static GnomeSocketEnd gnomeSocketEnd;
+	
 	private HeroManager heroManager;
-
 	private static JavaPlugin plugin;
-
 	private Set<Game> runningGames;
 	
 	/**
@@ -65,7 +66,10 @@ public class HelloWorld extends JavaPlugin {
 	private void setupGnome() {
 		gnome = new GnomeItem(this);
 		gnomeSocketStart = new GnomeSocketStart(this);
-		SpoutManager.getFileManager().addToPreLoginCache(plugin, "http://dl.dropbox.com/u/29386658/gt/textures/gnome_socket_16x16.png");
+		gnomeSocketEnd = new GnomeSocketEnd(this);
+		SpoutManager.getFileManager().addToPreLoginCache(plugin, "http://dl.dropbox.com/u/29386658/gt/textures/gnome_socket_start_16x16.png");
+		SpoutManager.getFileManager().addToPreLoginCache(plugin, "http://dl.dropbox.com/u/29386658/gt/textures/gnome_socket_end_16x16.png");
+		SpoutManager.getFileManager().addToPreLoginCache(plugin, "http://dl.dropbox.com/u/29386658/gt/textures/gnome2_16x16.png");
 	}
 
 	public static JavaPlugin getPlugin() {
@@ -109,10 +113,13 @@ public class HelloWorld extends JavaPlugin {
 			return true;
 		} else if (sender instanceof Player && cmd.getName().equalsIgnoreCase("test")) {
 			System.out.println("TEST");
+		}
+		else if (cmd.getName().equalsIgnoreCase("socket")) {
+			ItemStack items = new SpoutItemStack(HelloWorld.gnomeSocketStart, 1);
+			getServer().getPlayer(sender.getName()).getInventory().addItem(items);
 			
-		} else if (cmd.getName().equalsIgnoreCase("socket")) {
-			ItemStack gnomeSockets = new SpoutItemStack(HelloWorld.gnomeSocketStart, 2);
-			getServer().getPlayer(sender.getName()).getInventory().addItem(gnomeSockets);
+			items = new SpoutItemStack(HelloWorld.gnomeSocketEnd, 1);
+			getServer().getPlayer(sender.getName()).getInventory().addItem(items);
 			return true;
 		}
 		return false;

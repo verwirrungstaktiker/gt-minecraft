@@ -12,6 +12,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.bukkit.event.player.PlayerToggleSprintEvent;
 
 /**
  * Game Controller for a Last-Gnome-Scenario
