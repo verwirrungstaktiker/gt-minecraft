@@ -22,6 +22,7 @@ import org.bukkit.scheduler.BukkitScheduler;
 import org.getspout.spoutapi.Spout;
 import org.getspout.spoutapi.SpoutManager;
 import org.getspout.spoutapi.SpoutServer;
+import org.getspout.spoutapi.gui.InGameHUD;
 import org.getspout.spoutapi.inventory.MaterialManager;
 import org.getspout.spoutapi.material.item.GenericCustomItem;
 import org.getspout.spoutapi.player.FileManager;
@@ -36,7 +37,7 @@ import org.powermock.modules.junit4.PowerMockRunner;
  * Basic Tests
  */
 @RunWith(PowerMockRunner.class)
-@PrepareForTest({SpoutManager.class, Spout.class, HelloWorld.class})
+@PrepareForTest({Bukkit.class, SpoutManager.class, Spout.class, HelloWorld.class})
 public class BaseTest {
 	
 	/**
@@ -47,12 +48,7 @@ public class BaseTest {
 		BukkitScheduler scheduler = mock(BukkitScheduler.class);
 		PowerMockito.mockStatic(Bukkit.class);
 		PowerMockito.when(Bukkit.getScheduler()).thenReturn(scheduler);
-	}
-	
-	/**
-	 * Initialization method for Tests which use Items
-	 */
-	protected void setupForItems() {
+
 		MaterialManager mm = mock(MaterialManager.class);
 		when(mm.registerCustomItemName(any(Plugin.class), anyString())).thenReturn(1);
 		
@@ -61,8 +57,8 @@ public class BaseTest {
 
 		PowerMockito.mockStatic(SpoutManager.class);
 		when(SpoutManager.getMaterialManager()).thenReturn(mm);
-		when(SpoutManager.getFileManager()).thenReturn(fm);
-
+		when(SpoutManager.getFileManager()).thenReturn(fm);		
+		
 		//pseudo-initialize our plugin 
 		PowerMockito.mockStatic(HelloWorld.class);
 		HelloWorld hw = mock(HelloWorld.class);

@@ -4,6 +4,7 @@ import gt.general.Game;
 import gt.general.Hero;
 import gt.general.HeroManager;
 import gt.general.Team;
+import gt.plugin.helloworld.HelloWorld;
 import gt.general.aura.Effect;
 import gt.general.aura.GnomeSlowEffect;
 
@@ -15,18 +16,22 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
+import org.bukkit.plugin.java.JavaPlugin;
+import org.bukkit.event.player.PlayerToggleSprintEvent;
 
 /**
  * Game Controller for a Last-Gnome-Scenario
  */
 public class LastGnomeGame extends Game implements Listener {
 
+	private final Team team;
 	private final GnomeItem gnome;
 
 	/** so that e.g. Zombies know who the Gnome-Bearer is */
 	private Hero gnomeBearer;
 	
 	/**
+
 	 * initiates a new Last Gome Game with an initial GnomeBearer
 	 * @param team the Team playing the game
 	 * @param initialBearer the hero bearing the gnome from the start
@@ -37,6 +42,7 @@ public class LastGnomeGame extends Game implements Listener {
 		initialBearer.setActiveItem(gnome);
 		setGnomeBearer(initialBearer);
 	}
+
 	
 	/**
 	 * handles passing of the gnome to another player, as triggered by minecraft
@@ -45,18 +51,14 @@ public class LastGnomeGame extends Game implements Listener {
 	 */
 	@EventHandler
 	public void handleGnomPassing(final PlayerInteractEntityEvent event) {
-
-		System.out.println(gnomeBearer.getPlayer());
-		System.out.println(event.getPlayer());
 		
-		if (!gnomeBearer.getPlayer().equals(event.getPlayer())) {
-			return;
-		}
-
-		Entity target = event.getRightClicked();
-		
-		if (target instanceof Player) {
-			giveGnomeTo(HeroManager.getHero((Player) target));
+		if (gnomeBearer.getPlayer().equals(event.getPlayer())) {	
+			Entity target = event.getRightClicked();
+			
+			if (target instanceof Player) {
+				Hero hero = HeroManager.getHero((Player) target);
+				giveGnomeTo(hero);
+			}
 		}
 	}
 
@@ -65,26 +67,17 @@ public class LastGnomeGame extends Game implements Listener {
 	 *
 	 * @param newBearer the new gnomeBearer
 	 */
-	void giveGnomeTo(final Hero newBearer) {
+	synchronized void giveGnomeTo(final Hero newBearer) {
 		
 		// If Player does not belong to the Team, stop here.
 		if (team.isMember(newBearer)
 				&& newBearer.canRecieveItem()) {
-			
-			Hero oldBearer = gnomeBearer;			
 
-			// pass the gnome
-			oldBearer.transferActiveItem(newBearer);
-			setGnomeBearer(newBearer);
+			System.out.println("gnome to: " + newBearer.getPlayer().getName());
 			
-			// remove effects - slow and misc
-			Iterator<Effect> it = oldBearer.getEffects().iterator();
-			while(it.hasNext()) {
-		        if (it.next() instanceof GnomeSlowEffect) {
-		            it.remove();
-		        }
-			}
-			oldBearer.removeEffect(gnome.getGnomeEffect());
+			// pass the gnome
+			gnomeBearer.transferActiveItem(newBearer);
+			setGnomeBearer(newBearer);
 		}
 	}
 
@@ -95,9 +88,6 @@ public class LastGnomeGame extends Game implements Listener {
 	 *            the new gnome bearer
 	 */
 	void setGnomeBearer(final Hero newBearer) {
-		newBearer.addEffect(gnome.getGnomeEffect());
-		gnome.getGnomeAura().setOwner(newBearer);
-		
 		gnomeBearer = newBearer;
 	}
 
@@ -125,6 +115,17 @@ public class LastGnomeGame extends Game implements Listener {
 		
 		
 	}
+	
+	@Override
+	public void dispose() {
+		gnomeBearer.removeActiveItem();
+		
+	}
+	
+	@Override
+	public void finalize() {
+		System.out.println("finalizing a gnome game");
+	
 	
 	public void restoreHero(Hero hero) {
 		super.restoreHero(hero,getGnomeBearer());

@@ -39,10 +39,7 @@ public class LastGnomeTest extends BaseTest {
 	 */
 	@Before
 	public void setup() {
-		super.setup();
-		setupForItems();
-		
-		
+		super.setup();		
 		
 		mockPlayer1 = mock(Player.class);
 		mockPlayer2 = mock(Player.class);
@@ -66,7 +63,7 @@ public class LastGnomeTest extends BaseTest {
 		PowerMockito.mockStatic(CopyUtil.class);
 		
 		team = new Team(heroes);
-		game = new LastGnomeGame(team, world, hero1);
+
 	}
 
 	/**
@@ -74,6 +71,8 @@ public class LastGnomeTest extends BaseTest {
 	 */
 	@Test
 	public void simpleGnomeSwitchingTest() {
+		
+		game = new LastGnomeGame(team, hero1);
 		assertEquals(hero1,game.getGnomeBearer());
 
 		game.giveGnomeTo(hero2);

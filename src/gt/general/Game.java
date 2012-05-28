@@ -87,4 +87,10 @@ public abstract class Game {
 	abstract public void onEnd();
 	
 
+	/**
+	 * ensures there are no internal dependencies to prevent the game from garbage collection
+	 * e.g. removes related tasks from the scheduler
+	 */
+	void dispose();
+	
 }

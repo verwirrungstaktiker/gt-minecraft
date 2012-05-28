@@ -5,7 +5,8 @@ import gt.general.Hero;
 import gt.general.HeroManager;
 import gt.general.Team;
 import gt.lastgnome.GnomeItem;
-import gt.lastgnome.GnomeSocket;
+import gt.lastgnome.GnomeSocketEnd;
+import gt.lastgnome.GnomeSocketStart;
 import gt.lastgnome.LastGnomeGame;
 
 import java.util.HashSet;
@@ -15,9 +16,14 @@ import org.bukkit.World;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.getspout.spoutapi.SpoutManager;
+import org.getspout.spoutapi.gui.GenericLabel;
+import org.getspout.spoutapi.gui.WidgetAnchor;
+import org.getspout.spoutapi.inventory.SpoutItemStack;
+import org.getspout.spoutapi.player.SpoutPlayer;
 
 
 /**
@@ -29,11 +35,11 @@ import org.getspout.spoutapi.SpoutManager;
 public class HelloWorld extends JavaPlugin {
 
 	public static GnomeItem gnome;
-	public static GnomeSocket gnomeSocket;
+	public static GnomeSocketStart gnomeSocketStart;
+	public static GnomeSocketEnd gnomeSocketEnd;
+	
 	private HeroManager heroManager;
-
 	private static JavaPlugin plugin;
-
 	private Set<Game> runningGames;
 	
 	/**
@@ -60,8 +66,11 @@ public class HelloWorld extends JavaPlugin {
 	@SuppressWarnings("unused")
 	private void setupGnome() {
 		gnome = new GnomeItem(this);
-		gnomeSocket = new GnomeSocket(this);
-		SpoutManager.getFileManager().addToPreLoginCache(plugin, "res/textures/gnome_16x16.png");
+		gnomeSocketStart = new GnomeSocketStart(this);
+		gnomeSocketEnd = new GnomeSocketEnd(this);
+		SpoutManager.getFileManager().addToPreLoginCache(plugin, "http://dl.dropbox.com/u/29386658/gt/textures/gnome_socket_start_16x16.png");
+		SpoutManager.getFileManager().addToPreLoginCache(plugin, "http://dl.dropbox.com/u/29386658/gt/textures/gnome_socket_end_16x16.png");
+		SpoutManager.getFileManager().addToPreLoginCache(plugin, "http://dl.dropbox.com/u/29386658/gt/textures/gnome2_16x16.png");
 	}
 
 	public static JavaPlugin getPlugin() {
@@ -90,6 +99,29 @@ public class HelloWorld extends JavaPlugin {
 			getServer().getPluginManager().registerEvents(lgg, this);
 			
 			runningGames.add(lgg);
+			return true;
+		} else if (cmd.getName().equalsIgnoreCase("end")) {
+			
+			System.out.println("ending games");
+			
+			for(Game g : runningGames) {
+				g.dispose();
+			}
+			
+			runningGames.clear();
+			
+		} else if (cmd.getName().equalsIgnoreCase("gc")) {
+			System.gc();
+			return true;
+		} else if (sender instanceof Player && cmd.getName().equalsIgnoreCase("test")) {
+			System.out.println("TEST");
+		}
+		else if (cmd.getName().equalsIgnoreCase("socket")) {
+			ItemStack items = new SpoutItemStack(HelloWorld.gnomeSocketStart, 1);
+			getServer().getPlayer(sender.getName()).getInventory().addItem(items);
+			
+			items = new SpoutItemStack(HelloWorld.gnomeSocketEnd, 1);
+			getServer().getPlayer(sender.getName()).getInventory().addItem(items);
 			return true;
 		}
 		return false;

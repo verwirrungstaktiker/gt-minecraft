@@ -77,4 +77,9 @@ public abstract class PortableItem extends GenericCustomItem{
 
 	public abstract ItemStack getItemStack();
 
+	public abstract void onAttachHero(Hero hero);
+	
+	
+	public abstract void onDetachHero(Hero hero);
+	
 }

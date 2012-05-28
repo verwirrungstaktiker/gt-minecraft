@@ -1,7 +1,13 @@
 package gt.general;
 
+import gt.general.gui.GuiElement;
+
+import java.util.HashSet;
+import java.util.Set;
+
 import org.bukkit.Location;
 import org.bukkit.World;
+import org.bukkit.entity.Item;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -11,7 +17,6 @@ import org.bukkit.event.player.PlayerPickupItemEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.getspout.spoutapi.SpoutManager;
-import org.getspout.spoutapi.inventory.SpoutItemStack;
 import org.getspout.spoutapi.player.SpoutPlayer;
 
 /**
@@ -41,6 +46,7 @@ public class Hero extends Character implements Listener{
 
 		team = Team.NOTEAM;
 		this.player = player;
+		
 	}
 
 	/**
@@ -115,6 +121,7 @@ public class Hero extends Character implements Listener{
 		if (activeItem == null) {
 			activeItem = item;
 			getPlayer().getInventory().addItem(item.getItemStack());
+			activeItem.onAttachHero(this);
 			return;
 		}
 
@@ -122,6 +129,7 @@ public class Hero extends Character implements Listener{
 			passivItem = activeItem;
 			activeItem = item;
 			getPlayer().getInventory().addItem(item.getItemStack());
+			activeItem.onAttachHero(this);
 			return;
 		}
 
@@ -129,10 +137,25 @@ public class Hero extends Character implements Listener{
 			dropActiveItem();
 			activeItem = item;
 			getPlayer().getInventory().addItem(item.getItemStack());
+			activeItem.onAttachHero(this);
 			return;
 		}
 
 		throw new RuntimeException();
+	}
+	
+	public PortableItem removeActiveItem() {
+		PortableItem toRemove = activeItem;
+		
+		//getPlayer().getInventory().remove(activeItem.getItemStack());
+		getSpoutPlayer()
+			.getInventory()
+			.remove(activeItem.getItemStack());
+		
+		activeItem.onDetachHero(this);
+		activeItem = null;
+		
+		return toRemove;
 	}
 
 
@@ -143,13 +166,8 @@ public class Hero extends Character implements Listener{
 	 */
 	public void transferActiveItem(final Hero target) {
 		if (activeItem.isTransferable() && target.canRecieveItem()) {
-
-			target.setActiveItem(activeItem);
-
-			// send to minecraft core
-			Inventory inventory = getPlayer().getInventory();
-			inventory.remove(activeItem.getItemStack());
-			activeItem = null;
+			
+			target.setActiveItem(removeActiveItem());
 		}
 	}
 
@@ -159,6 +177,9 @@ public class Hero extends Character implements Listener{
 	 */
 	public void dropActiveItem() {
 		if (activeItemDropable()) {
+			
+			activeItem.onDetachHero(this);
+			
 			//creates a new Item, with ItemStack where player stands
 			World world = getPlayer().getWorld();
 			ItemStack item = activeItem.getItemStack();
@@ -229,7 +250,4 @@ public class Hero extends Character implements Listener{
 			} else inventory.setActiveItem(null);
 		}*/
 	}
-
-
-
 }
