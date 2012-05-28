@@ -9,6 +9,7 @@ import gt.general.aura.GnomeSlowEffect;
 
 import java.util.Iterator;
 
+import org.bukkit.World;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -18,32 +19,21 @@ import org.bukkit.event.player.PlayerInteractEntityEvent;
 /**
  * Game Controller for a Last-Gnome-Scenario
  */
-public class LastGnomeGame implements Listener, Game {
+public class LastGnomeGame extends Game implements Listener {
 
-	private final Team team;
 	private final GnomeItem gnome;
 
 	/** so that e.g. Zombies know who the Gnome-Bearer is */
 	private Hero gnomeBearer;
-
-	/**
-	 * initiates a new Last Gnome Game
-	 *
-	 * @param team the Team playing the game
-	 */
-	public LastGnomeGame(final Team team) {
-		this.team = team;
-		gnome = new GnomeItem();
-	}
-
+	
 	/**
 	 * initiates a new Last Gome Game with an initial GnomeBearer
 	 * @param team the Team playing the game
 	 * @param initialBearer the hero bearing the gnome from the start
 	 */
-	public LastGnomeGame(final Team team, final Hero initialBearer) {
-		this(team);
-		
+	public LastGnomeGame(final Team team, final World world, final Hero initialBearer) {
+		super(team, world);
+		gnome = new GnomeItem();
 		initialBearer.setActiveItem(gnome);
 		setGnomeBearer(initialBearer);
 	}
@@ -123,5 +113,26 @@ public class LastGnomeGame implements Listener, Game {
 	 */
 	public Hero getGnomeBearer() {
 		return gnomeBearer;
+	}
+	
+	public void disconnectHero(Hero hero) {
+		super.disconnectHero(hero);
+		if (getGnomeBearer()==hero) {
+			Hero players[] = null;
+			players = team.getPlayers().toArray(players);
+			giveGnomeTo(players[0]);
+		}
+		
+		
+	}
+	
+	public void restoreHero(Hero hero) {
+		super.restoreHero(hero,getGnomeBearer());
+	}
+
+	@Override
+	public void onEnd() {
+		// TODO Auto-generated method stub
+		
 	}
 }

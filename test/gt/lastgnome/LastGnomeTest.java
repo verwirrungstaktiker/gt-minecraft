@@ -1,26 +1,32 @@
 package gt.lastgnome;
 import static org.junit.Assert.assertEquals;
+import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 import gt.BaseTest;
 import gt.general.Hero;
 import gt.general.Team;
+import gt.general.util.CopyUtil;
+import gt.plugin.helloworld.HelloWorld;
 
 import java.util.HashSet;
 import java.util.Set;
 
 import org.bukkit.Bukkit;
+import org.bukkit.Server;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.PlayerInventory;
+import org.bukkit.plugin.java.JavaPlugin;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.powermock.api.mockito.PowerMockito;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
 
 @RunWith(PowerMockRunner.class)
-@PrepareForTest(Bukkit.class)
+@PrepareForTest({Bukkit.class, CopyUtil.class})
 public class LastGnomeTest extends BaseTest {
 	private Player mockPlayer1, mockPlayer2;
 	private Hero hero1, hero2;
@@ -57,8 +63,10 @@ public class LastGnomeTest extends BaseTest {
 		heroes.add(hero1);
 		heroes.add(hero2);
 
+		PowerMockito.mockStatic(CopyUtil.class);
+		
 		team = new Team(heroes);
-		game = new LastGnomeGame(team);
+		game = new LastGnomeGame(team, world, hero1);
 	}
 
 	/**
@@ -66,9 +74,6 @@ public class LastGnomeTest extends BaseTest {
 	 */
 	@Test
 	public void simpleGnomeSwitchingTest() {
-		//Set (and get) GnomeBearer of the Team TODO gnomeBearer should be set automatically later
-		hero1.setActiveItem(game.getGnome());
-		game.setGnomeBearer(hero1);
 		assertEquals(hero1,game.getGnomeBearer());
 
 		game.giveGnomeTo(hero2);
@@ -87,10 +92,6 @@ public class LastGnomeTest extends BaseTest {
 		
 		GnomeItem item3 = new GnomeItem();
 		item3.setName("Item3");
-		
-		hero1.setActiveItem(game.getGnome());
-		game.setGnomeBearer(hero1);
-		assertEquals(hero1,game.getGnomeBearer());
 		
 		//Now we give hero2 a Tool-Item and see if it works then
 		hero2.setActiveItem(item1);
