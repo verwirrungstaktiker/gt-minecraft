@@ -3,6 +3,7 @@ package gt.general;
 import java.util.HashMap;
 
 import gt.general.util.CopyUtil;
+import gt.plugin.helloworld.HelloWorld;
 
 import org.bukkit.Location;
 import org.bukkit.World;
@@ -30,13 +31,6 @@ public abstract class Game {
 		for (Hero hero : team.getPlayers()) {
 			hero.getPlayer().teleport(spawn);
 		}
-	}
-	
-	/**
-	 * Performs the cleanup after the game is finished 
-	 */
-	public void cleanUp() {
-		world.getWorldFolder().delete();
 	}
 	
 	/**
@@ -91,6 +85,13 @@ public abstract class Game {
 	 * ensures there are no internal dependencies to prevent the game from garbage collection
 	 * e.g. removes related tasks from the scheduler
 	 */
-	void dispose();
+	public void dispose() {
+		Location ret = HelloWorld.getPlugin().
+		getServer().getWorld("world").getSpawnLocation();
+		for (Hero member : team.getPlayers()) {
+			member.getPlayer().teleport(ret);
+		}
+		CopyUtil.deleteDirectory(world.getWorldFolder());
+	}
 	
 }

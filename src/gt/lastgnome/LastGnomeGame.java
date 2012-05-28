@@ -5,10 +5,7 @@ import gt.general.Hero;
 import gt.general.HeroManager;
 import gt.general.Team;
 import gt.plugin.helloworld.HelloWorld;
-import gt.general.aura.Effect;
-import gt.general.aura.GnomeSlowEffect;
 
-import java.util.Iterator;
 
 import org.bukkit.World;
 import org.bukkit.entity.Entity;
@@ -24,7 +21,6 @@ import org.bukkit.event.player.PlayerToggleSprintEvent;
  */
 public class LastGnomeGame extends Game implements Listener {
 
-	private final Team team;
 	private final GnomeItem gnome;
 
 	/** so that e.g. Zombies know who the Gnome-Bearer is */
@@ -116,15 +112,16 @@ public class LastGnomeGame extends Game implements Listener {
 		
 	}
 	
-	@Override
 	public void dispose() {
 		gnomeBearer.removeActiveItem();
+		super.dispose();
 		
 	}
 	
 	@Override
 	public void finalize() {
 		System.out.println("finalizing a gnome game");
+	}
 	
 	
 	public void restoreHero(Hero hero) {

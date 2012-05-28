@@ -33,6 +33,7 @@ public class LastGnomeTest extends BaseTest {
 
 	private Team team;
 	private LastGnomeGame game;
+	private World world;
 
 	/**
 	 * Setup
@@ -52,7 +53,7 @@ public class LastGnomeTest extends BaseTest {
 		PlayerInventory mockInventory2 = mock(PlayerInventory.class);
 		when(mockPlayer2.getInventory()).thenReturn(mockInventory2);
 		
-		World world = mock(World.class);
+		world = mock(World.class);
 		when(mockPlayer1.getWorld()).thenReturn(world);
 		when(mockPlayer2.getWorld()).thenReturn(world);
 		
@@ -72,7 +73,7 @@ public class LastGnomeTest extends BaseTest {
 	@Test
 	public void simpleGnomeSwitchingTest() {
 		
-		game = new LastGnomeGame(team, hero1);
+		game = new LastGnomeGame(team, world, hero1);
 		assertEquals(hero1,game.getGnomeBearer());
 
 		game.giveGnomeTo(hero2);
@@ -81,6 +82,8 @@ public class LastGnomeTest extends BaseTest {
 
 	@Test
 	public void complexGnomeSwitchingTest(){
+		game = new LastGnomeGame(team, world, hero1);
+
 		GnomeItem item1 = new GnomeItem();
 		item1.setTool(true);
 		item1.setName("Item1");
