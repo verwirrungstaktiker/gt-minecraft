@@ -45,9 +45,9 @@ public class GnomeSocketEnd extends GenericCubeCustomBlock {
 	
 	@Override
 	public boolean onBlockInteract(World world, int x, int y, int z, SpoutPlayer player) {
-		if(player.getInventory().contains(GnomeItem.rawID)) {
+		if(player.getInventory().contains(GnomeItem.RAWID)) {
 			player.sendMessage("The Gnome has been saved");
-			player.getInventory().remove(GnomeItem.rawID);
+			player.getInventory().remove(GnomeItem.RAWID);
 			//TODO: some extern method could be called here
 		}
 		else {
