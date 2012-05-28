@@ -31,6 +31,9 @@ public class GnomeItem extends PortableItem {
 	
 	private final SpeedBar speedBar;
 	
+	/** The ID that is replaced by this new item (flint) **/
+	public static int rawID = 318;
+	
 	/**
 	 * Creates a new Gnome
 	 * @param plugin  the plugin we run
