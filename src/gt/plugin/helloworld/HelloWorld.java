@@ -114,6 +114,7 @@ public class HelloWorld extends JavaPlugin {
 			
 			// TODO this should be a factory once we have more than one game mode
 			Hero starter = HeroManager.getHero(player);
+			
 			Team team = new Team(HeroManager.getAllHeros());
 			World world = getServer().getWorld("world");
 			LastGnomeGame lgg = new LastGnomeGame(team, world, starter);
@@ -147,5 +148,9 @@ public class HelloWorld extends JavaPlugin {
 			return true;
 		}
 		return false;
+	}
+
+	public Set<Game> getRunningGames() {
+		return runningGames;
 	}
 }

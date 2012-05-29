@@ -17,9 +17,9 @@ import org.getspout.spoutapi.inventory.SpoutItemStack;
 
 public class BlockListener implements Listener {
 
-	
+	/** is this event even working? **/
 	@EventHandler
-	public void noRunningNonOP(final PlayerToggleSprintEvent event) {
+	public void noGnomeDropping(final PlayerToggleSprintEvent event) {
 		event.setCancelled(true);
 	}
 	
@@ -49,19 +49,5 @@ public class BlockListener implements Listener {
 		}
 	}
 	
-	/**
-	 * FOR TESTING ONLY
-	 * @param event
-	 */
-	@EventHandler
-	public void giveGnomeSocket(BlockBreakEvent event) {
-		if (event.getBlock().getType() == Material.DIAMOND_BLOCK) {
-			event.setCancelled(true);
-			event.getPlayer().sendMessage(ChatColor.GREEN + "Gave a gnomeSocket!");
-			ItemStack gnomeSockets = new SpoutItemStack(HelloWorld.gnomeSocketStart);
-			
-			event.getPlayer().getInventory().addItem(gnomeSockets);
-		}
-	}
 
 }
