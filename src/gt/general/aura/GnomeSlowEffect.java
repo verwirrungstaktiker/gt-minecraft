@@ -7,7 +7,10 @@ import gt.general.Hero;
  * Effect for slowing down gnome bearer, and draining his stamina
  */
 public class GnomeSlowEffect implements Effect {
-
+	
+	// lowers the speed by 1/16
+	public final static double SLOWRATE = 0.0625;
+	
 	@Override
 	public void performTick() {
 	}
@@ -24,7 +27,7 @@ public class GnomeSlowEffect implements Effect {
 		if(character instanceof Hero) {
 			Hero hero = (Hero)character;
 			hero.addToAttribute(CharacterAttributes.SPEED,
-								hero.getBaseAttribute(CharacterAttributes.SPEED) * -0.0625);
+								hero.getBaseAttribute(CharacterAttributes.SPEED) * -SLOWRATE);
 		}
 
 	}

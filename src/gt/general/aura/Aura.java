@@ -63,8 +63,11 @@ public class Aura implements Runnable {
 
 		this.owner = owner;
 
+		// TODO parameterize this
+		int initial = rate;
+		
 		taskId = Bukkit.getScheduler().scheduleAsyncRepeatingTask(
-				HelloWorld.getPlugin(), this, 0, rate);
+				HelloWorld.getPlugin(), this, initial, rate);
 	}
 
 	/**
