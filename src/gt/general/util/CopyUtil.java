@@ -66,8 +66,9 @@ public class CopyUtil {
 		File uid = new File(newWorld,"uid.dat");
 		uid.delete();
 		
-		WorldCreator wc = new WorldCreator("kp");
-		wc.copy(world);
+		WorldCreator wc = new WorldCreator(name);
+		//wc.copy(world);
+		
 		return wc.createWorld();		
 	}
 	
@@ -96,7 +97,7 @@ public class CopyUtil {
 			temp = new File(worldsfolder,world.getName()+i);
 		} while (temp.exists());
 		
-		return temp.getPath();
+		return temp.getName();
 	}
 	
 }

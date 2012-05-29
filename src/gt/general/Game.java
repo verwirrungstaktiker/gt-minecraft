@@ -3,9 +3,11 @@ package gt.general;
 import java.util.HashMap;
 
 import gt.general.util.CopyUtil;
+import gt.general.util.DeleteWorldTask;
 import gt.plugin.helloworld.HelloWorld;
 
 import org.bukkit.Location;
+import org.bukkit.Server;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
 
@@ -27,7 +29,7 @@ public abstract class Game {
 		team.setGame(this);
 		String newWorldFolder = CopyUtil.findnextInstanceFolder(world);
 		this.world = CopyUtil.copyWorld(world, newWorldFolder);
-		Location spawn = world.getSpawnLocation();
+		Location spawn = this.world.getSpawnLocation();
 		for (Hero hero : team.getPlayers()) {
 			hero.getPlayer().teleport(spawn);
 		}
@@ -64,13 +66,14 @@ public abstract class Game {
 		Player player = hero.getPlayer();
 		disconnectedHeros.remove(player);
 		team.getPlayers().add(hero);
+		
 		player.teleport(world.getSpawnLocation());	
 	}
 	
 	/**
 	 * restores a previous hero and teleports him to another hero
 	 * @param hero Hero to be restored
-	 * @param dest Hero to teleport tp
+	 * @param dest Hero to teleport to
 	 */
 	protected void restoreHero(Hero hero, Hero dest) {
 		Player player = hero.getPlayer();
@@ -86,12 +89,17 @@ public abstract class Game {
 	 * e.g. removes related tasks from the scheduler
 	 */
 	public void dispose() {
-		Location ret = HelloWorld.getPlugin().
-		getServer().getWorld("world").getSpawnLocation();
+		Server server = HelloWorld.getPlugin().getServer();
+		Location ret = server.getWorld("world").getSpawnLocation();
 		for (Hero member : team.getPlayers()) {
 			member.getPlayer().teleport(ret);
 		}
-		CopyUtil.deleteDirectory(world.getWorldFolder());
+
+		DeleteWorldTask dwt = new DeleteWorldTask(world.getWorldFolder()); 
+		server.getScheduler().scheduleSyncDelayedTask(HelloWorld.getPlugin(), dwt, 80);
+		
+		server.unloadWorld(world, true);
+		
 	}
 	
 }

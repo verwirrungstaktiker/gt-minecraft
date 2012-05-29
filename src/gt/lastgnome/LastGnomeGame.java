@@ -37,6 +37,7 @@ public class LastGnomeGame extends Game implements Listener {
 		gnome = new GnomeItem();
 		initialBearer.setActiveItem(gnome);
 		setGnomeBearer(initialBearer);
+		new TeamLostTrigger(this, null, HelloWorld.getTM());
 	}
 
 	

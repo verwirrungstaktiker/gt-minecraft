@@ -4,6 +4,8 @@ import gt.general.Game;
 import gt.general.Hero;
 import gt.general.HeroManager;
 import gt.general.Team;
+import gt.general.trigger.TriggerManager;
+import gt.general.util.CopyUtil;
 import gt.lastgnome.GnomeItem;
 import gt.lastgnome.GnomeSocketEnd;
 import gt.lastgnome.GnomeSocketStart;
@@ -41,7 +43,12 @@ public class HelloWorld extends JavaPlugin {
 	private HeroManager heroManager;
 	private static JavaPlugin plugin;
 	private Set<Game> runningGames;
+	private static TriggerManager tm;
 	
+	public static TriggerManager getTM() {
+		return tm;
+	}
+
 	/**
 	 * Initialization of our plugin
 	 */
@@ -52,14 +59,29 @@ public class HelloWorld extends JavaPlugin {
 
 		runningGames = new HashSet<Game>();
 		heroManager = new HeroManager(this,runningGames);
+		tm = new TriggerManager();
 
 		PluginManager pm = getServer().getPluginManager();
 		pm.registerEvents(new BlockListener(), this);
 		pm.registerEvents(heroManager, this);
 
 		getServer().getScheduler().scheduleSyncRepeatingTask(this, heroManager, 0, 10);
+		getServer().getScheduler().scheduleSyncRepeatingTask(this, tm, 0, 10);
 	}
-
+	
+	/**
+	 * 
+	 */
+	public void onDisable() {
+		for (World world : getServer().getWorlds()) {
+			if (world.getName().equals("world")) {
+				continue;
+			}
+			
+			CopyUtil.deleteDirectory(world.getWorldFolder());
+		}
+	}
+	
 	/**
 	 * instantiate gnome block and precache it's texture
 	 */

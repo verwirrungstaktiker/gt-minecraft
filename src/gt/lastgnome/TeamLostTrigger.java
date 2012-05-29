@@ -25,7 +25,11 @@ public class TeamLostTrigger extends Trigger{
 		if (game.getGnomeBearer() == null) return;
 		if (game.getGnomeBearer().getPlayer().getHealth() <= 0) {
 			tm.deregisterTrigger(this);
+			if (callback!= null) {
 			callback.run();
+			} else {
+				game.dispose();
+			}
 		}
 
 	}
