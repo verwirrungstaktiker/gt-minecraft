@@ -22,7 +22,8 @@ import static org.mockito.Mockito.*;
 @RunWith(PowerMockRunner.class)
 @PrepareForTest(SpoutManager.class)
 public class GnomeCarrierEffectTest {
-	private GnomeCarrierEffect effect;
+	private GnomeCarrierEffect carrierEffect;
+	private GnomeSlowEffect slowEffect;
 	private Hero hero;
 	private Player playerMock;
 	private double delta = 1e-20;
@@ -31,7 +32,8 @@ public class GnomeCarrierEffectTest {
 	public void setup() {
 		playerMock = mock(Player.class);
 		hero = new Hero(playerMock);
-		effect = new GnomeCarrierEffect();
+		carrierEffect = new GnomeCarrierEffect();
+		slowEffect = new GnomeSlowEffect();
 		
 		SpoutPlayer sp = mock(SpoutPlayer.class);
 		PowerMockito.mockStatic(SpoutManager.class);
@@ -54,10 +56,10 @@ public class GnomeCarrierEffectTest {
 		
 		double currentSpeed = hero.getCurrentSpeed();
 		while (hero.getCurrentSpeed() > 0) {
-			hero.addEffect(effect);
+			hero.addEffect(slowEffect);
 			hero.simulateEffects();
 
-			currentSpeed -= Hero.DEFAULT_HERO_SPEED*GnomeCarrierEffect.SLOWRATE;
+			currentSpeed -= Hero.DEFAULT_HERO_SPEED*GnomeSlowEffect.SLOWRATE;
 			assertEquals(currentSpeed, hero.getCurrentSpeed(), delta);
 		}
 	}
