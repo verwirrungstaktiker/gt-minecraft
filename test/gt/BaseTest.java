@@ -39,7 +39,7 @@ import org.powermock.modules.junit4.PowerMockRunner;
 @RunWith(PowerMockRunner.class)
 @PrepareForTest({Bukkit.class, SpoutManager.class, Spout.class, HelloWorld.class})
 public class BaseTest {
-
+	
 	/**
 	 * Setup
 	 */

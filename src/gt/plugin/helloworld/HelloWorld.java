@@ -12,6 +12,7 @@ import gt.lastgnome.LastGnomeGame;
 import java.util.HashSet;
 import java.util.Set;
 
+import org.bukkit.World;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -49,8 +50,8 @@ public class HelloWorld extends JavaPlugin {
 
 		setupGnome();
 
-		heroManager = new HeroManager(this);
 		runningGames = new HashSet<Game>();
+		heroManager = new HeroManager(this,runningGames);
 
 		PluginManager pm = getServer().getPluginManager();
 		pm.registerEvents(new BlockListener(), this);
@@ -92,7 +93,8 @@ public class HelloWorld extends JavaPlugin {
 			// TODO this should be a factory once we have more than one game mode
 			Hero starter = HeroManager.getHero(player);
 			Team team = new Team(HeroManager.getAllHeros());
-			LastGnomeGame lgg = new LastGnomeGame(team, starter);
+			World world = getServer().getWorld("world");
+			LastGnomeGame lgg = new LastGnomeGame(team, world, starter);
 			
 			getServer().getPluginManager().registerEvents(lgg, this);
 			
