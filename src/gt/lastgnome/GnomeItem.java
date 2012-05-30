@@ -28,6 +28,9 @@ public final class GnomeItem extends PortableItem {
 	
 	private final ItemStack itemStack;
 	
+	/** The ID that is replaced by this new item (flint) **/
+	public static final int RAWID = 318;
+	
 	/**
 	 * Creates a new Gnome
 	 * @param plugin  the plugin we run

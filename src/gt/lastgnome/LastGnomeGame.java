@@ -5,10 +5,12 @@ import gt.general.Hero;
 import gt.general.HeroManager;
 import gt.general.Team;
 import gt.lastgnome.gui.SpeedBar;
+import gt.plugin.helloworld.HelloWorld;
 
 import java.util.HashMap;
 import java.util.Map;
 
+import org.bukkit.World;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -18,14 +20,12 @@ import org.bukkit.event.player.PlayerInteractEntityEvent;
 /**
  * Game Controller for a Last-Gnome-Scenario
  */
-public class LastGnomeGame implements Listener, Game {
+public class LastGnomeGame extends Game implements Listener {
 
-	private final Team team;
 	private final GnomeItem gnome;
 
 	/** so that e.g. Zombies know who the Gnome-Bearer is */
 	private Hero gnomeBearer;
-
 	
 	private final Map<Hero, SpeedBar> speedBars;
 	
@@ -33,9 +33,11 @@ public class LastGnomeGame implements Listener, Game {
 	 * initiates a new Last Gnome Game
 	 *
 	 * @param team the Team playing the game
+	 * @param world 
 	 */
-	public LastGnomeGame(final Team team) {
-		this.team = team;
+	public LastGnomeGame(final Team team, final World world) {
+		super(team, world);
+		
 		gnome = new GnomeItem();
 		
 		speedBars = new HashMap<Hero, SpeedBar>();
@@ -44,15 +46,17 @@ public class LastGnomeGame implements Listener, Game {
 			hero.getGui().addGuiElement(speedBar);
 			speedBars.put(hero, speedBar);
 		}
+		
+		new TeamLostTrigger(this, null, HelloWorld.getTM());
 	}
-
+	
 	/**
 	 * initiates a new Last Gome Game with an initial GnomeBearer
 	 * @param team the Team playing the game
 	 * @param initialBearer the hero bearing the gnome from the start
 	 */
-	public LastGnomeGame(final Team team, final Hero initialBearer) {
-		this(team);
+	public LastGnomeGame(final Team team, final World world, final Hero initialBearer) {
+		this(team, world);
 		
 		initialBearer.setActiveItem(gnome);
 		setGnomeBearer(initialBearer);
@@ -119,10 +123,21 @@ public class LastGnomeGame implements Listener, Game {
 	public Hero getGnomeBearer() {
 		return gnomeBearer;
 	}
-
-	@Override
+	
+	public void disconnectHero(Hero hero) {
+		super.disconnectHero(hero);
+		if (getGnomeBearer()==hero) {
+			Hero players[] = null;
+			players = team.getPlayers().toArray(players);
+			giveGnomeTo(players[0]);
+		}
+		
+		
+	}
+	
 	public void dispose() {
 		gnomeBearer.removeActiveItem();
+		super.dispose();
 		
 		for(Hero hero : speedBars.keySet()) {
 			SpeedBar speedBar = speedBars.get(hero);
@@ -133,5 +148,16 @@ public class LastGnomeGame implements Listener, Game {
 	@Override
 	public void finalize() {
 		System.out.println("finalizing a gnome game");
+	}
+	
+	
+	public void restoreHero(Hero hero) {
+		super.restoreHero(hero,getGnomeBearer());
+	}
+
+	@Override
+	public void onEnd() {
+		// TODO Auto-generated method stub
+		
 	}
 }

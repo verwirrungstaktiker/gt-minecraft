@@ -4,13 +4,17 @@ import gt.general.Game;
 import gt.general.Hero;
 import gt.general.HeroManager;
 import gt.general.Team;
+import gt.general.trigger.TriggerManager;
+import gt.general.util.CopyUtil;
 import gt.lastgnome.GnomeItem;
+import gt.lastgnome.GnomeSocketEnd;
 import gt.lastgnome.GnomeSocketStart;
 import gt.lastgnome.LastGnomeGame;
 
 import java.util.HashSet;
 import java.util.Set;
 
+import org.bukkit.World;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -34,12 +38,17 @@ public class HelloWorld extends JavaPlugin {
 
 	public static GnomeItem gnome;
 	public static GnomeSocketStart gnomeSocketStart;
-	private HeroManager heroManager;
-
-	private static JavaPlugin plugin;
-
-	private Set<Game> runningGames;
+	public static GnomeSocketEnd gnomeSocketEnd;
 	
+	private HeroManager heroManager;
+	private static JavaPlugin plugin;
+	private Set<Game> runningGames;
+	private static TriggerManager tm;
+	
+	public static TriggerManager getTM() {
+		return tm;
+	}
+
 	/**
 	 * Initialization of our plugin
 	 */
@@ -48,16 +57,31 @@ public class HelloWorld extends JavaPlugin {
 
 		setupGnome();
 
-		heroManager = new HeroManager(this);
 		runningGames = new HashSet<Game>();
+		heroManager = new HeroManager(this,runningGames);
+		tm = new TriggerManager();
 
 		PluginManager pm = getServer().getPluginManager();
 		pm.registerEvents(new BlockListener(), this);
 		pm.registerEvents(heroManager, this);
 
 		getServer().getScheduler().scheduleSyncRepeatingTask(this, heroManager, 0, 10);
+		getServer().getScheduler().scheduleSyncRepeatingTask(this, tm, 0, 10);
 	}
-
+	
+	/**
+	 * 
+	 */
+	public void onDisable() {
+		for (World world : getServer().getWorlds()) {
+			if (world.getName().equals("world")) {
+				continue;
+			}
+			
+			CopyUtil.deleteDirectory(world.getWorldFolder());
+		}
+	}
+	
 	/**
 	 * instantiate gnome block and precache it's texture
 	 */
@@ -65,7 +89,10 @@ public class HelloWorld extends JavaPlugin {
 	private void setupGnome() {
 		gnome = new GnomeItem(this);
 		gnomeSocketStart = new GnomeSocketStart(this);
-		SpoutManager.getFileManager().addToPreLoginCache(plugin, "http://dl.dropbox.com/u/29386658/gt/textures/gnome_socket_16x16.png");
+		gnomeSocketEnd = new GnomeSocketEnd(this);
+		SpoutManager.getFileManager().addToPreLoginCache(plugin, "http://dl.dropbox.com/u/29386658/gt/textures/gnome_socket_start_16x16.png");
+		SpoutManager.getFileManager().addToPreLoginCache(plugin, "http://dl.dropbox.com/u/29386658/gt/textures/gnome_socket_end_16x16.png");
+		SpoutManager.getFileManager().addToPreLoginCache(plugin, "http://dl.dropbox.com/u/29386658/gt/textures/gnome2_16x16.png");
 	}
 
 	public static JavaPlugin getPlugin() {
@@ -87,8 +114,10 @@ public class HelloWorld extends JavaPlugin {
 			
 			// TODO this should be a factory once we have more than one game mode
 			Hero starter = HeroManager.getHero(player);
+			
 			Team team = new Team(HeroManager.getAllHeros());
-			LastGnomeGame lgg = new LastGnomeGame(team, starter);
+			World world = getServer().getWorld("world");
+			LastGnomeGame lgg = new LastGnomeGame(team, world, starter);
 			
 			getServer().getPluginManager().registerEvents(lgg, this);
 			
@@ -109,12 +138,19 @@ public class HelloWorld extends JavaPlugin {
 			return true;
 		} else if (sender instanceof Player && cmd.getName().equalsIgnoreCase("test")) {
 			System.out.println("TEST");
+		}
+		else if (cmd.getName().equalsIgnoreCase("socket")) {
+			ItemStack items = new SpoutItemStack(HelloWorld.gnomeSocketStart, 1);
+			getServer().getPlayer(sender.getName()).getInventory().addItem(items);
 			
-		} else if (cmd.getName().equalsIgnoreCase("socket")) {
-			ItemStack gnomeSockets = new SpoutItemStack(HelloWorld.gnomeSocketStart, 2);
-			getServer().getPlayer(sender.getName()).getInventory().addItem(gnomeSockets);
+			items = new SpoutItemStack(HelloWorld.gnomeSocketEnd, 1);
+			getServer().getPlayer(sender.getName()).getInventory().addItem(items);
 			return true;
 		}
 		return false;
+	}
+
+	public Set<Game> getRunningGames() {
+		return runningGames;
 	}
 }

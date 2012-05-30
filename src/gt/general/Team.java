@@ -12,6 +12,17 @@ public class Team {
 
 	/**Array of heros belonging to this team*/
 	private Set<Hero> members;
+	
+	/***/
+	private Game game;
+
+	public Game getGame() {
+		return game;
+	}
+
+	public void setGame(Game game) {
+		this.game = game;
+	}
 
 	/**
 	 * @param members the initial members of this team
