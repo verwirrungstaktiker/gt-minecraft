@@ -10,13 +10,21 @@ import org.bukkit.event.player.PlayerDropItemEvent;
 import org.bukkit.event.player.PlayerPickupItemEvent;
 import org.bukkit.event.player.PlayerToggleSprintEvent;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.PlayerInventory;
+import org.getspout.spoutapi.player.SpoutPlayer;
 
 public class PlayerListener implements Listener {
 
-	/** is this event even doing anything? **/
+	/** prevent sprinting **/
 	@EventHandler
 	public final void preventSprinting(final PlayerToggleSprintEvent event) {
-		event.setCancelled(true);
+		SpoutPlayer player = (SpoutPlayer) event.getPlayer();
+		// cancelling the event doesn't do anything, so have this dirty hack instead
+		if (event.isSprinting()) {
+			player.setWalkingMultiplier(0.66);
+		} else {
+			player.setWalkingMultiplier(1.0);
+		}
 	}
 
 	/** prevents item dropping for Gnomes only. **/
@@ -34,7 +42,11 @@ public class PlayerListener implements Listener {
 	public final void carryOnlyOneOfEachKind(final PlayerPickupItemEvent event) {
 		//TODO: Carry max 2 items
 		ItemStack eventItem = event.getItem().getItemStack();
-		if (event.getPlayer().getInventory().contains(eventItem)) {
+		PlayerInventory inv = event.getPlayer().getInventory();
+				
+		boolean itemAlreadyCarried = inv.contains(eventItem);
+		boolean gnomeCarried =  inv.contains(GnomeItem.RAWID);
+		if (itemAlreadyCarried || gnomeCarried) {
 			event.setCancelled(true);
 		}
 	}
