@@ -1,8 +1,8 @@
 package gt.lastgnome.gui;
 
-import gt.general.CharacterAttributes;
-import gt.general.Hero;
-import gt.general.Hero.Notification;
+import gt.general.character.CharacterAttributes;
+import gt.general.character.Hero;
+import gt.general.character.Hero.Notification;
 import gt.general.gui.GuiElement;
 import gt.lastgnome.GnomeItem;
 

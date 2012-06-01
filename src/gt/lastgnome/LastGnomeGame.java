@@ -1,9 +1,9 @@
 package gt.lastgnome;
 
 import gt.general.Game;
-import gt.general.Hero;
-import gt.general.HeroManager;
-import gt.general.Team;
+import gt.general.character.Hero;
+import gt.general.character.HeroManager;
+import gt.general.character.Team;
 import gt.lastgnome.gui.SpeedBar;
 import gt.plugin.helloworld.HelloWorld;
 

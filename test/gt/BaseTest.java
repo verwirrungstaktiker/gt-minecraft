@@ -9,7 +9,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.lang.reflect.Field;
 
-import gt.general.Hero;
+import gt.general.character.Hero;
 import gt.plugin.helloworld.HelloWorld;
 
 import org.bukkit.Bukkit;

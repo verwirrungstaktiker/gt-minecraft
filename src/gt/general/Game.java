@@ -1,5 +1,7 @@
 package gt.general;
 
+import gt.general.character.Hero;
+import gt.general.character.Team;
 import gt.general.util.DeleteWorldTask;
 import gt.plugin.helloworld.HelloWorld;
 

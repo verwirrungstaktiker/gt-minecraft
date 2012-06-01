@@ -1,7 +1,7 @@
 package gt.general.gui;
 
-import gt.general.Hero;
-import gt.general.HeroObserver;
+import gt.general.character.Hero;
+import gt.general.character.HeroObserver;
 
 public interface GuiElement extends HeroObserver{
 	

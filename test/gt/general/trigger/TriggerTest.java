@@ -1,7 +1,7 @@
 package gt.general.trigger;
 
 import static org.junit.Assert.*;
-import gt.general.Hero;
+import gt.general.character.Hero;
 import gt.lastgnome.LastGnomeGame;
 import gt.lastgnome.TeamLostTrigger;
 

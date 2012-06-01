@@ -1,12 +1,12 @@
 package gt.lastgnome;
 
-import gt.general.Hero;
 import gt.general.PortableItem;
 import gt.general.aura.Aura;
 import gt.general.aura.Effect;
 import gt.general.aura.EffectFactory;
 import gt.general.aura.GnomeCarrierEffect;
 import gt.general.aura.GnomeSlowEffect;
+import gt.general.character.Hero;
 import gt.plugin.helloworld.HelloWorld;
 
 import java.util.Iterator;

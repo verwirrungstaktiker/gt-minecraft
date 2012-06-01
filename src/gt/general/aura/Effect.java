@@ -1,6 +1,6 @@
 package gt.general.aura;
 
-import gt.general.Character;
+import gt.general.character.Character;
 
 /**
  * Effect, that can affect characters

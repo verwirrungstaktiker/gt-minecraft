@@ -2,9 +2,9 @@ package gt.general.aura;
 
 import static org.junit.Assert.*;
 
-import gt.general.Character;
-import gt.general.CharacterAttributes;
-import gt.general.Hero;
+import gt.general.character.Character;
+import gt.general.character.CharacterAttributes;
+import gt.general.character.Hero;
 import gt.plugin.helloworld.HelloWorld;
 
 import org.bukkit.entity.Player;

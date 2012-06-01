@@ -1,5 +1,7 @@
 package gt.general;
 
+import gt.general.character.Hero;
+
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.Plugin;
 import org.getspout.spoutapi.material.item.GenericCustomItem;

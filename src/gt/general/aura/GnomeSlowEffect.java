@@ -1,8 +1,8 @@
 package gt.general.aura;
 
-import gt.general.Character;
-import gt.general.CharacterAttributes;
-import gt.general.Hero;
+import gt.general.character.Character;
+import gt.general.character.CharacterAttributes;
+import gt.general.character.Hero;
 /**
  * Effect for slowing down gnome bearer, and draining his stamina
  */

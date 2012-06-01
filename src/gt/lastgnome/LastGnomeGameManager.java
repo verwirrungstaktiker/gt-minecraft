@@ -1,8 +1,8 @@
 package gt.lastgnome;
 
 import gt.general.GameManager;
-import gt.general.Hero;
-import gt.general.Team;
+import gt.general.character.Hero;
+import gt.general.character.Team;
 import gt.plugin.helloworld.HelloWorld;
 
 import org.bukkit.World;

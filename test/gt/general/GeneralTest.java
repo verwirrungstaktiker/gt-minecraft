@@ -5,6 +5,7 @@ import static org.mockito.Mockito.*;
 
 
 import gt.BaseTest;
+import gt.general.character.Hero;
 import gt.lastgnome.GnomeItem;
 import gt.plugin.helloworld.HelloWorld;
 import junit.framework.Assert;

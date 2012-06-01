@@ -7,7 +7,7 @@ import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.reset;
-import gt.general.Hero;
+import gt.general.character.Hero;
 import gt.general.gui.GuiElement;
 
 import org.bukkit.entity.Player;

@@ -1,6 +1,6 @@
 package gt.general.gui;
 
-import gt.general.Hero;
+import gt.general.character.Hero;
 import gt.plugin.helloworld.HelloWorld;
 
 import java.util.HashSet;

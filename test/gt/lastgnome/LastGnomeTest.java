@@ -4,8 +4,8 @@ import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 import gt.BaseTest;
-import gt.general.Hero;
-import gt.general.Team;
+import gt.general.character.Hero;
+import gt.general.character.Team;
 import gt.general.util.CopyUtil;
 import gt.plugin.helloworld.HelloWorld;
 
