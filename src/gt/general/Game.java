@@ -1,26 +1,22 @@
 package gt.general;
 
-import gt.general.util.CopyUtil;
 import gt.general.util.DeleteWorldTask;
 import gt.plugin.helloworld.HelloWorld;
 
 import java.util.HashMap;
 
-import org.bukkit.Location;
 import org.bukkit.Server;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
+import org.bukkit.event.Listener;
 
-public abstract class Game {
+public class Game implements Listener {
 	
 	/** The team playing this game */
 	private final Team team;
-
-	/** The world where the players spawn initially */
-	private final World initialWorld;
 	
 	/** The instance where the game is played */
-	private final World world;
+	private World world;
 	
 	/** Heros, which are currently offline */
 	private final HashMap<Player,Hero> disconnectedHeros;
@@ -29,17 +25,10 @@ public abstract class Game {
 	 * @param team The team playing this game
 	 * @param initialWorld Which world to instantiate
 	 */
-	public Game(final Team team, final World initialWorld) {
+	public Game(final Team team) {
 		super();
 		this.team = team;
 		team.setGame(this);
-		
-		this.initialWorld = initialWorld;
-		
-		String newWorldFolder = CopyUtil.findnextInstanceFolder(initialWorld);
-		world = CopyUtil.copyWorld(initialWorld, newWorldFolder);
-		
-		teleportTeamTo(world.getSpawnLocation());
 		
 		disconnectedHeros = new HashMap<Player, Hero>();
 	}
@@ -95,32 +84,25 @@ public abstract class Game {
 	/**
 	 * handles the victory or defeat of a game
 	 */
-	public abstract void onEnd();
+	public void onEnd() {
+		// XXX not clean, but we want a factory
+	}
 	
 
 	/**
 	 * ensures there are no internal dependencies to prevent the game from garbage collection
 	 * e.g. removes related tasks from the scheduler
 	 */
-	public void dispose() {	
-		teleportTeamTo(initialWorld.getSpawnLocation());
-
+	public void dispose() {
+		
+		// this has nothing to do here
+		
 		Server server = HelloWorld.getPlugin().getServer();
 		
 		DeleteWorldTask dwt = new DeleteWorldTask(world.getWorldFolder()); 
 		server.getScheduler().scheduleSyncDelayedTask(HelloWorld.getPlugin(), dwt, 80);
 		
-		server.unloadWorld(world, true);
-		
-	}
-	
-	/**
-	 * @param spawn Where to teleport the whole Team
-	 */
-	private void teleportTeamTo(final Location spawn) {
-		for (Hero hero : team.getPlayers()) {
-			hero.getPlayer().teleport(spawn);
-		}
+		server.unloadWorld(world, true);		
 	}
 
 	/**
@@ -135,6 +117,15 @@ public abstract class Game {
 	 */
 	public World getWorld() {
 		return world;
+	}
+
+
+
+	/**
+	 * @param world the world to set
+	 */
+	public void setWorld(World world) {
+		this.world = world;
 	}
 	
 }

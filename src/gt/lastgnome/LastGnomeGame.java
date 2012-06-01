@@ -38,8 +38,8 @@ public class LastGnomeGame extends Game implements Listener{
 	 * @param team the Team playing the game
 	 * @param world 
 	 */
-	public LastGnomeGame(final Team team, final World world) {
-		super(team, world);
+	public LastGnomeGame(final Team team) {
+		super(team);
 		
 		gnome = new GnomeItem();
 		
@@ -60,8 +60,8 @@ public class LastGnomeGame extends Game implements Listener{
 	 * @param team the Team playing the game
 	 * @param initialBearer the hero bearing the gnome from the start
 	 */
-	public LastGnomeGame(final Team team, final World world, final Hero initialBearer) {
-		this(team, world);
+	public LastGnomeGame(final Team team, final Hero initialBearer) {
+		this(team);
 		
 		initialBearer.setActiveItem(gnome);
 		setGnomeBearer(initialBearer);

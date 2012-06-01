@@ -3,6 +3,8 @@ package gt.general;
 import java.util.HashSet;
 import java.util.Set;
 
+import org.bukkit.Location;
+
 /**
  * Team which manages a group of four players
  */
@@ -55,4 +57,14 @@ public class Team {
 	public void setGame(final Game game) {
 		this.game = game;
 	}
+	
+	/**
+	 * @param spawn Where to teleport the whole Team
+	 */
+	public void teleportTo(final Location spawn) {
+		for (Hero hero : getPlayers()) {
+			hero.getPlayer().teleport(spawn);
+		}
+	}
+
 }

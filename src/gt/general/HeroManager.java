@@ -17,7 +17,7 @@ import org.bukkit.plugin.java.JavaPlugin;
  */
 public class HeroManager implements Listener, Runnable {
 	/**Heros sorted by player*/
-	private static final Map<Player, Hero> HEROS = new HashMap<Player, Hero>();
+	private static final Map<String, Hero> HEROS = new HashMap<String, Hero>();
 	/**The plugin the manager runs in*/
 	private final JavaPlugin plugin;
 	
@@ -52,7 +52,7 @@ public class HeroManager implements Listener, Runnable {
 			Hero hero = game.getDisconnectedHero(player);
 			if (hero != null) {
 				registerListener(hero);
-				HEROS.put(player, hero);
+				HEROS.put(player.getName(), hero);
 				game.restoreHero(hero);
 				return;
 			}
@@ -61,7 +61,7 @@ public class HeroManager implements Listener, Runnable {
 		Hero hero = new Hero(player);
 		registerListener(hero);
 		hero.getPlayer().getInventory().setMaxStackSize(1);
-		HEROS.put(player, hero);
+		HEROS.put(player.getName(), hero);
 	}
 	
 	/**
@@ -109,7 +109,7 @@ public class HeroManager implements Listener, Runnable {
 	 * @return associated hero
 	 */
 	public static Hero getHero(final Player player) {
-		return HEROS.get(player);
+		return HEROS.get(player.getName());
 	}
 	
 

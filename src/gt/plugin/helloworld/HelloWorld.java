@@ -9,7 +9,7 @@ import gt.general.util.CopyUtil;
 import gt.lastgnome.GnomeItem;
 import gt.lastgnome.GnomeSocketEnd;
 import gt.lastgnome.GnomeSocketStart;
-import gt.lastgnome.LastGnomeGame;
+import gt.lastgnome.LastGnomeGameManager;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -41,10 +41,15 @@ public class HelloWorld extends JavaPlugin {
 	private Set<Game> runningGames;
 	private static TriggerManager tm;
 	
+	private LastGnomeGameManager lastGnomeGameManager;
+	
 	public static TriggerManager getTM() {
 		return tm;
 	}
 
+	
+
+	
 	/**
 	 * Initialization of our plugin
 	 */
@@ -64,6 +69,8 @@ public class HelloWorld extends JavaPlugin {
 
 		getServer().getScheduler().scheduleSyncRepeatingTask(this, heroManager, 0, 10);
 		getServer().getScheduler().scheduleSyncRepeatingTask(this, tm, 0, 10);
+		
+		lastGnomeGameManager = new LastGnomeGameManager(getServer().getWorld("world"));
 	}
 	
 	/**
@@ -107,36 +114,39 @@ public class HelloWorld extends JavaPlugin {
 	public boolean onCommand(final CommandSender sender, final Command cmd, final  String label, final String[] args) {
 		if (sender instanceof Player && cmd.getName().equalsIgnoreCase("gg")) {
 			Player player = (Player) sender;
-			player.sendMessage("starting gnome game");
+			getServer().broadcastMessage("starting gnome game: " + player.getDisplayName());
 			
 			// TODO this should be a factory once we have more than one game mode
 			Hero starter = HeroManager.getHero(player);
 			
 			Team team = new Team(HeroManager.getAllHeros());
-			World world = getServer().getWorld("world");
-			LastGnomeGame lgg = new LastGnomeGame(team, world, starter);
 			
+			World worldPrototype = getServer().getWorld("world_nether");
+			String newWorldFolder = CopyUtil.findnextInstanceFolder(worldPrototype);
+			World world = CopyUtil.copyWorld(worldPrototype, newWorldFolder);
+			
+			getServer().broadcastMessage(starter.getPlayer().getDisplayName());
+			
+			Game lgg = lastGnomeGameManager.startGame(team, starter, world);
+			
+			// TODO this must be better
 			getServer().getPluginManager().registerEvents(lgg, this);
 			
-			runningGames.add(lgg);
 			return true;
 		} else if (cmd.getName().equalsIgnoreCase("end")) {
 			
 			System.out.println("ending games");
+	
+			lastGnomeGameManager.endAllGames();
 			
-			for(Game g : runningGames) {
-				g.dispose();
-			}
-			
-			runningGames.clear();
 			
 		} else if (cmd.getName().equalsIgnoreCase("gc")) {
 			System.gc();
 			return true;
 		} else if (sender instanceof Player && cmd.getName().equalsIgnoreCase("test")) {
 			System.out.println("TEST");
-		}
-		else if (cmd.getName().equalsIgnoreCase("socket")) {
+			
+		} else if (cmd.getName().equalsIgnoreCase("socket")) {
 			ItemStack items = new SpoutItemStack(HelloWorld.gnomeSocketStart, 1);
 			getServer().getPlayer(sender.getName()).getInventory().addItem(items);
 			
