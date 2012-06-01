@@ -8,20 +8,16 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockDamageEvent;
 import org.bukkit.event.player.PlayerDropItemEvent;
+import org.bukkit.event.player.PlayerPickupItemEvent;
 import org.bukkit.event.player.PlayerShearEntityEvent;
 import org.bukkit.event.player.PlayerToggleSprintEvent;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.PlayerInventory;
 import org.getspout.spoutapi.inventory.SpoutItemStack;
 
 
 
 public class BlockListener implements Listener {
-
-	/** is this event even working? **/
-	@EventHandler
-	public void noGnomeDropping(final PlayerToggleSprintEvent event) {
-		event.setCancelled(true);
-	}
 	
 	/**
 	 * FOR TESTING ONLY

@@ -63,6 +63,7 @@ public class HelloWorld extends JavaPlugin {
 
 		PluginManager pm = getServer().getPluginManager();
 		pm.registerEvents(new BlockListener(), this);
+		pm.registerEvents(new PlayerListener(), this);
 		pm.registerEvents(heroManager, this);
 
 		getServer().getScheduler().scheduleSyncRepeatingTask(this, heroManager, 0, 10);
@@ -90,9 +91,9 @@ public class HelloWorld extends JavaPlugin {
 		gnome = new GnomeItem(this);
 		gnomeSocketStart = new GnomeSocketStart(this);
 		gnomeSocketEnd = new GnomeSocketEnd(this);
-		SpoutManager.getFileManager().addToPreLoginCache(plugin, "http://dl.dropbox.com/u/29386658/gt/textures/gnome_socket_start_16x16.png");
-		SpoutManager.getFileManager().addToPreLoginCache(plugin, "http://dl.dropbox.com/u/29386658/gt/textures/gnome_socket_end_16x16.png");
-		SpoutManager.getFileManager().addToPreLoginCache(plugin, "http://dl.dropbox.com/u/29386658/gt/textures/gnome2_16x16.png");
+//		SpoutManager.getFileManager().addToPreLoginCache(plugin, "http://dl.dropbox.com/u/29386658/gt/textures/gnome_socket_start_16x16.png");
+//		SpoutManager.getFileManager().addToPreLoginCache(plugin, "http://dl.dropbox.com/u/29386658/gt/textures/gnome_socket_end_16x16.png");
+//		SpoutManager.getFileManager().addToPreLoginCache(plugin, "http://dl.dropbox.com/u/29386658/gt/textures/gnome2_16x16.png");
 	}
 
 	public static JavaPlugin getPlugin() {
