@@ -23,10 +23,10 @@ public abstract class PortableItem extends GenericCustomItem{
 	 * @param name Name of the Item
 	 * @param texture Texture for the new Item
 	 */
-	public PortableItem(Plugin plugin, String name, String texture) {
+	public PortableItem(final Plugin plugin, final String name, final String texture) {
 		super(plugin, name, texture);
 
-		//TODO: block type dependend values
+		//TODO block type dependend values
 		dropable = false;
 		tool = false;
 		transferable = false;
@@ -75,11 +75,19 @@ public abstract class PortableItem extends GenericCustomItem{
 		this.transferable = transferable;
 	}
 
+	/**
+	 * @return the ItemStack which represents this item
+	 */
 	public abstract ItemStack getItemStack();
 
+	/**
+	 * @param hero will be called if a hero puts this in his inventory
+	 */
 	public abstract void onAttachHero(Hero hero);
 	
-	
+	/**
+	 * @param hero will be called if a hero removes this from his inventory
+	 */
 	public abstract void onDetachHero(Hero hero);
 	
 }

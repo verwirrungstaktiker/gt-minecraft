@@ -66,6 +66,9 @@ public class Hero extends Character implements Listener{
 		return player;
 	}
 
+	/**
+	 * @return the Spout version of the wrapped Player
+	 */
 	public SpoutPlayer getSpoutPlayer() {
 		return SpoutManager.getPlayer(getPlayer());
 	}
@@ -148,6 +151,9 @@ public class Hero extends Character implements Listener{
 		throw new RuntimeException();
 	}
 
+	/**
+	 * @param item the new active item of the Hero
+	 */
 	private void innerSetActiveItem(final PortableItem item) {
 		activeItem = item;
 		getPlayer().getInventory().addItem(item.getItemStack());
@@ -157,6 +163,9 @@ public class Hero extends Character implements Listener{
 	}
 	
 	
+	/**
+	 * @return the old active item of the Hero
+	 */
 	public PortableItem removeActiveItem() {
 		PortableItem toRemove = activeItem;
 		
@@ -221,7 +230,7 @@ public class Hero extends Character implements Listener{
 	}
 	
 	@Override
-	public void applyEffects() {
+	public void applyAttributes() {
 
 		SpoutPlayer sPlayer = getSpoutPlayer();
 
@@ -236,7 +245,7 @@ public class Hero extends Character implements Listener{
 	 * @param event a PlayerDropItemEvent
 	 */
 	@EventHandler
-	public void handleItemDrop(PlayerDropItemEvent event) {
+	public void handleItemDrop(final PlayerDropItemEvent event) {
 		/*
 		if (event.getPlayer().equals(this.player)) {
 			if(inventory.activeItemDropable()) {
@@ -251,7 +260,7 @@ public class Hero extends Character implements Listener{
 	 * @param event PlayerPickupItemEvent
 	 */
 	@EventHandler
-	public void handleItemPickup(PlayerPickupItemEvent event) {
+	public void handleItemPickup(final PlayerPickupItemEvent event) {
 		/*
 		if (event.getPlayer().equals(this.player)) {
 			PortableItem newItem = new PortableItem(event.getItem().getItemStack());
@@ -265,7 +274,7 @@ public class Hero extends Character implements Listener{
 	 * @param event BlockPlaceEvent
 	 */
 	@EventHandler
-	public void handleBlockPlacing(BlockPlaceEvent event) {
+	public void handleBlockPlacing(final BlockPlaceEvent event) {
 		/*if (event.getPlayer().equals(this.player)) {
 			if (!inventory.getActiveItem().isPlacable()){
 				event.setCancelled(true);
@@ -280,15 +289,24 @@ public class Hero extends Character implements Listener{
 		return gui;
 	}
 	
-	public void addObserver(HeroObserver heroObserver) {
+	/**
+	 * @param heroObserver the observer to be added
+	 */
+	public void addObserver(final HeroObserver heroObserver) {
 		observers.add(heroObserver);
 	}
 	
-	public void removeObserver(HeroObserver heroObserver) {
+	/**
+	 * @param heroObserver the observer to be removed
+	 */
+	public void removeObserver(final HeroObserver heroObserver) {
 		observers.remove(heroObserver);
 	}
 	
-	public void notifyChanged(Notification notification) {
+	/**
+	 * @param notification the type of change which happened
+	 */
+	public void notifyChanged(final Notification notification) {
 		for(HeroObserver observer : observers) {
 			observer.update(this, notification);
 		}

@@ -25,6 +25,7 @@ public class HeroManager implements Listener, Runnable {
 	/**
 	 * Creates a new HeroManager
 	 * @param plugin the plugin we run
+	 * @param runningGames all currently running games
 	 */
 	public HeroManager(final JavaPlugin plugin, final Set<Game>runningGames) {
 		this.plugin = plugin;
@@ -90,13 +91,6 @@ public class HeroManager implements Listener, Runnable {
 		plugin.getServer()
 				  .getPluginManager()
 			  .registerEvents(listener, plugin);
-	}
-	
-	/**
-	 * @param listener to be unregistered for all events
-	 */
-	private void unregisterListener(final Listener listener) {
-		//listener.
 	}
 
 	@Override

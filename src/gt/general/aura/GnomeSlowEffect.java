@@ -9,7 +9,7 @@ import gt.general.Hero;
 public class GnomeSlowEffect implements Effect {
 	
 	// lowers the speed by 1/16
-	public final static double SLOWRATE = 0.0625;
+	public static final double SLOWRATE = 0.0625;
 	
 	@Override
 	public void performTick() {

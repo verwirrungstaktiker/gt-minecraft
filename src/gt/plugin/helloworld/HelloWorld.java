@@ -21,11 +21,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
-import org.getspout.spoutapi.SpoutManager;
-import org.getspout.spoutapi.gui.GenericLabel;
-import org.getspout.spoutapi.gui.WidgetAnchor;
 import org.getspout.spoutapi.inventory.SpoutItemStack;
-import org.getspout.spoutapi.player.SpoutPlayer;
 
 
 /**

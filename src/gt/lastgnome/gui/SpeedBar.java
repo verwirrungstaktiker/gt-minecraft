@@ -7,8 +7,6 @@ import gt.general.gui.GuiElement;
 import gt.lastgnome.GnomeItem;
 
 import org.getspout.spoutapi.gui.Color;
-import org.getspout.spoutapi.gui.ContainerType;
-import org.getspout.spoutapi.gui.GenericContainer;
 import org.getspout.spoutapi.gui.GenericGradient;
 import org.getspout.spoutapi.gui.GenericLabel;
 import org.getspout.spoutapi.gui.RenderPriority;
@@ -103,7 +101,10 @@ public class SpeedBar implements GuiElement{
 		}
 	}
 
-	private void setVisible(boolean state) {
+	/**
+	 * @param state The visibility of all elements of the speedbar
+	 */
+	private void setVisible(final boolean state) {
 		label.setVisible(state);
 		bar.setVisible(state);
 		background.setVisible(state);
