@@ -1,4 +1,4 @@
-package gt.plugin.helloworld;
+package gt.general.world;
 
 import org.bukkit.Location;
 import org.bukkit.World;
@@ -6,16 +6,12 @@ import org.bukkit.event.Listener;
 
 
 
-public abstract class CustomWorld implements Listener {
+public abstract class CustomWorld {
 	
 	private World world;
 	
 	public World getWorld() {
 		return world;
-	}
-
-	public void setWorld(World world) {
-		this.world = world;
 	}
 
 	public abstract Location getSpawn();
