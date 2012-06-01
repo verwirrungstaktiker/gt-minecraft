@@ -34,7 +34,7 @@ public class Hero extends Character implements Listener{
 	/**Passiv-Slot for tools*/
 	private PortableItem passivItem;
 
-	private final HeroGui gui;
+	private HeroGui gui;
 	
 	public enum Notification {
 		INVENTORY,
@@ -156,7 +156,6 @@ public class Hero extends Character implements Listener{
 	 */
 	private void innerSetActiveItem(final PortableItem item) {
 		activeItem = item;
-		getPlayer().getInventory().addItem(item.getItemStack());
 		
 		activeItem.onAttachHero(this);
 		notifyChanged(Notification.INVENTORY);
@@ -168,12 +167,7 @@ public class Hero extends Character implements Listener{
 	 */
 	public PortableItem removeActiveItem() {
 		PortableItem toRemove = activeItem;
-		
-		//getPlayer().getInventory().remove(activeItem.getItemStack());
-		getSpoutPlayer()
-			.getInventory()
-			.remove(activeItem.getItemStack());
-		
+	
 		activeItem = null;
 		
 		toRemove.onDetachHero(this);
@@ -211,6 +205,9 @@ public class Hero extends Character implements Listener{
 			//remove Item from MC-Player's inventory
 			getPlayer().setItemInHand(null);
 			activeItem = null;
+			
+			// TODO event!
+			
 		}
 		// TODO debug in else branch
 	}
@@ -282,6 +279,13 @@ public class Hero extends Character implements Listener{
 		}*/
 	}
 
+	/**
+	 * @param gui the gui associated with this Hero
+	 */
+	public void setGui(final HeroGui gui) {
+		this.gui = gui;
+	}
+	
 	/**
 	 * @return the gui associated with this Hero
 	 */

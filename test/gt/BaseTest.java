@@ -57,7 +57,9 @@ public class BaseTest {
 
 		PowerMockito.mockStatic(SpoutManager.class);
 		when(SpoutManager.getMaterialManager()).thenReturn(mm);
-		when(SpoutManager.getFileManager()).thenReturn(fm);		
+		when(SpoutManager.getFileManager()).thenReturn(fm);
+		
+		when(SpoutManager.getPlayer(any(Player.class))).thenReturn(mock(SpoutPlayer.class));
 		
 		//pseudo-initialize our plugin 
 		PowerMockito.mockStatic(HelloWorld.class);

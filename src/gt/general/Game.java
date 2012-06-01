@@ -23,7 +23,6 @@ public class Game implements Listener {
 	
 	/**
 	 * @param team The team playing this game
-	 * @param initialWorld Which world to instantiate
 	 */
 	public Game(final Team team) {
 		super();
@@ -87,7 +86,6 @@ public class Game implements Listener {
 	public void onEnd() {
 		// XXX not clean, but we want a factory
 	}
-	
 
 	/**
 	 * ensures there are no internal dependencies to prevent the game from garbage collection
@@ -124,7 +122,7 @@ public class Game implements Listener {
 	/**
 	 * @param world the world to set
 	 */
-	public void setWorld(World world) {
+	public void setWorld(final World world) {
 		this.world = world;
 	}
 	

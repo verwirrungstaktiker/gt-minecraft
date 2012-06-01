@@ -5,6 +5,11 @@ import java.util.Set;
 
 import org.bukkit.World;
 
+/**
+ * Implements common functionality for managing game modes.
+ * 
+ * @author Sebastian Fahnenschreiber
+ */
 public class GameManager implements GameObserver{
 
 	private final Set<Game> runningGames;
@@ -21,13 +26,16 @@ public class GameManager implements GameObserver{
 		this.initialWorld = initialWorld;
 	}
 	
-	protected Game startGame(final Game game, final World world) {
+	/**
+	 * @param game The Game to be initialized.
+	 * @param world The place of the Game.
+	 */
+	protected void startGame(final Game game, final World world) {
 		game.setWorld(world);
 		
 		game.getTeam().teleportTo(world.getSpawnLocation());
 		
 		runningGames.add(game);
-		return game;
 	}
 	
 	

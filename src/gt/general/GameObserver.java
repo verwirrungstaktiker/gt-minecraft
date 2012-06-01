@@ -6,6 +6,11 @@ public interface GameObserver {
 		GAMEEND
 	}
 	
-	//push style event
+	/**
+	 * push style event
+	 * 
+	 * @param game Where it happened.
+	 * @param type What happened.
+	 */
 	void update(Game game, EventType type);
 }

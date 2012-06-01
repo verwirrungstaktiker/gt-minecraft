@@ -42,17 +42,19 @@ public class LastGnomeGame extends Game implements Listener{
 		super(team);
 		
 		gnome = new GnomeItem();
-		
 		speedBars = new HashMap<Hero, SpeedBar>();
-		for(Hero hero : team.getPlayers()) {
-			SpeedBar speedBar = new SpeedBar();
-			hero.getGui().addGuiElement(speedBar);
-			speedBars.put(hero, speedBar);
-		}
-		
-		new TeamLostTrigger(this, null, HelloWorld.getTM());
-		
+
 		gameRunning = true;
+	}
+
+	
+	/**
+	 * @param hero
+	 */
+	public void upgradeGui(final Hero hero) {
+		SpeedBar speedBar = new SpeedBar();
+		hero.getGui().addGuiElement(speedBar);
+		speedBars.put(hero, speedBar);
 	}
 	
 	/**

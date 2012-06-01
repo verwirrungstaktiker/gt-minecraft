@@ -15,18 +15,20 @@ public class TeamLostTrigger extends Trigger{
 	 * @param callback runnable to be called
 	 * @param tm the TriggerManager for this trigger
 	 */
-	public TeamLostTrigger (LastGnomeGame game, Runnable callback, TriggerManager tm) {
+	public TeamLostTrigger (final LastGnomeGame game, final Runnable callback, final TriggerManager tm) {
 		super(false, callback, tm);
 		this.game = game;
 	}
 
 	@Override
 	public void checkTrigger() {
-		if (game.getGnomeBearer() == null) return;
+		if (game.getGnomeBearer() == null) {
+			return;
+		}
 		if (game.getGnomeBearer().getPlayer().getHealth() <= 0) {
 			tm.deregisterTrigger(this);
 			if (callback!= null) {
-			callback.run();
+				callback.run();
 			} else {
 				game.dispose();
 			}

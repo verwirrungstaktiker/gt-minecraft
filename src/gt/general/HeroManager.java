@@ -1,5 +1,7 @@
 package gt.general;
 
+import gt.general.gui.HeroGui;
+
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
@@ -21,6 +23,8 @@ public class HeroManager implements Listener, Runnable {
 	/**The plugin the manager runs in*/
 	private final JavaPlugin plugin;
 	
+	private final InventoryConnector inventoryConnector;
+	
 	private final Set<Game> runningGames;
 	/**
 	 * Creates a new HeroManager
@@ -32,6 +36,8 @@ public class HeroManager implements Listener, Runnable {
 		this.runningGames = runningGames;
 		registerListener(this);
 
+		inventoryConnector = new InventoryConnector();
+		
 		// simulate on each tick (?)
 		plugin
 			.getServer()
@@ -48,6 +54,7 @@ public class HeroManager implements Listener, Runnable {
 
 		Player player = ple.getPlayer();
 		
+		// TODO redo this
 		for (Game game : runningGames) {
 			Hero hero = game.getDisconnectedHero(player);
 			if (hero != null) {
@@ -59,8 +66,12 @@ public class HeroManager implements Listener, Runnable {
 		}
 		
 		Hero hero = new Hero(player);
-		registerListener(hero);
 		hero.getPlayer().getInventory().setMaxStackSize(1);
+		hero.setGui(new HeroGui(hero));
+		
+		hero.addObserver(inventoryConnector);
+		
+		registerListener(hero);
 		HEROS.put(player.getName(), hero);
 	}
 	
@@ -72,6 +83,8 @@ public class HeroManager implements Listener, Runnable {
 	public void playerLogout(final PlayerQuitEvent pqe) {
 		Hero hero = HEROS.get(pqe.getPlayer());
 		Team team = hero.getTeam();
+		
+		// TODO redo this
 		if (team != null) {
 			Game game = hero.getTeam().getGame();
 			if (game != null) {
