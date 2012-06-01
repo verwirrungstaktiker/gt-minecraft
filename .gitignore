@@ -4,3 +4,4 @@ res/CraftBukkit/world*
 res/CraftBukkit/plugins/HelloWorld.jar
 res/CraftBukkit/plugins/Spout/CRCCache.txt
 res/CraftBukkit/plugins/Spout/itemMap.txt
+.checkstyle
