@@ -20,8 +20,10 @@ import org.bukkit.event.player.PlayerInteractEntityEvent;
 /**
  * Game Controller for a Last-Gnome-Scenario
  */
-public class LastGnomeGame extends Game implements Listener {
+public class LastGnomeGame extends Game implements Listener{
 
+	private boolean gameRunning;
+	
 	private final GnomeItem gnome;
 
 	/** so that e.g. Zombies know who the Gnome-Bearer is */
@@ -48,6 +50,8 @@ public class LastGnomeGame extends Game implements Listener {
 		}
 		
 		new TeamLostTrigger(this, null, HelloWorld.getTM());
+		
+		gameRunning = true;
 	}
 	
 	/**
@@ -71,7 +75,7 @@ public class LastGnomeGame extends Game implements Listener {
 	@EventHandler
 	public void handleGnomPassing(final PlayerInteractEntityEvent event) {
 		
-		if (gnomeBearer.getPlayer().equals(event.getPlayer())) {	
+		if (gameRunning && gnomeBearer.getPlayer().equals(event.getPlayer())) {	
 			Entity target = event.getRightClicked();
 			
 			if (target instanceof Player) {
@@ -86,7 +90,7 @@ public class LastGnomeGame extends Game implements Listener {
 	 *
 	 * @param newBearer the new gnomeBearer
 	 */
-	synchronized void giveGnomeTo(final Hero newBearer) {
+	void giveGnomeTo(final Hero newBearer) {
 		
 		// If Player does not belong to the Team, stop here.
 		if (team.isMember(newBearer)
@@ -136,13 +140,17 @@ public class LastGnomeGame extends Game implements Listener {
 	}
 	
 	public void dispose() {
-		gnomeBearer.removeActiveItem();
+		
+		gameRunning = false;
 		super.dispose();
+		
+		gnomeBearer.removeActiveItem();
 		
 		for(Hero hero : speedBars.keySet()) {
 			SpeedBar speedBar = speedBars.get(hero);
 			hero.getGui().removeGuiElement(speedBar);
 		}
+		
 	}
 	
 	@Override
