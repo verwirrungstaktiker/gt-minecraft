@@ -16,23 +16,23 @@ import org.bukkit.plugin.Plugin;
 import org.getspout.spoutapi.inventory.SpoutItemStack;
 
 /**
- * Item-class for Gnome
+ * Item-class for Gnome.
  */
 public final class GnomeItem extends PortableItem {
-	
-	/** Aura associated with Gnome --> adds the slow stacks */
+
+	/** Aura associated with Gnome --> adds the slow stacks. */
 	private final Aura gnomeAura;
 
 	/** Effect associated with Gnome --> e.g. cannot jump */
 	private final Effect gnomeEffect;
-	
+
 	private final ItemStack itemStack;
-	
-	/** The ID that is replaced by this new item (flint) **/
+
+	/** The ID that is replaced by this new item (flint). **/
 	public static final int RAWID = 318;
-	
+
 	/**
-	 * Creates a new Gnome
+	 * Creates a new Gnome.
 	 * @param plugin  the plugin we run
 	 * @param name the name of the gnome
 	 * @param texture texture for the gnome
