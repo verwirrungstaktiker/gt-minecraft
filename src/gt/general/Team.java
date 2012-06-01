@@ -7,22 +7,14 @@ import java.util.Set;
  * Team which manages a group of four players
  */
 public class Team {
-	/**The empty team, assigned to all teamless heros*/
+	/** The empty team, assigned to all teamless heros */
 	public static final Team NOTEAM = new Team(new HashSet<Hero>());
 
-	/**Array of heros belonging to this team*/
+	/** Array of heros belonging to this team */
 	private Set<Hero> members;
 	
-	/***/
+	/** The Game this Team is currently playing */
 	private Game game;
-
-	public Game getGame() {
-		return game;
-	}
-
-	public void setGame(Game game) {
-		this.game = game;
-	}
 
 	/**
 	 * @param members the initial members of this team
@@ -48,5 +40,19 @@ public class Team {
 	 */
 	public boolean isMember(final Hero hero) {
 		return members.contains(hero);
+	}
+	
+	/**
+	 * @return the currently played Game
+	 */
+	public Game getGame() {
+		return game;
+	}
+
+	/**
+	 * @param game the Game to be played
+	 */
+	public void setGame(final Game game) {
+		this.game = game;
 	}
 }

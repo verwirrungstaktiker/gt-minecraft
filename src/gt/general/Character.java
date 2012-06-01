@@ -92,6 +92,9 @@ public abstract class Character {
 	}
 
 
+	/**
+	 * @param effect The effect to be removed from this character
+	 */
 	public void removeEffect(final Effect effect) {
 		computedAttributesTainted = true;
 		effects.remove(effect);
@@ -163,7 +166,7 @@ public abstract class Character {
 
 		if (computedAttributesTainted) {
 			calculateAttributes();
-			applyEffects();
+			applyAttributes();
 			computedAttributesTainted = false;
 		}
 	}
@@ -183,7 +186,10 @@ public abstract class Character {
 
 	}
 
-	public abstract void applyEffects();
+	/**
+	 * Applys the calculated Attributes to the ingame model
+	 */
+	public abstract void applyAttributes();
 
 	/**
 	 * returns the computed value of the attribute
