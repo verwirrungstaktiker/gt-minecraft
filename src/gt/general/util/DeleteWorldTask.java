@@ -7,7 +7,7 @@ public class DeleteWorldTask implements Runnable{
 	private File world;
 	
 	
-	public DeleteWorldTask(File world){
+	public DeleteWorldTask(final File world){
 		this.world = world;
 	}
 	

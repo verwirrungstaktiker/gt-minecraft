@@ -16,18 +16,27 @@ public class WorldManager {
 	
 	private final Set<WorldInstance> openWorlds;
 
-	public WorldManager(World initialWorld) {
+	/**
+	 * @param initialWorld the base world, where the initial spawn is
+	 */
+	public WorldManager(final World initialWorld) {
 		this.initialWorld = initialWorld;
 
 		openWorlds = new HashSet<WorldInstance>();
 	}
 
+	/**
+	 * @return the world containing the initial spawn
+	 */
 	public World getInitialWorld() {
 		return initialWorld;
 	}
 	
-	
-	protected World getWorldByName(String name) {
+	/**
+	 * @param name the name of the world
+	 * @return the minecraft representation of the world
+	 */
+	protected World getWorldByName(final String name) {
 		return HelloWorld
 				.getPlugin()
 				.getServer()
@@ -37,9 +46,9 @@ public class WorldManager {
 	/**
 	 * searchs for a Folder with low Index for an Instance 
 	 * @param world the World the instance would be made of
-	 * @return
+	 * @return the name of the next free instance name
 	 */
-	protected String findnextInstanceFolder(final World world) {
+	protected String findNextInstanceFolder(final World world) {
 		int i = 0;
 		File worldsfolder = world.getWorldFolder().getParentFile();
 		File temp;
@@ -72,6 +81,9 @@ public class WorldManager {
 		return wc.createWorld();		
 	}
 
+	/**
+	 * @return all currnently open worlds
+	 */
 	public Set<WorldInstance> getOpenWorlds() {
 		return openWorlds;
 	}

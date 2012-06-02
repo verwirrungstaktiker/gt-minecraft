@@ -6,14 +6,21 @@ import org.bukkit.World;
 
 public class LastGnomeWorldManager extends WorldManager {
 
-	public LastGnomeWorldManager(World initialWorld) {
+	/**
+	 * @param initialWorld the world where the initial spawn is
+	 */
+	public LastGnomeWorldManager(final World initialWorld) {
 		super(initialWorld);
 	}
 	
-	public LastGnomeWorldInstance instantiateWorld(String baseName) {
+	/**
+	 * @param baseName which world to instantiate
+	 * @return the instantiated world
+	 */
+	public LastGnomeWorldInstance instantiateWorld(final String baseName) {
 
 		World baseWorld = getWorldByName(baseName);
-		String newName = findnextInstanceFolder(baseWorld);
+		String newName = findNextInstanceFolder(baseWorld);
 		
 		LastGnomeWorldInstance lastGnomeWorld = new LastGnomeWorldInstance();
 			

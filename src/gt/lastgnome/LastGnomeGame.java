@@ -23,7 +23,7 @@ import org.bukkit.event.player.PlayerInteractEntityEvent;
 public class LastGnomeGame extends Game implements Listener{
 
 	
-	private WorldInstance worldWrapper;
+	private WorldInstance worldInstance;
 	
 	private boolean gameRunning;
 	
@@ -38,7 +38,6 @@ public class LastGnomeGame extends Game implements Listener{
 	 * initiates a new Last Gnome Game
 	 *
 	 * @param team the Team playing the game
-	 * @param world 
 	 */
 	public LastGnomeGame(final Team team) {
 		super(team);
@@ -51,7 +50,10 @@ public class LastGnomeGame extends Game implements Listener{
 
 	
 	/**
-	 * @param hero
+	 * TODO downgrade? is here the right place for this stuff?
+	 * 		better in game manager?
+	 * 
+	 * @param hero whose gui to be upgraded
 	 */
 	public void upgradeGui(final Hero hero) {
 		SpeedBar speedBar = new SpeedBar();
@@ -181,11 +183,14 @@ public class LastGnomeGame extends Game implements Listener{
 
 
 	@Override
-	public WorldInstance getWorldWrapper() {
-		return worldWrapper;
+	public WorldInstance getWorldInstance() {
+		return worldInstance;
 	}
 	
-	public void setWorldWrapper(final WorldInstance worldWrapper) {
-		this.worldWrapper = worldWrapper;
+	/**
+	 * @param worldInstance where to play the game
+	 */
+	public void setWorldWrapper(final LastGnomeWorldInstance worldInstance) {
+		this.worldInstance = worldInstance;
 	}
 }

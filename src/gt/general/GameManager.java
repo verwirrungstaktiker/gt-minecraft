@@ -1,7 +1,6 @@
 package gt.general;
 
 import gt.general.world.WorldInstance;
-import gt.general.world.WorldManager;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -31,10 +30,9 @@ public class GameManager implements GameObserver{
 	
 	/**
 	 * @param game The Game to be initialized.
-	 * @param world The place of the Game.
 	 */
 	protected void startGame(final Game game) {
-		WorldInstance worldWrapper = game.getWorldWrapper();
+		WorldInstance worldWrapper = game.getWorldInstance();
 		game.getTeam().teleportTo(worldWrapper.getSpawnLocation());
 	}
 	
