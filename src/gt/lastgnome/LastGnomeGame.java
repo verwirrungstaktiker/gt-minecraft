@@ -4,14 +4,13 @@ import gt.general.Game;
 import gt.general.character.Hero;
 import gt.general.character.HeroManager;
 import gt.general.character.Team;
+import gt.general.world.WorldInstance;
 import gt.lastgnome.gui.SpeedBar;
-import gt.plugin.helloworld.HelloWorld;
 
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 
-import org.bukkit.World;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -23,6 +22,9 @@ import org.bukkit.event.player.PlayerInteractEntityEvent;
  */
 public class LastGnomeGame extends Game implements Listener{
 
+	
+	private WorldInstance worldWrapper;
+	
 	private boolean gameRunning;
 	
 	private final GnomeItem gnome;
@@ -175,5 +177,15 @@ public class LastGnomeGame extends Game implements Listener{
 	public void onEnd() {
 		// TODO Auto-generated method stub
 		
+	}
+
+
+	@Override
+	public WorldInstance getWorldWrapper() {
+		return worldWrapper;
+	}
+	
+	public void setWorldWrapper(final WorldInstance worldWrapper) {
+		this.worldWrapper = worldWrapper;
 	}
 }

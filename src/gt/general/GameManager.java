@@ -1,5 +1,8 @@
 package gt.general;
 
+import gt.general.world.WorldInstance;
+import gt.general.world.WorldManager;
+
 import java.util.HashSet;
 import java.util.Set;
 
@@ -13,7 +16,7 @@ import org.bukkit.World;
 public class GameManager implements GameObserver{
 
 	private final Set<Game> runningGames;
-	
+
 	/** The world where the players spawn initially */
 	private final World initialWorld;
 	
@@ -30,12 +33,9 @@ public class GameManager implements GameObserver{
 	 * @param game The Game to be initialized.
 	 * @param world The place of the Game.
 	 */
-	protected void startGame(final Game game, final World world) {
-		game.setWorld(world);
-		
-		game.getTeam().teleportTo(world.getSpawnLocation());
-		
-		runningGames.add(game);
+	protected void startGame(final Game game) {
+		WorldInstance worldWrapper = game.getWorldWrapper();
+		game.getTeam().teleportTo(worldWrapper.getSpawnLocation());
 	}
 	
 	
@@ -45,6 +45,13 @@ public class GameManager implements GameObserver{
 			endGame(game);
 		}
 		
+	}
+
+	/**
+	 * @return the runningGames
+	 */
+	public Set<Game> getRunningGames() {
+		return runningGames;
 	}
 	
 	/**
@@ -62,6 +69,8 @@ public class GameManager implements GameObserver{
 	public void endAllGames() {
 		for(Game game : runningGames) {
 			endGame(game);
+			// TODO remove from list
 		}
 	}
+
 }

@@ -18,6 +18,7 @@ import org.bukkit.World;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import org.bukkit.event.Listener;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -114,29 +115,18 @@ public class HelloWorld extends JavaPlugin {
 	public boolean onCommand(final CommandSender sender, final Command cmd, final  String label, final String[] args) {
 		if (sender instanceof Player && cmd.getName().equalsIgnoreCase("gg")) {
 			Player player = (Player) sender;
-			getServer().broadcastMessage("starting gnome game: " + player.getDisplayName());
 			
 			// TODO this should be a factory once we have more than one game mode
 			Hero starter = HeroManager.getHero(player);
-			
 			Team team = new Team(HeroManager.getAllHeros());
 			
-			World worldPrototype = getServer().getWorld("world_nether");
-			String newWorldFolder = CopyUtil.findnextInstanceFolder(worldPrototype);
-			World world = CopyUtil.copyWorld(worldPrototype, newWorldFolder);
-			
-			getServer().broadcastMessage(starter.getPlayer().getDisplayName());
-			
-			Game lgg = lastGnomeGameManager.startGame(team, starter, world);
-			
-			// TODO this must be better
-			getServer().getPluginManager().registerEvents(lgg, this);
+			getServer().broadcastMessage("starting gnome game: " + starter.getPlayer().getName());
+			lastGnomeGameManager.startGame(team, starter, "world_nether");
 			
 			return true;
 		} else if (cmd.getName().equalsIgnoreCase("end")) {
 			
 			System.out.println("ending games");
-	
 			lastGnomeGameManager.endAllGames();
 			
 			
@@ -160,4 +150,12 @@ public class HelloWorld extends JavaPlugin {
 	public Set<Game> getRunningGames() {
 		return runningGames;
 	}
+	
+	public static void registerListener(Listener listener) {
+		getPlugin()
+			.getServer()
+			.getPluginManager()
+			.registerEvents(listener, getPlugin());
+	}
+	
 }

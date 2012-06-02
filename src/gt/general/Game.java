@@ -2,23 +2,20 @@ package gt.general;
 
 import gt.general.character.Hero;
 import gt.general.character.Team;
-import gt.general.util.DeleteWorldTask;
-import gt.plugin.helloworld.HelloWorld;
+import gt.general.world.WorldInstance;
 
 import java.util.HashMap;
 
-import org.bukkit.Server;
-import org.bukkit.World;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
 
-public class Game implements Listener {
+public abstract class Game implements Listener {
 	
 	/** The team playing this game */
 	private final Team team;
 	
 	/** The instance where the game is played */
-	private World world;
+	private WorldInstance world;
 	
 	/** Heros, which are currently offline */
 	private final HashMap<Player,Hero> disconnectedHeros;
@@ -85,9 +82,7 @@ public class Game implements Listener {
 	/**
 	 * handles the victory or defeat of a game
 	 */
-	public void onEnd() {
-		// XXX not clean, but we want a factory
-	}
+	public abstract void onEnd();
 
 	/**
 	 * ensures there are no internal dependencies to prevent the game from garbage collection
@@ -96,13 +91,14 @@ public class Game implements Listener {
 	public void dispose() {
 		
 		// this has nothing to do here
-		
+		/*
 		Server server = HelloWorld.getPlugin().getServer();
 		
 		DeleteWorldTask dwt = new DeleteWorldTask(world.getWorldFolder()); 
 		server.getScheduler().scheduleSyncDelayedTask(HelloWorld.getPlugin(), dwt, 80);
 		
-		server.unloadWorld(world, true);		
+		server.unloadWorld(world, true);
+		*/		
 	}
 
 	/**
@@ -115,17 +111,5 @@ public class Game implements Listener {
 	/**
 	 * @return the world
 	 */
-	public World getWorld() {
-		return world;
-	}
-
-
-
-	/**
-	 * @param world the world to set
-	 */
-	public void setWorld(final World world) {
-		this.world = world;
-	}
-	
+	public abstract WorldInstance getWorldWrapper();	
 }
