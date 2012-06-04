@@ -4,8 +4,6 @@ import gt.plugin.helloworld.HelloWorld;
 
 import org.bukkit.World;
 import org.bukkit.plugin.Plugin;
-import org.getspout.commons.entity.Player;
-import org.getspout.spoutapi.block.design.*;
 import org.getspout.spoutapi.material.block.GenericCubeCustomBlock;
 import org.getspout.spoutapi.player.SpoutPlayer;
 
@@ -44,13 +42,12 @@ public class GnomeSocketEnd extends GenericCubeCustomBlock {
 	}
 	
 	@Override
-	public boolean onBlockInteract(World world, int x, int y, int z, SpoutPlayer player) {
+	public boolean onBlockInteract(final World world, final int x, final int y, final int z, final SpoutPlayer player) {
 		if(player.getInventory().contains(GnomeItem.RAWID)) {
 			player.sendMessage("The Gnome has been saved");
 			player.getInventory().remove(GnomeItem.RAWID);
 			//TODO: some extern method could be called here
-		}
-		else {
+		} else {
 			player.sendMessage("The mighty Gnome Socket demands the Gnome!");
 		}
 		return true;

@@ -90,7 +90,7 @@ public class HelloWorld extends JavaPlugin {
 	/**
 	 * instantiate gnome block and precache it's texture
 	 */
-	@SuppressWarnings("unused")
+//	@SuppressWarnings("unused")
 	private void setupGnome() {
 		gnome = new GnomeItem(this);
 		gnomeSocketStart = new GnomeSocketStart(this);
