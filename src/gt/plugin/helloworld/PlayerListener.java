@@ -40,14 +40,32 @@ public class PlayerListener implements Listener {
 	/** prevents carrying more than one item of the same kind **/
 	@EventHandler
 	public final void carryOnlyOneOfEachKind(final PlayerPickupItemEvent event) {
-		//TODO: Carry max 2 items
 		ItemStack eventItem = event.getItem().getItemStack();
 		PlayerInventory inv = event.getPlayer().getInventory();
 				
 		boolean itemAlreadyCarried = inv.contains(eventItem);
 		boolean gnomeCarried =  inv.contains(GnomeItem.RAWID);
-		if (itemAlreadyCarried || gnomeCarried) {
+		boolean twoItemsCarried = inventoryContainsTwoPlusStacks(inv);
+		if (itemAlreadyCarried || gnomeCarried || twoItemsCarried) {
 			event.setCancelled(true);
 		}
+	}
+	
+	/**
+	 * quick & dirty
+	 * @return true if inventory contains > 1 stacks
+	 */
+	private boolean inventoryContainsTwoPlusStacks(final PlayerInventory inv) {
+		ItemStack[] contents = inv.getContents();
+		int itemcount = 0;
+		for(int i=0; i<contents.length; i++) {
+			if(contents[i] != null) {
+				itemcount++;
+			}
+			if(itemcount > 1) {
+				return true;
+			}
+		}
+		return false;
 	}
 }

@@ -37,7 +37,7 @@ public class BlockListener implements Listener {
 	 * @param event
 	 */
 	@EventHandler
-	public void stopGoldBlockBreak(BlockBreakEvent event) {
+	public void clearInventoryOnGoldBlockBreak(BlockBreakEvent event) {
 		if (event.getBlock().getType() == Material.GOLD_BLOCK) {
 			event.setCancelled(true);
 			event.getPlayer().sendMessage(ChatColor.GREEN + "Cleaned up your inventory!");
