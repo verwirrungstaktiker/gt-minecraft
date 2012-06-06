@@ -51,7 +51,7 @@ public class TeamManager {
 	 * @param team The team to be disbanded.
 	 */
 	public void disband(final Team team) {
-				
+		
 		for(Hero hero : team.getPlayers()) {
 			hero.getGui().removeGuiElement(GuiElementType.TEAMFRAME);
 		}
@@ -77,8 +77,8 @@ public class TeamManager {
 		team.addHero(hero);
 		hero.setTeam(team);
 		
-		TeamFrame teamFrame = new TeamFrame(team);
-		hero.getGui().addGuiElement(GuiElementType.TEAMFRAME, teamFrame);		
+		hero.getGui().addGuiElement(GuiElementType.TEAMFRAME,
+									new TeamFrame(team));
 	}
 
 	/**
