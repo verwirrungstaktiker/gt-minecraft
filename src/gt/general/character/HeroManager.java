@@ -127,6 +127,11 @@ public class HeroManager implements Listener, Runnable {
 	}
 	
 
+	public static Hero getHero(String name) {
+		return HEROS.get(name);
+		
+	}
+
 	/**
 	 * @return all currently online heros
 	 */

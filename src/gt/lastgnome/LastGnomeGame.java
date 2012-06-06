@@ -4,12 +4,11 @@ import gt.general.Game;
 import gt.general.character.Hero;
 import gt.general.character.HeroManager;
 import gt.general.character.Team;
+import gt.general.gui.GuiElementType;
 import gt.general.world.WorldInstance;
 import gt.lastgnome.gui.SpeedBar;
 
-import java.util.HashMap;
 import java.util.Iterator;
-import java.util.Map;
 
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
@@ -32,8 +31,6 @@ public class LastGnomeGame extends Game implements Listener{
 	/** so that e.g. Zombies know who the Gnome-Bearer is */
 	private Hero gnomeBearer;
 	
-	private final Map<Hero, SpeedBar> speedBars;
-	
 	/**
 	 * initiates a new Last Gnome Game
 	 *
@@ -43,8 +40,6 @@ public class LastGnomeGame extends Game implements Listener{
 		super(team);
 		
 		gnome = new GnomeItem();
-		speedBars = new HashMap<Hero, SpeedBar>();
-
 		gameRunning = true;
 	}
 
@@ -57,8 +52,7 @@ public class LastGnomeGame extends Game implements Listener{
 	 */
 	public void upgradeGui(final Hero hero) {
 		SpeedBar speedBar = new SpeedBar();
-		hero.getGui().addGuiElement(speedBar);
-		speedBars.put(hero, speedBar);
+		hero.getGui().addGuiElement(GuiElementType.SPEEDBAR, speedBar);
 	}
 	
 	/**
@@ -154,9 +148,8 @@ public class LastGnomeGame extends Game implements Listener{
 		
 		gnomeBearer.removeActiveItem();
 		
-		for(Hero hero : speedBars.keySet()) {
-			SpeedBar speedBar = speedBars.get(hero);
-			hero.getGui().removeGuiElement(speedBar);
+		for(Hero hero : getTeam().getPlayers()) {
+			hero.getGui().removeGuiElement(GuiElementType.SPEEDBAR);
 		}
 		
 	}

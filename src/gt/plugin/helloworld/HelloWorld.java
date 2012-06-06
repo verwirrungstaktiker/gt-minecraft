@@ -4,6 +4,7 @@ import gt.general.Game;
 import gt.general.character.Hero;
 import gt.general.character.HeroManager;
 import gt.general.character.Team;
+import gt.general.character.TeamManager;
 import gt.general.trigger.TriggerManager;
 import gt.general.util.CopyUtil;
 import gt.lastgnome.GnomeItem;
@@ -44,6 +45,8 @@ public class HelloWorld extends JavaPlugin {
 	
 	private LastGnomeGameManager lastGnomeGameManager;
 	
+	private TeamManager teamManager;
+	
 	public static TriggerManager getTM() {
 		return tm;
 	}
@@ -62,6 +65,7 @@ public class HelloWorld extends JavaPlugin {
 		runningGames = new HashSet<Game>();
 		heroManager = new HeroManager(this,runningGames);
 		tm = new TriggerManager();
+		teamManager = new TeamManager();
 
 		PluginManager pm = getServer().getPluginManager();
 		pm.registerEvents(new BlockListener(), this);
@@ -87,10 +91,26 @@ public class HelloWorld extends JavaPlugin {
 		}
 	}
 	
+	public static void registerListener(Listener listener) {
+		getPlugin()
+			.getServer()
+			.getPluginManager()
+			.registerEvents(listener, getPlugin());
+	}
+
+
+
+
+	public Set<Game> getRunningGames() {
+		return runningGames;
+	}
+
+
+
+
 	/**
 	 * instantiate gnome block and precache it's texture
 	 */
-	@SuppressWarnings("unused")
 	private void setupGnome() {
 		gnome = new GnomeItem(this);
 		gnomeSocketStart = new GnomeSocketStart(this);
@@ -113,49 +133,109 @@ public class HelloWorld extends JavaPlugin {
 	 */
 	@Override
 	public boolean onCommand(final CommandSender sender, final Command cmd, final  String label, final String[] args) {
-		if (sender instanceof Player && cmd.getName().equalsIgnoreCase("gg")) {
-			Player player = (Player) sender;
-			
-			// TODO this should be a factory once we have more than one game mode
-			Hero starter = HeroManager.getHero(player);
-			Team team = new Team(HeroManager.getAllHeros());
-			
-			getServer().broadcastMessage("starting gnome game: " + starter.getPlayer().getName());
-			lastGnomeGameManager.startGame(team, starter, "world_nether");
-			
+		
+		/*
+		 * Gnome game
+		 */
+		if (isPlayer(sender) && commandEquals(cmd, "gg")) {
+			startGnomeGame(sender);
 			return true;
-		} else if (cmd.getName().equalsIgnoreCase("end")) {
 			
-			System.out.println("ending games");
-			lastGnomeGameManager.endAllGames();
+		} else if (commandEquals(cmd, "end")) {
+			endAllGames();
+			return true;
+		
+		/*
+		 * Team management
+		 */
+		} else if (isPlayer(sender) && commandEquals(cmd, "team")) {
+			dispatchTeamCommand(sender, args);
 			
-			
-		} else if (cmd.getName().equalsIgnoreCase("gc")) {
+		/*
+		 * Debug / Testing
+		 */
+		} else if (commandEquals(cmd, "gc")) {
 			System.gc();
 			return true;
-		} else if (sender instanceof Player && cmd.getName().equalsIgnoreCase("test")) {
+			
+		} else if (commandEquals(cmd, "test")) {
 			System.out.println("TEST");
-			
-		} else if (cmd.getName().equalsIgnoreCase("socket")) {
-			ItemStack items = new SpoutItemStack(HelloWorld.gnomeSocketStart, 1);
-			getServer().getPlayer(sender.getName()).getInventory().addItem(items);
-			
-			items = new SpoutItemStack(HelloWorld.gnomeSocketEnd, 1);
-			getServer().getPlayer(sender.getName()).getInventory().addItem(items);
 			return true;
+			
+		} else if (isPlayer(sender) && commandEquals(cmd, "socket")) {
+			giveSocketsToPlayer(sender);
+			return true;
+			
 		}
 		return false;
 	}
 
-	public Set<Game> getRunningGames() {
-		return runningGames;
+	private boolean commandEquals(final Command cmd, final String string) {
+		return cmd.getName().equalsIgnoreCase(string);
+	}
+
+	private boolean isPlayer(final CommandSender sender) {
+		return sender instanceof Player;
+	}
+
+	private void startGnomeGame(final CommandSender sender) {
+		Player player = (Player) sender;
+		
+		// TODO this should be a factory once we have more than one game mode
+		Hero starter = HeroManager.getHero(player);
+		Team team = new Team(HeroManager.getAllHeros());
+		
+		getServer().broadcastMessage("starting gnome game: " + starter.getPlayer().getName());
+		lastGnomeGameManager.startGame(team, starter, "world_nether");
+	}
+
+	private void endAllGames() {
+		System.out.println("ending games");
+		lastGnomeGameManager.endAllGames();
 	}
 	
-	public static void registerListener(Listener listener) {
-		getPlugin()
-			.getServer()
-			.getPluginManager()
-			.registerEvents(listener, getPlugin());
+	private void dispatchTeamCommand(CommandSender sender, String[] args) {
+		Hero invoker = HeroManager.getHero((Player) sender);
+		
+		// disband the team
+		if (args.length == 1 && args[0].equalsIgnoreCase("disband")) {
+			
+			System.out.println("disbanded a team");
+			teamManager.disband(invoker.getTeam());
+			return;
+		}
+		
+		// create a new team
+		if (invoker.getTeam() == Team.NOTEAM) {
+			teamManager.initiateTeam(invoker);
+		}
+		
+		for (String name : args) {
+			Team team = invoker.getTeam();
+			Hero hero = HeroManager.getHero(name);
+			
+			if (hero != null) {
+				teamManager.addHeroToTeam(team, hero);
+			} else {
+				sender.sendMessage("no player with name: " + name);
+			}
+			
+		}
+		
+		// now the invoker must have a team
+		// XXX DEBUG
+		System.out.println(invoker.getTeam().toString());
+		
+		
+		
+	}
+
+	private void giveSocketsToPlayer(final CommandSender sender) {
+		ItemStack items = new SpoutItemStack(HelloWorld.gnomeSocketStart, 1);
+		getServer().getPlayer(sender.getName()).getInventory().addItem(items);
+		
+		items = new SpoutItemStack(HelloWorld.gnomeSocketEnd, 1);
+		getServer().getPlayer(sender.getName()).getInventory().addItem(items);
 	}
 	
 }

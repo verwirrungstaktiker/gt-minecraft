@@ -18,7 +18,7 @@ import org.getspout.spoutapi.gui.WidgetAnchor;
  * 
  * @author sebastian
  */
-public class SpeedBar implements GuiElement{
+public class SpeedBar implements GuiElement {
 	
 	private static final int BASEWIDTH = 100;
 	private static final int BASEHEIGHT = 20;
@@ -59,16 +59,21 @@ public class SpeedBar implements GuiElement{
 	}
 
 	@Override
-	public void attach(final Hero hero) {		
+	public void attach(final Hero hero) {
 		hero.getGui().attachWidget(label);		
 		hero.getGui().attachWidget(bar);
 		hero.getGui().attachWidget(background);
 		
 		setVisible(false);
+		
+		hero.addObserver(this);
 	}
 
 	@Override
 	public void detach(final Hero hero) {
+		
+		hero.removeObserver(this);
+		
 		hero.getGui().removeWidget(label);
 		hero.getGui().removeWidget(bar);
 		hero.getGui().removeWidget(background);

@@ -3,15 +3,16 @@ package gt.general.gui;
 import gt.general.character.Hero;
 import gt.plugin.helloworld.HelloWorld;
 
+import java.util.EnumMap;
 import java.util.HashSet;
-import java.util.Set;
+import java.util.Map;
 
 import org.getspout.spoutapi.gui.Widget;
 
 public class HeroGui {
 
 	// XXX do we really need this set?
-	private final Set<GuiElement> guiElements;
+	private final Map<GuiElementType, GuiElement> guiElements;
 	
 	private final Hero holder;
 	
@@ -19,36 +20,38 @@ public class HeroGui {
 	 * @param holder To which hero this Gui is coupled
 	 */
 	public HeroGui (final Hero holder) {
-		guiElements = new HashSet<GuiElement>();
+		guiElements = new EnumMap<GuiElementType, GuiElement>(GuiElementType.class);
 		this.holder = holder;
 	}
 	
 	/**
 	 * @param ge The GuiElement to be added to this Gui
 	 */
-	public void addGuiElement(final GuiElement ge) {
-		guiElements.add(ge);
-		ge.attach(holder);
+	public void addGuiElement(final GuiElementType get, final GuiElement ge) {
 		
-		holder.addObserver(ge);
+		/*
+		 * TODO catch if there is already more than one element
+		 */
+		
+		guiElements.put(get, ge);
+		ge.attach(holder);
 	}
 	
 	/**
 	 * @param ge The GuiElement to be removed from this Gui
 	 */
-	public void removeGuiElement(final GuiElement ge) {
-		guiElements.remove(ge);
-		holder.removeObserver(ge);
+	public void removeGuiElement(final GuiElementType get) {
 		
-		ge.detach(holder);
+		GuiElement ge = guiElements.remove(get);
+		holder.removeObserver(ge);
 	}
 	
 	/**
 	 * @param ge The GuiElement to be checked
 	 * @return true if the GuiElement is displayed on this Gui
 	 */
-	public boolean hasGuiElement(final GuiElement ge) {
-		return guiElements.contains(ge);
+	public boolean hasGuiElement(final GuiElementType get) {
+		return guiElements.containsKey(get);
 	}
 	
 	/**
