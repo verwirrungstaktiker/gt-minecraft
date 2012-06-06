@@ -3,9 +3,11 @@ package gt.plugin.helloworld;
 import gt.lastgnome.GnomeItem;
 
 import org.bukkit.ChatColor;
+import org.bukkit.Location;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerDropItemEvent;
+import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.event.player.PlayerPickupItemEvent;
 import org.bukkit.event.player.PlayerToggleSprintEvent;
 import org.bukkit.inventory.ItemStack;
@@ -13,7 +15,7 @@ import org.bukkit.inventory.PlayerInventory;
 import org.getspout.spoutapi.player.SpoutPlayer;
 
 public class PlayerListener implements Listener {
-
+	
 	/** prevent sprinting **/
 	@EventHandler
 	public final void preventSprinting(final PlayerToggleSprintEvent event) {

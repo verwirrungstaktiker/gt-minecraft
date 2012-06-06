@@ -66,6 +66,7 @@ public class HelloWorld extends JavaPlugin {
 		PluginManager pm = getServer().getPluginManager();
 		pm.registerEvents(new BlockListener(), this);
 		pm.registerEvents(new PlayerListener(), this);
+		pm.registerEvents(new KeyPressListener(), this);
 		pm.registerEvents(heroManager, this);
 
 		getServer().getScheduler().scheduleSyncRepeatingTask(this, heroManager, 0, 10);
