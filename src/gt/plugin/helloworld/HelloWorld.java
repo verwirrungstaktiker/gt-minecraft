@@ -124,7 +124,7 @@ public class HelloWorld extends JavaPlugin {
 	}
 	
 	/**
-	 * 
+	 * TODO this should be encapsuled in a extra class
 	 */
 	@Override
 	public boolean onCommand(final CommandSender sender, final Command cmd, final  String label, final String[] args) {
@@ -145,6 +145,7 @@ public class HelloWorld extends JavaPlugin {
 		 */
 		} else if (isPlayer(sender) && commandEquals(cmd, "team")) {
 			dispatchTeamCommand(sender, args);
+			return true;
 			
 		/*
 		 * Debug / Testing
@@ -165,14 +166,29 @@ public class HelloWorld extends JavaPlugin {
 		return false;
 	}
 
+	/**
+	 * @param cmd The Command to be matched.
+	 * @param string The case insensitive String to match the Command.
+	 * @return true if the Command matches the String
+	 */
 	private boolean commandEquals(final Command cmd, final String string) {
 		return cmd.getName().equalsIgnoreCase(string);
 	}
 
-	private boolean isPlayer(final CommandSender sender) {
-		return sender instanceof Player;
+	/**
+	 * @param commandSender the commandSender to be tested
+	 * @return true if commandSender is a subclass of Player
+	 */
+	private boolean isPlayer(final CommandSender commandSender) {
+		return commandSender instanceof Player;
 	}
 
+	/**
+	 * Handles the <tt>/gg</tt> command.
+	 * Starts a new LastGnomeGame for the Team of the sender.
+	 * 
+	 * @param sender the starter of the last gnome game
+	 */
 	private void startGnomeGame(final CommandSender sender) {
 		Player player = (Player) sender;
 		
@@ -184,12 +200,24 @@ public class HelloWorld extends JavaPlugin {
 		lastGnomeGameManager.startGame(team, starter, "world_nether");
 	}
 
+	/**
+	 * Handles the <tt>/end</tt> command.
+	 * Ends all currently running games.
+	 */
 	private void endAllGames() {
 		System.out.println("ending games");
 		lastGnomeGameManager.endAllGames();
 	}
 	
-	private void dispatchTeamCommand(CommandSender sender, String[] args) {
+	/**
+	 * Handles the <tt>/team</tt> command.
+	 * /team disband Deletes the team of the sender
+	 * /team [nick] ... Creates a new team and invites the attached Heros
+	 * 
+	 * @param sender who typed /team
+	 * @param args arguments attached to the command
+	 */
+	private void dispatchTeamCommand(final CommandSender sender, final String[] args) {
 		Hero invoker = HeroManager.getHero((Player) sender);
 		
 		// disband the team
@@ -205,26 +233,27 @@ public class HelloWorld extends JavaPlugin {
 			teamManager.initiateTeam(invoker);
 		}
 		
+		// now the invoker must have a team
+		Team team = invoker.getTeam();
 		for (String name : args) {
-			Team team = invoker.getTeam();
-			Hero hero = HeroManager.getHero(name);
 			
-			if (hero != null) {
-				teamManager.addHeroToTeam(team, hero);
-			} else {
-				sender.sendMessage("no player with name: " + name);
+			try {
+				teamManager.addHeroToTeamByName(team, name);
+			} catch (TeamManager.TeamJoinException tje) {
+				sender.sendMessage(tje.getMessage());
 			}
 			
 		}
 		
-		// now the invoker must have a team
 		// XXX DEBUG
 		System.out.println(invoker.getTeam().toString());
-		
-		
-		
 	}
 
+	/**
+	 * XXX DEBUG
+	 * 
+	 * @param sender 
+	 */
 	private void giveSocketsToPlayer(final CommandSender sender) {
 		ItemStack items = new SpoutItemStack(HelloWorld.gnomeSocketStart, 1);
 		getServer().getPlayer(sender.getName()).getInventory().addItem(items);

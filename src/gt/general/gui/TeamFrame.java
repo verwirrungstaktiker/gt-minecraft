@@ -1,18 +1,19 @@
 package gt.general.gui;
 
-import org.getspout.spoutapi.gui.GenericGradient;
-import org.getspout.spoutapi.gui.GenericLabel;
-
 import gt.general.character.Hero;
+import gt.general.character.Hero.Notification;
 import gt.general.character.Team;
 import gt.general.character.TeamObserver;
-import gt.general.character.Hero.Notification;
+
+import org.getspout.spoutapi.gui.GenericLabel;
 
 public class TeamFrame implements GuiElement, TeamObserver {
 
 	private final Team team;
 	
+	private final GenericLabel testLabel;
 	
+	/*
 	private class MemberFrame {
 		
 		private final GenericGradient background;
@@ -25,23 +26,24 @@ public class TeamFrame implements GuiElement, TeamObserver {
 		}
 		
 	}
+	*/
 	
 	public TeamFrame(final Team team) {
 		this.team = team;
+		
+		testLabel = new GenericLabel("test");
 		
 		team.addTeamObserver(this);
 	}
 	
 	@Override
 	public void attach(final Hero hero) {
-		// TODO Auto-generated method stub
-		
+		hero.getGui().attachWidget(testLabel);
 	}
 
 	@Override
 	public void detach(final Hero hero) {
-		// TODO Auto-generated method stub
-		
+		hero.getGui().removeWidget(testLabel);
 	}
 
 	@Override
@@ -57,8 +59,4 @@ public class TeamFrame implements GuiElement, TeamObserver {
 		// TODO ensure, every Hero has a registered listener
 		
 	}
-	
-	
-	
-
 }
