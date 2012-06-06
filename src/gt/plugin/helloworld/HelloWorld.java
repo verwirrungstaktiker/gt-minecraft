@@ -70,6 +70,7 @@ public class HelloWorld extends JavaPlugin {
 		PluginManager pm = getServer().getPluginManager();
 		pm.registerEvents(new BlockListener(), this);
 		pm.registerEvents(new PlayerListener(), this);
+		pm.registerEvents(new KeyPressListener(), this);
 		pm.registerEvents(heroManager, this);
 
 		getServer().getScheduler().scheduleSyncRepeatingTask(this, heroManager, 0, 10);
@@ -98,16 +99,10 @@ public class HelloWorld extends JavaPlugin {
 			.registerEvents(listener, getPlugin());
 	}
 
-
-
-
 	public Set<Game> getRunningGames() {
 		return runningGames;
 	}
-
-
-
-
+	
 	/**
 	 * instantiate gnome block and precache it's texture
 	 */
