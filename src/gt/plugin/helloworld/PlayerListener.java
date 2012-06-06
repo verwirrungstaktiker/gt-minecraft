@@ -20,9 +20,9 @@ public class PlayerListener implements Listener {
 		SpoutPlayer player = (SpoutPlayer) event.getPlayer();
 		// cancelling the event doesn't do anything, so have this dirty hack instead
 		if (event.isSprinting()) {
-			player.setWalkingMultiplier(0.66);
+			player.setWalkingMultiplier(player.getWalkingMultiplier()*0.66);
 		} else {
-			player.setWalkingMultiplier(1.0);
+			player.setWalkingMultiplier(player.getWalkingMultiplier()*1.5);
 		}
 	}
 
