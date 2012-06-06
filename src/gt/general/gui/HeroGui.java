@@ -4,7 +4,6 @@ import gt.general.character.Hero;
 import gt.plugin.helloworld.HelloWorld;
 
 import java.util.EnumMap;
-import java.util.HashSet;
 import java.util.Map;
 
 import org.getspout.spoutapi.gui.Widget;
@@ -25,6 +24,7 @@ public class HeroGui {
 	}
 	
 	/**
+	 * @param get The type of the gui element to be added
 	 * @param ge The GuiElement to be added to this Gui
 	 */
 	public void addGuiElement(final GuiElementType get, final GuiElement ge) {
@@ -38,16 +38,16 @@ public class HeroGui {
 	}
 	
 	/**
-	 * @param ge The GuiElement to be removed from this Gui
+	 * @param get The type of the GuiElement to be removed from this Gui
 	 */
 	public void removeGuiElement(final GuiElementType get) {
 		
 		GuiElement ge = guiElements.remove(get);
-		holder.removeObserver(ge);
+		ge.detach(holder);
 	}
 	
 	/**
-	 * @param ge The GuiElement to be checked
+	 * @param get The GuiElementType to be checked
 	 * @return true if the GuiElement is displayed on this Gui
 	 */
 	public boolean hasGuiElement(final GuiElementType get) {

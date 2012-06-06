@@ -19,7 +19,10 @@ public class TeamManager {
 		/** */
 		private static final long serialVersionUID = -1343429439804370656L;
 		
-		public TeamJoinException(String msg) {
+		/**
+		 * @param msg the reason the Hero cant join the Team.
+		 */
+		public TeamJoinException(final String msg) {
 			super(msg);
 		}
 		
@@ -35,7 +38,6 @@ public class TeamManager {
 	/**
 	 * @param initiator The initial member of the team.
 	 * @return The freshly initiated Team.
-	 * @throws TeamJoinException 
 	 */
 	public Team initiateTeam(final Hero initiator) {
 		Team team = new Team();
@@ -49,15 +51,12 @@ public class TeamManager {
 	 * @param team The team to be disbanded.
 	 */
 	public void disband(final Team team) {
-		
-		for(Hero member : team.getPlayers()) {
-			
-			member.getGui().removeGuiElement(GuiElementType.TEAMFRAME);
-			
-			team.removeHero(member);
-			member.setTeam(null);
+				
+		for(Hero hero : team.getPlayers()) {
+			hero.getGui().removeGuiElement(GuiElementType.TEAMFRAME);
 		}
 		
+		team.dispose();
 		teams.remove(team);
 	}
 
@@ -71,7 +70,7 @@ public class TeamManager {
 			throw new TeamJoinException("already in a team: " + hero.getPlayer().getName());
 		}
 		
-		if( hero.getTeam().getPlayers().size() >= 4 ) {
+		if( team.getPlayers().size() >= 4 ) {
 			throw new TeamJoinException("team is full, player cant join: " + hero.getPlayer().getName());
 		}
 		

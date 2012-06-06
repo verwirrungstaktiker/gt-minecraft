@@ -46,29 +46,29 @@ public class Team {
 		for(Hero member : members) {
 			member.setTeam(this);
 		}
+		
+		notifyChanged(Notification.MEMBERCHANGE);
 	}
 	
-	public Team(final Hero initiator) {
-		this();
-		
-		members.add(initiator);
-		
-		// abstract this		
-		for(Hero member : members) {
-			member.setTeam(this);
-		}
-	}
-	
+	/**
+	 * Generates an empty Team.
+	 */
 	public Team() {
 		members = new HashSet<Hero>();
 		observers = new HashSet<TeamObserver>();
 	}
 	
+	/**
+	 * Disposes the Team.
+	 */
 	public void dispose() {
 		
 		for(Hero member : members) {
 			member.setTeam(NOTEAM);
 		}
+		members.clear();
+		
+		notifyChanged(Notification.MEMBERCHANGE);
 	}
 	
 	/**
@@ -109,22 +109,42 @@ public class Team {
 		}
 	}
 
+	/**
+	 * @param teamObserver The TeamObserver to be added.
+	 */
 	public void addTeamObserver(final TeamObserver teamObserver) {
 		observers.add(teamObserver);
 	}
 	
+	/**
+	 * @param teamObserver The TeamObserver to be removed.
+	 */
 	public void removeTeamObserver(final TeamObserver teamObserver) {
 		observers.remove(teamObserver);
 	}
 	
+	/**
+	 * @param notification The type of change which happened.
+	 */
 	public void notifyChanged(final Notification notification) {
 		for(TeamObserver observer : observers) {
 			observer.update(this, notification);
 		}
 	}
 
-	public void addHero(Hero hero) {
+	/**
+	 * @param hero The Hero to be added to the Team.
+	 */
+	public void addHero(final Hero hero) {
 		members.add(hero);
+		notifyChanged(Notification.MEMBERCHANGE);
+	}
+
+	/**
+	 * @param hero The Hero to be removed from the Team.
+	 */
+	public void removeHero(final Hero hero) {
+		members.remove(hero);
 		notifyChanged(Notification.MEMBERCHANGE);
 	}
 	
@@ -144,9 +164,4 @@ public class Team {
 		return sb.toString();
 	}
 
-	public void removeHero(Hero member) {
-		members.remove(member);
-		notifyChanged(Notification.MEMBERCHANGE);
-	}
-	
 }

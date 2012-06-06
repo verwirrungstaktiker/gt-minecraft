@@ -7,6 +7,8 @@ commands:
     description: Starts a new Last Gnome Game.
   end:
     description: Ends the Last Gnome Game.
+  team:
+    description: manages the team TODO
   gc:
     description: Runs the GC.
   socket:
