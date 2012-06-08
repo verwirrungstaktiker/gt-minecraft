@@ -17,8 +17,11 @@ public class BlockListener implements Listener {
 	 * @param event Damaging a block
 	 */
 	@EventHandler
-	public void breakJackOLanternOnDamage(final BlockDamageEvent event) {
-		if (event.getBlock().getType() == Material.JACK_O_LANTERN && event.getPlayer().isOp()) {
+	public void breakSocketOnDamage(final BlockDamageEvent event) {
+		Material mat = event.getBlock().getType();
+		// these are the underlying blocks
+		if (event.getPlayer().isOp() && 
+				(mat==Material.JACK_O_LANTERN || mat==Material.CAKE_BLOCK ) ) {
 			event.getBlock().setType(Material.AIR);
 		}
 	}
