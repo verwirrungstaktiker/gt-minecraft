@@ -1,7 +1,10 @@
 package gt.lastgnome;
 
+import gt.general.character.Hero;
+import gt.general.character.HeroManager;
 import gt.plugin.helloworld.HelloWorld;
 
+import org.bukkit.ChatColor;
 import org.bukkit.World;
 import org.bukkit.plugin.Plugin;
 import org.getspout.spoutapi.material.block.GenericCubeCustomBlock;
@@ -43,12 +46,12 @@ public class GnomeSocketEnd extends GenericCubeCustomBlock {
 	
 	@Override
 	public boolean onBlockInteract(final World world, final int x, final int y, final int z, final SpoutPlayer player) {
-		if(player.getInventory().contains(GnomeItem.RAWID)) {
-			player.sendMessage("The Gnome has been saved");
-			player.getInventory().remove(GnomeItem.RAWID);
-			//TODO: some extern method could be called here
+		Hero hero = HeroManager.getHero(player.getName());
+		if(hero.getActiveItem() instanceof GnomeItem) {	
+			hero.removeActiveItem();
+			player.sendMessage(ChatColor.GREEN + "The Gnome has been saved!");
 		} else {
-			player.sendMessage("The mighty Gnome Socket demands the Gnome!");
+			player.sendMessage(ChatColor.YELLOW + "The mighty Gnome Socket demands the Gnome!");
 		}
 		return true;
 	}

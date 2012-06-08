@@ -1,5 +1,7 @@
 package gt.lastgnome;
 
+import gt.general.character.Hero;
+import gt.general.character.HeroManager;
 import gt.plugin.helloworld.HelloWorld;
 
 import org.bukkit.ChatColor;
@@ -47,9 +49,13 @@ public class GnomeSocketStart extends GenericCubeCustomBlock {
 	
 	@Override
 	public boolean onBlockInteract(World world, int x, int y, int z, SpoutPlayer player) {
-		ItemStack items = new SpoutItemStack(HelloWorld.gnome);
-		player.getInventory().addItem(items);
-		player.sendMessage(ChatColor.GREEN + "You obtained a Gnome for Testing");
+		Hero hero = HeroManager.getHero(player.getName());
+		if(hero.canRecieveItem()) {
+			hero.setActiveItem(HelloWorld.gnome);
+			
+			player.sendMessage(ChatColor.GREEN + "You obtained a Gnome for Testing");
+		}
+		player.sendMessage(ChatColor.GREEN + "nothing happens.");
 		return true;
 	}
 	
