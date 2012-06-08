@@ -57,24 +57,28 @@ public class HeroGui {
 	/**
 	 * Handles the connection to the Spout core
 	 * 
-	 * @param widget To be attached to the Heros screen.
+	 * @param widgets To be attached to the Heros screen.
 	 */
-	public void attachWidget(final Widget widget) {
-		holder
-			.getSpoutPlayer()
-			.getMainScreen()
-			.attachWidget(HelloWorld.getPlugin(), widget);
+	public void attachWidgets(final Widget... widgets) {
+		for(Widget widget : widgets) {
+			holder
+				.getSpoutPlayer()
+				.getMainScreen()
+				.attachWidget(HelloWorld.getPlugin(), widget);
+		}
 	}
 	
 	/**
 	 * Handles the connention to the Spout core
 	 * 
-	 * @param widget To be removed from the Heros screen.
+	 * @param widgets To be removed from the Heros screen.
 	 */
-	public void removeWidget(final Widget widget) {
-		holder
-			.getSpoutPlayer()
-			.getMainScreen()
-			.removeWidget(widget);
+	public void removeWidgets(final Widget... widgets) {
+		for(Widget widget : widgets) {
+			holder
+				.getSpoutPlayer()
+				.getMainScreen()
+				.removeWidget(widget);
+		}
 	}	
 }

@@ -60,7 +60,7 @@ public class HeroManager implements Listener, Runnable {
 			Hero hero = game.getDisconnectedHero(player);
 			if (hero != null) {
 				registerListener(hero);
-				HEROS.put(player.getName(), hero);
+				HEROS.put(player.getName().toLowerCase(), hero);
 				game.restoreHero(hero);
 				return;
 			}
@@ -73,7 +73,7 @@ public class HeroManager implements Listener, Runnable {
 		hero.addObserver(inventoryConnector);
 		
 		registerListener(hero);
-		HEROS.put(player.getName(), hero);
+		HEROS.put(player.getName().toLowerCase(), hero);
 	}
 	
 	/**
@@ -82,7 +82,7 @@ public class HeroManager implements Listener, Runnable {
 	 */
 	@EventHandler
 	public void playerLogout(final PlayerQuitEvent pqe) {
-		Hero hero = HEROS.get(pqe.getPlayer());
+		Hero hero = HEROS.get(pqe.getPlayer().getName().toLowerCase());
 		Team team = hero.getTeam();
 		
 		// TODO redo this
@@ -123,12 +123,12 @@ public class HeroManager implements Listener, Runnable {
 	 * @return associated hero
 	 */
 	public static Hero getHero(final Player player) {
-		return HEROS.get(player.getName());
+		return getHero(player.getName());
 	}
 	
 
 	public static Hero getHero(String name) {
-		return HEROS.get(name);
+		return HEROS.get(name.toLowerCase());
 		
 	}
 
