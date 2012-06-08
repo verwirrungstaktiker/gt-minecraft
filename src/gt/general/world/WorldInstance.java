@@ -1,7 +1,13 @@
 package gt.general.world;
 
+import gt.plugin.helloworld.HelloWorld;
+
 import org.bukkit.Location;
+import org.bukkit.Material;
 import org.bukkit.World;
+import org.bukkit.block.Block;
+import org.bukkit.block.BlockFace;
+import org.getspout.spoutapi.SpoutManager;
 
 /**
  * Represents one Instance of a World including metadata.
@@ -19,6 +25,7 @@ public abstract class WorldInstance {
 	 */
 	public void setWorld(final World world) {
 		this.world = world;
+		placeCustomBlocks();
 	}
 	
 	/**
@@ -52,4 +59,16 @@ public abstract class WorldInstance {
 		return world.getSpawnLocation();
 	};
 	
+	//XXX: Testing
+	public void placeCustomBlocks() {
+		Location spawn = world.getSpawnLocation();
+		Location offsetSpawn = world.getBlockAt(spawn)
+				.getRelative(BlockFace.NORTH, 10)
+				.getRelative(BlockFace.EAST, 10)
+				.getLocation();
+		Block block = world.getHighestBlockAt(offsetSpawn);
+		//place a end-socket 10 diagonal locks away
+		SpoutManager.getMaterialManager().overrideBlock(block, HelloWorld.gnomeSocketEnd);
+	}
+
 }
