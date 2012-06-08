@@ -13,6 +13,18 @@ public class BlockListener implements Listener {
 	
 	/**
 	 * FOR TESTING ONLY
+	 * Break Pumpkins immediately on damage
+	 * @param event Damaging a block
+	 */
+	@EventHandler
+	public void breakJackOLanternOnDamage(final BlockDamageEvent event) {
+		if (event.getBlock().getType() == Material.JACK_O_LANTERN && event.getPlayer().isOp()) {
+			event.getBlock().setType(Material.AIR);
+		}
+	}
+	
+	/**
+	 * FOR TESTING ONLY
 	 * @param event Damaging a block
 	 */
 	@EventHandler
