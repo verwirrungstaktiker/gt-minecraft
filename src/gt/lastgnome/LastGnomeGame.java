@@ -63,13 +63,13 @@ public class LastGnomeGame extends Game implements Listener{
 	 * @param team the Team playing the game
 	 * @param initialBearer the hero bearing the gnome from the start
 	 */
-	public LastGnomeGame(final Team team, final Hero initialBearer) {
+/*	public LastGnomeGame(final Team team) {
 		this(team);
 		
-		initialBearer.setActiveItem(gnome);
-		setGnomeBearer(initialBearer);
+//		initialBearer.setActiveItem(gnome);
+//		setGnomeBearer(initialBearer);
 	}
-	
+*/	
 	/**
 	 * handles gnome transfer from Start Socket to Player
 	 * @param event player rightclick event
@@ -194,7 +194,9 @@ public class LastGnomeGame extends Game implements Listener{
 		gameRunning = false;
 		super.dispose();
 		
-		gnomeBearer.removeActiveItem();
+		if (gnomeBearer != null) {
+			gnomeBearer.removeActiveItem();
+		}
 		
 		for(Hero hero : getTeam().getPlayers()) {
 			hero.getGui().removeGuiElement(GuiElementType.SPEEDBAR);

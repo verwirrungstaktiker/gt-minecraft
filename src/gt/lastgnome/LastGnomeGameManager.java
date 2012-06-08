@@ -26,9 +26,9 @@ public class LastGnomeGameManager extends GameManager {
 	 * @param worldName Where is the Game played.
 	 * @return The instantiated Game.
 	 */
-	public LastGnomeGame startGame(final Team team, final Hero initialBearer, final String worldName) {
+	public LastGnomeGame startGame(final Team team, final String worldName) {
 		// instantiate
-		LastGnomeGame lastGnomeGame = new LastGnomeGame(team, initialBearer);
+		LastGnomeGame lastGnomeGame = new LastGnomeGame(team);
 		
 		// build world
 		lastGnomeGame.setWorldWrapper(worldManager.instantiateWorld(worldName));
