@@ -93,5 +93,12 @@ public class TeamManager {
 		}
 		
 		addHeroToTeam(team, hero);
-	}	
+	}
+	
+	/**
+	 * @return the teams
+	 */
+	public Set<Team> getTeams() {
+		return teams;
+	}
 }

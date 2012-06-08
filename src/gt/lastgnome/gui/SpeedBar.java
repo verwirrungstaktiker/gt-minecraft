@@ -107,5 +107,9 @@ public class SpeedBar implements GuiElement, HeroObserver {
 		label.setVisible(state);
 		bar.setVisible(state);
 		background.setVisible(state);
+		
+		label.setDirty(true);
+		bar.setDirty(true);
+		background.setDirty(true);
 	}
 }

@@ -17,8 +17,9 @@ public class Team {
 	 * 
 	 */
 	public static final Team NOTEAM = null;
-
 	
+	private boolean fixed;
+
 	/** 
 	 * Array of heros belonging to this team
 	 * TODO this needs to be ordered
@@ -40,6 +41,7 @@ public class Team {
 	 */
 	public Team(final Set<Hero> members) {		
 		this.members = members;
+		fixed = false;
 
 		observers = new HashSet<TeamObserver>();
 		
@@ -56,6 +58,7 @@ public class Team {
 	public Team() {
 		members = new HashSet<Hero>();
 		observers = new HashSet<TeamObserver>();
+		fixed = false;
 	}
 	
 	/**
@@ -162,6 +165,20 @@ public class Team {
 		}
 		
 		return sb.toString();
+	}
+	
+	/**
+	 * @return the fixed
+	 */
+	public boolean isFixed() {
+		return fixed;
+	}
+	
+	/**
+	 * after calling this function, the team cannot be canged anymore
+	 */
+	public void fix() {
+		fixed = true;
 	}
 
 }

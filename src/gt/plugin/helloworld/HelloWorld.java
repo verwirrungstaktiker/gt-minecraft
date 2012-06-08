@@ -194,7 +194,20 @@ public class HelloWorld extends JavaPlugin {
 		
 		// TODO this should be a factory once we have more than one game mode
 		Hero starter = HeroManager.getHero(player);
-		Team team = new Team(HeroManager.getAllHeros());
+		
+		// build the team
+		Team team = starter.getTeam();
+		if(team == null) {
+			team = teamManager.initiateTeam(starter);
+			
+			for(Hero hero : HeroManager.getAllHeros()) {
+				try {
+					teamManager.addHeroToTeam(team, hero);
+				} catch (TeamManager.TeamJoinException tje) {
+					sender.sendMessage(tje.getMessage());
+				}
+			}
+		}
 		
 		getServer().broadcastMessage("starting gnome game: " + starter.getPlayer().getName());
 		lastGnomeGameManager.startGame(team, starter, "world_nether");
@@ -207,6 +220,10 @@ public class HelloWorld extends JavaPlugin {
 	private void endAllGames() {
 		System.out.println("ending games");
 		lastGnomeGameManager.endAllGames();
+		
+		for(Team team : teamManager.getTeams()) {
+			teamManager.disband(team);
+		}
 	}
 	
 	/**
