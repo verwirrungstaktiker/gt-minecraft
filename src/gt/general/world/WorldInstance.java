@@ -7,6 +7,7 @@ import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.getspout.spoutapi.SpoutManager;
+import org.getspout.spoutapi.material.block.GenericCubeCustomBlock;
 
 /**
  * Represents one Instance of a World including metadata.
@@ -62,17 +63,26 @@ public abstract class WorldInstance {
 	/**
 	 * places start socket & end socket
 	 */
-	public void placeCustomBlocks() {
+	private void placeCustomBlocks() {
 		Location spawn = world.getSpawnLocation();
-		SpoutManager.getMaterialManager().overrideBlock(world.getBlockAt(spawn), HelloWorld.gnomeSocketStart);
 		
-		Location offsetSpawn = world.getBlockAt(spawn)
-				.getRelative(BlockFace.NORTH, 3)
-				.getRelative(BlockFace.EAST, 3)
+		spawnCustomBlockAtRelativeLocation(HelloWorld.gnomeSocketStart, spawn, -2, -2);
+		
+		spawnCustomBlockAtRelativeLocation(HelloWorld.gnomeSocketEnd, spawn, 2, 2);
+		
+		
+	}
+	
+	private void spawnCustomBlockAtRelativeLocation(final GenericCubeCustomBlock customBlock, final Location start,
+														final int east, final int north) {
+		Location loc = world.getBlockAt(start)
+				.getRelative(BlockFace.EAST, east)
+				.getRelative(BlockFace.NORTH, north)
 				.getLocation();
-		Block block = world.getHighestBlockAt(offsetSpawn);
-		//place a end-socket 10 diagonal locks away
-		SpoutManager.getMaterialManager().overrideBlock(block, HelloWorld.gnomeSocketEnd);
+		
+		Block oldBlock = world.getHighestBlockAt(loc);
+		
+		SpoutManager.getMaterialManager().overrideBlock(oldBlock, customBlock);
 	}
 
 }
