@@ -9,6 +9,7 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.reset;
 import gt.general.character.Hero;
 import gt.general.gui.GuiElement;
+import gt.general.gui.GuiElementType;
 
 import org.bukkit.entity.Player;
 import org.junit.Before;
@@ -27,39 +28,13 @@ public class GuiElementTest {
 	public void addAndRemoveGuiElementsTest() {
 		
 		GuiElement ge = mock(GuiElement.class);
+		GuiElementType get = GuiElementType.SPEEDBAR;
 		
-		h.getGui().addGuiElement(ge);
-		assertTrue(h.getGui().hasGuiElement(ge));
+		h.getGui().addGuiElement(get, ge);
+		assertTrue(h.getGui().hasGuiElement(get));
 		
-		h.getGui().removeGuiElement(ge);
-		assertFalse(h.getGui().hasGuiElement(ge));
-		
-	}
-	
-	@Test
-	public void notificationTest() {
-		
-		GuiElement ge1 = mock(GuiElement.class);
-		GuiElement ge2 = mock(GuiElement.class);
-		
-		// notifies ge1 and ge2
-		h.getGui().addGuiElement(ge1);
-		h.getGui().addGuiElement(ge2);
-		
-		h.notifyChanged(Hero.Notification.UNSPECIFIED);
-		
-		verify(ge1, times(1)).update(h, Hero.Notification.UNSPECIFIED);
-		verify(ge2, times(1)).update(h, Hero.Notification.UNSPECIFIED);
-		
-		reset(ge1);
-		reset(ge2);
-		
-		// notifies only ge1
-		h.getGui().removeGuiElement(ge2);
-		h.notifyChanged(Hero.Notification.UNSPECIFIED);
-		
-		verify(ge1, times(1)).update(h, Hero.Notification.UNSPECIFIED);
-		verify(ge2, never()).update(h, Hero.Notification.UNSPECIFIED);
+		h.getGui().removeGuiElement(get);
+		assertFalse(h.getGui().hasGuiElement(get));		
 	}
 
 }

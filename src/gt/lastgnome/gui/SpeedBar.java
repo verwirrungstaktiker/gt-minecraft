@@ -3,6 +3,7 @@ package gt.lastgnome.gui;
 import gt.general.character.CharacterAttributes;
 import gt.general.character.Hero;
 import gt.general.character.Hero.Notification;
+import gt.general.character.HeroObserver;
 import gt.general.gui.GuiElement;
 import gt.lastgnome.GnomeItem;
 
@@ -18,7 +19,7 @@ import org.getspout.spoutapi.gui.WidgetAnchor;
  * 
  * @author sebastian
  */
-public class SpeedBar implements GuiElement {
+public class SpeedBar implements GuiElement, HeroObserver {
 	
 	private static final int BASEWIDTH = 100;
 	private static final int BASEHEIGHT = 20;

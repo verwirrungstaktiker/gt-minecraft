@@ -126,8 +126,11 @@ public class HeroManager implements Listener, Runnable {
 		return getHero(player.getName());
 	}
 	
-
-	public static Hero getHero(String name) {
+	/**
+	 * @param name The name of the Hero to find
+	 * @return the Hero
+	 */
+	public static Hero getHero(final String name) {
 		return HEROS.get(name.toLowerCase());
 		
 	}

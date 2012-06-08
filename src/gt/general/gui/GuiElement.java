@@ -1,9 +1,8 @@
 package gt.general.gui;
 
 import gt.general.character.Hero;
-import gt.general.character.HeroObserver;
 
-public interface GuiElement extends HeroObserver{
+public interface GuiElement{
 	
 	/**
 	 * @param hero to be called if attached to a Hero

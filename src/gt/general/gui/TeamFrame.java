@@ -1,7 +1,6 @@
 package gt.general.gui;
 
 import gt.general.character.Hero;
-import gt.general.character.Hero.Notification;
 import gt.general.character.Team;
 import gt.general.character.TeamObserver;
 
@@ -9,68 +8,19 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 
-import org.getspout.spoutapi.gui.Color;
-import org.getspout.spoutapi.gui.GenericGradient;
-import org.getspout.spoutapi.gui.GenericLabel;
-import org.getspout.spoutapi.gui.RenderPriority;
-import org.getspout.spoutapi.gui.WidgetAnchor;
-
 public class TeamFrame implements GuiElement, TeamObserver {
 
-	private final GenericLabel testLabel;
 	private final Map<Hero, HeroFrame> frameMapping;
 	
 	private Hero holder;
 
-	private class HeroFrame {
-
-		private final static int HEIGHT = 15;
-		private final static int BASEWIDTH = 75;
-		
-		private final GenericGradient background;
-		private final GenericLabel name;
-
-		public HeroFrame(final Hero hero) {
-			background = new GenericGradient();
-			
-			background
-				.setTopColor(new Color(0, 0, 255, 75))
-				.setBottomColor(new Color(0, 0, 255))
-				.setWidth(BASEWIDTH)
-				.setHeight(HEIGHT)
-				.setPriority(RenderPriority.Highest);
-				
-			
-			name = new GenericLabel(hero.getPlayer().getName());
-			
-			name.setAlign(WidgetAnchor.CENTER_LEFT)
-				.setWidth(BASEWIDTH)
-				.setHeight(HEIGHT)
-				.setX(2)
-				.setPriority(RenderPriority.Lowest);
-
-		}
-
-		public void layout(int rank) {
-			name.setY(HEIGHT * rank + HEIGHT / 2);
-			background.setY(HEIGHT * rank);
-		}
-		
-		public void attach(final Hero hero) {
-			hero.getGui().attachWidgets(name, background);
-		}
-		
-		public void detach(final Hero hero) {
-			hero.getGui().removeWidgets(name, background );
-		}
-
-	}
-
+	/**
+	 * @param team The Team, which is tracked by this TeamFrame.
+	 */
 	public TeamFrame(final Team team) {
 		holder = null;
 		
-		testLabel = new GenericLabel("test");
-		frameMapping = new HashMap<Hero, TeamFrame.HeroFrame>();
+		frameMapping = new HashMap<Hero, HeroFrame>();
 
 		updateLayout(team);
 
@@ -94,12 +44,6 @@ public class TeamFrame implements GuiElement, TeamObserver {
 			heroframe.detach(hero);
 		}
 	}
-	
-	@Override
-	public void update(final Hero hero, final Notification notification) {
-		// TODO Auto-generated method stub
-
-	}
 
 	@Override
 	public void update(final Team team,
@@ -122,13 +66,15 @@ public class TeamFrame implements GuiElement, TeamObserver {
 		Iterator<Hero> it = frameMapping.keySet().iterator();
 		while (it.hasNext()) {
 			Hero hero = it.next();
+			HeroFrame frame = frameMapping.get(hero);
+			
 			if (!team.isMember(hero)) {
 				
-				if(holder != null) {
-					frameMapping.get(hero).detach(holder);
+				if(isAttached()) {
+					frame.detach(holder);
 				}
 				
-				hero.removeObserver(this);
+				hero.removeObserver(frame);
 
 				it.remove();
 			}
@@ -141,19 +87,33 @@ public class TeamFrame implements GuiElement, TeamObserver {
 			if (frameMapping.containsKey(hero)) {
 				frameMapping.get(hero).layout(rank);
 			} else {
-				HeroFrame frame = new HeroFrame(hero);
+				HeroFrame frame = new HeroFrame(this, hero);
 				
-				if(holder != null) {
+				if(isAttached()) {
 					frame.attach(holder);
 				}
 				
 				frameMapping.put(hero, frame);
-				hero.addObserver(this);
+				hero.addObserver(frame);
 				
 				frame.layout(rank);
 			}
 
 			rank++;
 		}
+	}
+	
+	/**
+	 * @return The Hero holding this TeamFrame.
+	 */
+	public Hero getHolder() {
+		return holder;
+	}
+	
+	/**
+	 * @return true, if this TeamFrame is attached to a Heros gui.
+	 */
+	public boolean isAttached() {
+		return holder != null;
 	}
 }
