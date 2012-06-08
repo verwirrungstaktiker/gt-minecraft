@@ -25,7 +25,7 @@ public class GnomeSocketStart extends GenericCubeCustomBlock {
 	 * @param texture texture for the gnomeSocket
 	 */
 	public GnomeSocketStart(final Plugin plugin, final String name, final String texture) {
-		// 91 is blockID of overwritten block
+		// 91 is id of underlying block
 		// 16 is texture size
 		// last parameter is "rotatetility"
 		super(plugin, name, 91, texture, 16, true);
@@ -46,18 +46,4 @@ public class GnomeSocketStart extends GenericCubeCustomBlock {
 	public GnomeSocketStart() {
 		this(HelloWorld.getPlugin());
 	}
-	
-	@Override
-	public boolean onBlockInteract(World world, int x, int y, int z, SpoutPlayer player) {
-		Hero hero = HeroManager.getHero(player.getName());
-		if(hero.canRecieveItem()) {
-			hero.setActiveItem(HelloWorld.gnome);
-			
-			player.sendMessage(ChatColor.GREEN + "You obtained a Gnome for Testing");
-		}
-		player.sendMessage(ChatColor.GREEN + "nothing happens.");
-		return true;
-	}
-	
-
 }

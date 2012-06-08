@@ -7,14 +7,17 @@ import gt.general.character.Team;
 import gt.general.gui.GuiElementType;
 import gt.general.world.WorldInstance;
 import gt.lastgnome.gui.SpeedBar;
+import gt.plugin.helloworld.HelloWorld;
 
 import java.util.Iterator;
 
+import org.bukkit.ChatColor;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
+import org.bukkit.event.player.PlayerInteractEvent;
 
 /**
  * Game Controller for a Last-Gnome-Scenario
@@ -66,7 +69,52 @@ public class LastGnomeGame extends Game implements Listener{
 		initialBearer.setActiveItem(gnome);
 		setGnomeBearer(initialBearer);
 	}
+	
+	/**
+	 * handles gnome transfer from Start Socket to Player
+	 * @param event player rightclick event
+	 */
+	@EventHandler
+	public void getGnomeFromStartSocket(final PlayerInteractEvent event) {
+		if(event.hasBlock() && event.getClickedBlock().getTypeId() == HelloWorld.gnomeSocketStart.getBlockId()) {
+			Player player = event.getPlayer();
+			Hero hero = HeroManager.getHero(player.getName());
+			
+			if (gnomeBearer == null && hero.canRecieveItem()) {
 
+				hero.setActiveItem(HelloWorld.gnome);
+				gnomeBearer = hero;
+				
+				player.sendMessage(ChatColor.GREEN + "You obtained a Gnome for Testing");
+				
+			} else {
+			player.sendMessage(ChatColor.YELLOW + "nothing happens.");
+			}
+		}
+	}
+	
+	/**
+	 * handles gnome transfer from Player to End Socket
+	 * @param event	player right click event
+	 */
+	@EventHandler
+	public void giveGnomeToEndSocket(final PlayerInteractEvent event) {
+		if(event.hasBlock() && event.getClickedBlock().getTypeId() == HelloWorld.gnomeSocketEnd.getBlockId()) {
+			
+			Player player = event.getPlayer();
+			Hero hero = HeroManager.getHero(player.getName());
+			
+			if(hero.equals(gnomeBearer)) {	
+				
+				hero.removeActiveItem();
+				gnomeBearer = null;
+				
+				player.sendMessage(ChatColor.GREEN + "The Gnome has been saved!");
+			} else {
+				player.sendMessage(ChatColor.YELLOW + "The mighty Gnome Socket demands the Gnome!");
+			}
+		}
+	}
 	
 	/**
 	 * handles passing of the gnome to another player, as triggered by minecraft

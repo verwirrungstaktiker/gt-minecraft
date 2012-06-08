@@ -62,9 +62,11 @@ public abstract class WorldInstance {
 	//XXX: Testing
 	public void placeCustomBlocks() {
 		Location spawn = world.getSpawnLocation();
+		SpoutManager.getMaterialManager().overrideBlock(world.getBlockAt(spawn), HelloWorld.gnomeSocketStart);
+		
 		Location offsetSpawn = world.getBlockAt(spawn)
-				.getRelative(BlockFace.NORTH, 10)
-				.getRelative(BlockFace.EAST, 10)
+				.getRelative(BlockFace.NORTH, 3)
+				.getRelative(BlockFace.EAST, 3)
 				.getLocation();
 		Block block = world.getHighestBlockAt(offsetSpawn);
 		//place a end-socket 10 diagonal locks away

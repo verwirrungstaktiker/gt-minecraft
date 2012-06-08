@@ -21,10 +21,10 @@ public class GnomeSocketEnd extends GenericCubeCustomBlock {
 	 * @param texture texture for the gnomeSocket
 	 */
 	public GnomeSocketEnd(final Plugin plugin, final String name, final String texture) {
-		// 91 is blockID of overwritten block
+		// 92 is blockID of overwritten block
 		// 16 is texture size
 		// last parameter is "rotatetility"
-		super(plugin, name, 91, texture, 16, true);
+		super(plugin, name, 92, texture, 16, true);
 	}
 
 	/**
@@ -43,18 +43,4 @@ public class GnomeSocketEnd extends GenericCubeCustomBlock {
 		this(HelloWorld.getPlugin());
 		
 	}
-	
-	@Override
-	public boolean onBlockInteract(final World world, final int x, final int y, final int z, final SpoutPlayer player) {
-		Hero hero = HeroManager.getHero(player.getName());
-		if(hero.getActiveItem() instanceof GnomeItem) {	
-			hero.removeActiveItem();
-			player.sendMessage(ChatColor.GREEN + "The Gnome has been saved!");
-		} else {
-			player.sendMessage(ChatColor.YELLOW + "The mighty Gnome Socket demands the Gnome!");
-		}
-		return true;
-	}
-	
-
 }
