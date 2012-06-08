@@ -7,6 +7,7 @@ import java.io.File;
 import java.util.HashSet;
 import java.util.Set;
 
+import org.bukkit.Bukkit;
 import org.bukkit.World;
 import org.bukkit.WorldCreator;
 
@@ -48,13 +49,13 @@ public class WorldManager {
 	 * @param world the World the instance would be made of
 	 * @return the name of the next free instance name
 	 */
-	protected String findNextInstanceFolder(final World world) {
+	protected String findNextInstanceFolder(final String name) {
 		int i = 0;
-		File worldsfolder = world.getWorldFolder().getParentFile();
+		File worldsfolder = Bukkit.getServer().getWorldContainer();
 		File temp;
 		do {
 			++i;
-			temp = new File(worldsfolder,world.getName()+i);
+			temp = new File(worldsfolder,name+i);
 		} while (temp.exists());
 		
 		return temp.getName();
@@ -66,16 +67,18 @@ public class WorldManager {
 	 * @param name Name for the duplicate
 	 * @return the duplicate
 	 */
-	protected World instatiateWorld (final World world, final String name) {
-		File worldsFolder = world.getWorldFolder().getParentFile();
-		File newWorld = new File(worldsFolder,name);
+	protected World instatiateWorld (final String baseName, final String newName) {
+		File worldsFolder = Bukkit.getServer().getWorldContainer();
 		
-		CopyUtil.copyDirectory(world.getWorldFolder(), newWorld);
+		File baseWorld = new File(worldsFolder, baseName);
+		File newWorld = new File(worldsFolder, newName);
+		
+		CopyUtil.copyDirectory(baseWorld, newWorld);
 		
 		File uid = new File(newWorld,"uid.dat");
 		uid.delete();
 		
-		WorldCreator wc = new WorldCreator(name);
+		WorldCreator wc = new WorldCreator(newName);
 		//wc.copy(world);
 		
 		return wc.createWorld();		
