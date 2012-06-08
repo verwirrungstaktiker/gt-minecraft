@@ -1,18 +1,9 @@
 package gt.lastgnome;
 
-import gt.general.character.Hero;
-import gt.general.character.HeroManager;
 import gt.plugin.helloworld.HelloWorld;
 
-import org.bukkit.ChatColor;
-import org.bukkit.World;
-import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.Plugin;
-import org.getspout.commons.entity.Player;
-import org.getspout.spoutapi.block.design.*;
-import org.getspout.spoutapi.inventory.SpoutItemStack;
 import org.getspout.spoutapi.material.block.GenericCubeCustomBlock;
-import org.getspout.spoutapi.player.SpoutPlayer;
 
 /**
  * Item-class for GnomeSocket

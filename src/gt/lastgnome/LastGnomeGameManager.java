@@ -22,7 +22,6 @@ public class LastGnomeGameManager extends GameManager {
 
 	/**
 	 * @param team Who plays the game.
-	 * @param initialBearer Who carries the Gnome initially.
 	 * @param worldName Where is the Game played.
 	 * @return The instantiated Game.
 	 */

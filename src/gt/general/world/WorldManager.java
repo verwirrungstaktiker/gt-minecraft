@@ -46,7 +46,7 @@ public class WorldManager {
 	
 	/**
 	 * searchs for a Folder with low Index for an Instance 
-	 * @param world the World the instance would be made of
+	 * @param name name of the world that the instance is made of
 	 * @return the name of the next free instance name
 	 */
 	protected String findNextInstanceFolder(final String name) {
@@ -63,8 +63,8 @@ public class WorldManager {
 	
 	/**
 	 * duplicates a world
-	 * @param world the World to be copied
-	 * @param name Name for the duplicate
+	 * @param baseName name of the world to be copied
+	 * @param newName Name for the duplicate
 	 * @return the duplicate
 	 */
 	protected World instatiateWorld (final String baseName, final String newName) {

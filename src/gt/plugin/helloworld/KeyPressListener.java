@@ -12,6 +12,7 @@ public class KeyPressListener implements Listener {
 	/** 
 	 * prints the location of the target block in player chat 
 	 * works for OP players only
+	 * @param event client key press event
 	 **/
 	@EventHandler
 	public void showCoordsOnSpecialKeypress (final KeyPressedEvent event) {

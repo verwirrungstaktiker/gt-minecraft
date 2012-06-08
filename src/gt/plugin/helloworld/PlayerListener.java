@@ -3,11 +3,9 @@ package gt.plugin.helloworld;
 import gt.lastgnome.GnomeItem;
 
 import org.bukkit.ChatColor;
-import org.bukkit.Location;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerDropItemEvent;
-import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.event.player.PlayerPickupItemEvent;
 import org.bukkit.event.player.PlayerToggleSprintEvent;
 import org.bukkit.inventory.ItemStack;
@@ -16,7 +14,10 @@ import org.getspout.spoutapi.player.SpoutPlayer;
 
 public class PlayerListener implements Listener {
 	
-	/** prevent sprinting **/
+	/** 
+	 * prevent sprinting 
+	 * @param event player toggles sprint
+	 **/
 	@EventHandler
 	public final void preventSprinting(final PlayerToggleSprintEvent event) {
 		SpoutPlayer player = (SpoutPlayer) event.getPlayer();
@@ -28,7 +29,10 @@ public class PlayerListener implements Listener {
 		}
 	}
 
-	/** prevents item dropping for Gnomes only. **/
+	/** 
+	 * prevents item dropping for Gnomes only.
+	 * @param event player drops an item
+	 **/
 	@EventHandler
 	public final void preventGnomeDropping(final PlayerDropItemEvent event) {
 		if (event.getItemDrop().getItemStack().getTypeId() == GnomeItem.RAWID) {
@@ -38,7 +42,12 @@ public class PlayerListener implements Listener {
 		
 	}
 
-	/** prevents carrying more than one item of the same kind **/
+	/** 
+	 * prevents carrying more than one item of the same kind 
+	 * @param event player picks up an item
+	 * 
+	 * XXX: buggy if 2+ items picked up at same time
+	 */
 	@EventHandler
 	public final void carryOnlyOneOfEachKind(final PlayerPickupItemEvent event) {
 		ItemStack eventItem = event.getItem().getItemStack();
@@ -55,6 +64,7 @@ public class PlayerListener implements Listener {
 	/**
 	 * quick & dirty
 	 * @return true if inventory contains > 1 stacks
+	 * @param inv the player's inventory
 	 */
 	private boolean inventoryContainsTwoPlusStacks(final PlayerInventory inv) {
 		ItemStack[] contents = inv.getContents();

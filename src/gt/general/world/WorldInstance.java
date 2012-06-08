@@ -3,7 +3,6 @@ package gt.general.world;
 import gt.plugin.helloworld.HelloWorld;
 
 import org.bukkit.Location;
-import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
@@ -60,6 +59,9 @@ public abstract class WorldInstance {
 	};
 	
 	//XXX: Testing
+	/**
+	 * places start socket & end socket
+	 */
 	public void placeCustomBlocks() {
 		Location spawn = world.getSpawnLocation();
 		SpoutManager.getMaterialManager().overrideBlock(world.getBlockAt(spawn), HelloWorld.gnomeSocketStart);
