@@ -55,7 +55,7 @@ public class WorldManager {
 		File temp;
 		do {
 			++i;
-			temp = new File(worldsfolder,name+i);
+			temp = new File(worldsfolder,name+"_"+i);
 		} while (temp.exists());
 		
 		return temp.getName();

@@ -5,3 +5,4 @@ res/CraftBukkit/plugins/HelloWorld.jar
 res/CraftBukkit/plugins/Spout/CRCCache.txt
 res/CraftBukkit/plugins/Spout/itemMap.txt
 .checkstyle
+res/CraftBukkit/lastgnome_*
