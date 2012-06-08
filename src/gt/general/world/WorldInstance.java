@@ -7,7 +7,9 @@ import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.getspout.spoutapi.SpoutManager;
+import org.getspout.spoutapi.inventory.SpoutItemStack;
 import org.getspout.spoutapi.material.block.GenericCubeCustomBlock;
+import org.getspout.spoutapi.material.item.GenericCustomItem;
 
 /**
  * Represents one Instance of a World including metadata.
@@ -70,19 +72,36 @@ public abstract class WorldInstance {
 		
 		spawnCustomBlockAtRelativeLocation(HelloWorld.gnomeSocketEnd, spawn, 2, 2);
 		
+		spawnCustomToolsAtRelativeLocation(HelloWorld.placeholderTool, 1, spawn, 2, -2);
+		
 		
 	}
 	
 	private void spawnCustomBlockAtRelativeLocation(final GenericCubeCustomBlock customBlock, final Location start,
 														final int east, final int north) {
-		Location loc = world.getBlockAt(start)
-				.getRelative(BlockFace.EAST, east)
-				.getRelative(BlockFace.NORTH, north)
-				.getLocation();
+		
+		Location loc = getRelativeLocation(start, east, north);
 		
 		Block oldBlock = world.getHighestBlockAt(loc);
 		
 		SpoutManager.getMaterialManager().overrideBlock(oldBlock, customBlock);
+	}
+	
+	private void spawnCustomToolsAtRelativeLocation(final GenericCustomItem customItem, final int amount, final Location start,
+			final int east, final int north) {
+
+		Location loc = getRelativeLocation(start, east, north);
+		
+		SpoutItemStack item = new SpoutItemStack(customItem, amount);
+		
+		world.dropItem(loc, item);
+	}
+	
+	private Location getRelativeLocation(final Location start, final int east, final int north) {
+		return world.getBlockAt(start)
+				.getRelative(BlockFace.EAST, east)
+				.getRelative(BlockFace.NORTH, north)
+				.getLocation();
 	}
 
 }

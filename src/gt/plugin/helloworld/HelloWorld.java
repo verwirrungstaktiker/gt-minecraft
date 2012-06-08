@@ -11,6 +11,7 @@ import gt.lastgnome.GnomeItem;
 import gt.lastgnome.GnomeSocketEnd;
 import gt.lastgnome.GnomeSocketStart;
 import gt.lastgnome.LastGnomeGameManager;
+import gt.lastgnome.PlaceHolderTool;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -37,6 +38,7 @@ public class HelloWorld extends JavaPlugin {
 	public static GnomeItem gnome;
 	public static GnomeSocketStart gnomeSocketStart;
 	public static GnomeSocketEnd gnomeSocketEnd;
+	public static PlaceHolderTool placeholderTool;
 	
 	private HeroManager heroManager;
 	private static JavaPlugin plugin;
@@ -110,6 +112,7 @@ public class HelloWorld extends JavaPlugin {
 		gnome = new GnomeItem(this);
 		gnomeSocketStart = new GnomeSocketStart(this);
 		gnomeSocketEnd = new GnomeSocketEnd(this);
+		placeholderTool = new PlaceHolderTool(this);
 //		SpoutManager.getFileManager().addToPreLoginCache(plugin, "http://dl.dropbox.com/u/29386658/gt/textures/gnome_socket_start_16x16.png");
 //		SpoutManager.getFileManager().addToPreLoginCache(plugin, "http://dl.dropbox.com/u/29386658/gt/textures/gnome_socket_end_16x16.png");
 //		SpoutManager.getFileManager().addToPreLoginCache(plugin, "http://dl.dropbox.com/u/29386658/gt/textures/gnome2_16x16.png");

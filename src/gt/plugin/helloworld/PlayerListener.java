@@ -1,8 +1,10 @@
 package gt.plugin.helloworld;
 
+import gt.general.PortableItem;
 import gt.lastgnome.GnomeItem;
 
 import org.bukkit.ChatColor;
+import org.bukkit.entity.Item;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerDropItemEvent;
@@ -10,6 +12,7 @@ import org.bukkit.event.player.PlayerPickupItemEvent;
 import org.bukkit.event.player.PlayerToggleSprintEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
+import org.getspout.spoutapi.material.item.GenericCustomItem;
 import org.getspout.spoutapi.player.SpoutPlayer;
 
 public class PlayerListener implements Listener {
@@ -35,9 +38,14 @@ public class PlayerListener implements Listener {
 	 **/
 	@EventHandler
 	public final void preventGnomeDropping(final PlayerDropItemEvent event) {
-		if (event.getItemDrop().getItemStack().getTypeId() == GnomeItem.RAWID) {
-			event.setCancelled(true);
-			event.getPlayer().sendMessage(ChatColor.RED + "The Gnome is honorbound & can't be dropped");
+		Item item = event.getItemDrop();
+		if (item instanceof PortableItem) {
+			PortableItem portable = (PortableItem) item;
+
+			if (!portable.isDropable()) {
+				event.setCancelled(true);
+				event.getPlayer().sendMessage(ChatColor.RED + "This item cannot be dropped");
+			}
 		}
 		
 	}

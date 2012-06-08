@@ -55,6 +55,8 @@ public final class GnomeItem extends PortableItem {
 		itemStack = new SpoutItemStack(this);
 
 		setTransferable(true);
+		setDropable(false);
+		setTool(false);
 	}
 
 	/**

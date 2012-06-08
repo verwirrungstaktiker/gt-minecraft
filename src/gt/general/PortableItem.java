@@ -1,7 +1,7 @@
 package gt.general;
 
 import gt.general.character.Hero;
-
+import org.bukkit.event.Listener;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.Plugin;
 import org.getspout.spoutapi.material.item.GenericCustomItem;
@@ -9,7 +9,7 @@ import org.getspout.spoutapi.material.item.GenericCustomItem;
 /**
  * class for portable items
  */
-public abstract class PortableItem extends GenericCustomItem{
+public abstract class PortableItem extends GenericCustomItem implements Listener{
 	/**dropable items can be dropped to the floor*/
 	private boolean dropable;
 
@@ -33,7 +33,7 @@ public abstract class PortableItem extends GenericCustomItem{
 		tool = false;
 		transferable = false;
 	}
-
+	
 	/**
 	 * @return true if item can be dropped
 	 */
