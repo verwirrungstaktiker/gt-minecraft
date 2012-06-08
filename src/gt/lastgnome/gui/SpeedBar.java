@@ -60,10 +60,7 @@ public class SpeedBar implements GuiElement {
 
 	@Override
 	public void attach(final Hero hero) {
-		hero.getGui().attachWidget(label);		
-		hero.getGui().attachWidget(bar);
-		hero.getGui().attachWidget(background);
-		
+		hero.getGui().attachWidgets(label, bar, background);		
 		setVisible(false);
 		
 		hero.addObserver(this);
@@ -71,12 +68,8 @@ public class SpeedBar implements GuiElement {
 
 	@Override
 	public void detach(final Hero hero) {
-		
 		hero.removeObserver(this);
-		
-		hero.getGui().removeWidget(label);
-		hero.getGui().removeWidget(bar);
-		hero.getGui().removeWidget(background);
+		hero.getGui().removeWidgets(label, bar, background);
 	}
 
 	@Override
