@@ -210,7 +210,7 @@ public class HelloWorld extends JavaPlugin {
 		}
 		
 		getServer().broadcastMessage("starting gnome game: " + starter.getPlayer().getName());
-		lastGnomeGameManager.startGame(team, starter, "world_nether");
+		lastGnomeGameManager.startGame(team, starter, "lastgnome");
 	}
 
 	/**
