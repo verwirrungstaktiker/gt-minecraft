@@ -4,6 +4,7 @@ import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 import gt.BaseTest;
+import gt.general.PortableItem;
 import gt.general.character.Hero;
 import gt.general.character.Team;
 import gt.general.util.CopyUtil;
@@ -45,7 +46,7 @@ public class LastGnomeTest extends BaseTest {
 		mockPlayer1 = mock(Player.class);
 		mockPlayer2 = mock(Player.class);
 
-		hero1 = new Hero(mockPlayer1);
+		hero1 = new Hero(mockPlayer1);		
 		hero2 = new Hero(mockPlayer2);
 		
 		PlayerInventory mockInventory1 = mock(PlayerInventory.class);
@@ -62,6 +63,11 @@ public class LastGnomeTest extends BaseTest {
 		heroes.add(hero2);
 
 		team = new Team(heroes);
+		// start game
+		game = new LastGnomeGame(team);
+		hero1.setActiveItem(game.getGnome());
+		game.setGnomeBearer(hero1);
+		
 
 	}
 
@@ -70,8 +76,7 @@ public class LastGnomeTest extends BaseTest {
 	 */
 	@Test
 	public void simpleGnomeSwitchingTest() {
-		
-		game = new LastGnomeGame(team, hero1);
+
 		assertEquals(hero1,game.getGnomeBearer());
 
 		game.giveGnomeTo(hero2);
@@ -80,18 +85,24 @@ public class LastGnomeTest extends BaseTest {
 
 	@Test
 	public void complexGnomeSwitchingTest(){
-		game = new LastGnomeGame(team, hero1);
 
-		GnomeItem item1 = new GnomeItem();
-		item1.setTool(true);
+		PortableItem item1 = new PlaceHolderTool();
 		item1.setName("Item1");
+		item1.setTransferable(true);
+		item1.setDropable(false);
+		item1.setTool(true);
 		
-		GnomeItem item2 = new GnomeItem();
-		item2.setDropable(true);
+		PortableItem item2 = new PlaceHolderTool();
 		item2.setName("Item2");
-		
-		GnomeItem item3 = new GnomeItem();
+		item2.setTransferable(true);
+		item2.setDropable(true);
+		item2.setTool(false);
+
+		PortableItem item3 = new PlaceHolderTool();
 		item3.setName("Item3");
+		item3.setTransferable(true);
+		item3.setDropable(false);
+		item3.setTool(false);
 		
 		//Now we give hero2 a Tool-Item and see if it works then
 		hero2.setActiveItem(item1);
