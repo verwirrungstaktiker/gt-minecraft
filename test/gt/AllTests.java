@@ -14,11 +14,15 @@ import org.junit.runners.Suite;
  * runs all available tests
  */
 @RunWith(Suite.class)
-@Suite.SuiteClasses({ GeneralTest.class,
-					  LastGnomeTest.class,
-					  AuraTest.class,
-					  GnomeCarrierEffectTest.class,
-					  TriggerTest.class,
-					  GuiElementTest.class})
+@Suite.SuiteClasses({ 
+		BaseTest.class,
+		GeneralTest.class,
+		AuraTest.class,
+		GnomeCarrierEffectTest.class,
+		TriggerTest.class,
+		GuiElementTest.class,
+		LastGnomeTest.class
+
+		})
 public class AllTests {
 }
