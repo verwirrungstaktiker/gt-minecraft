@@ -1,8 +1,11 @@
 package gt.lastgnome;
 
+import gt.general.Game;
 import gt.general.GameManager;
 import gt.general.character.Hero;
 import gt.general.character.Team;
+import gt.general.character.TeamManager;
+import gt.general.world.WorldInstance;
 import gt.plugin.helloworld.HelloWorld;
 
 import org.bukkit.World;
@@ -14,8 +17,8 @@ public class LastGnomeGameManager extends GameManager {
 	/**
 	 * @param initialWorld the base world where the initial spawnpoint is
 	 */
-	public LastGnomeGameManager(final World initialWorld) {
-		super(initialWorld);
+	public LastGnomeGameManager(final World initialWorld, final TeamManager teamManager) {
+		super(initialWorld, teamManager);
 		
 		worldManager = new LastGnomeWorldManager(initialWorld);
 	}
@@ -48,6 +51,15 @@ public class LastGnomeGameManager extends GameManager {
 		
 		getRunningGames().add(lastGnomeGame);
 		return lastGnomeGame;
+	}
+	
+	@Override
+	public void endGame(final Game game) {
+		WorldInstance world = game.getWorldInstance();
+		
+		super.endGame(game);
+		
+		worldManager.disposeWorldInstance(world);		
 	}
 	
 }

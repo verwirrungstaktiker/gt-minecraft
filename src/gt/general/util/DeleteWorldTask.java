@@ -15,7 +15,7 @@ public class DeleteWorldTask implements Runnable{
 	public void run() {
 		
 		//File worldfolder = world.getWorldFolder();
-		CopyUtil.deleteDirectory(world);
+		//CopyUtil.deleteDirectory(world);
 
 	}
 
