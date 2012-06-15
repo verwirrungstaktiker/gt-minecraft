@@ -6,12 +6,12 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.bukkit.ChatColor;
+import org.bukkit.GameMode;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
-import org.getspout.spoutapi.SpoutManager;
 import org.getspout.spoutapi.event.input.KeyPressedEvent;
 import org.getspout.spoutapi.keyboard.Keyboard;
 
@@ -21,7 +21,8 @@ public class BuildManager implements Listener {
 	public enum TriggerState {
 		IDLE,
 		TRIGGER,
-		RESPONSE
+		RESPONSE,
+		STANDBY
 	}
 	
 	/** contains all player's current TriggerStates **/
@@ -81,7 +82,7 @@ public class BuildManager implements Listener {
 			playerTriggerStates.put(name, TriggerState.TRIGGER);
 			playerTriggerContexts.put(name, new TriggerContext());
 			
-			player.sendMessage(ChatColor.YELLOW + "New Context..");
+			player.sendMessage(ChatColor.YELLOW + "New Context.. BuildState: TRIGGER");
 			
 		} else {
 			if(playerTriggerContexts.get(name).isComplete()) {
@@ -111,10 +112,17 @@ public class BuildManager implements Listener {
 			return;
 		} 
 		if(old == TriggerState.RESPONSE) {
+			playerTriggerStates.put(name, TriggerState.STANDBY);
+			player.sendMessage(ChatColor.YELLOW + "BuildState: STANDBY");
+			return;
+		}
+		if(old == TriggerState.STANDBY) {
 			playerTriggerStates.put(name, TriggerState.TRIGGER);
 			player.sendMessage(ChatColor.YELLOW + "BuildState: TRIGGER");
+			return;
 		}
-		player.sendMessage(ChatColor.YELLOW + "BuildState: IDLE");
+		
+		player.sendMessage(ChatColor.YELLOW + "No active TriggerContext");
 	}
 	
 	/**
@@ -139,10 +147,13 @@ public class BuildManager implements Listener {
 	 */
 	@EventHandler
 	public void onPlayerJoin(final PlayerJoinEvent event) {
-		String name = event.getPlayer().getName();
+		Player player = event.getPlayer();
+		String name = player.getName();
 		
 		addPlayer(name);
-		event.getPlayer().performCommand("helpme");
+		
+		player.performCommand("helpme");
+		player.setGameMode(GameMode.CREATIVE);
 	}
 	
 	/**

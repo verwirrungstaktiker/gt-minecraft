@@ -18,7 +18,7 @@ public abstract class Trigger {
 	 * @param callback runnable to be called
 	 * @param tm the TriggerManager for this trigger
 	 */
-	public Trigger (boolean repeat, Runnable callback, TriggerManager tm) {
+	public Trigger (final boolean repeat, final Runnable callback, final TriggerManager tm) {
 		this.repeat = repeat;
 		this.callback = callback;
 		this.tm = tm;
