@@ -7,6 +7,7 @@ import gt.general.character.Team;
 import gt.general.character.TeamManager;
 import gt.general.trigger.TriggerManager;
 import gt.lastgnome.LastGnomeGameManager;
+import gt.plugin.listener.MultiListener;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -28,13 +29,15 @@ import org.bukkit.plugin.java.JavaPlugin;
 public class HelloWorld extends JavaPlugin {
 	
 	private HeroManager heroManager;
-	private static JavaPlugin plugin;
+	private static HelloWorld plugin; //!singleton
 	private Set<Game> runningGames;
 	private static TriggerManager triggerManager;
 	
 	private LastGnomeGameManager lastGnomeGameManager;
 	
 	private TeamManager teamManager;
+	
+	private MultiListener multiListener;
 	
 	/**
 	 * Initialization of our plugin
@@ -47,12 +50,15 @@ public class HelloWorld extends JavaPlugin {
 		triggerManager = new TriggerManager();
 		teamManager = new TeamManager();
 
-		PluginManager pm = getServer().getPluginManager();
-		pm.registerEvents(new CommandsListener(), this);
-		pm.registerEvents(new BlockListener(), this);
-		pm.registerEvents(new PlayerListener(), this);
-		pm.registerEvents(new KeyPressListener(), this);
-		pm.registerEvents(heroManager, this);
+		
+		multiListener = new MultiListener(this);
+		
+		multiListener.registerListeners(new KeyPressListener(),
+										new BlockListener(),
+										// new CommandListener(), XXX seems to be missing?
+										new PlayerListener());
+		
+		multiListener.registerListener(heroManager);		
 
 		getServer().getScheduler().scheduleSyncRepeatingTask(this, heroManager, 0, 10);
 		getServer().getScheduler().scheduleSyncRepeatingTask(this, triggerManager, 0, 10);
@@ -63,14 +69,24 @@ public class HelloWorld extends JavaPlugin {
 	/** */
 	public void onDisable() { }
 	
+	
 	/**
+	 * Shortcut function to register listeners
+	 * 
 	 * @param listener the Listener to be registered
 	 */
 	public static void registerListener(final Listener listener) {
-		getPlugin()
-			.getServer()
-			.getPluginManager()
-			.registerEvents(listener, getPlugin());
+		getPlugin().multiListener.registerListener(listener);
+		
+	}
+
+	/**
+	 * Shortcut function to register listeners
+	 * 
+	 * @param listener the Listener to be registered
+	 */
+	public static void unregisterListener(final Listener listener) {
+		getPlugin().multiListener.unregisterListener(listener);
 	}
 
 	/**
@@ -83,7 +99,7 @@ public class HelloWorld extends JavaPlugin {
 	/**
 	 * @return the HelloWorld plugin
 	 */
-	public static JavaPlugin getPlugin() {
+	public static HelloWorld getPlugin() {
 		return plugin;
 	}
 
@@ -97,7 +113,7 @@ public class HelloWorld extends JavaPlugin {
 	/**
 	 * @param plugin the plugin to set
 	 */
-	public static void setPlugin(final JavaPlugin plugin) {
+	public static void setPlugin(final HelloWorld plugin) {
 		HelloWorld.plugin = plugin;
 	}
 	
