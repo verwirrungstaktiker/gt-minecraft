@@ -16,6 +16,7 @@ public class LastGnomeGameManager extends GameManager {
 	
 	/**
 	 * @param initialWorld the base world where the initial spawnpoint is
+	 * @param teamManager the global TeamManager
 	 */
 	public LastGnomeGameManager(final World initialWorld, final TeamManager teamManager) {
 		super(initialWorld, teamManager);
