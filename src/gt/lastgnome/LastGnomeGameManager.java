@@ -45,7 +45,7 @@ public class LastGnomeGameManager extends GameManager {
 		}
 		
 		// TODO actually do something
-		new TeamLostTrigger(lastGnomeGame, null, HelloWorld.getTM());
+		new TeamLostTrigger(lastGnomeGame, null, HelloWorld.getTriggerManager());
 		
 		HelloWorld.registerListener(lastGnomeGame);
 		

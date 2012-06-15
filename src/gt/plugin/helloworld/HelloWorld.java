@@ -30,15 +30,11 @@ public class HelloWorld extends JavaPlugin {
 	private HeroManager heroManager;
 	private static JavaPlugin plugin;
 	private Set<Game> runningGames;
-	private static TriggerManager tm;
+	private static TriggerManager triggerManager;
 	
 	private LastGnomeGameManager lastGnomeGameManager;
 	
 	private TeamManager teamManager;
-	
-	public static TriggerManager getTM() {
-		return tm;
-	}
 	
 	/**
 	 * Initialization of our plugin
@@ -48,7 +44,7 @@ public class HelloWorld extends JavaPlugin {
 
 		runningGames = new HashSet<Game>();
 		heroManager = new HeroManager(this,runningGames);
-		tm = new TriggerManager();
+		triggerManager = new TriggerManager();
 		teamManager = new TeamManager();
 
 		PluginManager pm = getServer().getPluginManager();
@@ -58,39 +54,56 @@ public class HelloWorld extends JavaPlugin {
 		pm.registerEvents(heroManager, this);
 
 		getServer().getScheduler().scheduleSyncRepeatingTask(this, heroManager, 0, 10);
-		getServer().getScheduler().scheduleSyncRepeatingTask(this, tm, 0, 10);
+		getServer().getScheduler().scheduleSyncRepeatingTask(this, triggerManager, 0, 10);
 		
 		lastGnomeGameManager = new LastGnomeGameManager(getServer().getWorld("world"), teamManager);
 	}
 	
-	/**
-	 * 
-	 */
-	public void onDisable() {
-	}
+	/** */
+	public void onDisable() { }
 	
-	public static void registerListener(Listener listener) {
+	/**
+	 * @param listener the Listener to be registered
+	 */
+	public static void registerListener(final Listener listener) {
 		getPlugin()
 			.getServer()
 			.getPluginManager()
 			.registerEvents(listener, getPlugin());
 	}
 
+	/**
+	 * @return all currently running games
+	 */
 	public Set<Game> getRunningGames() {
 		return runningGames;
 	}
 
+	/**
+	 * @return the HelloWorld plugin
+	 */
 	public static JavaPlugin getPlugin() {
 		return plugin;
 	}
 
-	public static void setPlugin(JavaPlugin plugin) {
+	/**
+	 * @return The TriggerManager associated to this Plugin
+	 */
+	public static TriggerManager getTriggerManager() {
+		return triggerManager;
+	}
+
+	/**
+	 * @param plugin the plugin to set
+	 */
+	public static void setPlugin(final JavaPlugin plugin) {
 		HelloWorld.plugin = plugin;
 	}
 	
-	/**
+	/*
 	 * TODO this should be encapsuled in a extra class
 	 */
+	@SuppressWarnings("javadoc")
 	@Override
 	public boolean onCommand(final CommandSender sender, final Command cmd, final  String label, final String[] args) {
 		
