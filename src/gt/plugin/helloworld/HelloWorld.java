@@ -6,25 +6,17 @@ import gt.general.character.HeroManager;
 import gt.general.character.Team;
 import gt.general.character.TeamManager;
 import gt.general.trigger.TriggerManager;
-import gt.general.util.CopyUtil;
-import gt.lastgnome.GnomeItem;
-import gt.lastgnome.GnomeSocketEnd;
-import gt.lastgnome.GnomeSocketStart;
 import gt.lastgnome.LastGnomeGameManager;
-import gt.lastgnome.PlaceHolderTool;
 
 import java.util.HashSet;
 import java.util.Set;
 
-import org.bukkit.World;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
-import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
-import org.getspout.spoutapi.inventory.SpoutItemStack;
 
 
 /**
@@ -34,11 +26,6 @@ import org.getspout.spoutapi.inventory.SpoutItemStack;
  *
  */
 public class HelloWorld extends JavaPlugin {
-
-	public static GnomeItem gnome;
-	public static GnomeSocketStart gnomeSocketStart;
-	public static GnomeSocketEnd gnomeSocketEnd;
-	public static PlaceHolderTool placeholderTool;
 	
 	private HeroManager heroManager;
 	private static JavaPlugin plugin;
@@ -52,17 +39,12 @@ public class HelloWorld extends JavaPlugin {
 	public static TriggerManager getTM() {
 		return tm;
 	}
-
-	
-
 	
 	/**
 	 * Initialization of our plugin
 	 */
 	public void onEnable() {
 		HelloWorld.setPlugin(this);
-
-		setupGnome();
 
 		runningGames = new HashSet<Game>();
 		heroManager = new HeroManager(this,runningGames);
@@ -78,20 +60,13 @@ public class HelloWorld extends JavaPlugin {
 		getServer().getScheduler().scheduleSyncRepeatingTask(this, heroManager, 0, 10);
 		getServer().getScheduler().scheduleSyncRepeatingTask(this, tm, 0, 10);
 		
-		lastGnomeGameManager = new LastGnomeGameManager(getServer().getWorld("world"));
+		lastGnomeGameManager = new LastGnomeGameManager(getServer().getWorld("world"), teamManager);
 	}
 	
 	/**
 	 * 
 	 */
 	public void onDisable() {
-		for (World world : getServer().getWorlds()) {
-			if (world.getName().equals("world")) {
-				continue;
-			}
-			
-			CopyUtil.deleteDirectory(world.getWorldFolder());
-		}
 	}
 	
 	public static void registerListener(Listener listener) {
@@ -103,19 +78,6 @@ public class HelloWorld extends JavaPlugin {
 
 	public Set<Game> getRunningGames() {
 		return runningGames;
-	}
-	
-	/**
-	 * instantiate gnome block and precache it's texture
-	 */
-	private void setupGnome() {
-		gnome = new GnomeItem(this);
-		gnomeSocketStart = new GnomeSocketStart(this);
-		gnomeSocketEnd = new GnomeSocketEnd(this);
-		placeholderTool = new PlaceHolderTool(this);
-//		SpoutManager.getFileManager().addToPreLoginCache(plugin, "http://dl.dropbox.com/u/29386658/gt/textures/gnome_socket_start_16x16.png");
-//		SpoutManager.getFileManager().addToPreLoginCache(plugin, "http://dl.dropbox.com/u/29386658/gt/textures/gnome_socket_end_16x16.png");
-//		SpoutManager.getFileManager().addToPreLoginCache(plugin, "http://dl.dropbox.com/u/29386658/gt/textures/gnome2_16x16.png");
 	}
 
 	public static JavaPlugin getPlugin() {
@@ -223,10 +185,6 @@ public class HelloWorld extends JavaPlugin {
 	private void endAllGames() {
 		System.out.println("ending games");
 		lastGnomeGameManager.endAllGames();
-		
-		for(Team team : teamManager.getTeams()) {
-			teamManager.disband(team);
-		}
 	}
 	
 	/**
@@ -275,11 +233,16 @@ public class HelloWorld extends JavaPlugin {
 	 * @param sender 
 	 */
 	private void giveSocketsToPlayer(final CommandSender sender) {
+		
+		sender.sendMessage("this command is currently not availible");
+		
+		/*
 		ItemStack items = new SpoutItemStack(HelloWorld.gnomeSocketStart, 1);
 		getServer().getPlayer(sender.getName()).getInventory().addItem(items);
 		
 		items = new SpoutItemStack(HelloWorld.gnomeSocketEnd, 1);
 		getServer().getPlayer(sender.getName()).getInventory().addItem(items);
+		*/
 	}
 	
 }

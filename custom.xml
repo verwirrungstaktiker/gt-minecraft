@@ -1,24 +1,38 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <?eclipse.ant.import?>
-<project name="gt-minecraft Server" basedir="." default="startBukkitServer">
+<project name="gt-minecraft Server" basedir="." default="startHelloWorldServer">
 
 	<!-- so the compiler wont nag -->
 	<import file="build.xml"/>
 
 	<property name="bukkitDir" value="res/CraftBukkit"/>
 	
-    <target name="jarServerPlugin" depends="build">
+    <target name="startHelloWorldServer" depends="build">
         <mkdir dir="${bukkitDir}/plugins"/>
+    	<delete>
+    		<fileset dir="${bukkitDir}/plugins/" includes="Hello*" />
+    	</delete>
+    	
         <jar destfile="${bukkitDir}/plugins/HelloWorld.jar" basedir="bin">
-        	<fileset file="plugin.yml" />
+        	<fileset file="res/helloworld/plugin.yml"  />
         </jar>
-    </target>
-
-	<target name="startBukkitServer" depends="jarServerPlugin">
+    	<exec dir="${bukkitDir}" executable="cmd">
+		  <arg line="/c RUN.bat"/>
+		</exec>
+	</target>
+	
+    <target name="startHelloEditorPlugin" depends="build">
+        <mkdir dir="${bukkitDir}/plugins"/>
+    	<delete>
+    		<fileset dir="${bukkitDir}/plugins/" includes="Hello*" />
+    	</delete>
+    	
+        <jar destfile="${bukkitDir}/plugins/HelloEditor.jar" basedir="bin">
+        	<fileset file="res/helloeditor/plugin.yml"  />
+        </jar>
 		<exec dir="${bukkitDir}" executable="cmd">
 		  <arg line="/c RUN.bat"/>
 		</exec>
-		
 	</target>
         	
 </project>

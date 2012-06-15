@@ -51,6 +51,4 @@ public class BlockListener implements Listener {
 			event.getPlayer().getInventory().clear();
 		}
 	}
-	
-
 }
