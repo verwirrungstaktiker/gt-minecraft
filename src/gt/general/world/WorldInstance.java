@@ -27,6 +27,9 @@ public abstract class WorldInstance {
 	 */
 	public void setWorld(final World world) {
 		this.world = world;
+		
+		loadMetadata();
+		
 		placeCustomBlocks();
 	}
 	
@@ -51,6 +54,9 @@ public abstract class WorldInstance {
 		return name;
 	}
 
+	/**
+	 * disposes this WorldInstance
+	 */
 	public void dispose() {
 		world = null;
 	}
@@ -64,6 +70,12 @@ public abstract class WorldInstance {
 	public Location getSpawnLocation() {
 		return world.getSpawnLocation();
 	};
+	
+	
+	protected void loadMetadata() {
+		
+	}
+	
 	
 	//XXX: Testing
 	/**
