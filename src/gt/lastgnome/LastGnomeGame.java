@@ -25,7 +25,7 @@ import org.bukkit.event.player.PlayerInteractEvent;
 public class LastGnomeGame extends Game implements Listener{
 
 	
-	private WorldInstance worldInstance;
+	private LastGnomeWorldInstance worldInstance;
 	
 	private boolean gameRunning;
 	
@@ -76,13 +76,13 @@ public class LastGnomeGame extends Game implements Listener{
 	 */
 	@EventHandler
 	public void getGnomeFromStartSocket(final PlayerInteractEvent event) {
-		if(event.hasBlock() && event.getClickedBlock().getTypeId() == HelloWorld.gnomeSocketStart.getBlockId()) {
+		if(event.hasBlock() && event.getClickedBlock().getTypeId() == worldInstance.getStartSocket().getBlockId()) {
 			Player player = event.getPlayer();
 			Hero hero = HeroManager.getHero(player.getName());
 			
 			if (gnomeBearer == null && hero.canRecieveItem()) {
 
-				hero.setActiveItem(HelloWorld.gnome);
+				hero.setActiveItem(gnome);
 				gnomeBearer = hero;
 				
 				player.sendMessage(ChatColor.GREEN + "You obtained a Gnome for Testing");
@@ -99,7 +99,7 @@ public class LastGnomeGame extends Game implements Listener{
 	 */
 	@EventHandler
 	public void giveGnomeToEndSocket(final PlayerInteractEvent event) {
-		if(event.hasBlock() && event.getClickedBlock().getTypeId() == HelloWorld.gnomeSocketEnd.getBlockId()) {
+		if(event.hasBlock() && event.getClickedBlock().getTypeId() == worldInstance.getEndSocket().getBlockId()) {
 			
 			Player player = event.getPlayer();
 			Hero hero = HeroManager.getHero(player.getName());

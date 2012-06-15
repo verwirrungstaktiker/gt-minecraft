@@ -21,9 +21,9 @@ public class LastGnomeWorldManager extends WorldManager {
 
 		String newName = findNextInstanceFolder(baseName);
 		
-		LastGnomeWorldInstance lastGnomeWorld = new LastGnomeWorldInstance();
-			
-		lastGnomeWorld.setWorld(instatiateWorld(baseName, newName));
+		World world = instatiateWorld(baseName, newName);
+		LastGnomeWorldInstance lastGnomeWorld = new LastGnomeWorldInstance(world);
+		
 		lastGnomeWorld.setName(newName);
 		
 		getOpenWorlds().add(lastGnomeWorld);

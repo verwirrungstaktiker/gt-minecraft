@@ -27,9 +27,6 @@ public abstract class WorldInstance {
 	 */
 	public void setWorld(final World world) {
 		this.world = world;
-		
-		loadMetadata();
-		
 		placeCustomBlocks();
 	}
 	
@@ -72,11 +69,6 @@ public abstract class WorldInstance {
 	};
 	
 	
-	protected void loadMetadata() {
-		
-	}
-	
-	
 	//XXX: Testing
 	/**
 	 * places start socket & end socket
@@ -84,16 +76,17 @@ public abstract class WorldInstance {
 	private void placeCustomBlocks() {
 		Location spawn = world.getSpawnLocation();
 		
+		/**
 		spawnCustomBlockAtRelativeLocation(HelloWorld.gnomeSocketStart, spawn, -2, -2);
 		
 		spawnCustomBlockAtRelativeLocation(HelloWorld.gnomeSocketEnd, spawn, 2, 2);
 		
 		spawnCustomToolsAtRelativeLocation(HelloWorld.placeholderTool, 1, spawn, 2, -2);
-		
+		*/
 		
 	}
 	
-	private void spawnCustomBlockAtRelativeLocation(final GenericCubeCustomBlock customBlock, final Location start,
+	protected void spawnCustomBlockAtRelativeLocation(final GenericCubeCustomBlock customBlock, final Location start,
 														final int east, final int north) {
 		
 		Location loc = getRelativeLocation(start, east, north);
@@ -103,7 +96,7 @@ public abstract class WorldInstance {
 		SpoutManager.getMaterialManager().overrideBlock(oldBlock, customBlock);
 	}
 	
-	private void spawnCustomToolsAtRelativeLocation(final GenericCustomItem customItem, final int amount, final Location start,
+	protected void spawnCustomToolsAtRelativeLocation(final GenericCustomItem customItem, final int amount, final Location start,
 			final int east, final int north) {
 
 		Location loc = getRelativeLocation(start, east, north);
@@ -113,7 +106,7 @@ public abstract class WorldInstance {
 		world.dropItem(loc, item);
 	}
 	
-	private Location getRelativeLocation(final Location start, final int east, final int north) {
+	protected Location getRelativeLocation(final Location start, final int east, final int north) {
 		return world.getBlockAt(start)
 				.getRelative(BlockFace.EAST, east)
 				.getRelative(BlockFace.NORTH, north)
