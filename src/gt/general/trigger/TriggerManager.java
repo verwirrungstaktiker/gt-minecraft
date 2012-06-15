@@ -45,4 +45,9 @@ public class TriggerManager implements Runnable {
 
 	}
 
+	public void dumpTrigger() {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

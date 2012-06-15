@@ -1,9 +1,11 @@
 package gt.plugin.helloeditor;
 
+import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
+import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
 
@@ -16,15 +18,39 @@ public class HelloEditor extends JavaPlugin {
 	
 	private static JavaPlugin plugin;
 	
+	private BuildManager bm = new BuildManager();
+	
 	/**
 	 * Initialization of our plugin
 	 */
 	public void onEnable() {
+		HelloEditor.setPlugin(this);
+		
+		PluginManager pm = getServer().getPluginManager();
 
+		pm.registerEvents(bm, this);
+		
+		printInformation();
 	}
 	
+	/**
+	 * help
+	 */
+	private void printInformation() {
+		System.out.println(
+				"\n  ********************** \n" +
+				"  Welcome to Build Mode \n" +
+				"   [F6]   -- Toggle Trigger Context Mode \n" +
+				"   [F7]   -- Toggle Player Trigger State (trigger/response)\n" +
+				"   [F9]   -- Toggle Context Input Function (and/or)\n" +
+				"   [F12]   -- Cancel Trigger Context Mode \n" +
+				"   /helpme -- show this information \n" +
+				"  **********************");
+	}
+
 	/** */
 	public void onDisable() {
+
 	}
 	
 	public static void registerListener(final Listener listener) {
@@ -47,16 +73,30 @@ public class HelloEditor extends JavaPlugin {
 	 */
 	@Override
 	public boolean onCommand(final CommandSender sender, final Command cmd, final  String label, final String[] args) {
-		
 		/*
-		 * Gnome game
+		 * set trigger input blocks
 		 */
-		if (isPlayer(sender) && commandEquals(cmd, "null")) {
+		if (isPlayer(sender) && commandEquals(cmd, "helpme")) {
+			printChatHelp((Player) sender);
+			return true;
+		}
+		
+		if (commandEquals(cmd, "dump")) {
+			//TODO: ??
 			return true;
 		}
 		return false;
 	}
 
+	private void printChatHelp(Player player) {
+		player.sendMessage(
+				ChatColor.YELLOW + 
+				"* [F6]Toggle Trigger Context \n" +
+				"* [F7]Toggle Trigger State \n" +
+				"* [F9]Toggle Context Mode \n" +
+				"*[F12]Cancel Trigger Context");
+	}
+	
 	/**
 	 * @param cmd The Command to be matched.
 	 * @param string The case insensitive String to match the Command.

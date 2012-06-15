@@ -7,7 +7,6 @@ import gt.general.character.Team;
 import gt.general.gui.GuiElementType;
 import gt.general.world.WorldInstance;
 import gt.lastgnome.gui.SpeedBar;
-import gt.plugin.helloworld.HelloWorld;
 
 import java.util.Iterator;
 

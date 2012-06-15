@@ -24,6 +24,7 @@ public class GameManager implements GameObserver{
 	
 	/**
 	 * @param initialWorld the world with the initial spawn
+	 * @param teamManager the global TeamManager
 	 */
 	public GameManager(final World initialWorld, final TeamManager teamManager) {
 		runningGames = new HashSet<Game>();
