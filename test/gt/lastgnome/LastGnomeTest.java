@@ -6,7 +6,6 @@ import gt.BaseTest;
 import gt.general.PortableItem;
 import gt.general.character.Hero;
 import gt.general.character.Team;
-import gt.general.util.CopyUtil;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -21,7 +20,6 @@ import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
 
 @RunWith(PowerMockRunner.class)
-@PrepareForTest({Bukkit.class, CopyUtil.class})
 public class LastGnomeTest extends BaseTest {
 	private Player mockPlayer1, mockPlayer2;
 	private Hero hero1, hero2;
