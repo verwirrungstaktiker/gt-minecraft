@@ -1,9 +1,9 @@
 package gt.lastgnome;
 
+import gt.general.world.WorldInstance;
+
 import org.bukkit.Location;
 import org.bukkit.World;
-
-import gt.general.world.WorldInstance;
 
 public class LastGnomeWorldInstance extends WorldInstance {
 	
