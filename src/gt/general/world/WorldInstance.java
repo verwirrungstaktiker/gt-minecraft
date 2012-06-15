@@ -83,6 +83,20 @@ public abstract class WorldInstance {
 		
 	}
 	
+	protected void spawnCustomBlockAtAbsoluteLocation(final GenericCubeCustomBlock customBlock, final Location location) {
+		
+		Block oldBlock = world.getBlockAt(location);
+		
+		SpoutManager.getMaterialManager().overrideBlock(oldBlock, customBlock);
+	}
+	
+	protected void spawnCustomToolsAtAbsoluteLocation(final GenericCustomItem customItem, final int amount, final Location location) {
+		
+		SpoutItemStack items = new SpoutItemStack(customItem, amount);
+		
+		world.dropItemNaturally(location, items);
+	}
+	
 	protected void spawnCustomBlockAtRelativeLocation(final GenericCubeCustomBlock customBlock, final Location start,
 														final int east, final int north) {
 		
@@ -100,7 +114,7 @@ public abstract class WorldInstance {
 		
 		SpoutItemStack item = new SpoutItemStack(customItem, amount);
 		
-		world.dropItem(loc, item);
+		world.dropItemNaturally(loc, item);
 	}
 	
 	protected Location getRelativeLocation(final Location start, final int east, final int north) {
