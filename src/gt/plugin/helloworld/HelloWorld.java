@@ -6,7 +6,6 @@ import gt.general.character.HeroManager;
 import gt.general.character.Team;
 import gt.general.character.TeamManager;
 import gt.general.trigger.TriggerManager;
-import gt.general.util.CopyUtil;
 import gt.lastgnome.GnomeItem;
 import gt.lastgnome.GnomeSocketEnd;
 import gt.lastgnome.GnomeSocketStart;
@@ -52,9 +51,6 @@ public class HelloWorld extends JavaPlugin {
 	public static TriggerManager getTM() {
 		return tm;
 	}
-
-	
-
 	
 	/**
 	 * Initialization of our plugin
@@ -78,20 +74,13 @@ public class HelloWorld extends JavaPlugin {
 		getServer().getScheduler().scheduleSyncRepeatingTask(this, heroManager, 0, 10);
 		getServer().getScheduler().scheduleSyncRepeatingTask(this, tm, 0, 10);
 		
-		lastGnomeGameManager = new LastGnomeGameManager(getServer().getWorld("world"));
+		lastGnomeGameManager = new LastGnomeGameManager(getServer().getWorld("world"), teamManager);
 	}
 	
 	/**
 	 * 
 	 */
 	public void onDisable() {
-		for (World world : getServer().getWorlds()) {
-			if (world.getName().equals("world")) {
-				continue;
-			}
-			
-			CopyUtil.deleteDirectory(world.getWorldFolder());
-		}
 	}
 	
 	public static void registerListener(Listener listener) {
@@ -223,10 +212,6 @@ public class HelloWorld extends JavaPlugin {
 	private void endAllGames() {
 		System.out.println("ending games");
 		lastGnomeGameManager.endAllGames();
-		
-		for(Team team : teamManager.getTeams()) {
-			teamManager.disband(team);
-		}
 	}
 	
 	/**

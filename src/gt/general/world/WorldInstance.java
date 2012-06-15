@@ -51,6 +51,10 @@ public abstract class WorldInstance {
 		return name;
 	}
 
+	public void dispose() {
+		world = null;
+	}
+	
 	
 	/**
 	 * shortcut
