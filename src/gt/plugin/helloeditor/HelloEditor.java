@@ -1,5 +1,6 @@
 package gt.plugin.helloeditor;
 
+import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -28,8 +29,25 @@ public class HelloEditor extends JavaPlugin {
 		PluginManager pm = getServer().getPluginManager();
 
 		pm.registerEvents(bm, this);
+		
+		printInformation();
 	}
 	
+	/**
+	 * help
+	 */
+	private void printInformation() {
+		System.out.println(
+				"\n  ********************** \n" +
+				"  Welcome to Build Mode \n" +
+				"   [F6]   -- Toggle Trigger Context Mode \n" +
+				"   [F7]   -- Toggle Player Trigger State (trigger/response)\n" +
+				"   [F9]   -- Toggle Context Input Function (and/or)\n" +
+				"   [F12]   -- Cancel Trigger Context Mode \n" +
+				"   /helpme -- show this information \n" +
+				"  **********************");
+	}
+
 	/** */
 	public void onDisable() {
 
@@ -58,8 +76,8 @@ public class HelloEditor extends JavaPlugin {
 		/*
 		 * set trigger input blocks
 		 */
-		if (isPlayer(sender) && commandEquals(cmd, "input")) {
-			
+		if (isPlayer(sender) && commandEquals(cmd, "helpme")) {
+			printChatHelp((Player) sender);
 			return true;
 		}
 		
@@ -70,6 +88,15 @@ public class HelloEditor extends JavaPlugin {
 		return false;
 	}
 
+	private void printChatHelp(Player player) {
+		player.sendMessage(
+				ChatColor.YELLOW + 
+				"* [F6]Toggle Trigger Context \n" +
+				"* [F7]Toggle Trigger State \n" +
+				"* [F9]Toggle Context Mode \n" +
+				"*[F12]Cancel Trigger Context");
+	}
+	
 	/**
 	 * @param cmd The Command to be matched.
 	 * @param string The case insensitive String to match the Command.

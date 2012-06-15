@@ -21,6 +21,8 @@ public class TriggerContext {
 	public TriggerContext() {
 		trigger = new HashSet<Trigger>();
 		response = new HashSet<Response>();
+		
+		inputFunction = InputFunction.OR;
 	}
 
 	/**
@@ -35,6 +37,17 @@ public class TriggerContext {
 	 */
 	public void setInputFunction(final InputFunction inputFunction) {
 		this.inputFunction = inputFunction;
+	}
+	
+	/**
+	 * toggle (AND / OR) input function
+	 */
+	public void toggleInputFunction() {
+		if(inputFunction == InputFunction.OR) {
+			inputFunction = InputFunction.AND;
+		} else {
+			inputFunction = InputFunction.OR;
+		}
 	}
 	
 	/**
