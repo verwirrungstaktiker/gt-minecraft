@@ -1,7 +1,5 @@
 package gt.general.world;
 
-import gt.plugin.helloworld.HelloWorld;
-
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.block.Block;
@@ -74,9 +72,8 @@ public abstract class WorldInstance {
 	 * places start socket & end socket
 	 */
 	private void placeCustomBlocks() {
-		Location spawn = world.getSpawnLocation();
-		
 		/**
+		Location spawn = world.getSpawnLocation();
 		spawnCustomBlockAtRelativeLocation(HelloWorld.gnomeSocketStart, spawn, -2, -2);
 		
 		spawnCustomBlockAtRelativeLocation(HelloWorld.gnomeSocketEnd, spawn, 2, 2);
