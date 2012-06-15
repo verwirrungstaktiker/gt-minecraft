@@ -1,9 +1,12 @@
 package gt.plugin.helloeditor;
 
+import gt.plugin.helloworld.HelloWorld;
+
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
+import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
 
@@ -16,11 +19,17 @@ public class HelloEditor extends JavaPlugin {
 	
 	private static JavaPlugin plugin;
 	
+	private BuildManager bm = new BuildManager();
+	
 	/**
 	 * Initialization of our plugin
 	 */
 	public void onEnable() {
-
+		HelloEditor.setPlugin(this);
+		
+		PluginManager pm = getServer().getPluginManager();
+		
+		
 	}
 	
 	/** */
@@ -47,10 +56,14 @@ public class HelloEditor extends JavaPlugin {
 	 */
 	@Override
 	public boolean onCommand(final CommandSender sender, final Command cmd, final  String label, final String[] args) {
-		
 		/*
-		 * Gnome game
+		 * set trigger input blocks
 		 */
+		if (isPlayer(sender) && commandEquals(cmd, "input")) {
+			
+			return true;
+		}
+		
 		if (isPlayer(sender) && commandEquals(cmd, "null")) {
 			return true;
 		}
