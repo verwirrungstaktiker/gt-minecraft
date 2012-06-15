@@ -16,5 +16,10 @@
 	<classpathentry kind="lib" path="lib/objenesis-1.2.jar"/>
 	<classpathentry kind="lib" path="lib/powermock-mockito-1.4.12-full.jar"/>
 	<classpathentry kind="lib" path="lib/spoutpluginapi-dev-607.jar"/>
+	<classpathentry kind="lib" path="lib/snakeyaml-1.10.jar" sourcepath="lib/snakeyaml-1.10-sources.jar">
+		<attributes>
+			<attribute name="javadoc_location" value="jar:platform:/resource/gt-minecraft/lib/snakeyaml-1.10-javadoc.jar!/"/>
+		</attributes>
+	</classpathentry>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
