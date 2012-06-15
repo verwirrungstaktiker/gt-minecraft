@@ -116,8 +116,10 @@ public class WorldManager {
 	}		
 	
 
-	
-	public void disposeWorldInstance(WorldInstance worldInstance) {
+	/** 
+	 * @param worldInstance will be disposed 
+	 */
+	public void disposeWorldInstance(final WorldInstance worldInstance) {
 		World w = worldInstance.getWorld();
 		final File f = w.getWorldFolder();
 
@@ -134,16 +136,12 @@ public class WorldManager {
 	 * @param dir directory to be deleted
 	 */
 	public void deleteDirectory(final File dir) {
-		
-		System.out.println(dir.getName());
-		
+				
 		for (File f : dir.listFiles()) {
 			if (f.isDirectory()) {		
 				deleteDirectory(f);
 			} else {
-				if(!f.delete()) {
-					System.out.println("error on: " + f.getName());
-				}
+				f.delete();
 			}
 		}
 		

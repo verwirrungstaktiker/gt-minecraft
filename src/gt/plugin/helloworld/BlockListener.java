@@ -52,12 +52,4 @@ public class BlockListener implements Listener {
 			event.getPlayer().getInventory().clear();
 		}
 	}
-	
-	
-	@EventHandler
-	public void chunkUnload(final ChunkUnloadEvent cue) {
-		System.out.println(cue.getWorld().getName());
-		System.out.println(cue.isCancelled());
-	}
-
 }
