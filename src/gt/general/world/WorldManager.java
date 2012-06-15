@@ -74,8 +74,8 @@ public class WorldManager {
 	
 	/**
 	 * duplicates a world
-	 * @param world the World to be copied
-	 * @param name Name for the duplicate
+	 * @param baseName the World to be copied
+	 * @param newName Name for the duplicate
 	 * @return the duplicate
 	 */
 	protected World instatiateWorld (final String baseName, final String newName) {
@@ -124,28 +124,11 @@ public class WorldManager {
 		final File f = w.getWorldFolder();
 
 		Bukkit.getServer().unloadWorld(w, false);
-		
-		for (Chunk c : w.getLoadedChunks()) {
-			//w.unloadChunk(c);
-			System.out.println("unload chunk: " + c.getX() + " | " + c.getZ());
-			System.out.println("result: " + c.unload(false, true));
-		}
 
 		worldInstance.dispose();
 		openWorlds.remove(worldInstance);
 		
-		Thread r = new Thread() {
-			@Override
-			public void run() {				
-				Bukkit.broadcastMessage("del folder");
-				deleteDirectory(f);
-				Bukkit.broadcastMessage("del folder finished");
-			}
-		};
-		
-		r.start();
-
-
+		deleteDirectory(f);
 	}
 	
 	/**

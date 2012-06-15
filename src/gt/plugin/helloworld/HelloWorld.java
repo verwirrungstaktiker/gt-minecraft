@@ -79,13 +79,6 @@ public class HelloWorld extends JavaPlugin {
 	 * 
 	 */
 	public void onDisable() {
-		for (World world : getServer().getWorlds()) {
-			if (world.getName().equals("world")) {
-				continue;
-			}
-			
-			//CopyUtil.deleteDirectory(world.getWorldFolder());
-		}
 	}
 	
 	public static void registerListener(Listener listener) {
