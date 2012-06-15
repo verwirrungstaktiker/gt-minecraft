@@ -48,6 +48,7 @@ public class HelloWorld extends JavaPlugin {
 		teamManager = new TeamManager();
 
 		PluginManager pm = getServer().getPluginManager();
+		pm.registerEvents(new CommandsListener(), this);
 		pm.registerEvents(new BlockListener(), this);
 		pm.registerEvents(new PlayerListener(), this);
 		pm.registerEvents(new KeyPressListener(), this);
