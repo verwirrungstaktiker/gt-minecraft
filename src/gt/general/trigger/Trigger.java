@@ -11,7 +11,7 @@ public abstract class Trigger {
 	protected Runnable callback;
 	/**TriggerManager this Trigger belongs to*/
 	protected TriggerManager tm;
-
+	
 	/**
 	 * Creates a trigger
 	 * @param repeat false, if the Trigger should only be triggered once

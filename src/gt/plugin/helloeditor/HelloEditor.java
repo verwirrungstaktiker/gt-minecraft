@@ -1,6 +1,6 @@
 package gt.plugin.helloeditor;
 
-import gt.plugin.helloworld.HelloWorld;
+import gt.general.trigger.TriggerManager;
 
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
@@ -18,6 +18,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 public class HelloEditor extends JavaPlugin {
 	
 	private static JavaPlugin plugin;
+	private TriggerManager triggerManager;
 	
 	private BuildManager bm = new BuildManager();
 	
@@ -28,12 +29,12 @@ public class HelloEditor extends JavaPlugin {
 		HelloEditor.setPlugin(this);
 		
 		PluginManager pm = getServer().getPluginManager();
-		
-		
+		triggerManager = new TriggerManager();
 	}
 	
 	/** */
 	public void onDisable() {
+		triggerManager = null;
 	}
 	
 	public static void registerListener(final Listener listener) {
@@ -64,7 +65,8 @@ public class HelloEditor extends JavaPlugin {
 			return true;
 		}
 		
-		if (isPlayer(sender) && commandEquals(cmd, "null")) {
+		if (commandEquals(cmd, "dump")) {
+			triggerManager.dumpTrigger();
 			return true;
 		}
 		return false;
