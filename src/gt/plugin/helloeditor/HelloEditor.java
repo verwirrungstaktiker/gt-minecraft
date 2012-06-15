@@ -1,7 +1,6 @@
 package gt.plugin.helloeditor;
 
-import gt.general.trigger.TriggerManager;
-
+import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -18,7 +17,6 @@ import org.bukkit.plugin.java.JavaPlugin;
 public class HelloEditor extends JavaPlugin {
 	
 	private static JavaPlugin plugin;
-	private TriggerManager triggerManager;
 	
 	private BuildManager bm = new BuildManager();
 	
@@ -29,12 +27,30 @@ public class HelloEditor extends JavaPlugin {
 		HelloEditor.setPlugin(this);
 		
 		PluginManager pm = getServer().getPluginManager();
-		triggerManager = new TriggerManager();
+
+		pm.registerEvents(bm, this);
+		
+		printInformation();
 	}
 	
+	/**
+	 * help
+	 */
+	private void printInformation() {
+		System.out.println(
+				"\n  ********************** \n" +
+				"  Welcome to Build Mode \n" +
+				"   [F6]   -- Toggle Trigger Context Mode \n" +
+				"   [F7]   -- Toggle Player Trigger State (trigger/response)\n" +
+				"   [F9]   -- Toggle Context Input Function (and/or)\n" +
+				"   [F12]   -- Cancel Trigger Context Mode \n" +
+				"   /helpme -- show this information \n" +
+				"  **********************");
+	}
+
 	/** */
 	public void onDisable() {
-		triggerManager = null;
+
 	}
 	
 	public static void registerListener(final Listener listener) {
@@ -60,18 +76,27 @@ public class HelloEditor extends JavaPlugin {
 		/*
 		 * set trigger input blocks
 		 */
-		if (isPlayer(sender) && commandEquals(cmd, "input")) {
-			
+		if (isPlayer(sender) && commandEquals(cmd, "helpme")) {
+			printChatHelp((Player) sender);
 			return true;
 		}
 		
 		if (commandEquals(cmd, "dump")) {
-			triggerManager.dumpTrigger();
+			//TODO: ??
 			return true;
 		}
 		return false;
 	}
 
+	private void printChatHelp(Player player) {
+		player.sendMessage(
+				ChatColor.YELLOW + 
+				"* [F6]Toggle Trigger Context \n" +
+				"* [F7]Toggle Trigger State \n" +
+				"* [F9]Toggle Context Mode \n" +
+				"*[F12]Cancel Trigger Context");
+	}
+	
 	/**
 	 * @param cmd The Command to be matched.
 	 * @param string The case insensitive String to match the Command.
