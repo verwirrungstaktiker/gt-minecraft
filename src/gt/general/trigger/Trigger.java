@@ -1,5 +1,7 @@
 package gt.general.trigger;
 
+import gt.general.trigger.persistance.YamlSerializable;
+
 /**
  * Abstract class to build triggers
  */

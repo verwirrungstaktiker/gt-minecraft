@@ -4,7 +4,6 @@ import gt.general.trigger.Response;
 import gt.general.trigger.Trigger;
 import gt.general.trigger.TriggerContext;
 import gt.general.trigger.TriggerManager;
-import gt.general.trigger.YamlSerializable;
 
 import java.util.ArrayList;
 import java.util.HashMap;

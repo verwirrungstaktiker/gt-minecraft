@@ -1,5 +1,7 @@
 package gt.general.trigger;
 
+import gt.general.trigger.persistance.YamlSerializable;
+
 public interface Response extends YamlSerializable {
 
 	/**
