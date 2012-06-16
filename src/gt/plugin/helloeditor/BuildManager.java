@@ -87,6 +87,7 @@ public class BuildManager implements Listener {
 		if(playerTriggerStates.get(name) == TriggerState.RESPONSE) {
 			if(isUsableAsResponse(block)) {
 				addResponse(name, block);
+				player.sendMessage(GREEN + "Response has been added");
 			} else {
 				player.sendMessage(RED + "This Block can't be used as Response.");
 				event.setCancelled(true);
