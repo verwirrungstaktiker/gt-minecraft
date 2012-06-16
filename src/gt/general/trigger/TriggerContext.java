@@ -10,20 +10,24 @@ public class TriggerContext {
 		AND, OR
 	}
 	
-	private final Set<Trigger> trigger;
-	private final Set<Response> response;
+	private final Set<Trigger> triggers;
+	private final Set<Response> responses;
 	
 	private InputFunction inputFunction;
 
 	private String label;
+	
+	private final Set<Trigger> activeTriggers;
 	
 	/**
 	 * Generates a new TriggerContext
 	 * 
 	 */
 	public TriggerContext() {
-		trigger = new HashSet<Trigger>();
-		response = new HashSet<Response>();
+		triggers = new HashSet<Trigger>();
+		responses = new HashSet<Response>();
+		
+		activeTriggers = new HashSet<Trigger>();
 		
 		inputFunction = InputFunction.OR;
 	}
@@ -53,19 +57,49 @@ public class TriggerContext {
 		}
 	}
 	
+	public void updateTriggerState(final Trigger trigger, final boolean state) {		
+		boolean oldState = evalInputFuntion();
+		
+		if(state) {
+			activeTriggers.add(trigger);
+		} else {
+			activeTriggers.remove(trigger);
+		}
+		
+		boolean newState = evalInputFuntion();
+		
+		if(oldState != newState) {
+			for(Response response : responses) {
+				response.triggered(newState);
+			}
+		}
+		
+		
+	}
+	
+	private boolean evalInputFuntion() {
+		switch (inputFunction) {
+		case OR:
+			return activeTriggers.size() != 0;
+		case AND:
+			return activeTriggers.size() == triggers.size();
+		}
+		return false;
+	}
+	
 	/**
 	 * @return true if the TriggerContext has a trigger and a response
 	 */
 	public boolean isComplete() {
-		return !trigger.isEmpty() && !response.isEmpty();
+		return !triggers.isEmpty() && !responses.isEmpty();
 	}
 
 	public Collection<Trigger> getTriggers() {
-		return trigger;
+		return triggers;
 	}
 
 	public Collection<Response> getResponses() {
-		return response;
+		return responses;
 	}
 	
 	public String getLabel() {
