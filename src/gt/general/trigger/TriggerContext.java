@@ -1,5 +1,6 @@
 package gt.general.trigger;
 
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -55,6 +56,24 @@ public class TriggerContext {
 	 */
 	public boolean isComplete() {
 		return !trigger.isEmpty() && !response.isEmpty();
+	}
+
+	public Collection<Trigger> getTriggers() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public Collection<Response> getResponses() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	
+	public String getLabel() {
+		return null;
+	}
+	
+	public void setLabel() {
+		
 	}
 	
 }
