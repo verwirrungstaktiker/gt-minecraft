@@ -170,7 +170,7 @@ public class BuildManager implements Listener {
 			playerTriggerStates.put(name, TriggerState.TRIGGER);
 			
 			TriggerContext context = new TriggerContext();
-			HelloEditor.getPlugin().getTm().addTriggerContext(context);
+			HelloEditor.getPlugin().getTriggerManager().addTriggerContext(context);
 			playerTriggerContexts.put(name, context);
 			
 			player.sendMessage(YELLOW + "New Context.. BuildState: TRIGGER");
@@ -229,7 +229,7 @@ public class BuildManager implements Listener {
 		playerTriggerStates.put(name, TriggerState.IDLE);
 		TriggerContext context = playerTriggerContexts.get(name);
 		playerTriggerContexts.put(name, null);
-		HelloEditor.getPlugin().getTm().deleteTriggerContext(context);
+		HelloEditor.getPlugin().getTriggerManager().deleteTriggerContext(context);
 		
 		
 		player.sendMessage(YELLOW + "Cancelled your TriggerContext");

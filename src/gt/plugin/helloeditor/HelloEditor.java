@@ -10,7 +10,6 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
-import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
 
@@ -23,18 +22,10 @@ public class HelloEditor extends JavaPlugin {
 	
 	private static HelloEditor plugin;
 	
-	private BuildManager bm = new BuildManager();
+	private BuildManager buildManager = new BuildManager();
 	
-	private TriggerManager tm = new TriggerManager();
+	private TriggerManager triggerManager = new TriggerManager();
 	
-	public TriggerManager getTm() {
-		return tm;
-	}
-
-	public void setTm(TriggerManager tm) {
-		this.tm = tm;
-	}
-
 	/**
 	 * Initialization of our plugin
 	 */
@@ -47,7 +38,7 @@ public class HelloEditor extends JavaPlugin {
 		PluginManager pm = getServer().getPluginManager();
 		pm.registerEvents(bm, this);
 		*/
-		MultiListener.registerListener(bm);
+		MultiListener.registerListener(buildManager);
 		
 		printInformation();
 	}
@@ -72,6 +63,11 @@ public class HelloEditor extends JavaPlugin {
 
 	}
 	
+	/**
+	 * register a Listener directly with bukkit
+	 * 
+	 * @param listener The Listener to be registered
+	 */
 	public static void registerListener(final Listener listener) {
 		getPlugin()
 			.getServer()
@@ -88,6 +84,13 @@ public class HelloEditor extends JavaPlugin {
 	}
 	
 	/**
+	 * @return the TriggerManager of this Editor
+	 */
+	public TriggerManager getTriggerManager() {
+		return triggerManager;
+	}
+
+	/*
 	 * TODO this should be encapsuled in a extra class
 	 */
 	@Override
@@ -111,7 +114,7 @@ public class HelloEditor extends JavaPlugin {
 			return true;
 		}
 		if(commandEquals(cmd, "toyaml")) {
-			System.out.println("\n" + TriggerManagerPersistance.toYaml(tm));
+			System.out.println("\n" + TriggerManagerPersistance.toYaml(triggerManager));
 		}
 		return false;
 	}
