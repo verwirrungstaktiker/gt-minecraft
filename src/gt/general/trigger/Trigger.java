@@ -3,7 +3,7 @@ package gt.general.trigger;
 /**
  * Abstract class to build triggers
  */
-public abstract class Trigger {
+public abstract class Trigger implements YamlSerializable {
 
 	/**boolean if the Trigger is repeatable*/
 	protected boolean repeat;

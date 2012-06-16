@@ -1,6 +1,6 @@
 package gt.general.trigger;
 
-public interface Response {
+public interface Response extends YamlSerializable {
 
 	/**
 	 * will be called, when the triggerFunction in the TriggerContexts changes its state
