@@ -11,6 +11,7 @@ import org.bukkit.event.EventException;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
+import org.bukkit.event.block.BlockRedstoneEvent;
 import org.bukkit.plugin.EventExecutor;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -80,10 +81,10 @@ public final class MultiListener implements Listener, EventExecutor {
 	 */
 	private void doRegisterListener(final Listener listener) {
 		Class<? extends Listener> cls = listener.getClass();
-		for (Method method : cls.getDeclaredMethods()) {
+		
+		for (Method method : cls.getMethods()) {
 			if (method.isAnnotationPresent(EventHandler.class)) {
 				Class<? extends Event> event = getEventType(method);
-
 				AtomicListener al = new AtomicListener(method, listener, event);
 
 				events.put(event, al);
