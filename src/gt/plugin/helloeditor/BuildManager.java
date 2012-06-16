@@ -20,9 +20,9 @@ import org.getspout.spoutapi.keyboard.Keyboard;
 
 public class BuildManager implements Listener {
 
-	private ChatColor YELLOW = ChatColor.YELLOW;
-	private ChatColor RED = ChatColor.RED;
-	private ChatColor GREEN = ChatColor.GREEN;
+	private static final ChatColor YELLOW = ChatColor.YELLOW;
+	private static final ChatColor RED = ChatColor.RED;
+	private static final ChatColor GREEN = ChatColor.GREEN;
 	
 	public enum TriggerState {
 		IDLE,		// no triggercontext
@@ -44,17 +44,21 @@ public class BuildManager implements Listener {
 	public void handleKeyPresses(final KeyPressedEvent event) {
 		Player player = event.getPlayer();
 
-		if(event.getKey() == Keyboard.KEY_F6) {
+		switch(event.getKey()) {
+		case KEY_F6:
 			toggleContext(player);
-		}
-		if(event.getKey() == Keyboard.KEY_F7) {
-			toggleTriggerState(player);
-		}
-		if(event.getKey() == Keyboard.KEY_F9) {
-			toggleContextInputFunction(player);
-		}
-		if(event.getKey() == Keyboard.KEY_F12) {
+			break;
+		case KEY_F7:
+			toggleTriggerState(player);		
+			break;
+		case KEY_F9:
+			toggleContextInputFunction(player);		
+			break;
+		case KEY_F12:
 			cancelContext(player);
+			break; 
+		default:
+			break;
 		}
 	}
 	
