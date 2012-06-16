@@ -73,7 +73,7 @@ public class TriggerManagerPersistance {
 	private void persist(YamlSerializable serializable,
 			Map<String, Object> map, List<String> list) {
 		list.add(serializable.getLabel());
-		map.put(serializable.getLabel(), serializable.teardown());
+		map.put(serializable.getLabel(), serializable.dump());
 	}
 
 	public static String toYaml(final TriggerManager triggerManager) {
