@@ -2,6 +2,7 @@ package gt.plugin.helloeditor;
 
 import gt.general.trigger.PressurePlateTrigger;
 import gt.general.trigger.TriggerContext;
+import gt.general.trigger.response.DoorResponse;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -76,6 +77,7 @@ public class BuildManager implements Listener {
 		if(playerTriggerStates.get(name) == TriggerState.TRIGGER) {
 			if(isUsableAsTrigger(block)) {
 				addTrigger(name, block);
+				player.sendMessage(GREEN + "Trigger has been added");
 			} else {
 				player.sendMessage(RED + "This Block can't be used as Trigger.");
 				event.setCancelled(true);
@@ -117,6 +119,7 @@ public class BuildManager implements Listener {
 			case STONE_PLATE:
 				PressurePlateTrigger trigger = new PressurePlateTrigger(block);
 				playerTriggerContexts.get(name).getTriggers().add(trigger);
+				
 				break;
 			default: 
 				System.out.println("This can't happen. Check Usable Trigger Blocks.");
@@ -130,7 +133,11 @@ public class BuildManager implements Listener {
 			case WOODEN_DOOR:
 			case IRON_DOOR:
 			case IRON_DOOR_BLOCK: 
-				//TODO
+				DoorResponse response = new DoorResponse(block);
+				playerTriggerContexts.get(name).getResponses().add(response);
+				break;
+			default:
+				System.out.println("This can't happen. Check Usable Response Blocks.");
 		}
 	}
 
