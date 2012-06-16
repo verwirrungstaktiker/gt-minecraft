@@ -1,4 +1,4 @@
-package gt.general.trigger;
+package gt.general.trigger.persistance;
 
 import java.util.Map;
 
