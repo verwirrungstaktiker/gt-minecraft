@@ -1,5 +1,6 @@
 package gt.general.trigger;
 
+import java.util.Collection;
 import java.util.Vector;
 
 /**
@@ -48,6 +49,11 @@ public class TriggerManager implements Runnable {
 	public void dumpTrigger() {
 		// TODO Auto-generated method stub
 		
+	}
+
+	public Collection<TriggerContext> getContexts() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }
