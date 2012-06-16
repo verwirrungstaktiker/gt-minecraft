@@ -7,6 +7,7 @@ import java.util.Map;
 
 import org.bukkit.ChatColor;
 import org.bukkit.GameMode;
+import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -15,7 +16,6 @@ import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.getspout.spoutapi.event.input.KeyPressedEvent;
-import org.getspout.spoutapi.keyboard.Keyboard;
 
 
 public class BuildManager implements Listener {
@@ -93,13 +93,14 @@ public class BuildManager implements Listener {
 
 
 	private boolean isUsableAsTrigger(Block block) {
-		// TODO Auto-generated method stub
-		return false;
+		// TODO
+		return block.getType() == Material.STONE_PLATE  || block.getType() == Material.WOOD_PLATE;
 	}
 	
 	private boolean isUsableAsResponse(Block block) {
-		// TODO Auto-generated method stub
-		return false;
+		// TODO
+		return block.getType() == Material.WOOD_DOOR || block.getType() == Material.IRON_DOOR_BLOCK ||
+			 block.getType() == Material.WOODEN_DOOR || block.getType() == Material.IRON_DOOR;
 	}
 
 	private void addResponse(String name, Block block) {
