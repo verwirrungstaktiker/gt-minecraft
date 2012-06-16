@@ -98,7 +98,7 @@ public class HelloEditor extends JavaPlugin {
 			return true;
 		}
 		if(commandEquals(cmd, "toyaml")) {
-			System.out.println(TriggerManagerPersistance.toYaml(tm));
+			System.out.println("\n" + TriggerManagerPersistance.toYaml(tm));
 		}
 		return false;
 	}

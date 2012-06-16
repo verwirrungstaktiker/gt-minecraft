@@ -21,6 +21,7 @@ public class PressurePlateTrigger extends RedstoneTrigger {
 	 */
 	public PressurePlateTrigger(final Block pressurePlate) {
 		this.pressurePlate = pressurePlate;
+		setLabel("PressurePlate_"+ hashCode());
 	}
 	
 	
