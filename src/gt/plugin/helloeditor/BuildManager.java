@@ -20,6 +20,10 @@ import org.getspout.spoutapi.keyboard.Keyboard;
 
 public class BuildManager implements Listener {
 
+	private ChatColor YELLOW = ChatColor.YELLOW;
+	private ChatColor RED = ChatColor.RED;
+	private ChatColor GREEN = ChatColor.GREEN;
+	
 	public enum TriggerState {
 		IDLE,
 		TRIGGER,
@@ -31,7 +35,6 @@ public class BuildManager implements Listener {
 	private Map<String, TriggerState> playerTriggerStates = new HashMap<String, TriggerState>();
 	/** contains all player's current TriggerContext's **/
 	private Map<String, TriggerContext> playerTriggerContexts = new HashMap<String, TriggerContext>();
-	
 	
 	/**
 	 * handles key presses
@@ -65,14 +68,23 @@ public class BuildManager implements Listener {
 		String name = player.getName();
 		Block block = event.getBlockPlaced();
 		// Trigger
-		if(playerTriggerStates.get(name) == TriggerState.TRIGGER && isUsableAsTrigger(block)) {
-			addTrigger(name, block);
+		if(playerTriggerStates.get(name) == TriggerState.TRIGGER) {
+			if(isUsableAsTrigger(block)) {
+				addTrigger(name, block);
+			} else {
+				player.sendMessage(RED + "This Block can't be used as Trigger.");
+				event.setCancelled(true);
+			}
 		}
 		// Response
-		if(playerTriggerStates.get(name) == TriggerState.RESPONSE && isUsableAsResponse(block)) {
-			addResponse(name, block);
+		if(playerTriggerStates.get(name) == TriggerState.RESPONSE) {
+			if(isUsableAsResponse(block)) {
+				addResponse(name, block);
+			} else {
+				player.sendMessage(RED + "This Block can't be used as Response.");
+				event.setCancelled(true);
+			}
 		}
-
 	}
 
 
