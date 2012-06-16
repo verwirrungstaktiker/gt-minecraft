@@ -1,6 +1,9 @@
 package gt.general.trigger;
 
+import java.util.Map;
+
 import org.bukkit.Location;
+import org.bukkit.World;
 /**
  * Trigger which checks if a location is in a cube
  */
@@ -19,8 +22,8 @@ public class AreaTrigger extends Trigger{
 	 * @param callback runnable to be called
 	 * @param tm the TriggerManager for this trigger
 	 */
-	public AreaTrigger (Location[] cube, Location loc, boolean repeat, Runnable callback, TriggerManager tm) {
-		super(repeat,callback,tm);
+	public AreaTrigger (Location[] cube, Location loc, TriggerContext context) {
+		super(context);
 		this.cube = cube;
 		this.loc = loc;
 	}
@@ -57,14 +60,26 @@ public class AreaTrigger extends Trigger{
 		if (between(cube[0].getBlockX(), loc.getBlockX(), cube[1].getBlockX())) {
 			if (between(cube[0].getBlockY(), loc.getBlockY(), cube[1].getBlockY())) {
 				if (between(cube[0].getBlockZ(), loc.getBlockZ(), cube[1].getBlockZ())) {
-					if (!repeat) {
-						tm.deregisterTrigger(this);
-					}
-					callback.run();
+					getContext().updateTriggerState(this, true);
+					return;
 				}
 			}
 
 		}
+		getContext().updateTriggerState(this, false);
+	}
+	@Override
+	public void dispose() {
+		
+	}
+	@Override
+	public Map<String, Object> dump() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	@Override
+	public void setup(Map<String, Object> values, World world) {
+		
 	}
 
 
