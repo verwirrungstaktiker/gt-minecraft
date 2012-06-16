@@ -15,6 +15,8 @@ public class TriggerContext {
 	
 	private InputFunction inputFunction;
 
+	private String label;
+	
 	/**
 	 * Generates a new TriggerContext
 	 * 
@@ -59,21 +61,19 @@ public class TriggerContext {
 	}
 
 	public Collection<Trigger> getTriggers() {
-		// TODO Auto-generated method stub
-		return null;
+		return trigger;
 	}
 
 	public Collection<Response> getResponses() {
-		// TODO Auto-generated method stub
-		return null;
+		return response;
 	}
 	
 	public String getLabel() {
-		return null;
+		return label;
 	}
 	
-	public void setLabel() {
-		
+	public void setLabel(final String label) {
+		this.label = label;
 	}
 	
 }

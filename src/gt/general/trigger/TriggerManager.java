@@ -1,59 +1,27 @@
 package gt.general.trigger;
 
 import java.util.Collection;
-import java.util.Vector;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * Manager for triggers
  */
-public class TriggerManager implements Runnable {
+public class TriggerManager {
 
-	/**iterator, needed for in-loop-removal of Trigger*/
-	private int i;
-	/**Vector of all registered Triggers*/
-	private Vector<Trigger> triggers = new Vector<Trigger>();
-
-	/**
-	 * @return Vector of all registered triggers
-	 */
-	public Vector<Trigger> getTriggers() {
-		return triggers;
+	private final Set<TriggerContext> triggerContexts;
+	
+	public TriggerManager() {
+		triggerContexts = new HashSet<TriggerContext>();
 	}
-
-	/**
-	 * Registers a trigger
-	 * @param t trigger to register
-	 */
-	public void registerTrigger(Trigger t) {
-		triggers.add(t);
+	
+	public TriggerManager(final Set<TriggerContext> triggerContexts) {
+		this.triggerContexts = triggerContexts;
 	}
+	
 
-	/**
-	 * remove trigger from TriggerManager
-	 * @param t the trigger to be removed
-	 */
-	public void deregisterTrigger(Trigger t) {
-		triggers.remove(t);
-		--i;
-	}
-
-	@Override
-	public void run() {
-
-		for (i=0;i<triggers.size();++i) {
-			triggers.get(i).checkTrigger();
-		}
-
-	}
-
-	public void dumpTrigger() {
-		// TODO Auto-generated method stub
-		
-	}
-
-	public Collection<TriggerContext> getContexts() {
-		// TODO Auto-generated method stub
-		return null;
+	public Collection<TriggerContext> getTriggerContexts() {
+		return triggerContexts;
 	}
 
 }

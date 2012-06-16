@@ -61,7 +61,6 @@ public class HelloWorld extends JavaPlugin {
 		multiListener.registerListener(heroManager);		
 
 		getServer().getScheduler().scheduleSyncRepeatingTask(this, heroManager, 0, 10);
-		getServer().getScheduler().scheduleSyncRepeatingTask(this, triggerManager, 0, 10);
 		
 		lastGnomeGameManager = new LastGnomeGameManager(getServer().getWorld("world"), teamManager);
 	}
