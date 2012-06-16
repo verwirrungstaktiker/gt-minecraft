@@ -41,7 +41,7 @@ public class TriggerManagerPersistance {
 		Map<String, Object> globalResponses = new HashMap<String, Object>();
 		Map<String, Object> globalContexts = new HashMap<String, Object>();
 
-		for(TriggerContext triggerContext : triggerManager.getContexts()) {
+		for(TriggerContext triggerContext : triggerManager.getTriggerContexts()) {
 			
 			List<String> itsTriggers = new ArrayList<String>();
 			for(Trigger t : triggerContext.getTriggers()) {
@@ -77,4 +77,13 @@ public class TriggerManagerPersistance {
 		map.put(serializable.getLabel(), serializable.teardown());
 	}
 
+	public static String toYaml(final TriggerManager triggerManager) {
+		return new TriggerManagerPersistance(triggerManager).persistTriggerManager();
+	}
+	
+	public static TriggerManager load(String yaml) {
+		
+		return null;
+	}
+	
 }
