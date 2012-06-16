@@ -23,5 +23,13 @@ public class TriggerManager {
 	public Collection<TriggerContext> getTriggerContexts() {
 		return triggerContexts;
 	}
+	
+	public void addTriggerContext(TriggerContext context) {
+		triggerContexts.add(context);
+	}
+	
+	public void deleteTriggerContext(TriggerContext context) {
+		triggerContexts.remove(context);
+	}
 
 }

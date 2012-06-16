@@ -19,12 +19,20 @@ import org.bukkit.plugin.java.JavaPlugin;
  */
 public class HelloEditor extends JavaPlugin {
 	
-	private static JavaPlugin plugin;
+	private static HelloEditor plugin;
 	
 	private BuildManager bm = new BuildManager();
 	
 	private TriggerManager tm = new TriggerManager();
 	
+	public TriggerManager getTm() {
+		return tm;
+	}
+
+	public void setTm(TriggerManager tm) {
+		this.tm = tm;
+	}
+
 	/**
 	 * Initialization of our plugin
 	 */
@@ -64,11 +72,11 @@ public class HelloEditor extends JavaPlugin {
 			.registerEvents(listener, getPlugin());
 	}
 
-	public static JavaPlugin getPlugin() {
+	public static HelloEditor getPlugin() {
 		return plugin;
 	}
 
-	public static void setPlugin(final JavaPlugin plugin) {
+	public static void setPlugin(final HelloEditor plugin) {
 		HelloEditor.plugin = plugin;
 	}
 	

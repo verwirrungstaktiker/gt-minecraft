@@ -1,5 +1,6 @@
 package gt.plugin.helloeditor;
 
+import gt.general.trigger.PressurePlateTrigger;
 import gt.general.trigger.TriggerContext;
 
 import java.util.HashMap;
@@ -91,25 +92,46 @@ public class BuildManager implements Listener {
 		}
 	}
 
-
+	/**
+	 * @param block
+	 * @return true if the block is usable as trigger
+	 */
 	private boolean isUsableAsTrigger(Block block) {
 		// TODO
 		return block.getType() == Material.STONE_PLATE  || block.getType() == Material.WOOD_PLATE;
 	}
 	
+	/**
+	 * @param block
+	 * @return true if the block is usable as response
+	 */
 	private boolean isUsableAsResponse(Block block) {
 		// TODO
 		return block.getType() == Material.WOOD_DOOR || block.getType() == Material.IRON_DOOR_BLOCK ||
 			 block.getType() == Material.WOODEN_DOOR || block.getType() == Material.IRON_DOOR;
 	}
-
-	private void addResponse(String name, Block block) {
-		// TODO Auto-generated method stub
+	
+	private void addTrigger(String name, Block block) {
+		switch(block.getType()) {
+			case WOOD_PLATE:
+			case STONE_PLATE:
+				PressurePlateTrigger trigger = new PressurePlateTrigger(block);
+				playerTriggerContexts.get(name).getTriggers().add(trigger);
+				break;
+			default: 
+				System.out.println("This can't happen. Check Usable Trigger Blocks.");
+		}
+		
 	}
 
-	private void addTrigger(String name, Block block) {
-		// TODO Auto-generated method stub
-		
+	private void addResponse(String name, Block block) {
+		switch(block.getType()) {
+			case WOOD_DOOR:
+			case WOODEN_DOOR:
+			case IRON_DOOR:
+			case IRON_DOOR_BLOCK: 
+				//TODO
+		}
 	}
 
 	/**
@@ -139,7 +161,10 @@ public class BuildManager implements Listener {
 		if(playerTriggerContexts.get(name) == null) {
 			
 			playerTriggerStates.put(name, TriggerState.TRIGGER);
-			playerTriggerContexts.put(name, new TriggerContext());
+			
+			TriggerContext context = new TriggerContext();
+			HelloEditor.getPlugin().getTm().addTriggerContext(context);
+			playerTriggerContexts.put(name, context);
 			
 			player.sendMessage(YELLOW + "New Context.. BuildState: TRIGGER");
 			
@@ -195,7 +220,10 @@ public class BuildManager implements Listener {
 			return;
 		}
 		playerTriggerStates.put(name, TriggerState.IDLE);
+		TriggerContext context = playerTriggerContexts.get(name);
 		playerTriggerContexts.put(name, null);
+		HelloEditor.getPlugin().getTm().deleteTriggerContext(context);
+		
 		
 		player.sendMessage(YELLOW + "Cancelled your TriggerContext");
 	}
