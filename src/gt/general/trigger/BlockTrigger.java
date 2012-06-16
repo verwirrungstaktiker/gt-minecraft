@@ -1,5 +1,7 @@
 package gt.general.trigger;
 
+import java.util.Map;
+
 import gt.general.trigger.callbacks.DeviceCallback;
 
 import org.bukkit.block.Block;
@@ -44,6 +46,21 @@ public class BlockTrigger extends Trigger{
 				tm.deregisterTrigger(this);
 			}
 		}
+	}
+
+
+	}
+
+	@Override
+	public void setup(Map<String, Object> values) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public Map<String, Object> teardown() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

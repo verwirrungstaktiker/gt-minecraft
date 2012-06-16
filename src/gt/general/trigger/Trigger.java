@@ -5,25 +5,27 @@ package gt.general.trigger;
  */
 public abstract class Trigger implements YamlSerializable {
 
-	/**boolean if the Trigger is repeatable*/
-	protected boolean repeat;
-	/**callback to run, if the Trigger triggers*/
-	protected Runnable callback;
-	/**TriggerManager this Trigger belongs to*/
-	protected TriggerManager tm;
-	
+	protected TriggerContext context;
+	protected String label;
 	/**
 	 * Creates a trigger
 	 * @param repeat false, if the Trigger should only be triggered once
-	 * @param callback runnable to be called
-	 * @param tm the TriggerManager for this trigger
 	 */
-	public Trigger (final boolean repeat, final Runnable callback, final TriggerManager tm) {
-		this.repeat = repeat;
-		this.callback = callback;
-		this.tm = tm;
-		tm.registerTrigger(this);
+	public Trigger (TriggerContext context) {
+		this.context = context;
+		context.addTrigger(this);
 	}
+	
+	@Override
+	public String getLabel() {
+		return label;
+	}
+
+	@Override
+	public void setLabel(String label) {
+		this.label = label;
+	}
+		
 
 	/**
 	 * checks trigger-condition and calls callback if appropriate
