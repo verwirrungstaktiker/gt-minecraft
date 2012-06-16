@@ -9,7 +9,6 @@ import java.util.Map;
 
 import org.bukkit.ChatColor;
 import org.bukkit.GameMode;
-import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -70,76 +69,69 @@ public class BuildManager implements Listener {
 	 */
 	@EventHandler
 	public void registerTriggerContext(final BlockPlaceEvent event) {
+		String name = event.getPlayer().getName();
+		
+		switch(playerTriggerStates.get(name)) {
+			case TRIGGER: 
+				addTrigger(event);
+				break;
+			case RESPONSE:
+				addResponse(event);
+				break;
+			default:
+		}
+	}
+	
+	/**
+	 * adds a new trigger to the currently active context
+	 * 
+	 * @param event the trigger(event) for the trigger to be placed
+	 */
+	private void addTrigger(final BlockPlaceEvent event) {
 		Player player = event.getPlayer();
-		String name = player.getName();
 		Block block = event.getBlockPlaced();
-		// Trigger
-		if(playerTriggerStates.get(name) == TriggerState.TRIGGER) {
-			if(isUsableAsTrigger(block)) {
-				addTrigger(name, block);
-				player.sendMessage(GREEN + "Trigger has been added");
-			} else {
-				player.sendMessage(RED + "This Block can't be used as Trigger.");
-				event.setCancelled(true);
-			}
-		}
-		// Response
-		if(playerTriggerStates.get(name) == TriggerState.RESPONSE) {
-			if(isUsableAsResponse(block)) {
-				addResponse(name, block);
-				player.sendMessage(GREEN + "Response has been added");
-			} else {
-				player.sendMessage(RED + "This Block can't be used as Response.");
-				event.setCancelled(true);
-			}
-		}
-	}
-
-	/**
-	 * @param block
-	 * @return true if the block is usable as trigger
-	 */
-	private boolean isUsableAsTrigger(final Block block) {
-		// TODO
-		return block.getType() == Material.STONE_PLATE  || block.getType() == Material.WOOD_PLATE;
-	}
-	
-	/**
-	 * @param block
-	 * @return true if the block is usable as response
-	 */
-	private boolean isUsableAsResponse(final Block block) {
-		// TODO
-		return block.getType() == Material.WOOD_DOOR || block.getType() == Material.IRON_DOOR_BLOCK ||
-			 block.getType() == Material.WOODEN_DOOR || block.getType() == Material.IRON_DOOR;
-	}
-	
-	private void addTrigger(String name, Block block) {
+		TriggerContext activeContext = playerTriggerContexts.get(player.getName());
+		
 		switch(block.getType()) {
 			case WOOD_PLATE:
 			case STONE_PLATE:
-				PressurePlateTrigger trigger = new PressurePlateTrigger(block);
-				playerTriggerContexts.get(name).addTrigger(trigger);
-				
+				activeContext.addTrigger(new PressurePlateTrigger(block));
 				break;
+				
 			default: 
-				System.out.println("This can't happen. Check Usable Trigger Blocks.");
+				// fail feedback
+				player.sendMessage(RED + "This Block can't be used as Trigger.");
+				return;
 		}
-		
+		// success feedback
+		player.sendMessage(GREEN + "Trigger has been added");
 	}
 
-	private void addResponse(String name, Block block) {
+	/**
+	 * adds a new response to the currently active context
+	 * 
+	 * @param event the trigger(event) for the response to be placed
+	 */
+	private void addResponse(final BlockPlaceEvent event) {
+		Player player = event.getPlayer();
+		Block block = event.getBlockPlaced();
+		TriggerContext activeContext = playerTriggerContexts.get(player.getName());
+		
 		switch(block.getType()) {
 			case WOOD_DOOR:
 			case WOODEN_DOOR:
 			case IRON_DOOR:
 			case IRON_DOOR_BLOCK: 
-				DoorResponse response = new DoorResponse(block);
-				playerTriggerContexts.get(name).addResponse(response);
+				activeContext.addResponse(new DoorResponse(block));
 				break;
+				
 			default:
-				System.out.println("This can't happen. Check Usable Response Blocks.");
+				// fail feedback
+				player.sendMessage(RED + "This Block can't be used as Response.");
+				return;
 		}
+		// success message
+		player.sendMessage(GREEN + "Response has been added");
 	}
 
 	/**
@@ -178,7 +170,7 @@ public class BuildManager implements Listener {
 			
 		} else {
 			if(playerTriggerContexts.get(name).isComplete()) {
-				//TODO: actually handle the Context before deleting it
+				// TODO actually handle the Context before deleting it
 				playerTriggerStates.put(name, TriggerState.IDLE);
 				playerTriggerContexts.put(name, null);
 				

@@ -75,10 +75,16 @@ public class HelloEditor extends JavaPlugin {
 			.registerEvents(listener, getPlugin());
 	}
 
+	/**
+	 * @return the Editor
+	 */
 	public static HelloEditor getPlugin() {
 		return plugin;
 	}
 
+	/**
+	 * @param plugin the Editor to be set
+	 */
 	public static void setPlugin(final HelloEditor plugin) {
 		HelloEditor.plugin = plugin;
 	}
@@ -110,7 +116,7 @@ public class HelloEditor extends JavaPlugin {
 			return true;
 		}
 		if(commandEquals(cmd, "dump")) {
-			//TODO: ??
+			// TODO ??
 			return true;
 		}
 		if(commandEquals(cmd, "toyaml")) {
@@ -119,7 +125,10 @@ public class HelloEditor extends JavaPlugin {
 		return false;
 	}
 
-	private void printChatHelp(Player player) {
+	/**
+	 * @param player the player which needs some help
+	 */
+	private void printChatHelp(final Player player) {
 		player.sendMessage(
 				ChatColor.YELLOW + 
 				"* [F6]Toggle Trigger Context \n" +
