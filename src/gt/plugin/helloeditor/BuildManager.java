@@ -98,7 +98,7 @@ public class BuildManager implements Listener {
 	 * @param block
 	 * @return true if the block is usable as trigger
 	 */
-	private boolean isUsableAsTrigger(Block block) {
+	private boolean isUsableAsTrigger(final Block block) {
 		// TODO
 		return block.getType() == Material.STONE_PLATE  || block.getType() == Material.WOOD_PLATE;
 	}
@@ -107,7 +107,7 @@ public class BuildManager implements Listener {
 	 * @param block
 	 * @return true if the block is usable as response
 	 */
-	private boolean isUsableAsResponse(Block block) {
+	private boolean isUsableAsResponse(final Block block) {
 		// TODO
 		return block.getType() == Material.WOOD_DOOR || block.getType() == Material.IRON_DOOR_BLOCK ||
 			 block.getType() == Material.WOODEN_DOOR || block.getType() == Material.IRON_DOOR;
@@ -118,7 +118,7 @@ public class BuildManager implements Listener {
 			case WOOD_PLATE:
 			case STONE_PLATE:
 				PressurePlateTrigger trigger = new PressurePlateTrigger(block);
-				playerTriggerContexts.get(name).getTriggers().add(trigger);
+				playerTriggerContexts.get(name).addTrigger(trigger);
 				
 				break;
 			default: 
@@ -134,7 +134,7 @@ public class BuildManager implements Listener {
 			case IRON_DOOR:
 			case IRON_DOOR_BLOCK: 
 				DoorResponse response = new DoorResponse(block);
-				playerTriggerContexts.get(name).getResponses().add(response);
+				playerTriggerContexts.get(name).addResponse(response);
 				break;
 			default:
 				System.out.println("This can't happen. Check Usable Response Blocks.");

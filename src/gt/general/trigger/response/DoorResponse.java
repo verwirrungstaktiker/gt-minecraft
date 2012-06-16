@@ -84,6 +84,9 @@ public class DoorResponse implements Response {
 
 	@Override
 	public void triggered(final boolean active) {
+		
+		System.out.println("door triggered");
+		
 		Door door = (Door) doorBlock.getState().getData();
 		Block otherhalf;
 		

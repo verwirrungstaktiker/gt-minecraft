@@ -2,6 +2,8 @@ package gt.plugin.helloeditor;
 
 import gt.general.trigger.TriggerManager;
 import gt.general.trigger.persistance.TriggerManagerPersistance;
+import gt.plugin.helloworld.KeyPressListener;
+import gt.plugin.listener.MultiListener;
 
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
@@ -39,8 +41,13 @@ public class HelloEditor extends JavaPlugin {
 	public void onEnable() {
 		HelloEditor.setPlugin(this);
 		
+		MultiListener.initialize(this);
+		
+		/*
 		PluginManager pm = getServer().getPluginManager();
 		pm.registerEvents(bm, this);
+		*/
+		MultiListener.registerListener(bm);
 		
 		printInformation();
 	}
@@ -93,6 +100,12 @@ public class HelloEditor extends JavaPlugin {
 			return true;
 		}
 		
+		if(commandEquals(cmd, "test")) {
+			
+			MultiListener.registerListener(new KeyPressListener());
+			
+			return true;
+		}
 		if(commandEquals(cmd, "dump")) {
 			//TODO: ??
 			return true;

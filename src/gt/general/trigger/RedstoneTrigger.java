@@ -17,13 +17,17 @@ import org.bukkit.event.block.BlockRedstoneEvent;
  */
 public abstract class RedstoneTrigger extends Trigger implements Listener {	
 	
+	public RedstoneTrigger() {
+		MultiListener.registerListeners(this);
+	}
+	
 	/**
 	 * @param event the redstone event this is based on
 	 */
 	@EventHandler
-	public void onBlockRedstoneChange(final BlockRedstoneEvent event) {
-		
-		if(getBlock().getLocation() == event.getBlock().getLocation()) {
+	public void onBlockRedstoneChange(final BlockRedstoneEvent event) {		
+		if(getBlock().getLocation().equals(event.getBlock().getLocation())) {
+			
 			getContext().updateTriggerState(this, event.getNewCurrent() > 0);
 		}
 	}

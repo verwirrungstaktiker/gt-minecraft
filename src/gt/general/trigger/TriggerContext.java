@@ -67,7 +67,6 @@ public class TriggerContext {
 		} else {
 			activeTriggers.remove(trigger);
 		}
-		
 		boolean newState = evalInputFuntion();
 		
 		if(oldState != newState) {
@@ -110,6 +109,15 @@ public class TriggerContext {
 	
 	public void setLabel(final String label) {
 		this.label = label;
+	}
+	
+	public void addTrigger(final Trigger trigger) {
+		triggers.add(trigger);
+		trigger.setContext(this);
+	}
+	
+	public void addResponse(final Response response) {
+		responses.add(response);
 	}
 	
 }
