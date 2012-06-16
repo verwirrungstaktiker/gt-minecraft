@@ -10,6 +10,11 @@ public interface YamlSerializable {
 	String getLabel ();
 	void setLabel(String label);
 	
+	/**
+	 * 
+	 * @param values map containing coordinates & orientation
+	 * @param world the minecraft world
+	 */
 	void setup(Map<String, Object> values, World world);
 	
 	/**

@@ -1,4 +1,4 @@
-package gt.general.trigger;
+package gt.general.trigger.response;
 
 import gt.general.trigger.persistance.YamlSerializable;
 
