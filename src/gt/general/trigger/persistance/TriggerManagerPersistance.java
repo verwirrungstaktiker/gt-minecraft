@@ -53,7 +53,7 @@ public class TriggerManagerPersistance {
 			}			
 			
 			Map<String, Object> c = new HashMap<String, Object>();
-			c.put(KEY_INPUT_FUNCTION, triggerContext.getInputFunction()); // .toString() maybe ?
+			c.put(KEY_INPUT_FUNCTION, triggerContext.getInputFunction().toString()); // .toString() maybe ?
 			c.put(KEY_TRIGGERS, itsTriggers);
 			c.put(KEY_RESPONSES, itsResponses);
 			
@@ -64,6 +64,8 @@ public class TriggerManagerPersistance {
 		global.put(KEY_GLOBAL_TRIGGERS, globalTriggers);
 		global.put(KEY_GLOBAL_RESPONSES, globalResponses);
 		global.put(KEY_GLOBAL_CONTEXTS, globalContexts);
+		
+		global.put("foo", "bar");
 		
 		Yaml yml = new Yaml();
 		return yml.dump(global);
