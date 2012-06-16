@@ -25,8 +25,10 @@ import com.google.common.collect.Multimap;
  * @author Sebastian Fahnenschreiber
  * 
  */
-public class MultiListener implements Listener, EventExecutor {
+public final class MultiListener implements Listener, EventExecutor {
 
+	private static MultiListener multiListenerInstance;
+	
 	/**
 	 * Identifies an atomic event listener
 	 */
@@ -64,29 +66,19 @@ public class MultiListener implements Listener, EventExecutor {
 	 * @param plugin
 	 *            Whose Events should be handled.
 	 */
-	public MultiListener(final JavaPlugin plugin) {
+	private MultiListener(final JavaPlugin plugin) {
 		events = HashMultimap.create();
 		listeners = HashMultimap.create();
 		registeredListeners = new HashSet<Class<? extends Event>>();
 
 		this.plugin = plugin;
 	}
-
-	/**
-	 * @param listeners
-	 *            the listeners to be registered
-	 */
-	public void registerListeners(final Listener... listeners) {
-		for (Listener l : listeners) {
-			registerListener(l);
-		}
-	}
-
+	
 	/**
 	 * @param listener
 	 *            the listener to be registered
 	 */
-	public void registerListener(final Listener listener) {
+	private void doRegisterListener(final Listener listener) {
 		Class<? extends Listener> cls = listener.getClass();
 		for (Method method : cls.getDeclaredMethods()) {
 			if (method.isAnnotationPresent(EventHandler.class)) {
@@ -134,7 +126,7 @@ public class MultiListener implements Listener, EventExecutor {
 	 * @param listener
 	 *            the listener to be removed
 	 */
-	public void unregisterListener(final Listener listener) {
+	private void doUnregisterListener(final Listener listener) {
 
 		for (AtomicListener al : listeners.removeAll(listener)) {
 			events.remove(al.event, al);
@@ -158,4 +150,56 @@ public class MultiListener implements Listener, EventExecutor {
 		}
 	}
 
+	/**
+	 * initializes the MultiListener
+	 * 
+	 * @param plugin Whose Events should be handled.
+	 */
+	public static void initialize(final JavaPlugin plugin) {
+		if(multiListenerInstance == null) {
+			multiListenerInstance = new MultiListener(plugin);
+		}
+	}
+	
+	
+	/**
+	 * Shortcut function to register listeners
+	 * 
+	 * @param listener the Listener to be registered
+	 */
+	public static void registerListener(final Listener listener) {
+		ensureInitialized();
+		multiListenerInstance.doRegisterListener(listener);
+	}
+
+	/**
+	 * @param listeners
+	 *            the listeners to be registered
+	 */
+	public static void registerListeners(final Listener... listeners) {
+		ensureInitialized();
+		for (Listener l : listeners) {
+			multiListenerInstance.doRegisterListener(l);
+		}
+	}
+	
+	/**
+	 * Shortcut function to register listeners
+	 * 
+	 * @param listener the Listener to be registered
+	 */
+	public static void unregisterListener(final Listener listener) {
+		ensureInitialized();
+		multiListenerInstance.doUnregisterListener(listener);
+	}
+	
+	/**
+	 * throws an exception if this is not ready for use
+	 */
+	private static void ensureInitialized() {
+		if(multiListenerInstance == null) {
+			throw new RuntimeException("The MultiListener must be initialized first.");
+		}
+	}
+	
 }

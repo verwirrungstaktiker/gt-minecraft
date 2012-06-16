@@ -7,15 +7,18 @@ import gt.general.trigger.persistance.YamlSerializable;
  */
 public abstract class Trigger implements YamlSerializable {
 
-	protected TriggerContext context;
-	protected String label;
+	private TriggerContext context;
+	private String label;
 	/**
 	 * Creates a trigger
 	 * @param repeat false, if the Trigger should only be triggered once
 	 */
-	public Trigger (TriggerContext context) {
-		this.context = context;
-		context.addTrigger(this);
+	public Trigger (final TriggerContext context) {
+		setContext(context);
+	}
+	
+	public Trigger () {
+		
 	}
 	
 	@Override
@@ -24,14 +27,16 @@ public abstract class Trigger implements YamlSerializable {
 	}
 
 	@Override
-	public void setLabel(String label) {
+	public void setLabel(final String label) {
 		this.label = label;
 	}
-		
 
-	/**
-	 * checks trigger-condition and calls callback if appropriate
-	 */
-	public abstract void checkTrigger();
+	public TriggerContext getContext() {
+		return context;
+	}
+
+	public void setContext(TriggerContext context) {
+		this.context = context;
+	}
 
 }

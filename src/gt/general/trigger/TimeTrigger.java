@@ -1,5 +1,7 @@
 package gt.general.trigger;
 
+import java.util.Map;
+
 /**
  * Trigger which is called in an interval
  */
@@ -14,8 +16,10 @@ public class TimeTrigger extends Trigger{
 	 * @param callback runnable to be called
 	 * @param tm the TriggerManager for this trigger
 	 */
-	public TimeTrigger (int interval, boolean repeat, Runnable callback, TriggerManager tm) {
-		super(repeat,callback,tm);
+	public TimeTrigger(final TriggerContext triggerContext) {
+		super(triggerContext);
+		
+		//super(repeat,callback,tm);
 		this.interval = interval;
 		this.count = interval;
 	}
@@ -29,6 +33,18 @@ public class TimeTrigger extends Trigger{
 			else tm.deregisterTrigger(this);
 		}
 
+	}
+
+	@Override
+	public void setup(Map<String, Object> values) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public Map<String, Object> teardown() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

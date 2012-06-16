@@ -51,14 +51,14 @@ public class HelloWorld extends JavaPlugin {
 		teamManager = new TeamManager();
 
 		
-		multiListener = new MultiListener(this);
+		MultiListener.initialize(this);
 		
-		multiListener.registerListeners(new KeyPressListener(),
+		MultiListener.registerListeners(new KeyPressListener(),
 										new BlockListener(),
 										// new CommandListener(), XXX seems to be missing?
 										new PlayerListener());
 		
-		multiListener.registerListener(heroManager);		
+		MultiListener.registerListener(heroManager);		
 
 		getServer().getScheduler().scheduleSyncRepeatingTask(this, heroManager, 0, 10);
 		
@@ -68,26 +68,6 @@ public class HelloWorld extends JavaPlugin {
 	/** */
 	public void onDisable() { }
 	
-	
-	/**
-	 * Shortcut function to register listeners
-	 * 
-	 * @param listener the Listener to be registered
-	 */
-	public static void registerListener(final Listener listener) {
-		getPlugin().multiListener.registerListener(listener);
-		
-	}
-
-	/**
-	 * Shortcut function to register listeners
-	 * 
-	 * @param listener the Listener to be registered
-	 */
-	public static void unregisterListener(final Listener listener) {
-		getPlugin().multiListener.unregisterListener(listener);
-	}
-
 	/**
 	 * @return all currently running games
 	 */

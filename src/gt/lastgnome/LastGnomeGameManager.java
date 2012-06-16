@@ -7,6 +7,7 @@ import gt.general.character.Team;
 import gt.general.character.TeamManager;
 import gt.general.world.WorldInstance;
 import gt.plugin.helloworld.HelloWorld;
+import gt.plugin.listener.MultiListener;
 
 import org.bukkit.World;
 
@@ -47,7 +48,7 @@ public class LastGnomeGameManager extends GameManager {
 		// TODO actually do something
 		new TeamLostTrigger(lastGnomeGame, null, HelloWorld.getTriggerManager());
 		
-		HelloWorld.registerListener(lastGnomeGame);
+		MultiListener.registerListener(lastGnomeGame);
 		
 		getRunningGames().add(lastGnomeGame);
 		return lastGnomeGame;
