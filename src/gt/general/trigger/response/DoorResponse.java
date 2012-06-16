@@ -1,4 +1,5 @@
-package gt.general.trigger;
+package gt.general.trigger.response;
+
 
 import java.util.HashMap;
 import java.util.Map;

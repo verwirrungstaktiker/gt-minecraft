@@ -1,5 +1,7 @@
 package gt.general.trigger;
 
+import gt.general.trigger.response.Response;
+
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
