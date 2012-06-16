@@ -120,11 +120,11 @@ public class BuildManager implements Listener {
 		if(playerTriggerContexts.get(name) != null) {
 			playerTriggerContexts.get(name).toggleInputFunction();
 			player.sendMessage(
-					ChatColor.YELLOW + 
+					YELLOW + 
 					"Trigger Input Fuction: " + 
 					playerTriggerContexts.get(name).getInputFunction().toString());
 		} else {
-			player.sendMessage(ChatColor.YELLOW + "No active TriggerContext");
+			player.sendMessage(YELLOW + "No active TriggerContext");
 		}
 	}
 
@@ -140,7 +140,7 @@ public class BuildManager implements Listener {
 			playerTriggerStates.put(name, TriggerState.TRIGGER);
 			playerTriggerContexts.put(name, new TriggerContext());
 			
-			player.sendMessage(ChatColor.YELLOW + "New Context.. BuildState: TRIGGER");
+			player.sendMessage(YELLOW + "New Context.. BuildState: TRIGGER");
 			
 		} else {
 			if(playerTriggerContexts.get(name).isComplete()) {
@@ -148,9 +148,9 @@ public class BuildManager implements Listener {
 				playerTriggerStates.put(name, TriggerState.IDLE);
 				playerTriggerContexts.put(name, null);
 				
-				player.sendMessage(ChatColor.YELLOW + "Handed over trigger context.");
+				player.sendMessage(YELLOW + "Handed over trigger context.");
 			} else {
-				player.sendMessage(ChatColor.YELLOW + "Context not complete. Use [F12] to cancel.");
+				player.sendMessage(YELLOW + "Context not complete. Use [F12] to cancel.");
 				return;
 			}
 		}
@@ -166,21 +166,21 @@ public class BuildManager implements Listener {
 	
 		if(old == TriggerState.TRIGGER) {
 			playerTriggerStates.put(name, TriggerState.RESPONSE);
-			player.sendMessage(ChatColor.YELLOW + "BuildState: RESPONSE");
+			player.sendMessage(YELLOW + "BuildState: RESPONSE");
 			return;
 		} 
 		if(old == TriggerState.RESPONSE) {
 			playerTriggerStates.put(name, TriggerState.STANDBY);
-			player.sendMessage(ChatColor.YELLOW + "BuildState: STANDBY");
+			player.sendMessage(YELLOW + "BuildState: STANDBY");
 			return;
 		}
 		if(old == TriggerState.STANDBY) {
 			playerTriggerStates.put(name, TriggerState.TRIGGER);
-			player.sendMessage(ChatColor.YELLOW + "BuildState: TRIGGER");
+			player.sendMessage(YELLOW + "BuildState: TRIGGER");
 			return;
 		}
 		
-		player.sendMessage(ChatColor.YELLOW + "No active TriggerContext");
+		player.sendMessage(YELLOW + "No active TriggerContext");
 	}
 	
 	/**
@@ -190,13 +190,13 @@ public class BuildManager implements Listener {
 	private void cancelContext(final Player player) {
 		String name = player.getName();
 		if(playerTriggerStates.get(name) == TriggerState.IDLE) {
-			player.sendMessage(ChatColor.YELLOW + "No active TriggerContext");
+			player.sendMessage(YELLOW + "No active TriggerContext");
 			return;
 		}
 		playerTriggerStates.put(name, TriggerState.IDLE);
 		playerTriggerContexts.put(name, null);
 		
-		player.sendMessage(ChatColor.YELLOW + "Cancelled your TriggerContext");
+		player.sendMessage(YELLOW + "Cancelled your TriggerContext");
 	}
 	
 	/**
