@@ -7,9 +7,11 @@ import java.util.Map;
 
 import org.bukkit.ChatColor;
 import org.bukkit.GameMode;
+import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.getspout.spoutapi.event.input.KeyPressedEvent;
@@ -53,6 +55,46 @@ public class BuildManager implements Listener {
 		}
 	}
 	
+	/**
+	 * register Triggers and Responses to playerTriggerContexts
+	 * @param event player places a block
+	 */
+	@EventHandler
+	public void registerTriggerContext(final BlockPlaceEvent event) {
+		Player player = event.getPlayer();
+		String name = player.getName();
+		Block block = event.getBlockPlaced();
+		// Trigger
+		if(playerTriggerStates.get(name) == TriggerState.TRIGGER && isUsableAsTrigger(block)) {
+			addTrigger(name, block);
+		}
+		// Response
+		if(playerTriggerStates.get(name) == TriggerState.RESPONSE && isUsableAsResponse(block)) {
+			addResponse(name, block);
+		}
+
+	}
+
+
+	private boolean isUsableAsTrigger(Block block) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+	
+	private boolean isUsableAsResponse(Block block) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	private void addResponse(String name, Block block) {
+		// TODO Auto-generated method stub
+	}
+
+	private void addTrigger(String name, Block block) {
+		// TODO Auto-generated method stub
+		
+	}
+
 	/**
 	 * toggle a players input function
 	 * @param player bukkit player
