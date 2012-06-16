@@ -25,10 +25,10 @@ public class BuildManager implements Listener {
 	private ChatColor GREEN = ChatColor.GREEN;
 	
 	public enum TriggerState {
-		IDLE,
+		IDLE,		// no triggercontext
 		TRIGGER,
 		RESPONSE,
-		STANDBY
+		STANDBY		// triggercontext but standbye
 	}
 	
 	/** contains all player's current TriggerStates **/

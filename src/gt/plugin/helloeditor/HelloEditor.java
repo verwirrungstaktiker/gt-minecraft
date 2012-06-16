@@ -1,5 +1,8 @@
 package gt.plugin.helloeditor;
 
+import gt.general.trigger.TriggerManager;
+import gt.general.trigger.persistance.TriggerManagerPersistance;
+
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
@@ -20,6 +23,8 @@ public class HelloEditor extends JavaPlugin {
 	
 	private BuildManager bm = new BuildManager();
 	
+	private TriggerManager tm = new TriggerManager();
+	
 	/**
 	 * Initialization of our plugin
 	 */
@@ -27,7 +32,6 @@ public class HelloEditor extends JavaPlugin {
 		HelloEditor.setPlugin(this);
 		
 		PluginManager pm = getServer().getPluginManager();
-
 		pm.registerEvents(bm, this);
 		
 		printInformation();
@@ -76,14 +80,17 @@ public class HelloEditor extends JavaPlugin {
 		/*
 		 * set trigger input blocks
 		 */
-		if (isPlayer(sender) && commandEquals(cmd, "helpme")) {
+		if(isPlayer(sender) && commandEquals(cmd, "helpme")) {
 			printChatHelp((Player) sender);
 			return true;
 		}
 		
-		if (commandEquals(cmd, "dump")) {
+		if(commandEquals(cmd, "dump")) {
 			//TODO: ??
 			return true;
+		}
+		if(commandEquals(cmd, "toyaml")) {
+			System.out.println(TriggerManagerPersistance.toYaml(tm));
 		}
 		return false;
 	}
