@@ -4,15 +4,12 @@ package gt.general.trigger.response;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.bukkit.Bukkit;
 import org.bukkit.Effect;
-import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.material.Door;
-import org.getspout.spoutapi.SpoutManager;
 
 public class DoorResponse implements Response {
 

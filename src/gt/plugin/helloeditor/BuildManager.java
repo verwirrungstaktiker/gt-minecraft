@@ -2,6 +2,7 @@ package gt.plugin.helloeditor;
 
 import gt.general.trigger.PressurePlateTrigger;
 import gt.general.trigger.TriggerContext;
+import gt.general.trigger.response.BlockDisappearResponse;
 import gt.general.trigger.response.DoorResponse;
 
 import java.util.HashMap;
@@ -124,7 +125,9 @@ public class BuildManager implements Listener {
 			case IRON_DOOR_BLOCK: 
 				activeContext.addResponse(new DoorResponse(block));
 				break;
-				
+			case DIAMOND_BLOCK:
+				activeContext.addResponse(new BlockDisappearResponse(block));
+				break;
 			default:
 				// fail feedback
 				player.sendMessage(RED + "This Block can't be used as Response.");
