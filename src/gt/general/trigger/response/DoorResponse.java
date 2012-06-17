@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.bukkit.Bukkit;
+import org.bukkit.Effect;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
@@ -22,44 +23,7 @@ public class DoorResponse implements Response {
 	public DoorResponse(Block doorBlock) {
 		this.doorBlock = doorBlock;
 	}
-	
-/**	
-	@Override
-	public void onDisable() {
-		Door door = (Door) doorblock.getState().getData();
-		Block otherhalf;
-		
-		if (door.isTopHalf()) {
-			otherhalf = doorblock.getRelative(BlockFace.DOWN);			
-		} else {
-			otherhalf = doorblock.getRelative(BlockFace.UP);
-		}
-		
-		door.setOpen(false);
-		doorblock.setData(door.getData(), true);
-		door.setTopHalf(!door.isTopHalf());
-		otherhalf.setData(door.getData(), true);
-		//doorblock.getWorld().pla	
-	}
 
-	@Override
-	public void onEnable() {
-		Door door = (Door) doorblock.getState().getData();
-		Block otherhalf;
-		
-		if (door.isTopHalf()) {
-			otherhalf = doorblock.getRelative(BlockFace.DOWN);			
-		} else {
-			otherhalf = doorblock.getRelative(BlockFace.UP);
-		}
-		
-		door.setOpen(true);
-		doorblock.setData(door.getData(), true);
-		door.setTopHalf(!door.isTopHalf());
-		otherhalf.setData(door.getData(), true);
-		
-	}
-*/
 	@Override
 	public String getLabel() {
 		return label;
@@ -95,11 +59,11 @@ public class DoorResponse implements Response {
 		} else {
 			otherhalf = doorBlock.getRelative(BlockFace.UP);
 		}		
-		if(active) {
-			door.setOpen(true);
-		} else {
-			door.setOpen(false);
-		}
+
+		door.setOpen(active);
+		// play the door toggle sound
+		doorBlock.getWorld().playEffect(doorBlock.getLocation(), Effect.DOOR_TOGGLE, 10); // we can set the radius here
+		
 		doorBlock.setData(door.getData(), true);
 		door.setTopHalf(!door.isTopHalf());
 		otherhalf.setData(door.getData(), true);
