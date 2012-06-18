@@ -1,5 +1,6 @@
 package gt.plugin.helloeditor;
 
+import gt.general.trigger.LeverTrigger;
 import gt.general.trigger.PressurePlateTrigger;
 import gt.general.trigger.TriggerContext;
 import gt.general.trigger.response.BlockDisappearResponse;
@@ -98,7 +99,9 @@ public class BuildManager implements Listener {
 			case STONE_PLATE:
 				activeContext.addTrigger(new PressurePlateTrigger(block));
 				break;
-				
+			case LEVER:
+				activeContext.addTrigger(new LeverTrigger(block));
+				break;
 			default: 
 				// fail feedback
 				player.sendMessage(RED + "This Block can't be used as Trigger.");
