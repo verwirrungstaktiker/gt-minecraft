@@ -11,10 +11,6 @@ public class TimeTrigger extends Trigger{
 
 	/**
 	 *
-	 * @param interval time in TriggerManager-ticks
-	 * @param repeat false, if the Trigger should only be triggered once
-	 * @param callback runnable to be called
-	 * @param tm the TriggerManager for this trigger
 	 */
 	public TimeTrigger(final TriggerContext triggerContext) {
 		super(triggerContext);

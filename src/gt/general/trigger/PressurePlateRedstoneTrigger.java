@@ -8,21 +8,25 @@ import org.bukkit.World;
 import org.bukkit.block.Block;
 
 /**
- * Uses a stone pressure plate as trigger
+ * Uses a pressure block as trigger (wood or stone)
  * 
  * @author Sebastian Fahnenschreiber
  */
-public class PressurePlateTrigger extends RedstoneTrigger {
+public class PressurePlateRedstoneTrigger extends RedstoneTrigger {
 
-	private Block pressurePlate;
+	private Block pressureBlock;
+	
+	private Material material;
 	
 	/**
 	 * @param pressurePlate the plate to be used as trigger
 	 */
-	public PressurePlateTrigger(final Block pressurePlate) {
+	public PressurePlateRedstoneTrigger(final Block pressurePlate) {
 		super();
 		
-		this.pressurePlate = pressurePlate;
+		this.pressureBlock = pressurePlate;
+		this.material = pressurePlate.getType();
+		
 		setLabel("PressurePlate_"+ hashCode());
 	}
 	
@@ -35,31 +39,35 @@ public class PressurePlateTrigger extends RedstoneTrigger {
 		int y = (Integer) values.get("y");
 		int z = (Integer) values.get("z");
 		
-		pressurePlate = world.getBlockAt(x, y, z);
-		pressurePlate.setType(Material.STONE_PLATE);
+		material = (Material) values.get("material");
+		
+		pressureBlock = world.getBlockAt(x, y, z);
+		pressureBlock.setType(material);
 	}
 	
 	@Override
 	public void dispose() {
 		super.dispose();
 		
-		pressurePlate.setType(Material.AIR);
+		pressureBlock.setType(Material.AIR);
 	}
 	
 	@Override
 	public Map<String, Object> dump() {
 		Map<String, Object> map = new HashMap<String,Object>();
 		
-		map.put("x", pressurePlate.getX());
-		map.put("y", pressurePlate.getY());
-		map.put("z", pressurePlate.getZ());
+		map.put("x", pressureBlock.getX());
+		map.put("y", pressureBlock.getY());
+		map.put("z", pressureBlock.getZ());
+		
+		map.put("material", material);
 
 		return map;
 	}
 
 	@Override
 	protected Block getBlock() {
-		return pressurePlate;
+		return pressureBlock;
 	}
 
 }

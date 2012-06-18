@@ -1,7 +1,7 @@
 package gt.plugin.helloeditor;
 
-import gt.general.trigger.LeverTrigger;
-import gt.general.trigger.PressurePlateTrigger;
+import gt.general.trigger.AttachableRedstoneTrigger;
+import gt.general.trigger.PressurePlateRedstoneTrigger;
 import gt.general.trigger.TriggerContext;
 import gt.general.trigger.response.BlockDisappearResponse;
 import gt.general.trigger.response.DoorResponse;
@@ -97,10 +97,12 @@ public class BuildManager implements Listener {
 		switch(block.getType()) {
 			case WOOD_PLATE:
 			case STONE_PLATE:
-				activeContext.addTrigger(new PressurePlateTrigger(block));
+				
+				activeContext.addTrigger(new PressurePlateRedstoneTrigger(block));
 				break;
 			case LEVER:
-				activeContext.addTrigger(new LeverTrigger(block));
+			case STONE_BUTTON:
+				activeContext.addTrigger(new AttachableRedstoneTrigger(block));
 				break;
 			default: 
 				// fail feedback

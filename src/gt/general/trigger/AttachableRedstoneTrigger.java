@@ -8,21 +8,25 @@ import org.bukkit.World;
 import org.bukkit.block.Block;
 
 /**
- * uses a minecraft
+ * uses a minecraft lever or stone button as trigger
  * 
  * @author roman
  */
-public class LeverTrigger extends RedstoneTrigger {
+public class AttachableRedstoneTrigger extends RedstoneTrigger {
 
 	private Block lever;
+	
+	private Material material;
 	
 	/**
 	 * @param lever the lever to be used as trigger
 	 */
-	public LeverTrigger(final Block lever) {
+	public AttachableRedstoneTrigger(final Block lever) {
 		super();
 		
 		this.lever = lever;
+		material = lever.getType();
+		
 		setLabel("Lever_"+ hashCode());
 	}
 	
@@ -34,6 +38,8 @@ public class LeverTrigger extends RedstoneTrigger {
 		int x = (Integer) values.get("x");
 		int y = (Integer) values.get("y");
 		int z = (Integer) values.get("z");
+		
+		material = (Material) values.get("material");
 		
 		lever = world.getBlockAt(x, y, z);
 		lever.setType(Material.LEVER);
@@ -53,6 +59,8 @@ public class LeverTrigger extends RedstoneTrigger {
 		map.put("x", lever.getX());
 		map.put("y", lever.getY());
 		map.put("z", lever.getZ());
+		
+		map.put("material", material);
 
 		return map;
 	}
