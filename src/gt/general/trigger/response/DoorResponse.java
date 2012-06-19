@@ -16,9 +16,12 @@ public class DoorResponse implements Response {
 	private Block doorBlock;
 	private String label;
 	
+	private Material material;
 	
 	public DoorResponse(Block doorBlock) {
 		this.doorBlock = doorBlock;
+		
+		setLabel("Door_"+ hashCode());
 	}
 
 	@Override
@@ -38,16 +41,17 @@ public class DoorResponse implements Response {
 		int y = (Integer) values.get("y");
 		int z = (Integer) values.get("z");
 		
+		material = (Material) values.get("material");
+		//TODO: do we need the orientation here?
+		
 		doorBlock = world.getBlockAt(x, y, z);
-		doorBlock.setType(Material.IRON_DOOR);
+		doorBlock.setType(material);
 	}
 
 
 	@Override
 	public void triggered(final boolean active) {
-		
-		System.out.println("door triggered");
-		
+
 		Door door = (Door) doorBlock.getState().getData();
 		Block otherhalf;
 		
@@ -81,6 +85,8 @@ public class DoorResponse implements Response {
 		map.put("y", doorBlock.getY());
 		map.put("z", doorBlock.getZ());
 
+		map.put("material", material);
+		
 		Door door = (Door) doorBlock.getState().getData();
 		map.put("orientation", door.getFacing());
 		

@@ -9,21 +9,18 @@ import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.block.Block;
 
-public class BlockDisappearResponse implements Response {
+public class RedstoneTorchResponse implements Response {
 
 	private Block block;
 	private String label;
 	
-	private Material material;	//type of the block
+//	private Material material;	//type of the block
 
-	private boolean invert = false;		//true if block appears on trigger
+	private boolean invert = false;		//true if response is inverted
 	
 	
-	public BlockDisappearResponse(Block doorBlock) {
-		this.block = doorBlock;
-		this.material = doorBlock.getType();
-		
-		setLabel("Appearable_Block_"+ hashCode());
+	public RedstoneTorchResponse(Block torchBlock) {
+		this.block = torchBlock;
 	}
 
 	@Override
@@ -35,6 +32,7 @@ public class BlockDisappearResponse implements Response {
 	public void setLabel(final String label) {
 		this.label = label;
 		
+		setLabel("RedstoneTorch_" + hashCode());
 	}
 
 	@Override
@@ -43,15 +41,12 @@ public class BlockDisappearResponse implements Response {
 		int y = (Integer) values.get("y");
 		int z = (Integer) values.get("z");
 		
-		material = (Material) values.get("material");
-		invert = (Boolean) values.get("invert");
-		
 		block = world.getBlockAt(x, y, z);
 		
 		if(invert) {
-			block.setType(Material.AIR);
+			block.setType(Material.REDSTONE_TORCH_ON);
 		} else {
-			block.setType(material);
+			block.setType(Material.REDSTONE_TORCH_OFF);
 		}
 	}
 
@@ -61,14 +56,14 @@ public class BlockDisappearResponse implements Response {
 		System.out.println("block triggered");
 		
 		if(active ^ invert) {
-			// block disappear
-			block.setType(Material.AIR);
+			// torch on
+			block.setType(Material.REDSTONE_TORCH_ON);
 		} else {
-			// block appear
-			block.setType(material);
+			// torch off
+			block.setType(Material.REDSTONE_TORCH_OFF);
 		}
 		// play a fancy effect
-		block.getWorld().playEffect(block.getLocation(), Effect.POTION_BREAK, 10);
+		block.getWorld().playEffect(block.getLocation(), Effect.MOBSPAWNER_FLAMES, 20);
 	}
 	
 
@@ -85,7 +80,6 @@ public class BlockDisappearResponse implements Response {
 		map.put("y", block.getY());
 		map.put("z", block.getZ());
 		
-		map.put("material", material);
 		map.put("invert", invert);
 		
 		return map;

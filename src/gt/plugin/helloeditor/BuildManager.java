@@ -5,17 +5,21 @@ import gt.general.trigger.PressurePlateRedstoneTrigger;
 import gt.general.trigger.TriggerContext;
 import gt.general.trigger.response.BlockDisappearResponse;
 import gt.general.trigger.response.DoorResponse;
+import gt.general.trigger.response.RedstoneTorchResponse;
+import gt.general.trigger.response.SignResponse;
 
 import java.util.HashMap;
 import java.util.Map;
 
 import org.bukkit.ChatColor;
 import org.bukkit.GameMode;
+import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockPlaceEvent;
+import org.bukkit.event.block.BlockRedstoneEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.getspout.spoutapi.event.input.KeyPressedEvent;
@@ -38,7 +42,7 @@ public class BuildManager implements Listener {
 	private Map<String, TriggerState> playerTriggerStates = new HashMap<String, TriggerState>();
 	/** contains all player's current TriggerContext's **/
 	private Map<String, TriggerContext> playerTriggerContexts = new HashMap<String, TriggerContext>();
-	
+
 	/**
 	 * handles key presses
 	 * @param event player presses a key
@@ -132,6 +136,14 @@ public class BuildManager implements Listener {
 				break;
 			case DIAMOND_BLOCK:
 				activeContext.addResponse(new BlockDisappearResponse(block));
+				break;
+			case REDSTONE_LAMP_OFF:
+			case REDSTONE_TORCH_ON:
+				activeContext.addResponse(new RedstoneTorchResponse(block));
+				break;
+			case SIGN:
+			case SIGN_POST:
+				activeContext.addResponse(new SignResponse(block));
 				break;
 			default:
 				// fail feedback
