@@ -111,6 +111,7 @@ public class BuildManager implements Listener {
 			default: 
 				// fail feedback
 				player.sendMessage(RED + "This Block can't be used as Trigger.");
+				System.out.println("This Block can't be used as Trigger. --> " + block.getType());
 				return;
 		}
 		// success feedback
@@ -141,13 +142,14 @@ public class BuildManager implements Listener {
 			case REDSTONE_TORCH_ON:
 				activeContext.addResponse(new RedstoneTorchResponse(block));
 				break;
-			case SIGN:
+			case WALL_SIGN:
 			case SIGN_POST:
 				activeContext.addResponse(new SignResponse(block));
 				break;
 			default:
 				// fail feedback
 				player.sendMessage(RED + "This Block can't be used as Response.");
+				System.out.println("This Block can't be used as Response. --> " + block.getType());
 				return;
 		}
 		// success message
