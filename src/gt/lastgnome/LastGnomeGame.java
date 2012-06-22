@@ -4,9 +4,11 @@ import gt.general.Game;
 import gt.general.character.Hero;
 import gt.general.character.HeroManager;
 import gt.general.character.Team;
+import gt.general.character.ZombieManager;
 import gt.general.gui.GuiElementType;
 import gt.general.world.WorldInstance;
 import gt.lastgnome.gui.SpeedBar;
+import gt.plugin.helloworld.HelloWorld;
 
 import java.util.Iterator;
 
@@ -33,6 +35,8 @@ public class LastGnomeGame extends Game implements Listener{
 	/** so that e.g. Zombies know who the Gnome-Bearer is */
 	private Hero gnomeBearer;
 	
+	private final ZombieManager zombieManager;
+	
 	/**
 	 * initiates a new Last Gnome Game
 	 *
@@ -40,6 +44,13 @@ public class LastGnomeGame extends Game implements Listener{
 	 */
 	public LastGnomeGame(final Team team) {
 		super(team);
+		
+		zombieManager = new ZombieManager(worldInstance.getWorld());
+		//geht das besser? 
+		int id = HelloWorld.getPlugin().getServer().getScheduler()
+		.scheduleSyncRepeatingTask(HelloWorld.getPlugin(), zombieManager, 0, 10);
+		
+		zombieManager.setTaskID(id);
 		
 		gnome = new GnomeItem();
 		gameRunning = true;
@@ -82,7 +93,8 @@ public class LastGnomeGame extends Game implements Listener{
 			if (gnomeBearer == null && hero.canRecieveItem()) {
 
 				hero.setActiveItem(gnome);
-				gnomeBearer = hero;
+				//gnomeBearer = hero;
+				setGnomeBearer(hero);
 				
 				player.sendMessage(ChatColor.GREEN + "You obtained a Gnome for Testing");
 				
@@ -106,7 +118,8 @@ public class LastGnomeGame extends Game implements Listener{
 			if(hero.equals(gnomeBearer)) {	
 				
 				hero.removeActiveItem();
-				gnomeBearer = null;
+				//gnomeBearer = null;
+				setGnomeBearer(null);
 				
 				player.sendMessage(ChatColor.GREEN + "The Gnome has been saved!");
 			} else {
@@ -160,6 +173,7 @@ public class LastGnomeGame extends Game implements Listener{
 	 */
 	void setGnomeBearer(final Hero newBearer) {
 		gnomeBearer = newBearer;
+		zombieManager.setTarget(newBearer.getPlayer());
 	}
 
 	/**
@@ -220,6 +234,7 @@ public class LastGnomeGame extends Game implements Listener{
 	@Override
 	public void onEnd() {
 		// TODO Auto-generated method stub
+		zombieManager.cleanup();
 		
 	}
 
@@ -234,5 +249,12 @@ public class LastGnomeGame extends Game implements Listener{
 	 */
 	public void setWorldWrapper(final LastGnomeWorldInstance worldInstance) {
 		this.worldInstance = worldInstance;
+	}
+	
+	/**
+	 * @return this game's ZombieManager
+	 */
+	public ZombieManager getZombieManager() {
+		return zombieManager;
 	}
 }
