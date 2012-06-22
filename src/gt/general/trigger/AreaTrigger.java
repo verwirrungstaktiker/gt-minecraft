@@ -1,5 +1,7 @@
 package gt.general.trigger;
 
+import gt.plugin.helloworld.HelloWorld;
+
 import java.util.Map;
 
 import org.bukkit.Location;
@@ -7,12 +9,14 @@ import org.bukkit.World;
 /**
  * Trigger which checks if a location is in a cube
  */
-public class AreaTrigger extends Trigger{
+public class AreaTrigger extends Trigger implements Runnable{
 
 	/**The two locations describing the cube*/
 	protected Location[] cube;
 	/**The location to be observed*/
 	protected Location loc;
+	
+	private int taskID;
 
 	/**
 	 *
@@ -56,7 +60,8 @@ public class AreaTrigger extends Trigger{
 	/**
 	 * Checks if Location is in Cube
 	 */
-	public void checkTrigger() {
+	@Override
+	public void run() {
 		if (between(cube[0].getBlockX(), loc.getBlockX(), cube[1].getBlockX())) {
 			if (between(cube[0].getBlockY(), loc.getBlockY(), cube[1].getBlockY())) {
 				if (between(cube[0].getBlockZ(), loc.getBlockZ(), cube[1].getBlockZ())) {
@@ -70,15 +75,17 @@ public class AreaTrigger extends Trigger{
 	}
 	@Override
 	public void dispose() {
-		
+		HelloWorld.getPlugin().getServer().getScheduler().cancelTask(taskID);
 	}
 	@Override
 	public Map<String, Object> dump() {
-		// TODO Auto-generated method stub
 		return null;
 	}
+	
 	@Override
 	public void setup(Map<String, Object> values, World world) {
+		taskID = HelloWorld.getPlugin().getServer().getScheduler()
+		.scheduleAsyncRepeatingTask(HelloWorld.getPlugin(), this, 0, 10);
 		
 	}
 

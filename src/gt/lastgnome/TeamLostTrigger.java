@@ -1,39 +1,52 @@
 package gt.lastgnome;
 
+import java.util.Map;
+
+import org.bukkit.World;
+import org.bukkit.entity.Player;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.Listener;
+import org.bukkit.event.entity.PlayerDeathEvent;
+
 import gt.general.trigger.Trigger;
-import gt.general.trigger.TriggerManager;
+
 
 /**
  * triggers when the gnome is caught
  */
-public class TeamLostTrigger extends Trigger{
+public class TeamLostTrigger extends Trigger implements Listener{
 	/** the observed game*/
 	private LastGnomeGame game;
 
-	/**
-	 * @param game the game to be observed
-	 * @param callback runnable to be called
-	 * @param tm the TriggerManager for this trigger
-	 */
-	public TeamLostTrigger (final LastGnomeGame game, final Runnable callback, final TriggerManager tm) {
-		super(false, callback, tm);
-		this.game = game;
+	@EventHandler
+	public void heroDeath(PlayerDeathEvent event) {
+		Player gnomebearer = game.getGnomeBearer().getPlayer();
+		
+		if (gnomebearer.equals(event.getEntity())) {
+			getContext().updateTriggerState(this, true);
+		}
+	}
+	
+	public void setGame(LastGnomeGame game) {
+		this.game = game;		
+	}
+	
+	@Override
+	public void dispose() {
+		
 	}
 
 	@Override
-	public void checkTrigger() {
-		if (game.getGnomeBearer() == null) {
-			return;
-		}
-		if (game.getGnomeBearer().getPlayer().getHealth() <= 0) {
-			tm.deregisterTrigger(this);
-			if (callback!= null) {
-				callback.run();
-			} else {
-				game.dispose();
-			}
-		}
-
+	public Map<String, Object> dump() {
+		
+		return null;
 	}
+
+	@Override
+	public void setup(Map<String, Object> values, World world) {
+		
+	}
+
+
 
 }
