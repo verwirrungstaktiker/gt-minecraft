@@ -27,8 +27,8 @@ public class SignResponse extends Response {
 		
 		this.signBlock = signBlock;
 		/// TODO: this is just for testing
-		this.untriggeredMessage = "foo\n12\n34\n67";
-		this.triggeredMessage = "\nbar\n 45";
+		this.untriggeredMessage = "\n untriggered ";
+		this.triggeredMessage = "\n triggered";
 	}
 
 	@Override
