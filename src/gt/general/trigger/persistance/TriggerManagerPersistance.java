@@ -25,17 +25,23 @@ public class TriggerManagerPersistance {
 		return triggerManager;
 	}
 	
-	private final static String KEY_INPUT_FUNCTION = "input-function"; 
-	private final static String KEY_TRIGGERS = "triggers"; 
-	private final static String KEY_RESPONSES = "responses";
+	public final static String KEY_INPUT_FUNCTION = "input-function"; 
+	public final static String KEY_TRIGGERS = "triggers"; 
+	public final static String KEY_RESPONSES = "responses";
 
 	
-	private final static String KEY_GLOBAL_TRIGGERS = "global-responses";
-	private final static String KEY_GLOBAL_RESPONSES = "global-responses";
-	private final static String KEY_GLOBAL_CONTEXTS = "global-contexts";
+	public final static String KEY_GLOBAL_TRIGGERS = "global-triggers";
+	public final static String KEY_GLOBAL_RESPONSES = "global-responses";
+	public final static String KEY_GLOBAL_CONTEXTS = "global-contexts";
 	
-	public synchronized String persistTriggerManager() {
-		
+	public final static String KEY_CLASS = "class";
+	
+	public String toYaml() {
+		Yaml yml = new Yaml();
+		return yml.dump(asYaml());
+	}
+
+	public Map<String, Object> asYaml() {
 		Map<String, Object> globalTriggers = new HashMap<String, Object>();
 		Map<String, Object> globalResponses = new HashMap<String, Object>();
 		Map<String, Object> globalContexts = new HashMap<String, Object>();
@@ -44,12 +50,22 @@ public class TriggerManagerPersistance {
 			
 			List<String> itsTriggers = new ArrayList<String>();
 			for(Trigger t : triggerContext.getTriggers()) {
-				persist(t, globalTriggers, itsTriggers);				
+				itsTriggers.add(t.getLabel());
+				
+				Map<String, Object> dumped = t.dump();
+				dumped.put(KEY_CLASS, t.getClass());
+				
+				globalTriggers.put(t.getLabel(), dumped);				
 			}
 			
 			List<String> itsResponses = new ArrayList<String>();
 			for(Response r : triggerContext.getResponses()) {
-				persist(r, globalResponses, itsResponses);				
+				itsResponses.add(r.getLabel());
+
+				Map<String, Object> dumped = r.dump();
+				dumped.put(KEY_CLASS, r.getClass());
+				
+				globalResponses.put(r.getLabel(), dumped);	
 			}			
 			
 			Map<String, Object> c = new HashMap<String, Object>();
@@ -67,19 +83,11 @@ public class TriggerManagerPersistance {
 		
 		global.put("foo", "bar");
 		
-		Yaml yml = new Yaml();
-		return yml.dump(global);
-	}
-
-
-	private void persist(YamlSerializable serializable,
-			Map<String, Object> map, List<String> list) {
-		list.add(serializable.getLabel());
-		map.put(serializable.getLabel(), serializable.dump());
+		return global;
 	}
 
 	public static String toYaml(final TriggerManager triggerManager) {
-		return new TriggerManagerPersistance(triggerManager).persistTriggerManager();
+		return new TriggerManagerPersistance(triggerManager).toYaml();
 	}
 	
 	public static TriggerManager load(String yaml) {
