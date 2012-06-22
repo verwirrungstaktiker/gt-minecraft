@@ -27,21 +27,22 @@ public class PressurePlateRedstoneTrigger extends RedstoneTrigger {
 		this.pressureBlock = pressurePlate;
 		this.material = pressurePlate.getType();
 		
-		setLabel("PressurePlate_"+ hashCode());
+		setLabel("pressure_plate_"+ hashCode());
 	}
 	
 	
+	public PressurePlateRedstoneTrigger() {
+		super();
+	}
+
+
 	@Override
 	public void setup(final Map<String, Object> values, final World world) {
 		super.setup(values, world);
 		
-		int x = (Integer) values.get("x");
-		int y = (Integer) values.get("y");
-		int z = (Integer) values.get("z");
-		
 		material = (Material) values.get("material");
 		
-		pressureBlock = world.getBlockAt(x, y, z);
+		pressureBlock = blockFromCoordinates(values, world);
 		pressureBlock.setType(material);
 	}
 	
@@ -56,12 +57,9 @@ public class PressurePlateRedstoneTrigger extends RedstoneTrigger {
 	public Map<String, Object> dump() {
 		Map<String, Object> map = new HashMap<String,Object>();
 		
-		map.put("x", pressureBlock.getX());
-		map.put("y", pressureBlock.getY());
-		map.put("z", pressureBlock.getZ());
-		
+		map.putAll(coordinatesFromPoint(pressureBlock));
 		map.put("material", material);
-
+		
 		return map;
 	}
 

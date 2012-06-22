@@ -10,7 +10,7 @@ import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.block.Sign;
 
-public class SignResponse extends AbstractResponse {
+public class SignResponse extends Response {
 
 	private Block signBlock;
 	
@@ -33,13 +33,10 @@ public class SignResponse extends AbstractResponse {
 
 	@Override
 	public void setup(final Map<String, Object> values, final World world) {
-		int x = (Integer) values.get("x");
-		int y = (Integer) values.get("y");
-		int z = (Integer) values.get("z");
 		
 		boolean onWall = (Boolean) values.get("onWall");
 		
-		signBlock = world.getBlockAt(x, y, z);
+		signBlock = blockFromCoordinates(values, world);
 
 		if(onWall) {
 			signBlock.setType(Material.SIGN);
@@ -73,10 +70,7 @@ public class SignResponse extends AbstractResponse {
 	public Map<String, Object> dump() {
 		Map<String, Object> map = new HashMap<String,Object>();
 		
-		map.put("x", signBlock.getX());
-		map.put("y", signBlock.getY());
-		map.put("z", signBlock.getZ());
-		
+		map.putAll(coordinatesFromPoint(signBlock));
 		map.put("onWall", onWall);
 		
 		map.put("untriggeredMessage", untriggeredMessage);

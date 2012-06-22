@@ -34,14 +34,10 @@ public class AttachableRedstoneTrigger extends RedstoneTrigger {
 	@Override
 	public void setup(final Map<String, Object> values, final World world) {
 		super.setup(values, world);
-		
-		int x = (Integer) values.get("x");
-		int y = (Integer) values.get("y");
-		int z = (Integer) values.get("z");
-		
+
 		material = (Material) values.get("material");
 		
-		lever = world.getBlockAt(x, y, z);
+		lever = blockFromCoordinates(values, world);
 		lever.setType(Material.LEVER);
 	}
 	
@@ -56,10 +52,7 @@ public class AttachableRedstoneTrigger extends RedstoneTrigger {
 	public Map<String, Object> dump() {
 		Map<String, Object> map = new HashMap<String,Object>();
 		
-		map.put("x", lever.getX());
-		map.put("y", lever.getY());
-		map.put("z", lever.getZ());
-		
+		map.putAll(coordinatesFromPoint(lever));
 		map.put("material", material);
 
 		return map;

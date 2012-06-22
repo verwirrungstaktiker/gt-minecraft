@@ -11,7 +11,7 @@ import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.material.Door;
 
-public class DoorResponse extends AbstractResponse {
+public class DoorResponse extends Response {
 
 	private Block doorBlock;	
 	private Material material;
@@ -21,16 +21,16 @@ public class DoorResponse extends AbstractResponse {
 		this.doorBlock = doorBlock;
 	}
 
+	public DoorResponse() {
+	}
+
 	@Override
 	public void setup(final Map<String, Object> values, final World world) {
-		int x = (Integer) values.get("x");
-		int y = (Integer) values.get("y");
-		int z = (Integer) values.get("z");
 		
 		material = (Material) values.get("material");
 		//TODO: do we need the orientation here?
 		
-		doorBlock = world.getBlockAt(x, y, z);
+		doorBlock = blockFromCoordinates(values, world);
 		doorBlock.setType(material);
 	}
 
@@ -67,10 +67,7 @@ public class DoorResponse extends AbstractResponse {
 	public Map<String, Object> dump() {
 		Map<String, Object> map = new HashMap<String,Object>();
 		
-		map.put("x", doorBlock.getX());
-		map.put("y", doorBlock.getY());
-		map.put("z", doorBlock.getZ());
-
+		map.putAll(coordinatesFromPoint(doorBlock));
 		map.put("material", material);
 		
 		Door door = (Door) doorBlock.getState().getData();

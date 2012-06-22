@@ -9,7 +9,7 @@ import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.block.Block;
 
-public class BlockDisappearResponse extends AbstractResponse {
+public class BlockDisappearResponse extends Response {
 
 	private Block block;
 	
@@ -26,14 +26,11 @@ public class BlockDisappearResponse extends AbstractResponse {
 
 	@Override
 	public void setup(final Map<String, Object> values, final World world) {
-		int x = (Integer) values.get("x");
-		int y = (Integer) values.get("y");
-		int z = (Integer) values.get("z");
 		
 		material = (Material) values.get("material");
 		invert = (Boolean) values.get("invert");
 		
-		block = world.getBlockAt(x, y, z);
+		block = blockFromCoordinates(values, world);
 		
 		if(invert) {
 			block.setType(Material.AIR);
@@ -68,10 +65,7 @@ public class BlockDisappearResponse extends AbstractResponse {
 	public Map<String, Object> dump() {
 		Map<String, Object> map = new HashMap<String,Object>();
 		
-		map.put("x", block.getX());
-		map.put("y", block.getY());
-		map.put("z", block.getZ());
-		
+		map.putAll(coordinatesFromPoint(block));
 		map.put("material", material);
 		map.put("invert", invert);
 		
