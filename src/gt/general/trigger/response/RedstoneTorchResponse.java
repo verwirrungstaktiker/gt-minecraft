@@ -31,7 +31,8 @@ public class RedstoneTorchResponse extends Response {
 		if(invert) {
 			block.setType(Material.REDSTONE_TORCH_ON);
 		} else {
-			block.setType(Material.REDSTONE_TORCH_OFF);
+			//TODO: Maybe we can find another Material to represent a RedstoneTorch that's not glowing
+			block.setType(Material.AIR);
 		}
 	}
 
@@ -45,10 +46,10 @@ public class RedstoneTorchResponse extends Response {
 			block.setType(Material.REDSTONE_TORCH_ON);
 		} else {
 			// torch off
-			block.setType(Material.REDSTONE_TORCH_OFF);
+			block.setType(Material.AIR);
 		}
 		// play a fancy effect
-		block.getWorld().playEffect(block.getLocation(), Effect.MOBSPAWNER_FLAMES, 20);
+		block.getWorld().playEffect(block.getLocation(), Effect.ENDER_SIGNAL, 20);
 	}
 	
 

@@ -14,20 +14,20 @@ import org.bukkit.block.Block;
  */
 public class AttachableRedstoneTrigger extends RedstoneTrigger {
 
-	private Block lever;
+	private Block trigger;
 	
 	private Material material;
 	
 	/**
-	 * @param lever the lever to be used as trigger
+	 * @param trigger the lever to be used as trigger
 	 */
-	public AttachableRedstoneTrigger(final Block lever) {
+	public AttachableRedstoneTrigger(final Block trigger) {
 		super();
 		
-		this.lever = lever;
-		material = lever.getType();
+		this.trigger = trigger;
+		material = trigger.getType();
 		
-		setLabel("Lever_"+ hashCode());
+		setLabel("attachable_trigger_"+ hashCode());
 	}
 	
 	
@@ -37,22 +37,23 @@ public class AttachableRedstoneTrigger extends RedstoneTrigger {
 
 		material = (Material) values.get("material");
 		
-		lever = blockFromCoordinates(values, world);
-		lever.setType(Material.LEVER);
+		trigger = blockFromCoordinates(values, world);
+		trigger.setType(material);
 	}
 	
 	@Override
 	public void dispose() {
 		super.dispose();
 		
-		lever.setType(Material.AIR);
+		trigger.setType(Material.AIR);
 	}
 	
 	@Override
 	public Map<String, Object> dump() {
 		Map<String, Object> map = new HashMap<String,Object>();
 		
-		map.putAll(coordinatesFromPoint(lever));
+
+		map.putAll(coordinatesFromPoint(trigger));
 		map.put("material", material);
 
 		return map;
@@ -60,7 +61,7 @@ public class AttachableRedstoneTrigger extends RedstoneTrigger {
 
 	@Override
 	protected Block getBlock() {
-		return lever;
+		return trigger;
 	}
 
 }

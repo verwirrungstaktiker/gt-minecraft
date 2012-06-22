@@ -12,6 +12,7 @@ import java.util.Map;
 
 import org.bukkit.block.Block;
 import org.bukkit.event.Listener;
+import org.bukkit.material.Door;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -67,24 +68,9 @@ public class SerializationTest {
 		tm.addTriggerContext(context);	
 				
 		Map<String, Object> yaml = sut.asYaml();
-		
+
 		assertTrue(((Map<String, Object>) yaml.get(KEY_GLOBAL_CONTEXTS)).containsKey(context.getLabel()));
 		assertTrue(((Map<String, Object>) yaml.get(KEY_GLOBAL_RESPONSES)).containsKey(response.getLabel()));
 		
 	}
-	
-	@Test
-	public void visualDumpTest() {
-		Trigger t = new PressurePlateRedstoneTrigger(mock(Block.class));
-		Response r = new DoorResponse(mock(Block.class));
-		
-		TriggerContext context = new TriggerContext();
-		context.addTrigger(t);
-		context.addResponse(r);
-		
-		tm.addTriggerContext(context);
-		
-		System.out.println(sut.toYaml());
-	}
-
 }
