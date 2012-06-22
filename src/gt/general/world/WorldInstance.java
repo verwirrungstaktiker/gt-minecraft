@@ -4,7 +4,9 @@ import gt.general.trigger.TriggerManager;
 import gt.general.trigger.persistance.TriggerManagerPersistance;
 
 import java.io.File;
-import java.io.IOException;
+import java.io.FileNotFoundException;
+import java.io.Reader;
+import java.io.Writer;
 import java.nio.charset.Charset;
 
 import org.bukkit.Location;
@@ -31,19 +33,18 @@ public abstract class WorldInstance {
 	
 	private TriggerManager triggerManager;
 	
-	/**
-	 * @return the triggerManager
-	 */
-	public TriggerManager getTriggerManager() {
-		return triggerManager;
-	}
-
+	private File triggerFile;
+	
 	/**
 	 * @param world the minecraft representation of this world
 	 */
-	public void setWorld(final World world) {
+	public WorldInstance(final World world, final TriggerManager triggerManager) {
 		this.world = world;
-
+		
+		triggerFile = new File(world.getWorldFolder(), "trigger.yml");
+		
+		this.triggerManager = triggerManager;
+		
 		loadTriggerManager();
 	}
 	
@@ -69,20 +70,23 @@ public abstract class WorldInstance {
 	}
 
 	public void loadTriggerManager() {
-		// todo determine the file
-		triggerManager = new TriggerManager(); //TriggerManagerPersistance.load("");
+		try {
+			Reader reader = Files.newReader(triggerFile, Charset.defaultCharset());
+			new TriggerManagerPersistance(triggerManager, world).deserializeFrom(reader);
+			
+		} catch (FileNotFoundException e) {
+			throw new RuntimeException(e);
+		}
 	}
 	
 	public void saveTriggerManager() {
-		String yaml = TriggerManagerPersistance.toYaml(triggerManager);
-		
-		File f = new File(world.getWorldFolder(), "trigger.yml");
 		try {
-			Files.write(yaml, f, Charset.defaultCharset());
-		} catch (IOException e) {
+			Writer writer = Files.newWriter(triggerFile, Charset.defaultCharset());
+			new TriggerManagerPersistance(triggerManager, world).serializeTo(writer);
+			
+		} catch (FileNotFoundException e) {
 			throw new RuntimeException(e);
 		}
-		
 	}
 	
 	/**
@@ -105,6 +109,13 @@ public abstract class WorldInstance {
 	};
 	
 	
+	/**
+	 * @return the triggerManager
+	 */
+	public TriggerManager getTriggerManager() {
+		return triggerManager;
+	}
+
 	//XXX: Testing
 	/**
 	 * places start socket & end socket

@@ -1,84 +1,177 @@
 package gt.general.trigger.persistance;
 
+import static com.google.common.collect.Lists.*;
+import static com.google.common.collect.Maps.*;
+import gt.general.trigger.InputFunction;
 import gt.general.trigger.Trigger;
 import gt.general.trigger.TriggerContext;
 import gt.general.trigger.TriggerManager;
 import gt.general.trigger.response.Response;
 
-import java.util.ArrayList;
-import java.util.HashMap;
+import java.io.Reader;
+import java.io.Writer;
 import java.util.List;
 import java.util.Map;
 
+import org.bukkit.World;
+import org.yaml.snakeyaml.DumperOptions;
+import org.yaml.snakeyaml.DumperOptions.FlowStyle;
 import org.yaml.snakeyaml.Yaml;
 
 public class TriggerManagerPersistance {
 	
 	private final TriggerManager triggerManager;
+	private final World world;
 	
-	private final Yaml yaml = new Yaml();
+	private final Yaml yaml;
 	
-	public TriggerManagerPersistance(final TriggerManager triggerManager) {
+	public static final String KEY_INPUT_FUNCTION = "input-function"; 
+	public static final String KEY_TRIGGERS = "triggers"; 
+	public static final String KEY_RESPONSES = "responses";
+
+	
+	public static final String KEY_GLOBAL_TRIGGERS = "global-triggers";
+	public static final String KEY_GLOBAL_RESPONSES = "global-responses";
+	public static final String KEY_GLOBAL_CONTEXTS = "global-contexts";
+	
+	public static final String KEY_CLASS = "class";
+	
+	private Map<String, Object> globalTriggers;
+	private Map<String, Object> globalResponses;
+	private Map<String, Object> globalContexts;
+	
+	/**
+	 * @param triggerManager the TriggerManager to be persisted
+	 */
+	public TriggerManagerPersistance(final TriggerManager triggerManager, final World world) {
 		this.triggerManager = triggerManager;
-	}
-	
-	
-	public TriggerManager getTriggerManager() {
-		return triggerManager;
-	}
-	
-	public final static String KEY_INPUT_FUNCTION = "input-function"; 
-	public final static String KEY_TRIGGERS = "triggers"; 
-	public final static String KEY_RESPONSES = "responses";
+		this.world = world;
+		
 
-	
-	public final static String KEY_GLOBAL_TRIGGERS = "global-triggers";
-	public final static String KEY_GLOBAL_RESPONSES = "global-responses";
-	public final static String KEY_GLOBAL_CONTEXTS = "global-contexts";
-	
-	public final static String KEY_CLASS = "class";
-	
-	public String toYaml() {
-		return yaml.dump(asYaml());
+		DumperOptions opts = new DumperOptions();
+		opts.setDefaultFlowStyle(FlowStyle.BLOCK);
+		opts.setPrettyFlow(true);
+		
+		yaml = new Yaml(opts);
 	}
 
-	public synchronized Map<String, Object> asYaml() {
-		Map<String, Object> globalTriggers = new HashMap<String, Object>();
-		Map<String, Object> globalResponses = new HashMap<String, Object>();
-		Map<String, Object> globalContexts = new HashMap<String, Object>();
+	/**
+	 * @param writer where the TriggerManager should be dumped
+	 */
+	public void serializeTo(final Writer writer) {
+		yaml.dump(asYaml(), writer);
+	}
 
-		for(TriggerContext triggerContext : triggerManager.getTriggerContexts()) {
-			
-			List<String> itsTriggers = new ArrayList<String>();
-			for(Trigger t : triggerContext.getTriggers()) {
-				itsTriggers.add(t.getLabel());
-				
-				globalTriggers.put(t.getLabel(), prepareDump(t));				
-			}
-			
-			List<String> itsResponses = new ArrayList<String>();
-			for(Response r : triggerContext.getResponses()) {
-				itsResponses.add(r.getLabel());
-
-				globalResponses.put(r.getLabel(), prepareDump(r));	
-			}			
-			
-			Map<String, Object> c = new HashMap<String, Object>();
-			c.put(KEY_INPUT_FUNCTION, triggerContext.getInputFunction().toString()); // .toString() maybe ?
-			c.put(KEY_TRIGGERS, itsTriggers);
-			c.put(KEY_RESPONSES, itsResponses);
-			
-			globalContexts.put(triggerContext.getLabel(), c);
+	/*
+	 * TODO convert classcast into something checked
+	 */
+	@SuppressWarnings("unchecked")
+	public void deserializeFrom(final Reader reader) {
+		Map<String, ? extends Object> global = (Map<String, ? extends Object>) yaml.load(reader);
+		
+		if(global == null) {
+			return;
 		}
 		
-		Map<String, Object> global = new HashMap<String, Object>();
-		global.put(KEY_GLOBAL_TRIGGERS, globalTriggers);
-		global.put(KEY_GLOBAL_RESPONSES, globalResponses);
-		global.put(KEY_GLOBAL_CONTEXTS, globalContexts);
+		globalContexts = (Map<String, Object>) global.get(KEY_GLOBAL_CONTEXTS);
+		globalResponses = (Map<String, Object>) global.get(KEY_GLOBAL_RESPONSES);
+		globalTriggers = (Map<String, Object>) global.get(KEY_GLOBAL_TRIGGERS);
 		
-		global.put("foo", "bar");
+		for(String contextLabel : globalContexts.keySet()) {
+			Map<String, ? extends Object> contextMap = (Map<String, Object>) globalContexts.get(contextLabel);
+			
+			TriggerContext tc = new TriggerContext();
+			tc.setInputFunction(InputFunction.valueOf((String) contextMap.get(KEY_INPUT_FUNCTION)));
+			tc.setLabel(contextLabel);
+			
+			try {
+				for(String triggerLabel : (List<String>) contextMap.get(KEY_TRIGGERS)) {
+					
+					Map<String, Object> triggerMap = (Map<String, Object>) globalTriggers.get(triggerLabel);
+					Trigger t = loadSerializable(triggerLabel, triggerMap);
+					t.setContext(tc);
+					
+					tc.addTrigger(t);
+				}
+				
+				for(String responseLabel : (List<String>) contextMap.get(KEY_RESPONSES)) {
+					Map<String, Object> responseMap = (Map<String, Object>) globalResponses.get(responseLabel);
+
+					tc.addResponse((Response) loadSerializable(responseLabel, responseMap));
+				}
+				
+			} catch (InstantiationException e) {
+				throw new RuntimeException(e);
+			} catch (IllegalAccessException e) {
+				throw new RuntimeException(e);
+			} catch (ClassNotFoundException e) {
+				throw new RuntimeException(e);
+			}
+			
+			triggerManager.addTriggerContext(tc);
+			
+		}
+	}
+
+
+	@SuppressWarnings("unchecked")
+	private <T extends YamlSerializable> T loadSerializable(String label, Map<String, Object> map) throws InstantiationException, IllegalAccessException, ClassNotFoundException {
 		
-		return global;
+		String className = (String) map.remove(KEY_CLASS);
+		
+		T serializable = (T) Class.forName(className).newInstance();
+		serializable.setLabel(label);
+		serializable.setup(map, world);
+		
+		return serializable;
+	}
+
+	/**
+	 * @return yaml string of contained TriggerManager
+	 */
+	public String toYaml() {
+		
+		return yaml.dump(asYaml());
+	}
+	
+	/**
+	 * @return yamlable representation of the contained TriggerManager
+	 */
+	public synchronized Map<String, Object> asYaml() {
+		
+		globalTriggers = newHashMap(); 
+		globalResponses = newHashMap();
+		globalContexts = newHashMap();
+		
+		for(TriggerContext triggerContext : triggerManager.getTriggerContexts()) {
+			processTriggerContext(triggerContext);
+		}
+		
+		return finalizeYaml();
+	}
+
+
+	private void processTriggerContext(final TriggerContext triggerContext) {
+		List<String> itsTriggers = newArrayList();
+		for(Trigger t : triggerContext.getTriggers()) {
+			itsTriggers.add(t.getLabel());
+			
+			globalTriggers.put(t.getLabel(), prepareDump(t));				
+		}
+		
+		List<String> itsResponses = newArrayList();
+		for(Response r : triggerContext.getResponses()) {
+			itsResponses.add(r.getLabel());
+
+			globalResponses.put(r.getLabel(), prepareDump(r));	
+		}			
+		
+		Map<String, Object> c = newHashMap();
+		c.put(KEY_INPUT_FUNCTION, triggerContext.getInputFunction().toString());
+		c.put(KEY_TRIGGERS, itsTriggers);
+		c.put(KEY_RESPONSES, itsResponses);
+		
+		globalContexts.put(triggerContext.getLabel(), c);
 	}
 
 
@@ -90,23 +183,17 @@ public class TriggerManagerPersistance {
 		return ret;
 	}
 
-	public static String toYaml(final TriggerManager triggerManager) {
-		return new TriggerManagerPersistance(triggerManager).toYaml();
+	private Map<String, Object> finalizeYaml() {
+		Map<String, Object> global = newHashMap();
+		global.put(KEY_GLOBAL_TRIGGERS, globalTriggers);
+		global.put(KEY_GLOBAL_RESPONSES, globalResponses);
+		global.put(KEY_GLOBAL_CONTEXTS, globalContexts);
+		
+		return global;
 	}
 	
-	@SuppressWarnings("unchecked")
+	@SuppressWarnings("unused")
 	public List<TriggerContext> fromYaml(String s) {
-		Map<String, ? extends Object> global = (Map<String, ? extends Object>) yaml.load(s);
-		
-		
-		
-		
 		return null;
 	}
-	
-	public static TriggerManager load(String yaml) {
-		
-		return null;
-	}
-	
 }

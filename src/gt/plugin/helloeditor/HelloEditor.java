@@ -39,14 +39,17 @@ public class HelloEditor extends JavaPlugin implements Listener {
 	 */
 	public void onEnable() {
 		HelloEditor.setPlugin(this);
+		MultiListener.initialize(this);
+
 		
 		WorldCreator wc = new WorldCreator("lastgnome");
 		wc.environment(Environment.NORMAL);
 		
-		worldInstance = new LastGnomeWorldInstance(wc.createWorld());
-		buildManager = new BuildManager(worldInstance.getTriggerManager());
+		triggerManager = new TriggerManager();
 		
-		MultiListener.initialize(this);
+		worldInstance = new LastGnomeWorldInstance(wc.createWorld(), triggerManager);
+		buildManager = new BuildManager(triggerManager);
+		
 		MultiListener.registerListeners(buildManager);
 		
 		printInformation();	
