@@ -10,7 +10,6 @@ public abstract class Trigger extends YamlSerializable {
 	private TriggerContext context;
 	/**
 	 * Creates a trigger
-	 * @param repeat false, if the Trigger should only be triggered once
 	 */
 	public Trigger (final TriggerContext context) {
 		setContext(context);
