@@ -10,10 +10,9 @@ import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.block.Sign;
 
-public class SignResponse implements Response {
+public class SignResponse extends AbstractResponse {
 
 	private Block signBlock;
-	private String label;
 	
 	private String untriggeredMessage;
 	private String triggeredMessage;
@@ -24,24 +23,12 @@ public class SignResponse implements Response {
 	 * @param signBlock the bukkit block of the sign
 	 */
 	public SignResponse(final Block signBlock) {
+		super("sign");
+		
 		this.signBlock = signBlock;
 		/// TODO: this is just for testing
 		this.untriggeredMessage = "foo";
 		this.triggeredMessage = "bar";
-		
-		setLabel("Sign_"+ hashCode());
-
-	}
-
-	@Override
-	public String getLabel() {
-		return label;
-	}
-
-	@Override
-	public void setLabel(final String label) {
-		this.label = label;
-		
 	}
 
 	@Override

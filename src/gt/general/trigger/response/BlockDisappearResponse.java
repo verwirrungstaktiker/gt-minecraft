@@ -9,10 +9,9 @@ import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.block.Block;
 
-public class BlockDisappearResponse implements Response {
+public class BlockDisappearResponse extends AbstractResponse {
 
 	private Block block;
-	private String label;
 	
 	private Material material;	//type of the block
 
@@ -20,21 +19,9 @@ public class BlockDisappearResponse implements Response {
 	
 	
 	public BlockDisappearResponse(Block doorBlock) {
+		super("appearable_block");
 		this.block = doorBlock;
 		this.material = doorBlock.getType();
-		
-		setLabel("Appearable_Block_"+ hashCode());
-	}
-
-	@Override
-	public String getLabel() {
-		return label;
-	}
-
-	@Override
-	public void setLabel(final String label) {
-		this.label = label;
-		
 	}
 
 	@Override
