@@ -34,7 +34,7 @@ public class RedstoneTorchResponse extends AbstractResponse {
 		if(invert) {
 			block.setType(Material.REDSTONE_TORCH_ON);
 		} else {
-			block.setType(Material.REDSTONE_TORCH_OFF);
+			block.setType(Material.AIR);
 		}
 	}
 
@@ -48,10 +48,10 @@ public class RedstoneTorchResponse extends AbstractResponse {
 			block.setType(Material.REDSTONE_TORCH_ON);
 		} else {
 			// torch off
-			block.setType(Material.REDSTONE_TORCH_OFF);
+			block.setType(Material.AIR);
 		}
 		// play a fancy effect
-		block.getWorld().playEffect(block.getLocation(), Effect.MOBSPAWNER_FLAMES, 20);
+		block.getWorld().playEffect(block.getLocation(), Effect.ENDER_SIGNAL, 20);
 	}
 	
 
