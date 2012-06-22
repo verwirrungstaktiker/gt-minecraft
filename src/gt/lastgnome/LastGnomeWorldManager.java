@@ -22,7 +22,7 @@ public class LastGnomeWorldManager extends WorldManager {
 		String newName = findNextInstanceFolder(baseName);
 		
 		World world = instatiateWorld(baseName, newName);
-		LastGnomeWorldInstance lastGnomeWorld = new LastGnomeWorldInstance(world);
+		LastGnomeWorldInstance lastGnomeWorld = new LastGnomeWorldInstance(world, new GnomeSocketStart(), new GnomeSocketEnd());
 		
 		lastGnomeWorld.setName(newName);
 		

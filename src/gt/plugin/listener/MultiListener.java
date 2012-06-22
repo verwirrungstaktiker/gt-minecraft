@@ -119,6 +119,8 @@ public final class MultiListener implements Listener, EventExecutor {
 		if (!registeredListeners.contains(event)) {
 			Bukkit.getPluginManager().registerEvent(event, this,
 					EventPriority.NORMAL, this, plugin);
+			
+			registeredListeners.add(event);
 		}
 	}
 

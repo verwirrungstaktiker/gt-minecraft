@@ -1,5 +1,12 @@
 package gt.general.world;
 
+import gt.general.trigger.TriggerManager;
+import gt.general.trigger.persistance.TriggerManagerPersistance;
+
+import java.io.File;
+import java.io.IOException;
+import java.nio.charset.Charset;
+
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.block.Block;
@@ -8,6 +15,8 @@ import org.getspout.spoutapi.SpoutManager;
 import org.getspout.spoutapi.inventory.SpoutItemStack;
 import org.getspout.spoutapi.material.block.GenericCubeCustomBlock;
 import org.getspout.spoutapi.material.item.GenericCustomItem;
+
+import com.google.common.io.Files;
 
 /**
  * Represents one Instance of a World including metadata.
@@ -20,12 +29,22 @@ public abstract class WorldInstance {
 	private World world;
 	private String name;
 	
+	private TriggerManager triggerManager;
+	
+	/**
+	 * @return the triggerManager
+	 */
+	public TriggerManager getTriggerManager() {
+		return triggerManager;
+	}
+
 	/**
 	 * @param world the minecraft representation of this world
 	 */
 	public void setWorld(final World world) {
 		this.world = world;
-		placeCustomBlocks();
+
+		loadTriggerManager();
 	}
 	
 	/**
@@ -49,10 +68,29 @@ public abstract class WorldInstance {
 		return name;
 	}
 
+	public void loadTriggerManager() {
+		// todo determine the file
+		triggerManager = new TriggerManager(); //TriggerManagerPersistance.load("");
+	}
+	
+	public void saveTriggerManager() {
+		String yaml = TriggerManagerPersistance.toYaml(triggerManager);
+		
+		File f = new File(world.getWorldFolder(), "trigger.yml");
+		try {
+			Files.write(yaml, f, Charset.defaultCharset());
+		} catch (IOException e) {
+			throw new RuntimeException(e);
+		}
+		
+	}
+	
 	/**
 	 * disposes this WorldInstance
 	 */
 	public void dispose() {
+		triggerManager.dispose();
+		
 		world = null;
 	}
 	

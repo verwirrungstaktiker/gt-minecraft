@@ -32,4 +32,9 @@ public class TriggerManager {
 		triggerContexts.remove(context);
 	}
 
+	public void dispose() {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

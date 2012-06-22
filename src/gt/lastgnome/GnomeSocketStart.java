@@ -2,6 +2,7 @@ package gt.lastgnome;
 
 import gt.plugin.helloworld.HelloWorld;
 
+import org.bukkit.Bukkit;
 import org.bukkit.plugin.Plugin;
 import org.getspout.spoutapi.material.block.GenericCubeCustomBlock;
 

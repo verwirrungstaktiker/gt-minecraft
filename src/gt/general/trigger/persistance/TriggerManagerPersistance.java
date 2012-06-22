@@ -85,7 +85,7 @@ public class TriggerManagerPersistance {
 	private Map<String, Object> prepareDump(final YamlSerializable serializable) {
 		
 		Map<String, Object> ret = serializable.dump();
-		ret.put(KEY_CLASS, serializable.getClass());
+		ret.put(KEY_CLASS, serializable.getClass().getName());
 		
 		return ret;
 	}
@@ -98,7 +98,8 @@ public class TriggerManagerPersistance {
 	public List<TriggerContext> fromYaml(String s) {
 		Map<String, ? extends Object> global = (Map<String, ? extends Object>) yaml.load(s);
 		
-		System.out.println(global);
+		
+		
 		
 		return null;
 	}

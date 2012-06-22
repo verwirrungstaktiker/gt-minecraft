@@ -2,14 +2,21 @@ package gt.plugin.helloeditor;
 
 import gt.general.trigger.TriggerManager;
 import gt.general.trigger.persistance.TriggerManagerPersistance;
+import gt.lastgnome.LastGnomeWorldInstance;
 import gt.plugin.helloworld.KeyPressListener;
 import gt.plugin.listener.MultiListener;
 
 import org.bukkit.ChatColor;
+import org.bukkit.WorldCreator;
+import org.bukkit.World.Environment;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.player.PlayerJoinEvent;
+import org.bukkit.event.player.PlayerLoginEvent;
+import org.bukkit.generator.ChunkGenerator;
 import org.bukkit.plugin.java.JavaPlugin;
 
 
@@ -18,13 +25,14 @@ import org.bukkit.plugin.java.JavaPlugin;
  * 
  * @author Sebastian Fahnenschreiber
  */
-public class HelloEditor extends JavaPlugin {
+public class HelloEditor extends JavaPlugin implements Listener {
 	
 	private static HelloEditor plugin;
 	
-	private BuildManager buildManager = new BuildManager();
-	
-	private TriggerManager triggerManager = new TriggerManager();
+	private TriggerManager triggerManager;
+	private BuildManager buildManager;
+
+	private LastGnomeWorldInstance worldInstance;
 	
 	/**
 	 * Initialization of our plugin
@@ -32,15 +40,16 @@ public class HelloEditor extends JavaPlugin {
 	public void onEnable() {
 		HelloEditor.setPlugin(this);
 		
+		WorldCreator wc = new WorldCreator("lastgnome");
+		wc.environment(Environment.NORMAL);
+		
+		worldInstance = new LastGnomeWorldInstance(wc.createWorld());
+		buildManager = new BuildManager(worldInstance.getTriggerManager());
+		
 		MultiListener.initialize(this);
+		MultiListener.registerListeners(buildManager);
 		
-		/*
-		PluginManager pm = getServer().getPluginManager();
-		pm.registerEvents(bm, this);
-		*/
-		MultiListener.registerListener(buildManager);
-		
-		printInformation();
+		printInformation();	
 	}
 	
 	/**
@@ -109,18 +118,18 @@ public class HelloEditor extends JavaPlugin {
 			return true;
 		}
 		
-		if(commandEquals(cmd, "test")) {
-			
-			MultiListener.registerListener(new KeyPressListener());
-			
+		if(isPlayer(sender) && commandEquals(cmd, "tp")) {
+			((Player)sender).teleport(worldInstance.getSpawnLocation());
 			return true;
 		}
+		
 		if(commandEquals(cmd, "dump")) {
 			// TODO ??
 			return true;
 		}
 		if(commandEquals(cmd, "save")) {
-			System.out.println("\n" + TriggerManagerPersistance.toYaml(triggerManager));
+			worldInstance.saveTriggerManager();
+			System.out.println("saved.");
 			return true;
 		}
 		if(commandEquals(cmd, "load")) {

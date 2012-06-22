@@ -3,6 +3,7 @@ package gt.plugin.helloeditor;
 import gt.general.trigger.AttachableRedstoneTrigger;
 import gt.general.trigger.PressurePlateRedstoneTrigger;
 import gt.general.trigger.TriggerContext;
+import gt.general.trigger.TriggerManager;
 import gt.general.trigger.response.BlockDisappearResponse;
 import gt.general.trigger.response.DoorResponse;
 import gt.general.trigger.response.RedstoneTorchResponse;
@@ -42,7 +43,14 @@ public class BuildManager implements Listener {
 	private Map<String, TriggerState> playerTriggerStates = new HashMap<String, TriggerState>();
 	/** contains all player's current TriggerContext's **/
 	private Map<String, TriggerContext> playerTriggerContexts = new HashMap<String, TriggerContext>();
+	
+	private TriggerManager triggerManager;
 
+	
+	public BuildManager(final TriggerManager triggerManager) {
+		this.triggerManager = triggerManager;
+	}
+	
 	/**
 	 * handles key presses
 	 * @param event player presses a key
@@ -185,7 +193,7 @@ public class BuildManager implements Listener {
 			playerTriggerStates.put(name, TriggerState.TRIGGER);
 			
 			TriggerContext context = new TriggerContext();
-			HelloEditor.getPlugin().getTriggerManager().addTriggerContext(context);
+			triggerManager.addTriggerContext(context);
 			playerTriggerContexts.put(name, context);
 			
 			player.sendMessage(YELLOW + "New Context.. BuildState: TRIGGER");

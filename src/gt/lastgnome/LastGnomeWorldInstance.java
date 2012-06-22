@@ -7,8 +7,8 @@ import org.bukkit.World;
 
 public class LastGnomeWorldInstance extends WorldInstance {
 	
-	private final GnomeSocketStart startSocket;
-	private final GnomeSocketEnd endSocket;
+	private GnomeSocketStart startSocket;
+	private GnomeSocketEnd endSocket;
 	
 	/**
 	 * @param world The Minecraft representation of the World.
@@ -16,9 +16,13 @@ public class LastGnomeWorldInstance extends WorldInstance {
 	public LastGnomeWorldInstance(final World world) {
 		super();
 		setWorld(world);
+	}
+	
+	public LastGnomeWorldInstance(final World world, final GnomeSocketStart start, final GnomeSocketEnd end) {
+		this(world);
 		
-		startSocket = new GnomeSocketStart();
-		endSocket = new GnomeSocketEnd();
+		startSocket = start;
+		endSocket = end;
 		
 		placeBlocks();
 	}
