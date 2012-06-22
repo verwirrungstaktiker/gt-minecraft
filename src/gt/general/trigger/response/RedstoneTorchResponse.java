@@ -34,6 +34,7 @@ public class RedstoneTorchResponse extends AbstractResponse {
 		if(invert) {
 			block.setType(Material.REDSTONE_TORCH_ON);
 		} else {
+			//TODO: Maybe we can find another Material to represent a RedstoneTorch that's not glowing
 			block.setType(Material.AIR);
 		}
 	}
