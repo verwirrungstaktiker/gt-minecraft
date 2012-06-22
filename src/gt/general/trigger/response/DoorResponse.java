@@ -11,28 +11,14 @@ import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.material.Door;
 
-public class DoorResponse implements Response {
+public class DoorResponse extends AbstractResponse {
 
-	private Block doorBlock;
-	private String label;
-	
+	private Block doorBlock;	
 	private Material material;
 	
 	public DoorResponse(Block doorBlock) {
+		super("door");
 		this.doorBlock = doorBlock;
-		
-		setLabel("Door_"+ hashCode());
-	}
-
-	@Override
-	public String getLabel() {
-		return label;
-	}
-
-	@Override
-	public void setLabel(final String label) {
-		this.label = label;
-		
 	}
 
 	@Override
