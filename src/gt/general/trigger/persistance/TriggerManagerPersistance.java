@@ -16,6 +16,8 @@ public class TriggerManagerPersistance {
 	
 	private final TriggerManager triggerManager;
 	
+	private final Yaml yaml = new Yaml();
+	
 	public TriggerManagerPersistance(final TriggerManager triggerManager) {
 		this.triggerManager = triggerManager;
 	}
@@ -37,11 +39,10 @@ public class TriggerManagerPersistance {
 	public final static String KEY_CLASS = "class";
 	
 	public String toYaml() {
-		Yaml yml = new Yaml();
-		return yml.dump(asYaml());
+		return yaml.dump(asYaml());
 	}
 
-	public Map<String, Object> asYaml() {
+	public synchronized Map<String, Object> asYaml() {
 		Map<String, Object> globalTriggers = new HashMap<String, Object>();
 		Map<String, Object> globalResponses = new HashMap<String, Object>();
 		Map<String, Object> globalContexts = new HashMap<String, Object>();
@@ -52,20 +53,14 @@ public class TriggerManagerPersistance {
 			for(Trigger t : triggerContext.getTriggers()) {
 				itsTriggers.add(t.getLabel());
 				
-				Map<String, Object> dumped = t.dump();
-				dumped.put(KEY_CLASS, t.getClass());
-				
-				globalTriggers.put(t.getLabel(), dumped);				
+				globalTriggers.put(t.getLabel(), prepareDump(t));				
 			}
 			
 			List<String> itsResponses = new ArrayList<String>();
 			for(Response r : triggerContext.getResponses()) {
 				itsResponses.add(r.getLabel());
 
-				Map<String, Object> dumped = r.dump();
-				dumped.put(KEY_CLASS, r.getClass());
-				
-				globalResponses.put(r.getLabel(), dumped);	
+				globalResponses.put(r.getLabel(), prepareDump(r));	
 			}			
 			
 			Map<String, Object> c = new HashMap<String, Object>();
@@ -86,8 +81,26 @@ public class TriggerManagerPersistance {
 		return global;
 	}
 
+
+	private Map<String, Object> prepareDump(final YamlSerializable serializable) {
+		
+		Map<String, Object> ret = serializable.dump();
+		ret.put(KEY_CLASS, serializable.getClass());
+		
+		return ret;
+	}
+
 	public static String toYaml(final TriggerManager triggerManager) {
 		return new TriggerManagerPersistance(triggerManager).toYaml();
+	}
+	
+	@SuppressWarnings("unchecked")
+	public List<TriggerContext> fromYaml(String s) {
+		Map<String, ? extends Object> global = (Map<String, ? extends Object>) yaml.load(s);
+		
+		System.out.println(global);
+		
+		return null;
 	}
 	
 	public static TriggerManager load(String yaml) {
