@@ -17,10 +17,16 @@ import org.bukkit.event.block.BlockRedstoneEvent;
  */
 public abstract class RedstoneTrigger extends Trigger implements Listener {	
 	
-	public RedstoneTrigger() {
+	public RedstoneTrigger(String prefix) {
+		super(prefix);
 		MultiListener.registerListeners(this);
 	}
 	
+	public RedstoneTrigger() {
+		super();
+		MultiListener.registerListeners(this);
+	}
+
 	/**
 	 * @param event the redstone event this is based on
 	 */

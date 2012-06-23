@@ -22,6 +22,10 @@ public class RedstoneTorchResponse extends Response {
 		super("redstone_torch");
 		this.block = torchBlock;
 	}
+	
+	public RedstoneTorchResponse() {
+		
+	}
 
 	@Override
 	public void setup(final Map<String, Object> values, final World world) {

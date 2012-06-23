@@ -26,11 +26,16 @@ public class AreaTrigger extends Trigger implements Runnable{
 	 * @param callback runnable to be called
 	 * @param tm the TriggerManager for this trigger
 	 */
-	public AreaTrigger (Location[] cube, Location loc, TriggerContext context) {
-		super(context);
+	public AreaTrigger (Location[] cube, Location loc) {
+		super("area");
 		this.cube = cube;
 		this.loc = loc;
 	}
+	
+	public AreaTrigger () {
+		
+	}
+	
 	/**
 	 * Sets the location to be observed
 	 * @param loc new location to be observed

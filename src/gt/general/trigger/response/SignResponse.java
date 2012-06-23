@@ -30,6 +30,10 @@ public class SignResponse extends Response {
 		this.untriggeredMessage = "\n untriggered ";
 		this.triggeredMessage = "\n triggered";
 	}
+	
+	public SignResponse() {
+		
+	}
 
 	@Override
 	public void setup(final Map<String, Object> values, final World world) {

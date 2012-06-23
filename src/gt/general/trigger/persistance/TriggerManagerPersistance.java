@@ -66,10 +66,26 @@ public class TriggerManagerPersistance {
 	/*
 	 * TODO convert classcast into something checked
 	 */
-	@SuppressWarnings("unchecked")
 	public void deserializeFrom(final Reader reader) {
+		try {
+			loadTriggerFile(reader);
+		} catch (ClassCastException e) {
+			throw new RuntimeException("bad file format", e);
+		} catch (InstantiationException e) {
+			throw new RuntimeException(e);
+		} catch (IllegalAccessException e) {
+			throw new RuntimeException(e);
+		} catch (ClassNotFoundException e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	
+	@SuppressWarnings("unchecked")
+	private void loadTriggerFile(final Reader reader) throws InstantiationException, IllegalAccessException, ClassNotFoundException {
 		Map<String, ? extends Object> global = (Map<String, ? extends Object>) yaml.load(reader);
 		
+		// if empty then empty
 		if(global == null) {
 			return;
 		}
@@ -79,41 +95,44 @@ public class TriggerManagerPersistance {
 		globalTriggers = (Map<String, Object>) global.get(KEY_GLOBAL_TRIGGERS);
 		
 		for(String contextLabel : globalContexts.keySet()) {
-			Map<String, ? extends Object> contextMap = (Map<String, Object>) globalContexts.get(contextLabel);
-			
-			TriggerContext tc = new TriggerContext();
-			tc.setInputFunction(InputFunction.valueOf((String) contextMap.get(KEY_INPUT_FUNCTION)));
-			tc.setLabel(contextLabel);
-			
-			try {
-				for(String triggerLabel : (List<String>) contextMap.get(KEY_TRIGGERS)) {
-					
-					Map<String, Object> triggerMap = (Map<String, Object>) globalTriggers.get(triggerLabel);
-					Trigger t = loadSerializable(triggerLabel, triggerMap);
-					t.setContext(tc);
-					
-					tc.addTrigger(t);
-				}
-				
-				for(String responseLabel : (List<String>) contextMap.get(KEY_RESPONSES)) {
-					Map<String, Object> responseMap = (Map<String, Object>) globalResponses.get(responseLabel);
-
-					tc.addResponse((Response) loadSerializable(responseLabel, responseMap));
-				}
-				
-			} catch (InstantiationException e) {
-				throw new RuntimeException(e);
-			} catch (IllegalAccessException e) {
-				throw new RuntimeException(e);
-			} catch (ClassNotFoundException e) {
-				throw new RuntimeException(e);
-			}
-			
-			triggerManager.addTriggerContext(tc);
+			loadTriggerContext(contextLabel);
 			
 		}
 	}
+	
+	@SuppressWarnings("unchecked")
+	private void loadTriggerContext(final String contextLabel)
+			throws InstantiationException, IllegalAccessException,
+			ClassNotFoundException {
+		
+		Map<String, ? extends Object> contextMap = (Map<String, Object>) globalContexts.get(contextLabel);
+		
+		TriggerContext tc = new TriggerContext();
+		tc.setInputFunction(InputFunction.valueOf((String) contextMap.get(KEY_INPUT_FUNCTION)));
+		tc.setLabel(contextLabel);
+		
+		
+			for(String triggerLabel : (List<String>) contextMap.get(KEY_TRIGGERS)) {
+				
+				Map<String, Object> triggerMap = (Map<String, Object>) globalTriggers.get(triggerLabel);
+				Trigger t = loadSerializable(triggerLabel, triggerMap);
+				t.setContext(tc);
+				
+				tc.addTrigger(t);
+			}
+			
+			for(String responseLabel : (List<String>) contextMap.get(KEY_RESPONSES)) {
+				Map<String, Object> responseMap = (Map<String, Object>) globalResponses.get(responseLabel);
 
+				tc.addResponse((Response) loadSerializable(responseLabel, responseMap));
+			}
+			
+
+		
+		triggerManager.addTriggerContext(tc);
+	}
+	
+	@SuppressWarnings("unchecked")
 	private <T extends YamlSerializable> T loadSerializable(String label, Map<String, Object> map) throws InstantiationException, IllegalAccessException, ClassNotFoundException {
 		
 		String className = (String) map.remove(KEY_CLASS);

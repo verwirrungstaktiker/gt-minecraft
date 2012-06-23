@@ -11,8 +11,8 @@ public abstract class Trigger extends YamlSerializable {
 	/**
 	 * Creates a trigger
 	 */
-	public Trigger (final TriggerContext context) {
-		setContext(context);
+	public Trigger (final String labelPrefix) {
+		super(labelPrefix);
 	}
 	
 	public Trigger () {
