@@ -1,8 +1,11 @@
 package gt.lastgnome;
 
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 
 import org.bukkit.World;
+import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -45,6 +48,11 @@ public class TeamLostTrigger extends Trigger implements Listener{
 	@Override
 	public void setup(Map<String, Object> values, World world) {
 		
+	}
+
+	@Override
+	public Set<Block> getBlocks() {
+		return new HashSet<Block>();
 	}
 
 

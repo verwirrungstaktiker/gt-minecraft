@@ -2,6 +2,7 @@ package gt.general.trigger.persistance;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 
 import org.bukkit.World;
 import org.bukkit.block.Block;
@@ -86,4 +87,9 @@ public abstract class YamlSerializable {
 	 * delete the corresponding block in the world
 	 */
 	public abstract void dispose();
+	
+	/**
+	 * @return a Set of all Blocks that correspond to the Serializable Object. Empty Set if no corresponding Blocks.
+	 */
+	public abstract Set<Block> getBlocks();
 }

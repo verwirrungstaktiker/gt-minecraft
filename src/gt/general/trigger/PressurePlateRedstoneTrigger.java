@@ -13,19 +13,12 @@ import org.bukkit.block.Block;
  * @author Sebastian Fahnenschreiber
  */
 public class PressurePlateRedstoneTrigger extends RedstoneTrigger {
-
-	private Block pressureBlock;
-	
-	private Material material;
 	
 	/**
 	 * @param pressurePlate the plate to be used as trigger
 	 */
 	public PressurePlateRedstoneTrigger(final Block pressurePlate) {
-		super("pressure_plate");
-		
-		this.pressureBlock = pressurePlate;
-		this.material = pressurePlate.getType();
+		super("pressure_plate", pressurePlate);
 	}
 	
 	
@@ -40,30 +33,24 @@ public class PressurePlateRedstoneTrigger extends RedstoneTrigger {
 		
 		material = (Material) values.get("material");
 		
-		pressureBlock = blockFromCoordinates(values, world);
-		pressureBlock.setType(material);
+		trigger = blockFromCoordinates(values, world);
+		trigger.setType(material);
 	}
 	
 	@Override
 	public void dispose() {
 		super.dispose();
 		
-		pressureBlock.setType(Material.AIR);
+		trigger.setType(Material.AIR);
 	}
 	
 	@Override
 	public Map<String, Object> dump() {
 		Map<String, Object> map = new HashMap<String,Object>();
 		
-		map.putAll(coordinatesFromPoint(pressureBlock));
+		map.putAll(coordinatesFromPoint(trigger));
 		map.put("material", material);
 		
 		return map;
 	}
-
-	@Override
-	protected Block getBlock() {
-		return pressureBlock;
-	}
-
 }

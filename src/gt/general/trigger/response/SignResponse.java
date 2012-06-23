@@ -10,10 +10,8 @@ import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.block.Sign;
 
-public class SignResponse extends Response {
+public class SignResponse extends BlockResponse {
 
-	private Block signBlock;
-	
 	private String untriggeredMessage;
 	private String triggeredMessage;
 	
@@ -23,9 +21,8 @@ public class SignResponse extends Response {
 	 * @param signBlock the bukkit block of the sign
 	 */
 	public SignResponse(final Block signBlock) {
-		super("sign");
-		
-		this.signBlock = signBlock;
+		super("sign", signBlock);
+
 		/// TODO: this is just for testing
 		this.untriggeredMessage = "\n untriggered ";
 		this.triggeredMessage = "\n triggered";
@@ -43,13 +40,10 @@ public class SignResponse extends Response {
 		untriggeredMessage = (String) values.get("untriggered_message");
 		triggeredMessage = (String) values.get("triggered_message");
 		
-		signBlock = blockFromCoordinates(values, world);
+		block = blockFromCoordinates(values, world);
 
-		if(onWall) {
-			signBlock.setType(Material.SIGN);
-		} else {
-			signBlock.setType(Material.SIGN_POST);
-		}
+		block.setType(material);
+
 	}
 
 	private void setSignMessage(Sign sign, String message) {
@@ -82,7 +76,7 @@ public class SignResponse extends Response {
 	@Override
 	public void triggered(final boolean active) {
 
-		Sign sign = (Sign) signBlock.getState();
+		Sign sign = (Sign) block.getState();
 		
 		if(active) {
 			setSignMessage(sign, triggeredMessage);
@@ -94,20 +88,20 @@ public class SignResponse extends Response {
 		sign.update();
 
 		// play a fancy effect
-		signBlock.getWorld().playEffect(signBlock.getLocation(), Effect.ENDER_SIGNAL, 10); // we can set the radius here
+		block.getWorld().playEffect(block.getLocation(), Effect.ENDER_SIGNAL, 10); // we can set the radius here
 	}
 	
 
 	@Override
 	public void  dispose() {
-		signBlock.setType(Material.AIR);
+		block.setType(Material.AIR);
 	}
 
 	@Override
 	public Map<String, Object> dump() {
 		Map<String, Object> map = new HashMap<String,Object>();
 		
-		map.putAll(coordinatesFromPoint(signBlock));
+		map.putAll(coordinatesFromPoint(block));
 		map.put("onWall", onWall);
 		
 		map.put("untriggeredMessage", untriggeredMessage);

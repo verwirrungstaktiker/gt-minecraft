@@ -13,19 +13,12 @@ import org.bukkit.block.Block;
  * @author roman
  */
 public class AttachableRedstoneTrigger extends RedstoneTrigger {
-
-	private Block trigger;
-	
-	private Material material;
 	
 	/**
 	 * @param trigger the lever to be used as trigger
 	 */
 	public AttachableRedstoneTrigger(final Block trigger) {
-		super("attachable_trigger");
-		
-		this.trigger = trigger;
-		material = trigger.getType();
+		super("attachable_trigger", trigger);
 	}
 	
 	public AttachableRedstoneTrigger() {
@@ -58,11 +51,6 @@ public class AttachableRedstoneTrigger extends RedstoneTrigger {
 		map.put("material", material);
 
 		return map;
-	}
-
-	@Override
-	protected Block getBlock() {
-		return trigger;
 	}
 
 }

@@ -9,17 +9,13 @@ import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.block.Block;
 
-public class RedstoneTorchResponse extends Response {
-
-	private Block block;
-	
-//	private Material material;	//type of the block
+public class RedstoneTorchResponse extends BlockResponse {
 
 	private boolean invert = false;		//true if response is inverted
 	
 	
 	public RedstoneTorchResponse(Block torchBlock) {
-		super("redstone_torch");
+		super("redstone_torch", torchBlock);
 		this.block = torchBlock;
 	}
 	
@@ -33,7 +29,7 @@ public class RedstoneTorchResponse extends Response {
 		block = blockFromCoordinates(values, world);
 		
 		if(invert) {
-			block.setType(Material.REDSTONE_TORCH_ON);
+			block.setType(material);
 		} else {
 			//TODO: Maybe we can find another Material to represent a RedstoneTorch that's not glowing
 			block.setType(Material.AIR);
@@ -47,7 +43,7 @@ public class RedstoneTorchResponse extends Response {
 		
 		if(active ^ invert) {
 			// torch on
-			block.setType(Material.REDSTONE_TORCH_ON);
+			block.setType(material);
 		} else {
 			// torch off
 			block.setType(Material.AIR);

@@ -15,10 +15,10 @@ import org.bukkit.event.block.BlockRedstoneEvent;
  * 
  * @author Sebastian Fahnenschreiber
  */
-public abstract class RedstoneTrigger extends Trigger implements Listener {	
+public abstract class RedstoneTrigger extends BlockTrigger implements Listener {	
 	
-	public RedstoneTrigger(String prefix) {
-		super(prefix);
+	public RedstoneTrigger(String prefix, Block block) {
+		super(prefix, block);
 		MultiListener.registerListeners(this);
 	}
 	
@@ -37,11 +37,6 @@ public abstract class RedstoneTrigger extends Trigger implements Listener {
 			getContext().updateTriggerState(this, event.getNewCurrent() > 0);
 		}
 	}
-	
-	/**
-	 * @return the block to be watched
-	 */
-	protected abstract Block getBlock();
 	
 	@Override
 	public void setup(final Map<String, Object> values, final World world) {

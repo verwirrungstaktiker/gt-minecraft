@@ -9,11 +9,7 @@ import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.block.Block;
 
-public class BlockDisappearResponse extends Response {
-
-	private Block block;
-	
-	private Material material;	//type of the block
+public class BlockDisappearResponse extends BlockResponse {
 
 	private boolean invert = false;		//true if block appears on trigger
 	
@@ -22,9 +18,7 @@ public class BlockDisappearResponse extends Response {
 	}
 	
 	public BlockDisappearResponse(Block block) {
-		super("appearable_block");
-		this.block = block;
-		this.material = block.getType();
+		super("appearable_block", block);
 	}
 
 	@Override

@@ -8,6 +8,7 @@ import gt.general.trigger.persistance.YamlSerializable;
 public abstract class Trigger extends YamlSerializable {
 
 	private TriggerContext context;
+	
 	/**
 	 * Creates a trigger
 	 */

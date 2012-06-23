@@ -11,15 +11,10 @@ import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.material.Door;
 
-public class DoorResponse extends Response {
-
-	private Block doorBlock;	
-	private Material material;
+public class DoorResponse extends BlockResponse {
 	
 	public DoorResponse(Block doorBlock) {
-		super("door");
-		this.doorBlock = doorBlock;
-		this.material = doorBlock.getType();
+		super("door", doorBlock);
 	}
 
 	public DoorResponse() {
@@ -31,28 +26,28 @@ public class DoorResponse extends Response {
 		material = (Material) values.get("material");
 		//TODO: do we need the orientation here?
 		
-		doorBlock = blockFromCoordinates(values, world);
-		doorBlock.setType(material);
+		block = blockFromCoordinates(values, world);
+		block.setType(material);
 	}
 
 
 	@Override
 	public void triggered(final boolean active) {
 
-		Door door = (Door) doorBlock.getState().getData();
+		Door door = (Door) block.getState().getData();
 		Block otherhalf;
 		
 		if (door.isTopHalf()) {
-			otherhalf = doorBlock.getRelative(BlockFace.DOWN);			
+			otherhalf = block.getRelative(BlockFace.DOWN);			
 		} else {
-			otherhalf = doorBlock.getRelative(BlockFace.UP);
+			otherhalf = block.getRelative(BlockFace.UP);
 		}		
 
 		door.setOpen(active);
 		// play the door toggle sound
-		doorBlock.getWorld().playEffect(doorBlock.getLocation(), Effect.DOOR_TOGGLE, 10); // we can set the radius here
+		block.getWorld().playEffect(block.getLocation(), Effect.DOOR_TOGGLE, 10); // we can set the radius here
 		
-		doorBlock.setData(door.getData(), true);
+		block.setData(door.getData(), true);
 		door.setTopHalf(!door.isTopHalf());
 		otherhalf.setData(door.getData(), true);
 
@@ -61,17 +56,17 @@ public class DoorResponse extends Response {
 
 	@Override
 	public void  dispose() {
-		doorBlock.setType(Material.AIR);
+		block.setType(Material.AIR);
 	}
 
 	@Override
 	public Map<String, Object> dump() {
 		Map<String, Object> map = new HashMap<String,Object>();
 		
-		map.putAll(coordinatesFromPoint(doorBlock));
+		map.putAll(coordinatesFromPoint(block));
 		map.put("material", material);
 		
-		Door door = (Door) doorBlock.getState().getData();
+		Door door = (Door) block.getState().getData();
 		map.put("orientation", door.getFacing());
 		
 		return map;

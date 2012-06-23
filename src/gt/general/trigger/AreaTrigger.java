@@ -3,9 +3,11 @@ package gt.general.trigger;
 import gt.plugin.helloworld.HelloWorld;
 
 import java.util.Map;
+import java.util.Set;
 
 import org.bukkit.Location;
 import org.bukkit.World;
+import org.bukkit.block.Block;
 /**
  * Trigger which checks if a location is in a cube
  */
@@ -92,6 +94,12 @@ public class AreaTrigger extends Trigger implements Runnable{
 		taskID = HelloWorld.getPlugin().getServer().getScheduler()
 		.scheduleAsyncRepeatingTask(HelloWorld.getPlugin(), this, 0, 10);
 		
+	}
+
+	@Override
+	public Set<Block> getBlocks() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 

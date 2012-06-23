@@ -1,8 +1,11 @@
 package gt.general.trigger;
 
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 
 import org.bukkit.World;
+import org.bukkit.block.Block;
 
 /**
  * Trigger which is called in an interval
@@ -50,6 +53,11 @@ public class TimeTrigger extends Trigger{
 	public void dispose() {
 		// TODO Auto-generated method stub
 		
+	}
+
+	@Override
+	public Set<Block> getBlocks() {
+		return new HashSet<Block>();
 	}
 
 }
