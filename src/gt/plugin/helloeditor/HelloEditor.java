@@ -46,6 +46,7 @@ public class HelloEditor extends JavaPlugin implements Listener {
 		worldInstance = new LastGnomeWorldInstance(wc.createWorld(), triggerManager);		
 		
 		MultiListener.registerListeners(playerManager);
+		MultiListener.registerListeners(buildManager);
 		
 		printInformation();	
 	}
