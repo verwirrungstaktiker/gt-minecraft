@@ -27,6 +27,8 @@ public class TriggerContext {
 		
 		activeTriggers = new HashSet<Trigger>();
 		
+		setLabel("context_" + hashCode());
+		
 		inputFunction = InputFunction.OR;
 	}
 

@@ -30,6 +30,9 @@ public class AttachableRedstoneTrigger extends RedstoneTrigger {
 		setLabel("_"+ hashCode());
 	}
 	
+	public AttachableRedstoneTrigger() {
+		
+	}
 	
 	@Override
 	public void setup(final Map<String, Object> values, final World world) {

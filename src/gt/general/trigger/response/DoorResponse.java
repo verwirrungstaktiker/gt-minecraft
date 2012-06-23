@@ -19,6 +19,7 @@ public class DoorResponse extends Response {
 	public DoorResponse(Block doorBlock) {
 		super("door");
 		this.doorBlock = doorBlock;
+		this.material = doorBlock.getType();
 	}
 
 	public DoorResponse() {

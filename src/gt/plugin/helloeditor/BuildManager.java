@@ -59,13 +59,14 @@ public class BuildManager implements Listener {
 		switch(block.getType()) {
 			case WOOD_PLATE:
 			case STONE_PLATE:
-				
 				activeContext.addTrigger(new PressurePlateRedstoneTrigger(block));
 				break;
+				
 			case LEVER:
 			case STONE_BUTTON:
 				activeContext.addTrigger(new AttachableRedstoneTrigger(block));
 				break;
+				
 			default: 
 				// fail feedback
 				player.sendMessage(RED + "This Block can't be used as Trigger.");
