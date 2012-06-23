@@ -5,6 +5,7 @@ import gt.general.GameManager;
 import gt.general.character.Hero;
 import gt.general.character.Team;
 import gt.general.character.TeamManager;
+import gt.general.trigger.TriggerManager;
 import gt.general.world.WorldInstance;
 import gt.plugin.helloworld.HelloWorld;
 import gt.plugin.listener.MultiListener;
@@ -46,7 +47,7 @@ public class LastGnomeGameManager extends GameManager {
 		}
 		
 		// TODO actually do something
-		new TeamLostTrigger(lastGnomeGame, null, HelloWorld.getTriggerManager());
+		//new TeamLostTrigger(lastGnomeGame, HelloWorld.getTriggerManager());
 		
 		MultiListener.registerListener(lastGnomeGame);
 		

@@ -1,5 +1,14 @@
 package gt.general.world;
 
+import gt.general.trigger.TriggerManager;
+import gt.general.trigger.persistance.TriggerManagerPersistance;
+
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.Reader;
+import java.io.Writer;
+import java.nio.charset.Charset;
+
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.block.Block;
@@ -8,6 +17,8 @@ import org.getspout.spoutapi.SpoutManager;
 import org.getspout.spoutapi.inventory.SpoutItemStack;
 import org.getspout.spoutapi.material.block.GenericCubeCustomBlock;
 import org.getspout.spoutapi.material.item.GenericCustomItem;
+
+import com.google.common.io.Files;
 
 /**
  * Represents one Instance of a World including metadata.
@@ -20,12 +31,21 @@ public abstract class WorldInstance {
 	private World world;
 	private String name;
 	
+	private TriggerManager triggerManager;
+	
+	private File triggerFile;
+	
 	/**
 	 * @param world the minecraft representation of this world
 	 */
-	public void setWorld(final World world) {
+	public WorldInstance(final World world, final TriggerManager triggerManager) {
 		this.world = world;
-		placeCustomBlocks();
+		
+		triggerFile = new File(world.getWorldFolder(), "trigger.yml");
+		
+		this.triggerManager = triggerManager;
+		
+		loadTriggerManager();
 	}
 	
 	/**
@@ -49,10 +69,32 @@ public abstract class WorldInstance {
 		return name;
 	}
 
+	public void loadTriggerManager() {
+		try {
+			Reader reader = Files.newReader(triggerFile, Charset.defaultCharset());
+			new TriggerManagerPersistance(triggerManager, world).deserializeFrom(reader);
+			
+		} catch (FileNotFoundException e) {
+			throw new RuntimeException(e);
+		}
+	}
+	
+	public void saveTriggerManager() {
+		try {
+			Writer writer = Files.newWriter(triggerFile, Charset.defaultCharset());
+			new TriggerManagerPersistance(triggerManager, world).serializeTo(writer);
+			
+		} catch (FileNotFoundException e) {
+			throw new RuntimeException(e);
+		}
+	}
+	
 	/**
 	 * disposes this WorldInstance
 	 */
 	public void dispose() {
+		triggerManager.dispose();
+		
 		world = null;
 	}
 	
@@ -67,6 +109,13 @@ public abstract class WorldInstance {
 	};
 	
 	
+	/**
+	 * @return the triggerManager
+	 */
+	public TriggerManager getTriggerManager() {
+		return triggerManager;
+	}
+
 	//XXX: Testing
 	/**
 	 * places start socket & end socket

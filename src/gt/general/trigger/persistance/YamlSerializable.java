@@ -8,28 +8,45 @@ import org.bukkit.block.Block;
 
 public abstract class YamlSerializable {
 
-	public final static String KEY_X_COORDINATE = "x";
-	public final static String KEY_Y_COORDINATE = "y";
-	public final static String KEY_Z_COORDINATE = "z";
+	public static final String KEY_X_COORDINATE = "x";
+	public static final String KEY_Y_COORDINATE = "y";
+	public static final String KEY_Z_COORDINATE = "z";
 	
 	private String label;
 	
+	/**
+	 * Generates a new YamlSerializable. Uses the class name for the label.
+	 */
 	public YamlSerializable() {
 		setLabel(this.getClass().getName() + "_"+ hashCode());
 	}
 	
+	/**
+	 * @param labelPrefix the prefix for the label.
+	 */
 	public YamlSerializable(final String labelPrefix) {
 		setLabel(labelPrefix + "_" + hashCode());
 	}
 	
+	/**
+	 * @return the label
+	 */
 	public String getLabel() {
 		return label;
 	}
 
+	/**
+	 * @param label the new Label
+	 */
 	public void setLabel(final String label) {
 		this.label = label;
 	}
 	
+	/**
+	 * @param values mapping - e.g. received by the deserialization process
+	 * @param world where the block can be found
+	 * @return the Block
+	 */
 	protected Block blockFromCoordinates(final Map<String, Object> values, final World world) {
 		int x = (Integer) values.get(KEY_X_COORDINATE);
 		int y = (Integer) values.get(KEY_Y_COORDINATE);
@@ -38,6 +55,10 @@ public abstract class YamlSerializable {
 		return world.getBlockAt(x, y, z);
 	}
 	
+	/**
+	 * @param block the block to be serialized
+	 * @return mapping - e.g. to be used in the serialization process
+	 */
 	protected Map<String, Object> coordinatesFromPoint(final Block block) {
 		Map<String, Object> map = new HashMap<String,Object>();
 

@@ -1,5 +1,6 @@
 package gt.lastgnome;
 
+import gt.general.trigger.TriggerManager;
 import gt.general.world.WorldInstance;
 
 import org.bukkit.Location;
@@ -7,18 +8,24 @@ import org.bukkit.World;
 
 public class LastGnomeWorldInstance extends WorldInstance {
 	
-	private final GnomeSocketStart startSocket;
-	private final GnomeSocketEnd endSocket;
+	private GnomeSocketStart startSocket;
+	private GnomeSocketEnd endSocket;
 	
 	/**
 	 * @param world The Minecraft representation of the World.
 	 */
-	public LastGnomeWorldInstance(final World world) {
-		super();
-		setWorld(world);
+	public LastGnomeWorldInstance(final World world, final TriggerManager triggerManager) {
+		super(world, triggerManager);
+	}
+	
+	public LastGnomeWorldInstance(final World world,
+									final TriggerManager triggerManager, 
+									final GnomeSocketStart start, 
+									final GnomeSocketEnd end) {
+		this(world, triggerManager);
 		
-		startSocket = new GnomeSocketStart();
-		endSocket = new GnomeSocketEnd();
+		startSocket = start;
+		endSocket = end;
 		
 		placeBlocks();
 	}

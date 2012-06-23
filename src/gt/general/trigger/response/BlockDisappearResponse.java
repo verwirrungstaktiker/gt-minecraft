@@ -17,11 +17,14 @@ public class BlockDisappearResponse extends Response {
 
 	private boolean invert = false;		//true if block appears on trigger
 	
+	public BlockDisappearResponse() {
+		super("appearable_block");		
+	}
 	
-	public BlockDisappearResponse(Block doorBlock) {
+	public BlockDisappearResponse(Block block) {
 		super("appearable_block");
-		this.block = doorBlock;
-		this.material = doorBlock.getType();
+		this.block = block;
+		this.material = block.getType();
 	}
 
 	@Override

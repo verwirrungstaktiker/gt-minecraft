@@ -8,10 +8,6 @@ import java.util.Set;
 
 public class TriggerContext {
 
-	public enum InputFunction {
-		AND, OR
-	}
-	
 	private final Set<Trigger> triggers;
 	private final Set<Response> responses;
 	
