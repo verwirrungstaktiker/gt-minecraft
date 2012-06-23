@@ -42,6 +42,7 @@ public class TriggerManagerPersistance {
 	
 	/**
 	 * @param triggerManager the TriggerManager to be persisted
+	 * @param world the to which the TriggerManager is associated
 	 */
 	public TriggerManagerPersistance(final TriggerManager triggerManager, final World world) {
 		this.triggerManager = triggerManager;
@@ -113,8 +114,6 @@ public class TriggerManagerPersistance {
 		}
 	}
 
-
-	@SuppressWarnings("unchecked")
 	private <T extends YamlSerializable> T loadSerializable(String label, Map<String, Object> map) throws InstantiationException, IllegalAccessException, ClassNotFoundException {
 		
 		String className = (String) map.remove(KEY_CLASS);
@@ -137,21 +136,21 @@ public class TriggerManagerPersistance {
 	/**
 	 * @return yamlable representation of the contained TriggerManager
 	 */
-	public synchronized Map<String, Object> asYaml() {
+	public Map<String, Object> asYaml() {
 		
 		globalTriggers = newHashMap(); 
 		globalResponses = newHashMap();
 		globalContexts = newHashMap();
 		
 		for(TriggerContext triggerContext : triggerManager.getTriggerContexts()) {
-			processTriggerContext(triggerContext);
+			serializeTriggerContext(triggerContext);
 		}
 		
 		return finalizeYaml();
 	}
 
 
-	private void processTriggerContext(final TriggerContext triggerContext) {
+	private void serializeTriggerContext(final TriggerContext triggerContext) {
 		List<String> itsTriggers = newArrayList();
 		for(Trigger t : triggerContext.getTriggers()) {
 			itsTriggers.add(t.getLabel());
@@ -190,10 +189,5 @@ public class TriggerManagerPersistance {
 		global.put(KEY_GLOBAL_CONTEXTS, globalContexts);
 		
 		return global;
-	}
-	
-	@SuppressWarnings("unused")
-	public List<TriggerContext> fromYaml(String s) {
-		return null;
 	}
 }

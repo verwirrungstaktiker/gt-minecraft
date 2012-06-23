@@ -1,22 +1,16 @@
 package gt.plugin.helloeditor;
 
 import gt.general.trigger.TriggerManager;
-import gt.general.trigger.persistance.TriggerManagerPersistance;
 import gt.lastgnome.LastGnomeWorldInstance;
-import gt.plugin.helloworld.KeyPressListener;
 import gt.plugin.listener.MultiListener;
 
 import org.bukkit.ChatColor;
-import org.bukkit.WorldCreator;
 import org.bukkit.World.Environment;
+import org.bukkit.WorldCreator;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.event.player.PlayerJoinEvent;
-import org.bukkit.event.player.PlayerLoginEvent;
-import org.bukkit.generator.ChunkGenerator;
 import org.bukkit.plugin.java.JavaPlugin;
 
 
@@ -31,6 +25,7 @@ public class HelloEditor extends JavaPlugin implements Listener {
 	
 	private TriggerManager triggerManager;
 	private BuildManager buildManager;
+	private PlayerManager playerManager;
 
 	private LastGnomeWorldInstance worldInstance;
 	
@@ -41,16 +36,16 @@ public class HelloEditor extends JavaPlugin implements Listener {
 		HelloEditor.setPlugin(this);
 		MultiListener.initialize(this);
 
+		triggerManager = new TriggerManager();
+		playerManager = new PlayerManager(triggerManager);
+		buildManager = new BuildManager(playerManager);
+		
 		
 		WorldCreator wc = new WorldCreator("lastgnome");
 		wc.environment(Environment.NORMAL);
+		worldInstance = new LastGnomeWorldInstance(wc.createWorld(), triggerManager);		
 		
-		triggerManager = new TriggerManager();
-		
-		worldInstance = new LastGnomeWorldInstance(wc.createWorld(), triggerManager);
-		buildManager = new BuildManager(triggerManager);
-		
-		MultiListener.registerListeners(buildManager);
+		MultiListener.registerListeners(playerManager);
 		
 		printInformation();	
 	}
@@ -99,13 +94,6 @@ public class HelloEditor extends JavaPlugin implements Listener {
 	 */
 	public static void setPlugin(final HelloEditor plugin) {
 		HelloEditor.plugin = plugin;
-	}
-	
-	/**
-	 * @return the TriggerManager of this Editor
-	 */
-	public TriggerManager getTriggerManager() {
-		return triggerManager;
 	}
 
 	/*
