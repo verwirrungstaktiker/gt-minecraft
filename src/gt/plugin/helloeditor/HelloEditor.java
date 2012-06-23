@@ -23,7 +23,7 @@ public class HelloEditor extends JavaPlugin implements Listener {
 	
 	private static HelloEditor plugin;
 	
-	private TriggerManager triggerManager;
+	private EditorTriggerManager triggerManager;
 	private BuildManager buildManager;
 	private PlayerManager playerManager;
 
@@ -36,7 +36,7 @@ public class HelloEditor extends JavaPlugin implements Listener {
 		HelloEditor.setPlugin(this);
 		MultiListener.initialize(this);
 
-		triggerManager = new TriggerManager();
+		triggerManager = new EditorTriggerManager();
 		playerManager = new PlayerManager(triggerManager);
 		buildManager = new BuildManager(playerManager);
 		

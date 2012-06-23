@@ -1,5 +1,6 @@
 package gt.general.trigger;
 
+import gt.general.trigger.persistance.YamlSerializable;
 import gt.general.trigger.response.Response;
 
 import java.util.Collection;
@@ -99,6 +100,12 @@ public class TriggerContext {
 
 	public Collection<Response> getResponses() {
 		return responses;
+	}
+	
+	public void removeSerializable(YamlSerializable serializable) {
+		triggers.remove(serializable);
+		responses.remove(serializable);
+		activeTriggers.remove(serializable);
 	}
 	
 	public String getLabel() {

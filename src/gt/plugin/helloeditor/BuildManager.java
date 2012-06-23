@@ -13,6 +13,7 @@ import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
 
 
@@ -59,12 +60,12 @@ public class BuildManager implements Listener {
 		switch(block.getType()) {
 			case WOOD_PLATE:
 			case STONE_PLATE:
-				activeContext.addTrigger(new PressurePlateRedstoneTrigger(block));
+				playerManager.getTriggerManager().addTrigger(new PressurePlateRedstoneTrigger(block), activeContext);
 				break;
 				
 			case LEVER:
 			case STONE_BUTTON:
-				activeContext.addTrigger(new AttachableRedstoneTrigger(block));
+				playerManager.getTriggerManager().addTrigger(new AttachableRedstoneTrigger(block), activeContext);
 				break;
 				
 			default: 
@@ -92,18 +93,18 @@ public class BuildManager implements Listener {
 			case WOODEN_DOOR:
 			case IRON_DOOR:
 			case IRON_DOOR_BLOCK: 
-				activeContext.addResponse(new DoorResponse(block));
+				playerManager.getTriggerManager().addResponse(new DoorResponse(block), activeContext);
 				break;
 			case DIAMOND_BLOCK:
-				activeContext.addResponse(new BlockDisappearResponse(block));
+				playerManager.getTriggerManager().addResponse(new BlockDisappearResponse(block), activeContext);
 				break;
 			case REDSTONE_LAMP_OFF:
 			case REDSTONE_TORCH_ON:
-				activeContext.addResponse(new RedstoneTorchResponse(block));
+				playerManager.getTriggerManager().addResponse(new RedstoneTorchResponse(block), activeContext);
 				break;
 			case WALL_SIGN:
 			case SIGN_POST:
-				activeContext.addResponse(new SignResponse(block));
+				playerManager.getTriggerManager().addResponse(new SignResponse(block), activeContext);
 				break;
 			default:
 				// fail feedback

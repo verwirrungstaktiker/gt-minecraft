@@ -3,14 +3,17 @@ package gt.plugin.helloeditor;
 import static org.bukkit.ChatColor.*;
 import gt.general.trigger.TriggerContext;
 import gt.general.trigger.TriggerManager;
+import gt.general.trigger.persistance.YamlSerializable;
 
 import java.util.HashMap;
 import java.util.Map;
 
 import org.bukkit.GameMode;
+import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.getspout.spoutapi.event.input.KeyPressedEvent;
@@ -29,16 +32,71 @@ public class PlayerManager implements Listener{
 	/** contains all player's current TriggerContext's **/
 	private Map<String, TriggerContext> playerTriggerContexts = new HashMap<String, TriggerContext>();
 
-	private TriggerManager triggerManager;
+	private EditorTriggerManager triggerManager;
 	
 	/**
 	 * @param triggerManager holds the TriggerContexts of the current map
 	 */
-	public PlayerManager(final TriggerManager triggerManager) {
+	public PlayerManager(final EditorTriggerManager triggerManager) {
 		this.triggerManager = triggerManager;
 	}
 	
 	
+	/**
+	 * deregister Triggers and Responses
+	 * @param event a block is broken
+	 */
+	@EventHandler
+	public void onBlockDestroyed(final BlockBreakEvent event) {
+		
+		Player player = event.getPlayer();
+		String name = event.getPlayer().getName();
+		Block block = event.getBlock();
+		
+		if(triggerManager.isSerializable(block)) {
+
+			TriggerContext context = triggerManager.getContext(block);
+			YamlSerializable serializable = triggerManager.getSerializable(block);
+			
+			String serLabel = serializable.getLabel();
+			String contextLabel = context.getLabel();
+		
+			switch(getState(name)) {
+				case TRIGGER: 
+				case RESPONSE:
+				case STANDBY:
+					if(playerTriggerContexts.get(name) == context) {
+						System.out.println("Breaking serializable block.");
+						//handle block break					
+						triggerManager.deleteBlock(block);
+						context.removeSerializable(serializable);
+
+						player.sendMessage(YELLOW + "Deleted " + serLabel + " from " + contextLabel);
+					} else {
+						System.out.println("Other unfinished context.");
+						//other unfinished context
+						player.sendMessage(YELLOW + "Finish your open Context first.");
+						event.setCancelled(true);
+					}
+					break;
+				case IDLE:
+					System.out.println("Switching to context.");
+					//goto corresponding context
+					playerTriggerContexts.put(name, context);
+					playerTriggerStates.put(name, TriggerState.TRIGGER);
+					player.sendMessage(GREEN + "Switched to Context " + contextLabel+ " State: TRIGGER.");
+					event.setCancelled(true);
+					break;
+				default:
+			}
+		}
+	}
+	
+	public EditorTriggerManager getTriggerManager() {
+		return triggerManager;
+	}
+
+
 	/**
 	 * handles key presses
 	 * @param event player presses a key
