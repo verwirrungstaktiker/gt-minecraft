@@ -18,7 +18,7 @@ public class BlockDisappearResponse extends Response {
 	private boolean invert = false;		//true if block appears on trigger
 	
 	public BlockDisappearResponse() {
-		super("appearable_block");		
+		super();
 	}
 	
 	public BlockDisappearResponse(Block block) {

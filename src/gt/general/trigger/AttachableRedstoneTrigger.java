@@ -22,12 +22,12 @@ public class AttachableRedstoneTrigger extends RedstoneTrigger {
 	 * @param trigger the lever to be used as trigger
 	 */
 	public AttachableRedstoneTrigger(final Block trigger) {
-		super();
+		super("attachable_trigger");
 		
 		this.trigger = trigger;
 		material = trigger.getType();
 		
-		setLabel("attachable_trigger_"+ hashCode());
+		setLabel("_"+ hashCode());
 	}
 	
 	

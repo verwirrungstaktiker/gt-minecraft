@@ -14,12 +14,12 @@ public class TimeTrigger extends Trigger{
 	/**
 	 *
 	 */
-	public TimeTrigger(final TriggerContext triggerContext) {
-		super(triggerContext);
+	public TimeTrigger() {
+		/*super("time");
 		
 		//super(repeat,callback,tm);
 		this.interval = interval;
-		this.count = interval;
+		this.count = interval;*/
 	}
 
 	/*

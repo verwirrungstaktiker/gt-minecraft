@@ -22,12 +22,10 @@ public class PressurePlateRedstoneTrigger extends RedstoneTrigger {
 	 * @param pressurePlate the plate to be used as trigger
 	 */
 	public PressurePlateRedstoneTrigger(final Block pressurePlate) {
-		super();
+		super("pressure_plate");
 		
 		this.pressureBlock = pressurePlate;
 		this.material = pressurePlate.getType();
-		
-		setLabel("pressure_plate_"+ hashCode());
 	}
 	
 	
