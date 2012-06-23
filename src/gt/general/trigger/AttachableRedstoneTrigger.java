@@ -26,8 +26,6 @@ public class AttachableRedstoneTrigger extends RedstoneTrigger {
 		
 		this.trigger = trigger;
 		material = trigger.getType();
-		
-		setLabel("_"+ hashCode());
 	}
 	
 	public AttachableRedstoneTrigger() {
