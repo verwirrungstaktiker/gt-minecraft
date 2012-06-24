@@ -1,9 +1,11 @@
 package gt.plugin.helloeditor;
 
 import static org.bukkit.ChatColor.*;
+import gt.general.trigger.Trigger;
 import gt.general.trigger.TriggerContext;
 import gt.general.trigger.TriggerManager;
 import gt.general.trigger.persistance.YamlSerializable;
+import gt.general.trigger.response.Response;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -92,10 +94,13 @@ public class PlayerManager implements Listener{
 		}
 	}
 	
-	public EditorTriggerManager getTriggerManager() {
-		return triggerManager;
+	public void addTrigger(Trigger trigger, TriggerContext context) {
+		triggerManager.addTrigger(trigger, context);
 	}
-
+	
+	public void addResponse(Response response, TriggerContext context) {
+		triggerManager.addResponse(response, context);
+	}
 
 	/**
 	 * handles key presses

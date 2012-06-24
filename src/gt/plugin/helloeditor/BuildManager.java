@@ -60,12 +60,12 @@ public class BuildManager implements Listener {
 		switch(block.getType()) {
 			case WOOD_PLATE:
 			case STONE_PLATE:
-				playerManager.getTriggerManager().addTrigger(new PressurePlateRedstoneTrigger(block), activeContext);
+				playerManager.addTrigger(new PressurePlateRedstoneTrigger(block), activeContext);
 				break;
 				
 			case LEVER:
 			case STONE_BUTTON:
-				playerManager.getTriggerManager().addTrigger(new AttachableRedstoneTrigger(block), activeContext);
+				playerManager.addTrigger(new AttachableRedstoneTrigger(block), activeContext);
 				break;
 				
 			default: 
@@ -93,18 +93,18 @@ public class BuildManager implements Listener {
 			case WOODEN_DOOR:
 			case IRON_DOOR:
 			case IRON_DOOR_BLOCK: 
-				playerManager.getTriggerManager().addResponse(new DoorResponse(block), activeContext);
+				playerManager.addResponse(new DoorResponse(block), activeContext);
 				break;
 			case DIAMOND_BLOCK:
-				playerManager.getTriggerManager().addResponse(new BlockDisappearResponse(block), activeContext);
+				playerManager.addResponse(new BlockDisappearResponse(block), activeContext);
 				break;
 			case REDSTONE_LAMP_OFF:
 			case REDSTONE_TORCH_ON:
-				playerManager.getTriggerManager().addResponse(new RedstoneTorchResponse(block), activeContext);
+				playerManager.addResponse(new RedstoneTorchResponse(block), activeContext);
 				break;
 			case WALL_SIGN:
 			case SIGN_POST:
-				playerManager.getTriggerManager().addResponse(new SignResponse(block), activeContext);
+				playerManager.addResponse(new SignResponse(block), activeContext);
 				break;
 			default:
 				// fail feedback
