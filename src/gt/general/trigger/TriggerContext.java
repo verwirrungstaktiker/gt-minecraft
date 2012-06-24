@@ -106,6 +106,7 @@ public class TriggerContext {
 		triggers.remove(serializable);
 		responses.remove(serializable);
 		activeTriggers.remove(serializable);
+		serializable.dispose();
 	}
 	
 	public String getLabel() {

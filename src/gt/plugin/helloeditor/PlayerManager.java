@@ -71,7 +71,6 @@ public class PlayerManager implements Listener{
 						System.out.println("Breaking serializable block.");
 						//handle block break					
 						triggerManager.deleteBlock(block);
-						context.removeSerializable(serializable);
 
 						player.sendMessage(YELLOW + "Deleted " + serLabel + " from " + contextLabel);
 					} else {
