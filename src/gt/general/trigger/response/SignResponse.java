@@ -101,7 +101,7 @@ public class SignResponse extends BlockResponse {
 	public Map<String, Object> dump() {
 		Map<String, Object> map = new HashMap<String,Object>();
 		
-		map.putAll(coordinatesFromPoint(block));
+		map.putAll(coordinatesFromBlock(block));
 		map.put("onWall", onWall);
 		
 		map.put("untriggeredMessage", untriggeredMessage);

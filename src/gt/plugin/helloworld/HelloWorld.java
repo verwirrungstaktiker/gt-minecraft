@@ -7,6 +7,7 @@ import gt.general.character.Team;
 import gt.general.character.TeamManager;
 import gt.general.trigger.TriggerManager;
 import gt.lastgnome.LastGnomeGameManager;
+import gt.plugin.Hello;
 import gt.plugin.listener.MultiListener;
 
 import java.util.HashSet;
@@ -39,6 +40,7 @@ public class HelloWorld extends JavaPlugin {
 	 * Initialization of our plugin
 	 */
 	public void onEnable() {
+		Hello.plugin = this;
 		HelloWorld.setPlugin(this);
 
 		runningGames = new HashSet<Game>();

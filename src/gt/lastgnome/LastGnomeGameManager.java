@@ -5,6 +5,7 @@ import gt.general.GameManager;
 import gt.general.character.Hero;
 import gt.general.character.Team;
 import gt.general.character.TeamManager;
+import gt.general.character.ZombieManager;
 import gt.general.trigger.TriggerManager;
 import gt.general.world.WorldInstance;
 import gt.plugin.helloworld.HelloWorld;
@@ -32,11 +33,24 @@ public class LastGnomeGameManager extends GameManager {
 	 * @return The instantiated Game.
 	 */
 	public LastGnomeGame startGame(final Team team, final String worldName) {
+		
+		LastGnomeWorldInstance worldInstance = worldManager.instantiateWorld(worldName);
+		
+		
+		ZombieManager zombieManager = new ZombieManager(worldInstance.getWorld());
+		//geht das besser? 
+		int id = HelloWorld
+					.getPlugin()
+					.getServer()
+					.getScheduler()
+					.scheduleSyncRepeatingTask(HelloWorld.getPlugin(), zombieManager, 0, 10);
+		zombieManager.setTaskID(id);
+		
 		// instantiate
-		LastGnomeGame lastGnomeGame = new LastGnomeGame(team);
+		LastGnomeGame lastGnomeGame = new LastGnomeGame(team, zombieManager);
 		
 		// build world
-		lastGnomeGame.setWorldWrapper(worldManager.instantiateWorld(worldName));
+		lastGnomeGame.setWorldWrapper(worldInstance);
 		
 		// generic
 		startGame(lastGnomeGame);

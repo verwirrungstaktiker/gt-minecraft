@@ -8,7 +8,6 @@ import gt.general.character.ZombieManager;
 import gt.general.gui.GuiElementType;
 import gt.general.world.WorldInstance;
 import gt.lastgnome.gui.SpeedBar;
-import gt.plugin.helloworld.HelloWorld;
 
 import java.util.Iterator;
 
@@ -41,16 +40,12 @@ public class LastGnomeGame extends Game implements Listener{
 	 * initiates a new Last Gnome Game
 	 *
 	 * @param team the Team playing the game
+	 * @param zombieManager the zombieManager of this game
 	 */
-	public LastGnomeGame(final Team team) {
+	public LastGnomeGame(final Team team, final ZombieManager zombieManager) {
 		super(team);
 		
-		zombieManager = new ZombieManager(worldInstance.getWorld());
-		//geht das besser? 
-		int id = HelloWorld.getPlugin().getServer().getScheduler()
-		.scheduleSyncRepeatingTask(HelloWorld.getPlugin(), zombieManager, 0, 10);
-		
-		zombieManager.setTaskID(id);
+		this.zombieManager = zombieManager;
 		
 		gnome = new GnomeItem();
 		gameRunning = true;
@@ -234,8 +229,7 @@ public class LastGnomeGame extends Game implements Listener{
 	@Override
 	public void onEnd() {
 		// TODO Auto-generated method stub
-		zombieManager.cleanup();
-		
+		zombieManager.cleanup();		
 	}
 
 

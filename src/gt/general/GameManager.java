@@ -38,7 +38,9 @@ public class GameManager implements GameObserver{
 	 */
 	protected void startGame(final Game game) {
 		WorldInstance world = game.getWorldInstance();
-		game.getTeam().teleportTo(world.getSpawnLocation());
+		
+		Spawn spawn = game.getWorldInstance().getSpawn();
+		spawn.spawnTeam(game.getTeam());
 	}
 	
 	

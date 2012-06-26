@@ -1,10 +1,13 @@
 package gt.lastgnome;
 
+import gt.general.Spawn;
 import gt.general.trigger.TriggerManager;
 import gt.general.world.WorldInstance;
+import gt.plugin.Hello;
 
 import org.bukkit.Location;
 import org.bukkit.World;
+import org.bukkit.event.world.SpawnChangeEvent;
 
 public class LastGnomeWorldInstance extends WorldInstance {
 	
@@ -14,15 +17,15 @@ public class LastGnomeWorldInstance extends WorldInstance {
 	/**
 	 * @param world The Minecraft representation of the World.
 	 */
-	public LastGnomeWorldInstance(final World world, final TriggerManager triggerManager) {
-		super(world, triggerManager);
+	public LastGnomeWorldInstance(final World world, final TriggerManager triggerManager, final Spawn spawn) {
+		super(world, triggerManager, spawn);
 	}
 	
 	public LastGnomeWorldInstance(final World world,
 									final TriggerManager triggerManager, 
 									final GnomeSocketStart start, 
 									final GnomeSocketEnd end) {
-		this(world, triggerManager);
+		this(world, triggerManager, new Spawn(Hello.plugin)); // TODO this will crash
 		
 		startSocket = start;
 		endSocket = end;

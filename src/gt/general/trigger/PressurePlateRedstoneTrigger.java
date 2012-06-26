@@ -48,7 +48,7 @@ public class PressurePlateRedstoneTrigger extends RedstoneTrigger {
 	public Map<String, Object> dump() {
 		Map<String, Object> map = new HashMap<String,Object>();
 		
-		map.putAll(coordinatesFromPoint(trigger));
+		map.putAll(coordinatesFromBlock(trigger));
 		map.put("material", material);
 		
 		return map;

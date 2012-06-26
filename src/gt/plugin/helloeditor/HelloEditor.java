@@ -1,7 +1,9 @@
 package gt.plugin.helloeditor;
 
-import gt.general.trigger.TriggerManager;
+import gt.general.Spawn;
+import gt.general.Spawn.SpawnBlock;
 import gt.lastgnome.LastGnomeWorldInstance;
+import gt.plugin.Hello;
 import gt.plugin.listener.MultiListener;
 
 import org.bukkit.ChatColor;
@@ -11,7 +13,9 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.getspout.spoutapi.inventory.SpoutItemStack;
 
 
 /**
@@ -29,10 +33,15 @@ public class HelloEditor extends JavaPlugin implements Listener {
 
 	private LastGnomeWorldInstance worldInstance;
 	
+	/*private Spawn spawnBlock;
+	
 	/**
 	 * Initialization of our plugin
 	 */
 	public void onEnable() {
+		
+		Hello.plugin = this;
+	
 		HelloEditor.setPlugin(this);
 		MultiListener.initialize(this);
 
@@ -40,15 +49,34 @@ public class HelloEditor extends JavaPlugin implements Listener {
 		playerManager = new PlayerManager(triggerManager);
 		buildManager = new BuildManager(playerManager);
 		
+		Spawn spawn = new Spawn(this);
 		
 		WorldCreator wc = new WorldCreator("lastgnome");
 		wc.environment(Environment.NORMAL);
-		worldInstance = new LastGnomeWorldInstance(wc.createWorld(), triggerManager);		
+		worldInstance = new LastGnomeWorldInstance(wc.createWorld(), triggerManager, spawn);		
 		
 		MultiListener.registerListeners(playerManager);
 		MultiListener.registerListeners(buildManager);
+				
+		/*
+		//SpoutManager.getFileManager().addToCache(this, SpawnBlock.TEXTURE);
 		
-		printInformation();	
+		Texture t = new Texture(this, Spawn.TEXTURE, 16, 16, 16);
+		
+		//GenericBlockDesign design = new GenericCuboidBlockDesign(this, SpawnBlock.TEXTURE, 16, 0, 0, 0, 1, 1, 1);
+		GenericCubeBlockDesign design = new GenericCubeBlockDesign(this, t, 0);
+		design.setBrightness(0.2f);
+		design.setMinBrightness(0.2f);
+		design.setMinBrightness(0.2f);
+		
+		spawnBlock = new Spawn(this, "Spawn", design);
+		
+		/*
+		@SuppressWarnings("unused")
+		int a = 4;
+		*/
+		printInformation();
+			
 	}
 	
 	/**
@@ -110,8 +138,20 @@ public class HelloEditor extends JavaPlugin implements Listener {
 			return true;
 		}
 		
-		if(isPlayer(sender) && commandEquals(cmd, "tp")) {
+		if(isPlayer(sender) && commandEquals(cmd, "teleport")) {
 			((Player)sender).teleport(worldInstance.getSpawnLocation());
+			return true;
+		}
+		
+		if(isPlayer(sender) && commandEquals(cmd, "spawn")) {
+			System.out.println("generate spawn");
+			
+			//Texture texture = new Texture(arg0, arg1, arg2, arg3, arg4)
+			
+			//GenericBlockDesign design = new GenericCuboidBlockDesign(this, texture, 2, 0, 0, 0, 1, 1, 1);
+			
+			ItemStack items = new SpoutItemStack(Spawn.getSpawnBlock(), 1);
+			getServer().getPlayer(sender.getName()).getInventory().addItem(items);
 			return true;
 		}
 		
@@ -121,6 +161,7 @@ public class HelloEditor extends JavaPlugin implements Listener {
 		}
 		if(commandEquals(cmd, "save")) {
 			worldInstance.saveTriggerManager();
+			worldInstance.saveSpawn();
 			System.out.println("saved.");
 			return true;
 		}
@@ -159,4 +200,12 @@ public class HelloEditor extends JavaPlugin implements Listener {
 	private boolean isPlayer(final CommandSender commandSender) {
 		return commandSender instanceof Player;
 	}
+	
+	/**
+	 * @return the worldInstance
+	 */
+	public LastGnomeWorldInstance getWorldInstance() {
+		return worldInstance;
+	}
+	
 }

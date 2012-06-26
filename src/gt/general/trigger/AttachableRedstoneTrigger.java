@@ -47,7 +47,7 @@ public class AttachableRedstoneTrigger extends RedstoneTrigger {
 		Map<String, Object> map = new HashMap<String,Object>();
 		
 
-		map.putAll(coordinatesFromPoint(trigger));
+		map.putAll(coordinatesFromBlock(trigger));
 		map.put("material", material);
 
 		return map;

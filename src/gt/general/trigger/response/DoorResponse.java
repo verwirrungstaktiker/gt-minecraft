@@ -63,7 +63,7 @@ public class DoorResponse extends BlockResponse {
 	public Map<String, Object> dump() {
 		Map<String, Object> map = new HashMap<String,Object>();
 		
-		map.putAll(coordinatesFromPoint(block));
+		map.putAll(coordinatesFromBlock(block));
 		map.put("material", material);
 		
 		Door door = (Door) block.getState().getData();

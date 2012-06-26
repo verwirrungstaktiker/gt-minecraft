@@ -1,5 +1,7 @@
 package gt.general.world;
 
+import gt.general.Spawn;
+import gt.general.SpawnPersistance;
 import gt.general.trigger.TriggerManager;
 import gt.general.trigger.persistance.TriggerManagerPersistance;
 
@@ -32,20 +34,26 @@ public abstract class WorldInstance {
 	private String name;
 	
 	private TriggerManager triggerManager;
-	
 	private File triggerFile;
+	
+	private Spawn spawn;
+	private File spawnFile;
 	
 	/**
 	 * @param world the minecraft representation of this world
 	 */
-	public WorldInstance(final World world, final TriggerManager triggerManager) {
+	public WorldInstance(final World world, final TriggerManager triggerManager, final Spawn spawn) {
 		this.world = world;
 		
+		// TODO refactor this -> init should not be done in this class -> controller
 		triggerFile = new File(world.getWorldFolder(), "trigger.yml");
-		
 		this.triggerManager = triggerManager;
-		
 		loadTriggerManager();
+		
+		spawnFile = new File(world.getWorldFolder(), "spawn.yml");
+		this.spawn = spawn;
+		
+		loadSpawn();
 	}
 	
 	/**
@@ -83,6 +91,26 @@ public abstract class WorldInstance {
 		try {
 			Writer writer = Files.newWriter(triggerFile, Charset.defaultCharset());
 			new TriggerManagerPersistance(triggerManager, world).serializeTo(writer);
+			
+		} catch (FileNotFoundException e) {
+			throw new RuntimeException(e);
+		}
+	}
+	
+	public void loadSpawn() {
+		try {
+			Reader reader = Files.newReader(spawnFile, Charset.defaultCharset());
+			new SpawnPersistance(spawn, world).deserializeFrom(reader);
+			
+		} catch (FileNotFoundException e) {
+			throw new RuntimeException(e);
+		}
+	}
+	
+	public void saveSpawn() {
+		try {
+			Writer writer = Files.newWriter(spawnFile, Charset.defaultCharset());
+			new SpawnPersistance(spawn, world).serializeTo(writer);
 			
 		} catch (FileNotFoundException e) {
 			throw new RuntimeException(e);
@@ -171,6 +199,10 @@ public abstract class WorldInstance {
 				.getRelative(BlockFace.EAST, east)
 				.getRelative(BlockFace.NORTH, north)
 				.getLocation();
+	}
+
+	public Spawn getSpawn() {
+		return spawn;
 	}
 
 }

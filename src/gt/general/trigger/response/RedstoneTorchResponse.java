@@ -62,7 +62,7 @@ public class RedstoneTorchResponse extends BlockResponse {
 	public Map<String, Object> dump() {
 		Map<String, Object> map = new HashMap<String,Object>();
 		
-		map.putAll(coordinatesFromPoint(block));
+		map.putAll(coordinatesFromBlock(block));
 		map.put("invert", invert);
 		
 		return map;

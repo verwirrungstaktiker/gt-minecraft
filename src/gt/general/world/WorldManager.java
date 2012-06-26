@@ -84,12 +84,12 @@ public class WorldManager {
 		
 		copyDirectory(baseWorld, newWorld);
 		
-		File uid = new File(newWorld,"uid.dat");
-		uid.delete();
+		new File(newWorld,"uid.dat").delete();
 		
-		WorldCreator wc = new WorldCreator(newName);
-		//wc.copy(world);
+		// experimental - may solve spout crashes
+		deleteDirectory(new File(newWorld, "spout_meta"));
 		
+		WorldCreator wc = new WorldCreator(newName);		
 		return wc.createWorld();		
 	}
 	
