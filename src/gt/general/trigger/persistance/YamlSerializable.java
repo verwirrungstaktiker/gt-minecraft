@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
+import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.block.Block;
 
@@ -57,6 +58,19 @@ public abstract class YamlSerializable {
 	}
 	
 	/**
+	 * @param values mapping - e.g. received by the deserialization process
+	 * @param world where the location can be found
+	 * @return the Location
+	 */
+	protected Location locationFromCoordinates(final Map<String, Object> values, final World world) {
+		int x = (Integer) values.get(KEY_X_COORDINATE);
+		int y = (Integer) values.get(KEY_Y_COORDINATE);
+		int z = (Integer) values.get(KEY_Z_COORDINATE);
+		
+		return world.getBlockAt(x, y, z).getLocation();
+	}	
+	
+	/**
 	 * @param block the block to be serialized
 	 * @return mapping - e.g. to be used in the serialization process
 	 */
@@ -66,6 +80,20 @@ public abstract class YamlSerializable {
 		map.put(KEY_X_COORDINATE, block.getX());
 		map.put(KEY_Y_COORDINATE, block.getY());
 		map.put(KEY_Z_COORDINATE, block.getZ());
+		
+		return map;
+	}
+	
+	/**
+	 * @param location the location to be serialized
+	 * @return mapping - e.g. to be used in the serialization process
+	 */
+	protected Map<String, Object> coordinatesFromPoint(final Location location) {
+		Map<String, Object> map = new HashMap<String,Object>();
+
+		map.put(KEY_X_COORDINATE, location.getX());
+		map.put(KEY_Y_COORDINATE, location.getY());
+		map.put(KEY_Z_COORDINATE, location.getZ());
 		
 		return map;
 	}
