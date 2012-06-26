@@ -2,6 +2,8 @@ package gt.plugin.helloeditor;
 
 import static org.bukkit.ChatColor.*;
 import gt.general.trigger.AttachableRedstoneTrigger;
+import gt.general.trigger.ButtonRedstoneTrigger;
+import gt.general.trigger.LeverRedstoneTrigger;
 import gt.general.trigger.PressurePlateRedstoneTrigger;
 import gt.general.trigger.TriggerContext;
 import gt.general.trigger.response.BlockDisappearResponse;
@@ -64,8 +66,10 @@ public class BuildManager implements Listener {
 				break;
 				
 			case LEVER:
+				playerManager.addTrigger(new LeverRedstoneTrigger(block), activeContext);
+				break;
 			case STONE_BUTTON:
-				playerManager.addTrigger(new AttachableRedstoneTrigger(block), activeContext);
+				playerManager.addTrigger(new ButtonRedstoneTrigger(block), activeContext);
 				break;
 				
 			default: 

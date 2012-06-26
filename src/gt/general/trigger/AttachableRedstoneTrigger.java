@@ -12,13 +12,13 @@ import org.bukkit.block.Block;
  * 
  * @author roman
  */
-public class AttachableRedstoneTrigger extends RedstoneTrigger {
+public abstract class AttachableRedstoneTrigger extends RedstoneTrigger {
 	
 	/**
 	 * @param trigger the lever to be used as trigger
 	 */
-	public AttachableRedstoneTrigger(final Block trigger) {
-		super("attachable_trigger", trigger);
+	public AttachableRedstoneTrigger(final String labelPrefix, final Block trigger) {
+		super(labelPrefix, trigger);
 	}
 	
 	public AttachableRedstoneTrigger() {
