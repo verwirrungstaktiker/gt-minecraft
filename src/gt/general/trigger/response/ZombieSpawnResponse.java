@@ -5,6 +5,7 @@ import gt.lastgnome.LastGnomeGame;
 import gt.plugin.helloworld.HelloWorld;
 
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
@@ -82,7 +83,7 @@ public class ZombieSpawnResponse extends Response{
 	}
 	@Override
 	public Set<Block> getBlocks() {
-		return null;
+		return new HashSet<Block>();
 	}
 	@Override
 	public void setup(Map<String, Object> values, World world) {
