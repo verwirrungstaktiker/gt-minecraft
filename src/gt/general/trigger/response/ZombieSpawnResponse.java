@@ -1,13 +1,14 @@
 package gt.general.trigger.response;
 
 import gt.general.character.ZombieManager;
+import gt.lastgnome.LastGnomeGame;
+import gt.plugin.helloworld.HelloWorld;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
 import org.bukkit.Location;
-import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.block.Block;
 
@@ -16,6 +17,14 @@ public class ZombieSpawnResponse extends Response{
 	private Location spawnLocation;
 	private int number;
 	private double speed;
+	
+	/**
+	 * Empty constructor for Serializable
+	 */
+	public ZombieSpawnResponse() {
+		super();
+		this.speed = 1.0;
+	}
 	
 	/**
 	 * A Response for spawning Zombies
@@ -46,6 +55,11 @@ public class ZombieSpawnResponse extends Response{
 	
 	@Override
 	public void triggered(boolean active) {
+		//TODO:HAAACKY!!!!
+		if (zm==null) {
+			LastGnomeGame game = (LastGnomeGame)HelloWorld.getPlugin().getRunningGames().iterator().next();
+			zm = game.getZombieManager();
+		}
 		if (active) {
 			for (int i=0;i<number;++i) {
 				zm.spawnZombie(spawnLocation, speed);
@@ -61,7 +75,7 @@ public class ZombieSpawnResponse extends Response{
 	public Map<String, Object> dump() {
 		Map<String, Object> map = new HashMap<String,Object>();
 		
-		map.putAll(coordinatesFromPoint(spawnLocation.getBlock()));
+		map.putAll(coordinatesFromPoint(spawnLocation));
 		map.put("number", number);
 		map.put("speed", speed);
 		return map;
@@ -75,7 +89,11 @@ public class ZombieSpawnResponse extends Response{
 		number = (Integer) values.get("number");
 		speed = (Double) values.get("speed");
 		
-		spawnLocation = blockFromCoordinates(values, world).getLocation();		
+		spawnLocation = locationFromCoordinates(values, world);		
+	}
+	
+	public void setZombieManager(ZombieManager zm) {
+		this.zm = zm;
 	}
 	
 

@@ -6,6 +6,9 @@ import gt.general.character.HeroManager;
 import gt.general.character.Team;
 import gt.general.character.ZombieManager;
 import gt.general.gui.GuiElementType;
+import gt.general.trigger.TriggerContext;
+import gt.general.trigger.response.Response;
+import gt.general.trigger.response.ZombieSpawnResponse;
 import gt.general.world.WorldInstance;
 import gt.lastgnome.gui.SpeedBar;
 
@@ -243,6 +246,14 @@ public class LastGnomeGame extends Game implements Listener{
 	 */
 	public void setWorldWrapper(final LastGnomeWorldInstance worldInstance) {
 		this.worldInstance = worldInstance;
+		//TODO:HACKY!!!!!
+		for (TriggerContext tc : worldInstance.getTriggerManager().getTriggerContexts()) {
+			for (Response response : tc.getResponses()) {
+				if (response instanceof ZombieSpawnResponse) {
+					((ZombieSpawnResponse) response).setZombieManager(zombieManager);
+				}
+			}
+		}
 	}
 	
 	/**
