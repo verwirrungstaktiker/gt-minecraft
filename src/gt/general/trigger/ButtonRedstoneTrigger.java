@@ -38,8 +38,8 @@ public class ButtonRedstoneTrigger extends AttachableRedstoneTrigger {
 		orientation = (BlockFace) values.get("orientation");
 		
 		updateOrientation();
-		
-		System.out.println("setup:" + orientation);
+		//
+		System.out.println("load:" + orientation);
 	}
 	
 	@Override
@@ -53,7 +53,7 @@ public class ButtonRedstoneTrigger extends AttachableRedstoneTrigger {
 		orientation = button.getFacing();
 		
 		map.put("orientation", orientation);
-		
+		//
 		System.out.println("dump:" + orientation);
 
 		return map;
