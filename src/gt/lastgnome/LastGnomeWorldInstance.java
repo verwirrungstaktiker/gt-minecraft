@@ -7,7 +7,8 @@ import gt.plugin.Hello;
 
 import org.bukkit.Location;
 import org.bukkit.World;
-import org.bukkit.event.world.SpawnChangeEvent;
+import org.bukkit.block.Block;
+import org.getspout.spoutapi.SpoutManager;
 
 public class LastGnomeWorldInstance extends WorldInstance {
 	
@@ -29,6 +30,14 @@ public class LastGnomeWorldInstance extends WorldInstance {
 		
 		startSocket = start;
 		endSocket = end;
+		
+		System.out.println(world.getName());
+		
+		Block s = world.getBlockAt(-5, 66, 15);
+		Block e = world.getBlockAt(86, 66, 15);
+		
+		System.out.println(SpoutManager.getMaterialManager().overrideBlock(s, start));
+		System.out.println(SpoutManager.getMaterialManager().overrideBlock(e, end));
 		
 		placeBlocks();
 	}
