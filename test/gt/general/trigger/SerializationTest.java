@@ -4,15 +4,12 @@ import static gt.general.trigger.persistance.TriggerManagerPersistance.*;
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
 import gt.general.trigger.persistance.TriggerManagerPersistance;
-import gt.general.trigger.response.DoorResponse;
 import gt.general.trigger.response.Response;
 import gt.plugin.listener.MultiListener;
 
 import java.util.Map;
 
-import org.bukkit.block.Block;
-import org.bukkit.event.Listener;
-import org.bukkit.material.Door;
+import org.bukkit.World;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -31,7 +28,7 @@ public class SerializationTest {
 	@Before
 	public void setup() {
 		tm = new TriggerManager();
-		sut = new TriggerManagerPersistance(tm);
+		sut = new TriggerManagerPersistance(tm, mock(World.class));
 		
 		PowerMockito.mockStatic(MultiListener.class);
 	}
