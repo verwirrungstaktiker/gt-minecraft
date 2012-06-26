@@ -4,6 +4,7 @@ import gt.general.Spawn;
 import gt.general.Spawn.SpawnBlock;
 import gt.lastgnome.LastGnomeWorldInstance;
 import gt.plugin.Hello;
+import gt.plugin.helloworld.KeyPressListener;
 import gt.plugin.listener.MultiListener;
 
 import org.bukkit.ChatColor;
@@ -55,8 +56,9 @@ public class HelloEditor extends JavaPlugin implements Listener {
 		wc.environment(Environment.NORMAL);
 		worldInstance = new LastGnomeWorldInstance(wc.createWorld(), triggerManager, spawn);		
 		
-		MultiListener.registerListeners(playerManager);
-		MultiListener.registerListeners(buildManager);
+		MultiListener.registerListeners(playerManager,
+										buildManager,
+										new KeyPressListener());
 				
 		/*
 		//SpoutManager.getFileManager().addToCache(this, SpawnBlock.TEXTURE);

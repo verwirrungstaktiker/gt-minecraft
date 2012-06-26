@@ -6,6 +6,8 @@ import gt.BaseTest;
 import gt.general.PortableItem;
 import gt.general.character.Hero;
 import gt.general.character.Team;
+import gt.general.character.ZombieManager;
+
 import java.util.HashSet;
 import java.util.Set;
 
@@ -27,6 +29,7 @@ public class LastGnomeTest extends BaseTest {
 	private Team team;
 	private LastGnomeGame game;
 	private World world;
+	private ZombieManager zm;
 
 	/**
 	 * Setup
@@ -50,13 +53,15 @@ public class LastGnomeTest extends BaseTest {
 		when(mockPlayer1.getWorld()).thenReturn(world);
 		when(mockPlayer2.getWorld()).thenReturn(world);
 		
+		zm = mock(ZombieManager.class);
+		
 		Set<Hero> heroes = new HashSet<Hero>();
 		heroes.add(hero1);
 		heroes.add(hero2);
 
 		team = new Team(heroes);
 		// start game
-		game = new LastGnomeGame(team);
+		game = new LastGnomeGame(team, zm);
 		hero1.setActiveItem(game.getGnome());
 		game.setGnomeBearer(hero1);
 		
