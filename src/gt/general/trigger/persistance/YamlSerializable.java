@@ -91,9 +91,9 @@ public abstract class YamlSerializable {
 	protected Map<String, Object> coordinatesFromPoint(final Location location) {
 		Map<String, Object> map = new HashMap<String,Object>();
 
-		map.put(KEY_X_COORDINATE, location.getX());
-		map.put(KEY_Y_COORDINATE, location.getY());
-		map.put(KEY_Z_COORDINATE, location.getZ());
+		map.put(KEY_X_COORDINATE, location.getBlockX());
+		map.put(KEY_Y_COORDINATE, location.getBlockY());
+		map.put(KEY_Z_COORDINATE, location.getBlockZ());
 		
 		return map;
 	}
