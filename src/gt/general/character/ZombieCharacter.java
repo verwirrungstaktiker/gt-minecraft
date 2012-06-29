@@ -6,12 +6,12 @@ import org.bukkit.potion.PotionEffectType;
 
 
 
-public class ZombieCharakter extends Character{
+public class ZombieCharacter extends Character{
 	private final Zombie zombie;
 	private PotionEffect  speedEffect;
 	
 	
-	public ZombieCharakter(Zombie zombie) {
+	public ZombieCharacter(Zombie zombie) {
 		this.zombie = zombie;
 	}
 	

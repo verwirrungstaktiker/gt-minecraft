@@ -22,7 +22,7 @@ import org.bukkit.event.Listener;
 public class ZombieManager implements Listener, Runnable{
 	
 	private LivingEntity target;
-	private Vector<ZombieCharakter> zombies;
+	private Vector<ZombieCharacter> zombies;
 	private final World world;
 	private int taskID;
 	
@@ -31,7 +31,7 @@ public class ZombieManager implements Listener, Runnable{
 	 * @param world the world, where the Zombies will be spawned
 	 */
 	public ZombieManager(World world) {
-		zombies = new Vector<ZombieCharakter>();
+		zombies = new Vector<ZombieCharacter>();
 		this.world = world;
 	}
 	
@@ -102,7 +102,7 @@ public class ZombieManager implements Listener, Runnable{
 	 * 
 	 */
 	public void spawnZombie(Location spawnpoint, Aura aura, double speed) {
-		ZombieCharakter zombie = new ZombieCharakter(world.spawn(spawnpoint, Zombie.class));
+		ZombieCharacter zombie = new ZombieCharacter(world.spawn(spawnpoint, Zombie.class));
 		zombie.setAttribute(CharacterAttributes.SPEED, speed);
 		//make sure not to add null-auras
 		if (aura != null) {
@@ -122,7 +122,7 @@ public class ZombieManager implements Listener, Runnable{
 	 * Removes all Zombies
 	 */
 	public void clearZombies() {
-		for (ZombieCharakter zombie : zombies) {
+		for (ZombieCharacter zombie : zombies) {
 			zombie.getZombie().remove();
 			zombies.remove(zombie);
 		}
@@ -134,7 +134,7 @@ public class ZombieManager implements Listener, Runnable{
 	@Override
 	public void run() {
 		if (target == null) return;
-		for (ZombieCharakter zombieChar : zombies) {
+		for (ZombieCharacter zombieChar : zombies) {
 			Zombie zombie = zombieChar.getZombie();
 			//I hope at least getTarget works
 			if (!zombie.getTarget().equals(target)) {
