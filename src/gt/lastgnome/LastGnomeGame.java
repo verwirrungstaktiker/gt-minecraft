@@ -1,6 +1,5 @@
 package gt.lastgnome;
 
-import gt.general.Game;
 import gt.general.character.Hero;
 import gt.general.character.HeroManager;
 import gt.general.character.Team;
@@ -14,7 +13,6 @@ import gt.lastgnome.gui.SpeedBar;
 
 import java.util.Iterator;
 
-import org.bukkit.ChatColor;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -25,7 +23,7 @@ import org.bukkit.event.player.PlayerInteractEvent;
 /**
  * Game Controller for a Last-Gnome-Scenario
  */
-public class LastGnomeGame extends Game implements Listener{
+public class LastGnomeGame extends AbstractLastGnomeGame implements Listener{
 
 	
 	private WorldInstance worldInstance;
@@ -43,9 +41,8 @@ public class LastGnomeGame extends Game implements Listener{
 	 * initiates a new Last Gnome Game
 	 *
 	 * @param team the Team playing the game
-	 * @param zombieManager the zombieManager of this game
 	 */
-	public LastGnomeGame(final Team team, final ZombieManager zombieManager) {
+	public LastGnomeGame(final Team team) {
 		super(team);
 		
 		this.zombieManager = zombieManager;
@@ -84,6 +81,7 @@ public class LastGnomeGame extends Game implements Listener{
 	 */
 	@EventHandler
 	public void getGnomeFromStartSocket(final PlayerInteractEvent event) {
+		/*
 		if(event.hasBlock() && event.getClickedBlock().getTypeId() == worldInstance.getStartSocket().getBlockId()) {
 			Player player = event.getPlayer();
 			Hero hero = HeroManager.getHero(player.getName());
@@ -99,7 +97,7 @@ public class LastGnomeGame extends Game implements Listener{
 			} else {
 			player.sendMessage(ChatColor.YELLOW + "nothing happens.");
 			}
-		}
+		}*/
 	}
 	
 	/**
@@ -108,6 +106,7 @@ public class LastGnomeGame extends Game implements Listener{
 	 */
 	@EventHandler
 	public void giveGnomeToEndSocket(final PlayerInteractEvent event) {
+		/*
 		if(event.hasBlock() && event.getClickedBlock().getTypeId() == worldInstance.getEndSocket().getBlockId()) {
 			
 			Player player = event.getPlayer();
@@ -123,7 +122,7 @@ public class LastGnomeGame extends Game implements Listener{
 			} else {
 				player.sendMessage(ChatColor.YELLOW + "The mighty Gnome Socket demands the Gnome!");
 			}
-		}
+		}*/
 	}
 	
 	/**
@@ -262,5 +261,17 @@ public class LastGnomeGame extends Game implements Listener{
 	 */
 	public ZombieManager getZombieManager() {
 		return zombieManager;
+	}
+
+
+	@Override
+	public void onStartSocketInteract(Player player) {
+		System.out.println(player.getName() + "klicked the start block");		
+	}
+
+
+	@Override
+	public void onEndSocketInteract(Player player) {
+		System.out.println(player.getName() + "klicked the end block");
 	}
 }

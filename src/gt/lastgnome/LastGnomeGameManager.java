@@ -22,16 +22,16 @@ import org.getspout.spoutapi.SpoutManager;
 
 public class LastGnomeGameManager extends GameManager {
 
-	private final WorldManager worldManager;
+	
 	
 	/**
 	 * @param initialWorld the base world where the initial spawnpoint is
 	 * @param teamManager the global TeamManager
 	 */
-	public LastGnomeGameManager(final World initialWorld, final TeamManager teamManager) {
-		super(initialWorld, teamManager);
+	public LastGnomeGameManager(final WorldManager worldManager, final TeamManager teamManager) {
+		super(worldManager, teamManager);
+
 		
-		worldManager = new WorldManager(initialWorld);
 	}
 
 	/**
@@ -41,7 +41,7 @@ public class LastGnomeGameManager extends GameManager {
 	 */
 	public LastGnomeGame startGame(final Team team, final String worldName) {
 		
-		WorldInstance worldInstance = worldManager.instantiateWorld(worldName);
+		WorldInstance worldInstance = getWorldManager().instantiateWorld(worldName);
 		
 		
 		ZombieManager zombieManager = new ZombieManager(worldInstance.getWorld());

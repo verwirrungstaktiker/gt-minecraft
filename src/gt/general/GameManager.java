@@ -2,6 +2,7 @@ package gt.general;
 
 import gt.general.character.TeamManager;
 import gt.general.world.WorldInstance;
+import gt.general.world.WorldManager;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -17,20 +18,40 @@ public class GameManager implements GameObserver{
 
 	private final Set<Game> runningGames;
 
-	/** The world where the players spawn initially */
-	private final World initialWorld;
 	
 	private final TeamManager teamManager;
 	
+	private final WorldManager worldManager;
+	
+	/**
+	 * @return the worldManager
+	 */
+	public WorldManager getWorldManager() {
+		return worldManager;
+	}
+
 	/**
 	 * @param initialWorld the world with the initial spawn
 	 * @param teamManager the global TeamManager
 	 */
-	public GameManager(final World initialWorld, final TeamManager teamManager) {
+	public GameManager(final WorldManager worldManager, final TeamManager teamManager) {
 		runningGames = new HashSet<Game>();
 		
-		this.initialWorld = initialWorld;
+		this.worldManager = worldManager;
 		this.teamManager = teamManager;
+	}
+	
+	
+	public void startGame(final GameBuilder builder, final String worldName) {
+		
+		builder.instantiateGame();
+		
+		WorldInstance worldInstance = worldManager.getWorld(worldName);
+		
+		builder.getGame().setWorldInstance(worldInstance);
+		builder.loadMetadata(worldInstance);
+		
+		runningGames.add(builder.finalizeGame());
 	}
 	
 	/**

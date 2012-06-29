@@ -10,6 +10,7 @@ import java.io.FileNotFoundException;
 import java.io.Reader;
 import java.io.Writer;
 import java.nio.charset.Charset;
+import java.util.Map;
 
 import org.bukkit.Location;
 import org.bukkit.World;
@@ -203,6 +204,11 @@ public class WorldInstance {
 
 	public Spawn getSpawn() {
 		return spawn;
+	}
+
+	public Map<String, Object> loadMeta(String string) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

@@ -1,5 +1,7 @@
 package gt.lastgnome;
 
+import org.bukkit.entity.Player;
+
 import gt.general.world.ObservableBlock;
 import gt.general.world.ObservableBlock.BlockEvent;
 import gt.general.world.ObservableBlock.BlockEventType;
@@ -30,8 +32,9 @@ public class GnomeSocketStart extends WorldUniqueBlock {
 	public void onBlockEvent(final BlockEvent blockEvent) {
 		super.onBlockEvent(blockEvent);
 		
-		if(blockEvent.blockEventType == BlockEventType.BLOCK_INTERACT) {
-			// TODO game.onStartBlockInteract(blockEvent.entity)
+		if(blockEvent.blockEventType == BlockEventType.BLOCK_INTERACT
+				&& blockEvent.entity instanceof Player) {
+			game.onStartSocketInteract((Player) blockEvent.entity);
 		}
 		
 	}

@@ -111,5 +111,12 @@ public abstract class Game implements Listener {
 	/**
 	 * @return the world
 	 */
-	public abstract WorldInstance getWorldInstance();	
+	public WorldInstance getWorldInstance() {
+		// TODO
+	}
+	
+	public void setWorldInstance(WorldInstance world instance) {
+		// TODO
+	}
 }
+

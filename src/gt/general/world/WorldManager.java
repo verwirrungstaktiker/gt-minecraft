@@ -173,4 +173,9 @@ public class WorldManager {
 		
 		dir.delete();
 	}
+
+	public WorldInstance getWorld(String worldName) {
+		// TODO subclass for simple wrapping
+		return instantiateWorld(worldName);
+	}
 }

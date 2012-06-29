@@ -1,6 +1,8 @@
 package gt.plugin.helloeditor;
 
 import gt.general.Spawn;
+import gt.general.world.WorldInstance;
+import gt.lastgnome.AbstractLastGnomeGame;
 import gt.lastgnome.LastGnomeWorldInstance;
 import gt.plugin.Hello;
 import gt.plugin.helloworld.KeyPressListener;
@@ -29,7 +31,7 @@ public class HelloEditor extends JavaPlugin implements Listener {
 	private BuildManager buildManager;
 	private PlayerManager playerManager;
 
-	private LastGnomeWorldInstance worldInstance;
+	private WorldInstance worldInstance;
 	
 	/*private Spawn spawnBlock;
 	
@@ -50,7 +52,7 @@ public class HelloEditor extends JavaPlugin implements Listener {
 		
 		WorldCreator wc = new WorldCreator("lastgnome");
 		wc.environment(Environment.NORMAL);
-		worldInstance = new LastGnomeWorldInstance(wc.createWorld(), triggerManager, spawn);		
+		worldInstance = new WorldInstance(wc.createWorld());		
 		
 		MultiListener.registerListeners(playerManager,
 										buildManager,
