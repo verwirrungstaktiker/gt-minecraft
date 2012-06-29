@@ -153,7 +153,7 @@ public class HelloWorld extends JavaPlugin {
 		
 		// build the team
 		Team team = starter.getTeam();
-		if(team == null) {
+		if(team == Team.NOTEAM) {
 			team = teamManager.initiateTeam(starter);
 			
 			for(Hero hero : HeroManager.getAllHeros()) {

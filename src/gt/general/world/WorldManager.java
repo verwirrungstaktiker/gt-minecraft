@@ -1,10 +1,12 @@
 package gt.general.world;
 
+import static com.google.common.collect.Maps.*;
+import static com.google.common.collect.Sets.*;
 import gt.plugin.Hello;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 
 import org.bukkit.Bukkit;
@@ -18,6 +20,8 @@ public class WorldManager {
 	private final World initialWorld;
 	
 	private final Set<WorldInstance> openWorlds;
+	
+	private final Map<World, WorldInstance> instanceMapping;
 
 	/**
 	 * @param initialWorld the base world, where the initial spawn is
@@ -25,9 +29,14 @@ public class WorldManager {
 	public WorldManager(final World initialWorld) {
 		this.initialWorld = initialWorld;
 
-		openWorlds = new HashSet<WorldInstance>();
+		openWorlds = newHashSet();
+		instanceMapping = newHashMap();
 	}
 
+	public WorldInstance getWorldInstance (final World world) {
+		return instanceMapping.get(world);
+	}
+	
 	/**
 	 * @return the world containing the initial spawn
 	 */
@@ -40,6 +49,27 @@ public class WorldManager {
 	 */
 	public Set<WorldInstance> getOpenWorlds() {
 		return openWorlds;
+	}
+	
+	/**
+	 * @param baseName which world to instantiate
+	 * @return the instantiated world
+	 */
+	public WorldInstance instantiateWorld(final String baseName) {
+
+		String newName = findNextInstanceFolder(baseName);
+		
+		World world = instatiateWorld(baseName, newName);
+		WorldInstance worldInstance = new WorldInstance(world);
+		
+		worldInstance.setName(newName);
+		
+		getOpenWorlds().add(worldInstance);
+		
+		instanceMapping.put(world, worldInstance);
+		
+		return worldInstance;
+		
 	}
 	
 	/**
@@ -120,14 +150,11 @@ public class WorldManager {
 	 */
 	public void disposeWorldInstance(final WorldInstance worldInstance) {
 		World w = worldInstance.getWorld();
-		final File f = w.getWorldFolder();
 
 		Bukkit.getServer().unloadWorld(w, false);
 
 		worldInstance.dispose();
 		openWorlds.remove(worldInstance);
-		
-		deleteDirectory(f);
 	}
 	
 	/**

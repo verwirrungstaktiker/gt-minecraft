@@ -1,7 +1,6 @@
 package gt.plugin.helloeditor;
 
 import gt.general.Spawn;
-import gt.general.Spawn.SpawnBlock;
 import gt.lastgnome.LastGnomeWorldInstance;
 import gt.plugin.Hello;
 import gt.plugin.helloworld.KeyPressListener;

@@ -8,14 +8,21 @@ import gt.general.character.TeamManager;
 import gt.general.character.ZombieManager;
 import gt.general.trigger.TriggerManager;
 import gt.general.world.WorldInstance;
+<<<<<<< Updated upstream
 import gt.plugin.Hello;
+=======
+import gt.general.world.WorldManager;
+import gt.plugin.helloworld.HelloWorld;
+>>>>>>> Stashed changes
 import gt.plugin.listener.MultiListener;
 
 import org.bukkit.World;
+import org.bukkit.block.Block;
+import org.getspout.spoutapi.SpoutManager;
 
 public class LastGnomeGameManager extends GameManager {
 
-	private final LastGnomeWorldManager worldManager;
+	private final WorldManager worldManager;
 	
 	/**
 	 * @param initialWorld the base world where the initial spawnpoint is
@@ -24,7 +31,7 @@ public class LastGnomeGameManager extends GameManager {
 	public LastGnomeGameManager(final World initialWorld, final TeamManager teamManager) {
 		super(initialWorld, teamManager);
 		
-		worldManager = new LastGnomeWorldManager(initialWorld);
+		worldManager = new WorldManager(initialWorld);
 	}
 
 	/**
@@ -34,7 +41,7 @@ public class LastGnomeGameManager extends GameManager {
 	 */
 	public LastGnomeGame startGame(final Team team, final String worldName) {
 		
-		LastGnomeWorldInstance worldInstance = worldManager.instantiateWorld(worldName);
+		WorldInstance worldInstance = worldManager.instantiateWorld(worldName);
 		
 		
 		ZombieManager zombieManager = new ZombieManager(worldInstance.getWorld());
@@ -47,6 +54,12 @@ public class LastGnomeGameManager extends GameManager {
 		
 		// build world
 		lastGnomeGame.setWorldWrapper(worldInstance);
+		
+		Block s = worldInstance.getWorld().getBlockAt(-5, 66, 15);
+		Block e = worldInstance.getWorld().getBlockAt(86, 66, 15);
+		
+		System.out.println(SpoutManager.getMaterialManager().overrideBlock(s, new GnomeSocketStart()));
+		System.out.println(SpoutManager.getMaterialManager().overrideBlock(e, new GnomeSocketEnd()));
 		
 		// generic
 		startGame(lastGnomeGame);

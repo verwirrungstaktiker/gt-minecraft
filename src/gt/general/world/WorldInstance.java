@@ -28,7 +28,7 @@ import com.google.common.io.Files;
  * @author Sebastian Fahnenschreiber
  *
  */
-public abstract class WorldInstance {
+public class WorldInstance {
 	
 	private World world;
 	private String name;
@@ -42,7 +42,7 @@ public abstract class WorldInstance {
 	/**
 	 * @param world the minecraft representation of this world
 	 */
-	public WorldInstance(final World world, final TriggerManager triggerManager, final Spawn spawn) {
+	public WorldInstance(final World world) {
 		this.world = world;
 		
 		// TODO refactor this -> init should not be done in this class -> controller

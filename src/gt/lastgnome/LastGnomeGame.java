@@ -28,7 +28,7 @@ import org.bukkit.event.player.PlayerInteractEvent;
 public class LastGnomeGame extends Game implements Listener{
 
 	
-	private LastGnomeWorldInstance worldInstance;
+	private WorldInstance worldInstance;
 	
 	private boolean gameRunning;
 	
@@ -244,8 +244,9 @@ public class LastGnomeGame extends Game implements Listener{
 	/**
 	 * @param worldInstance where to play the game
 	 */
-	public void setWorldWrapper(final LastGnomeWorldInstance worldInstance) {
+	public void setWorldWrapper(final WorldInstance worldInstance) {
 		this.worldInstance = worldInstance;
+		
 		//TODO:HACKY!!!!!
 		for (TriggerContext tc : worldInstance.getTriggerManager().getTriggerContexts()) {
 			for (Response response : tc.getResponses()) {
