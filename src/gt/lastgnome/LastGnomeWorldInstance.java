@@ -26,7 +26,7 @@ public class LastGnomeWorldInstance extends WorldInstance {
 									final TriggerManager triggerManager, 
 									final GnomeSocketStart start, 
 									final GnomeSocketEnd end) {
-		this(world, triggerManager, new Spawn(Hello.plugin)); // TODO this will crash
+		this(world, triggerManager, new Spawn(Hello.getPlugin())); // TODO this will crash
 		
 		startSocket = start;
 		endSocket = end;

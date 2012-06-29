@@ -57,7 +57,7 @@ public class Spawn extends YamlSerializable {
 		}
 		
 		private Spawn getSpawn(final World world) {
-			if(Hello.plugin instanceof HelloEditor) {
+			if(Hello.getPlugin() instanceof HelloEditor) {
 				WorldInstance worldInstance = HelloEditor.getPlugin().getWorldInstance();
 				
 				if(worldInstance.getWorld().equals(world)) {

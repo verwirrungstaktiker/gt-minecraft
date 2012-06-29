@@ -1,7 +1,7 @@
 package gt.general.gui;
 
 import gt.general.character.Hero;
-import gt.plugin.helloworld.HelloWorld;
+import gt.plugin.Hello;
 
 import java.util.EnumMap;
 import java.util.Map;
@@ -64,7 +64,7 @@ public class HeroGui {
 			holder
 				.getSpoutPlayer()
 				.getMainScreen()
-				.attachWidget(HelloWorld.getPlugin(), widget);
+				.attachWidget(Hello.getPlugin(), widget);
 		}
 	}
 	

@@ -26,8 +26,6 @@ import org.getspout.spoutapi.inventory.SpoutItemStack;
  */
 public class HelloEditor extends JavaPlugin implements Listener {
 	
-	private static HelloEditor plugin;
-	
 	private EditorTriggerManager triggerManager;
 	private BuildManager buildManager;
 	private PlayerManager playerManager;
@@ -41,9 +39,8 @@ public class HelloEditor extends JavaPlugin implements Listener {
 	 */
 	public void onEnable() {
 		
-		Hello.plugin = this;
+		Hello.setPlugin(this);
 	
-		HelloEditor.setPlugin(this);
 		MultiListener.initialize(this);
 
 		triggerManager = new EditorTriggerManager();
@@ -101,31 +98,7 @@ public class HelloEditor extends JavaPlugin implements Listener {
 
 	}
 	
-	/**
-	 * register a Listener directly with bukkit
-	 * 
-	 * @param listener The Listener to be registered
-	 */
-	public static void registerListener(final Listener listener) {
-		getPlugin()
-			.getServer()
-			.getPluginManager()
-			.registerEvents(listener, getPlugin());
-	}
 
-	/**
-	 * @return the Editor
-	 */
-	public static HelloEditor getPlugin() {
-		return plugin;
-	}
-
-	/**
-	 * @param plugin the Editor to be set
-	 */
-	public static void setPlugin(final HelloEditor plugin) {
-		HelloEditor.plugin = plugin;
-	}
 
 	/*
 	 * TODO this should be encapsuled in a extra class

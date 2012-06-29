@@ -7,7 +7,7 @@ import gt.general.aura.EffectFactory;
 import gt.general.aura.GnomeCarrierEffect;
 import gt.general.aura.GnomeSlowEffect;
 import gt.general.character.Hero;
-import gt.plugin.helloworld.HelloWorld;
+import gt.plugin.Hello;
 
 import java.util.Iterator;
 
@@ -71,7 +71,7 @@ public final class GnomeItem extends PortableItem {
 	 * Creates a new Gnome
 	 */
 	public GnomeItem() {
-		this(HelloWorld.getPlugin());
+		this(Hello.getPlugin());
 	}
 
 	/**

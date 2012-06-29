@@ -1,7 +1,7 @@
 package gt.general.character;
 
 import gt.general.aura.Aura;
-import gt.plugin.helloworld.HelloWorld;
+import gt.plugin.Hello;
 
 import java.util.Vector;
 
@@ -113,8 +113,7 @@ public class ZombieManager implements Listener, Runnable{
 	
 	public void cleanup() {
 		clearZombies();
-		HelloWorld.getPlugin().getServer().getScheduler()
-		.cancelTask(taskID);
+		Hello.cancelTask(taskID);
 		
 	}
 

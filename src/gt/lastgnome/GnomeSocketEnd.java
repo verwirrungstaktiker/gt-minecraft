@@ -1,6 +1,6 @@
 package gt.lastgnome;
 
-import gt.plugin.helloworld.HelloWorld;
+import gt.plugin.Hello;
 
 import org.bukkit.plugin.Plugin;
 import org.getspout.spoutapi.material.block.GenericCubeCustomBlock;
@@ -35,7 +35,7 @@ public class GnomeSocketEnd extends GenericCubeCustomBlock {
 	 * Creates a new GnomeSocket
 	 */
 	public GnomeSocketEnd() {
-		this(HelloWorld.getPlugin());
+		this(Hello.getPlugin());
 		
 	}
 }

@@ -2,7 +2,7 @@ package gt.general.trigger.response;
 
 import gt.general.character.ZombieManager;
 import gt.lastgnome.LastGnomeGame;
-import gt.plugin.helloworld.HelloWorld;
+import gt.plugin.Hello;
 
 import java.util.HashMap;
 import java.util.HashSet;
@@ -57,10 +57,10 @@ public class ZombieSpawnResponse extends Response{
 	@Override
 	public void triggered(boolean active) {
 		//TODO:HAAACKY!!!!
-		if (zm==null) {
-			LastGnomeGame game = (LastGnomeGame)HelloWorld.getPlugin().getRunningGames().iterator().next();
+		/*if (zm==null) {
+			LastGnomeGame game = (LastGnomeGame)Hello.getPlugin().getRunningGames().iterator().next();
 			zm = game.getZombieManager();
-		}
+		}*/
 		if (active) {
 			for (int i=0;i<number;++i) {
 				zm.spawnZombie(spawnLocation, speed);

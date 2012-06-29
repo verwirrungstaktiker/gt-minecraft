@@ -2,7 +2,7 @@ package gt.general.aura;
 
 import gt.general.character.Character;
 import gt.general.character.Hero;
-import gt.plugin.helloworld.HelloWorld;
+import gt.plugin.Hello;
 
 import org.bukkit.Bukkit;
 
@@ -67,7 +67,7 @@ public class Aura implements Runnable {
 		int initial = rate;
 		
 		taskId = Bukkit.getScheduler().scheduleAsyncRepeatingTask(
-				HelloWorld.getPlugin(), this, initial, rate);
+				Hello.getPlugin(), this, initial, rate);
 	}
 
 	/**

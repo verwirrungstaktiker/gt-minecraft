@@ -8,7 +8,7 @@ import gt.general.character.TeamManager;
 import gt.general.character.ZombieManager;
 import gt.general.trigger.TriggerManager;
 import gt.general.world.WorldInstance;
-import gt.plugin.helloworld.HelloWorld;
+import gt.plugin.Hello;
 import gt.plugin.listener.MultiListener;
 
 import org.bukkit.World;
@@ -39,11 +39,7 @@ public class LastGnomeGameManager extends GameManager {
 		
 		ZombieManager zombieManager = new ZombieManager(worldInstance.getWorld());
 		//geht das besser? 
-		int id = HelloWorld
-					.getPlugin()
-					.getServer()
-					.getScheduler()
-					.scheduleSyncRepeatingTask(HelloWorld.getPlugin(), zombieManager, 0, 10);
+		int id = Hello.ScheduleSyncTask(zombieManager, 0, 10);
 		zombieManager.setTaskID(id);
 		
 		// instantiate

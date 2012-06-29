@@ -1,6 +1,6 @@
 package gt.general.world;
 
-import gt.plugin.helloworld.HelloWorld;
+import gt.plugin.Hello;
 
 import java.io.File;
 import java.io.IOException;
@@ -47,8 +47,7 @@ public class WorldManager {
 	 * @return the minecraft representation of the world
 	 */
 	protected World getWorldByName(final String name) {
-		return HelloWorld
-				.getPlugin()
+		return Hello.getPlugin()
 				.getServer()
 				.getWorld(name);
 	}

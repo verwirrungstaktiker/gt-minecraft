@@ -2,7 +2,7 @@ package gt.lastgnome;
 
 import gt.general.PortableItem;
 import gt.general.character.Hero;
-import gt.plugin.helloworld.HelloWorld;
+import gt.plugin.Hello;
 
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.Plugin;
@@ -46,7 +46,7 @@ public final class PlaceHolderTool extends PortableItem {
 	 * Creates a new tool
 	 */
 	public PlaceHolderTool() {
-		this(HelloWorld.getPlugin());
+		this(Hello.getPlugin());
 	}
 
 	@Override

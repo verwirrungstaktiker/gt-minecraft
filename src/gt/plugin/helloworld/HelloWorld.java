@@ -28,7 +28,6 @@ import org.bukkit.plugin.java.JavaPlugin;
 public class HelloWorld extends JavaPlugin {
 	
 	private HeroManager heroManager;
-	private static HelloWorld plugin; //!singleton
 	private Set<Game> runningGames;
 	private static TriggerManager triggerManager;
 	
@@ -40,8 +39,7 @@ public class HelloWorld extends JavaPlugin {
 	 * Initialization of our plugin
 	 */
 	public void onEnable() {
-		Hello.plugin = this;
-		HelloWorld.setPlugin(this);
+		Hello.setPlugin(this);
 
 		runningGames = new HashSet<Game>();
 		heroManager = new HeroManager(this,runningGames);
@@ -74,24 +72,10 @@ public class HelloWorld extends JavaPlugin {
 	}
 
 	/**
-	 * @return the HelloWorld plugin
-	 */
-	public static HelloWorld getPlugin() {
-		return plugin;
-	}
-
-	/**
 	 * @return The TriggerManager associated to this Plugin
 	 */
 	public static TriggerManager getTriggerManager() {
 		return triggerManager;
-	}
-
-	/**
-	 * @param plugin the plugin to set
-	 */
-	public static void setPlugin(final HelloWorld plugin) {
-		HelloWorld.plugin = plugin;
 	}
 	
 	/*
