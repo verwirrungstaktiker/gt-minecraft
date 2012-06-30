@@ -50,7 +50,7 @@ public class GameManager implements GameObserver{
 		
 		builder.loadGameSpecific();
 		
-		builder.finalizeGame();
+		builder.startGame();
 		
 		Game game = builder.getGame();
 		

@@ -1,11 +1,9 @@
 package gt.lastgnome.game;
 
-import gt.general.Game;
 import gt.general.world.WorldManager;
 import gt.plugin.helloeditor.BuildManager;
 import gt.plugin.helloeditor.EditorTriggerManager;
 import gt.plugin.helloeditor.PlayerManager;
-import gt.plugin.helloworld.KeyPressListener;
 import gt.plugin.listener.MultiListener;
 
 
@@ -40,7 +38,7 @@ public class EditorLastGnomeGameBuilder extends AbstractLastGnomeGameBuilder {
 	public void updateGui() {}
 	
 	@Override
-	public void finalizeGame() {}
+	public void startGame() {}
 
 	@Override
 	protected AbstractLastGnomeGame getAbstractGame() {

@@ -38,7 +38,7 @@ public class LastGnomeGameBuilder extends AbstractLastGnomeGameBuilder {
 	}
 
 	@Override
-	public void finalizeGame() {
+	public void startGame() {
 
 		MultiListener.registerListener(game);
 

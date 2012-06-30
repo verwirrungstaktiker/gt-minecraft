@@ -15,7 +15,7 @@ public interface GameBuilder {
 	void updateGui();
 	
 	
-	void finalizeGame();
+	void startGame();
 	
 	Game getGame();
 
