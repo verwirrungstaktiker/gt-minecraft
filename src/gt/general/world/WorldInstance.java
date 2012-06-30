@@ -75,46 +75,6 @@ public class WorldInstance {
 	public String getName() {
 		return name;
 	}
-
-	public void loadTriggerManager() {
-		try {
-			Reader reader = Files.newReader(triggerFile, Charset.defaultCharset());
-			new TriggerManagerPersistance(triggerManager, world).deserializeFrom(reader);
-			
-		} catch (FileNotFoundException e) {
-			throw new RuntimeException(e);
-		}
-	}
-	
-	public void saveTriggerManager() {
-		try {
-			Writer writer = Files.newWriter(triggerFile, Charset.defaultCharset());
-			new TriggerManagerPersistance(triggerManager, world).serializeTo(writer);
-			
-		} catch (FileNotFoundException e) {
-			throw new RuntimeException(e);
-		}
-	}
-	
-	public void loadSpawn() {
-		try {
-			Reader reader = Files.newReader(spawnFile, Charset.defaultCharset());
-			new SpawnPersistance(spawn, world).deserializeFrom(reader);
-			
-		} catch (FileNotFoundException e) {
-			throw new RuntimeException(e);
-		}
-	}
-	
-	public void saveSpawn() {
-		try {
-			Writer writer = Files.newWriter(spawnFile, Charset.defaultCharset());
-			new SpawnPersistance(spawn, world).serializeTo(writer);
-			
-		} catch (FileNotFoundException e) {
-			throw new RuntimeException(e);
-		}
-	}
 	
 	/**
 	 * shortcut

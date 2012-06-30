@@ -1,11 +1,10 @@
 package gt.general.trigger;
 
 import static com.google.common.collect.Sets.*;
-
+import gt.general.trigger.persistance.TriggerManagerPersistance;
 import gt.general.trigger.persistance.YamlSerializable;
 
 import java.util.Collection;
-import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
@@ -40,21 +39,24 @@ public class TriggerManager extends YamlSerializable{
 		triggerContexts.remove(context);
 	}
 
+	@Override
 	public void dispose() {
-		// TODO Auto-generated method stub
-		
+		for(TriggerContext triggerContext : triggerContexts) {
+			triggerContext.dispose();
+		}
 	}
 
 	@Override
 	public void setup(Map<String, Object> values, World world) {
-		// TODO Auto-generated method stub
 		
+		if(values != null) {
+			TriggerManagerPersistance.setupTriggerManager(this, values, world);
+		}
 	}
 
 	@Override
 	public Map<String, Object> dump() {
-		// TODO Auto-generated method stub
-		return null;
+		return TriggerManagerPersistance.dumpTriggerManager(this);
 	}
 
 	@Override

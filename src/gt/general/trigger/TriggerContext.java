@@ -125,5 +125,16 @@ public class TriggerContext {
 	public void addResponse(final Response response) {
 		responses.add(response);
 	}
+
+	public void dispose() {
+		for(Trigger trigger : triggers) {
+			trigger.dispose();
+		}
+		
+		for(Response response : responses) {
+			response.dispose();
+		}
+		
+	}
 	
 }
