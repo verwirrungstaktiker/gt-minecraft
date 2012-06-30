@@ -1,5 +1,6 @@
 package gt.plugin.helloeditor;
 
+import gt.general.Game;
 import gt.general.GameManager;
 import gt.general.Spawn;
 import gt.general.character.TeamManager;
@@ -26,10 +27,6 @@ import org.getspout.spoutapi.inventory.SpoutItemStack;
  * @author Sebastian Fahnenschreiber
  */
 public class HelloEditor extends JavaPlugin implements Listener {
-	
-	private EditorTriggerManager triggerManager;
-	private BuildManager buildManager;
-	private PlayerManager playerManager;
 
 	private TeamManager teamManager;
 	
@@ -52,21 +49,13 @@ public class HelloEditor extends JavaPlugin implements Listener {
 		
 		gameManager = new GameManager(worldManager, teamManager);
 		
-		
-		// todo get this from the world instance
-		triggerManager = new EditorTriggerManager();
-		playerManager = new PlayerManager(triggerManager);
-		buildManager = new BuildManager(playerManager);
-		
-		MultiListener.registerListeners(playerManager,
-										buildManager,
-										new KeyPressListener());
-		
-		
+
 		gameManager.startGame(new EditorLastGnomeGameBuilder(), "lastgnome");
 
+		
+
+		MultiListener.registerListeners(new KeyPressListener());
 		printInformation();
-			
 	}
 	
 	/**
@@ -86,7 +75,7 @@ public class HelloEditor extends JavaPlugin implements Listener {
 
 	/** */
 	public void onDisable() {
-
+		gameManager.endAllGames();
 	}
 	
 

@@ -26,7 +26,6 @@ public class LastGnomeGameBuilder extends AbstractLastGnomeGameBuilder {
 	public void buildWorldInstance(final WorldManager worldManager, final String worldName) {
 		super.buildWorldInstance(worldManager, worldName);
 				
-		// TODO must the Editor Trigger Manager be set up?
 		worldManager.setupWorldInstance(game.getWorldInstance(),
 										new TriggerManager());
 	}

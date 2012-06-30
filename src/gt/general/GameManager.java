@@ -42,7 +42,7 @@ public class GameManager implements GameObserver{
 	}
 	
 	
-	public void startGame(final GameBuilder builder, final String worldName) {
+	public Game startGame(final GameBuilder builder, final String worldName) {
 		
 		builder.instantiateGame();
 		
@@ -52,7 +52,11 @@ public class GameManager implements GameObserver{
 		
 		builder.finalizeGame();
 		
-		runningGames.add(builder.getGame());
+		Game game = builder.getGame();
+		
+		runningGames.add(game);
+		
+		return game;
 	}
 	
 	
