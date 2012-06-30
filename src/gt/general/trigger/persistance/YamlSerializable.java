@@ -1,5 +1,7 @@
 package gt.general.trigger.persistance;
 
+import gt.general.world.WorldInstance;
+
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
@@ -7,6 +9,8 @@ import java.util.Set;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.block.Block;
+import org.yaml.snakeyaml.DumperOptions;
+import org.yaml.snakeyaml.DumperOptions.FlowStyle;
 
 public abstract class YamlSerializable {
 
@@ -15,6 +19,14 @@ public abstract class YamlSerializable {
 	public static final String KEY_Z_COORDINATE = "z";
 	
 	private String label;
+	
+	public static final DumperOptions YAML_OPTIONS;
+	
+	static {
+		YAML_OPTIONS = new DumperOptions();
+		YAML_OPTIONS.setDefaultFlowStyle(FlowStyle.BLOCK);
+		YAML_OPTIONS.setPrettyFlow(true);
+	}
 	
 	/**
 	 * Generates a new YamlSerializable. Uses the class name for the label.
@@ -104,6 +116,11 @@ public abstract class YamlSerializable {
 	 * @param world the minecraft world
 	 */
 	public abstract void setup(Map<String, Object> values, World world);
+	
+	
+	public void setup(final String file, final WorldInstance worldInstance) {
+		setup(worldInstance.loadMeta(file), worldInstance.getWorld());
+	}
 	
 	/**
 	 * 

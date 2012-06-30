@@ -4,9 +4,9 @@ import gt.general.character.Team;
 
 import org.bukkit.entity.Player;
 
-public class NullLastGnomeGame extends AbstractLastGnomeGame {
+public class EditorLastGnomeGame extends AbstractLastGnomeGame {
 
-	public NullLastGnomeGame() {
+	public EditorLastGnomeGame() {
 		super(new Team());
 	}
 

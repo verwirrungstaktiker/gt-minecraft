@@ -43,8 +43,7 @@ public class HelloWorld extends JavaPlugin {
 	 * Initialization of our plugin
 	 */
 	public void onEnable() {
-		MultiListener.initialize(this);
-		Hello.setPlugin(this);
+		Hello.initialize(this);
 
 		runningGames = new HashSet<Game>();
 		heroManager = new HeroManager(this,runningGames);

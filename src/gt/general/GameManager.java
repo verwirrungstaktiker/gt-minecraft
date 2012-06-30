@@ -46,10 +46,9 @@ public class GameManager implements GameObserver{
 		
 		builder.instantiateGame();
 		
-		WorldInstance worldInstance = worldManager.getWorld(worldName);
+		builder.buildWorldInstance(worldManager, worldName);
 		
-		builder.getGame().setWorldInstance(worldInstance);
-		builder.loadWorldSpecific(worldInstance);
+		builder.loadGameSpecific();
 		
 		builder.finalizeGame();
 		

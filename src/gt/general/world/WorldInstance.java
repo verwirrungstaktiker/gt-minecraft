@@ -4,6 +4,7 @@ import gt.general.Spawn;
 import gt.general.SpawnPersistance;
 import gt.general.trigger.TriggerManager;
 import gt.general.trigger.persistance.TriggerManagerPersistance;
+import gt.general.trigger.persistance.YamlSerializable;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -14,12 +15,7 @@ import java.util.Map;
 
 import org.bukkit.Location;
 import org.bukkit.World;
-import org.bukkit.block.Block;
-import org.bukkit.block.BlockFace;
-import org.getspout.spoutapi.SpoutManager;
-import org.getspout.spoutapi.inventory.SpoutItemStack;
-import org.getspout.spoutapi.material.block.GenericCubeCustomBlock;
-import org.getspout.spoutapi.material.item.GenericCustomItem;
+import org.yaml.snakeyaml.Yaml;
 
 import com.google.common.io.Files;
 
@@ -46,6 +42,7 @@ public class WorldInstance {
 	public WorldInstance(final World world) {
 		this.world = world;
 		
+		/*
 		// TODO refactor this -> init should not be done in this class -> controller
 		triggerFile = new File(world.getWorldFolder(), "trigger.yml");
 		this.triggerManager = triggerManager;
@@ -55,6 +52,7 @@ public class WorldInstance {
 		this.spawn = spawn;
 		
 		loadSpawn();
+		*/
 	}
 	
 	/**
@@ -119,16 +117,6 @@ public class WorldInstance {
 	}
 	
 	/**
-	 * disposes this WorldInstance
-	 */
-	public void dispose() {
-		triggerManager.dispose();
-		
-		world = null;
-	}
-	
-	
-	/**
 	 * shortcut
 	 * 
 	 * @return where the players spawn
@@ -145,70 +133,48 @@ public class WorldInstance {
 		return triggerManager;
 	}
 
-	//XXX: Testing
-	/**
-	 * places start socket & end socket
-	 */
-	private void placeCustomBlocks() {
-		/**
-		Location spawn = world.getSpawnLocation();
-		spawnCustomBlockAtRelativeLocation(HelloWorld.gnomeSocketStart, spawn, -2, -2);
-		
-		spawnCustomBlockAtRelativeLocation(HelloWorld.gnomeSocketEnd, spawn, 2, 2);
-		
-		spawnCustomToolsAtRelativeLocation(HelloWorld.placeholderTool, 1, spawn, 2, -2);
-		*/
-		
-	}
-	
-	protected void spawnCustomBlockAtAbsoluteLocation(final GenericCubeCustomBlock customBlock, final Location location) {
-		
-		Block oldBlock = world.getBlockAt(location);
-		
-		SpoutManager.getMaterialManager().overrideBlock(oldBlock, customBlock);
-	}
-	
-	protected void spawnCustomToolsAtAbsoluteLocation(final GenericCustomItem customItem, final int amount, final Location location) {
-		
-		SpoutItemStack items = new SpoutItemStack(customItem, amount);
-		
-		world.dropItemNaturally(location, items);
-	}
-	
-	protected void spawnCustomBlockAtRelativeLocation(final GenericCubeCustomBlock customBlock, final Location start,
-														final int east, final int north) {
-		
-		Location loc = getRelativeLocation(start, east, north);
-		
-		Block oldBlock = world.getHighestBlockAt(loc);
-		
-		SpoutManager.getMaterialManager().overrideBlock(oldBlock, customBlock);
-	}
-	
-	protected void spawnCustomToolsAtRelativeLocation(final GenericCustomItem customItem, final int amount, final Location start,
-			final int east, final int north) {
-
-		Location loc = getRelativeLocation(start, east, north);
-		
-		SpoutItemStack item = new SpoutItemStack(customItem, amount);
-		
-		world.dropItemNaturally(loc, item);
-	}
-	
-	protected Location getRelativeLocation(final Location start, final int east, final int north) {
-		return world.getBlockAt(start)
-				.getRelative(BlockFace.EAST, east)
-				.getRelative(BlockFace.NORTH, north)
-				.getLocation();
-	}
-
 	public Spawn getSpawn() {
 		return spawn;
 	}
 
-	public Map<String, Object> loadMeta(String string) {
-		// TODO Auto-generated method stub
-		return null;
+	public Map<String, Object> loadMeta(final String fileName) {		
+		try {
+			File path = new File(world.getWorldFolder(), fileName);
+			Reader reader = Files.newReader(path, Charset.defaultCharset());
+			
+			Yaml yaml = new Yaml(YamlSerializable.YAML_OPTIONS);
+			
+			@SuppressWarnings("unchecked")
+			Map<String, Object> values = (Map<String, Object>) yaml.load(reader);
+			
+			return values;
+		
+		} catch (ClassCastException e) {
+			throw new RuntimeException("cannot cast contents of " + fileName, e);
+		} catch (FileNotFoundException e) {
+			throw new RuntimeException(e);
+		}
+	}
+	
+	public void saveMeta(final String fileName, final Map<String, Object> values) {
+		try {
+			File path = new File(world.getWorldFolder(), fileName);
+			Writer writer = Files.newWriter(path, Charset.defaultCharset());
+			
+			Yaml yaml = new Yaml(YamlSerializable.YAML_OPTIONS);
+			yaml.dump(values, writer);
+			
+		} catch (FileNotFoundException e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	public void setSpawn(Spawn spawn) {
+		this.spawn = spawn;
+	}
+
+	public void setTriggerManager(TriggerManager triggerManager) {
+		this.triggerManager = triggerManager;
 	}
 
 }

@@ -1,6 +1,7 @@
 package gt.plugin;
 
 import gt.general.world.WorldManager;
+import gt.plugin.listener.MultiListener;
 
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -29,9 +30,10 @@ public class Hello {
 		Bukkit.getScheduler().cancelTask(id);
 	}
 	
+	/*
 	 public static WorldManager getWorldManager() {
 		 return hello.worldManager;
-	 }
+	 }*/
 	 
 	 public static JavaPlugin getPlugin() {
 		 return Hello.getInstance().plugin;
@@ -43,7 +45,10 @@ public class Hello {
 	 
 	 public static void initialize(final JavaPlugin plugin) {
 		 if (instance == null) {
+			 
 			 instance = new Hello(plugin);
+			 MultiListener.initialize(plugin);
+			 
 		 } else {
 			 throw new RuntimeException("Hello already initialized");
 		 }

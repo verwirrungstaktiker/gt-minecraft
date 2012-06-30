@@ -2,6 +2,9 @@ package gt.general.world;
 
 import static com.google.common.collect.Maps.*;
 
+import gt.general.Spawn;
+import gt.general.trigger.TriggerManager;
+
 import java.util.Collection;
 import java.util.Map;
 
@@ -41,16 +44,25 @@ public class WorldManager {
 		return instanceMapping.values();
 	}	
 
+	public void setupWorldInstance(final WorldInstance worldInstance, final TriggerManager triggerManager) {
+		
+		triggerManager.setup("trigger.yml", worldInstance);
+		worldInstance.setTriggerManager(triggerManager);
+		
+		Spawn spawn = new Spawn();
+		spawn.setup("spawn.yml", worldInstance);
+		
+		worldInstance.setSpawn(spawn);
+	}
+	
 	/** 
 	 * @param worldInstance will be disposed 
 	 */
 	public void disposeWorldInstance(final WorldInstance worldInstance) {
-		World w = worldInstance.getWorld();
-
-		Bukkit.getServer().unloadWorld(w, false);
-
-		worldInstance.dispose();
 		instanceMapping.remove(worldInstance.getWorld());
+
+		worldInstance.getTriggerManager().dispose();
+		worldInstance.getSpawn().dispose();
 	}
 	
 
@@ -64,6 +76,7 @@ public class WorldManager {
 		} else {
 			
 			WorldInstance worldInstance = new WorldInstance(world);
+			
 			instanceMapping.put(world, worldInstance);
 			return worldInstance;
 		}

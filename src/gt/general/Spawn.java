@@ -32,11 +32,10 @@ public class Spawn extends YamlSerializable implements BlockObserver {
 										 16);
 	}
 	
-	private final World world;
+	private World world;
 	private final Set<Block> spawnBlocks;
 	
-	public Spawn(final World world) {
-		this.world = world;
+	public Spawn() {
 		spawnBlocks = newHashSet();
 	}
 

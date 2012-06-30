@@ -5,7 +5,7 @@ import gt.general.Spawn;
 import gt.general.character.TeamManager;
 import gt.general.world.WorldInstance;
 import gt.general.world.WorldManager;
-import gt.lastgnome.game.NullLastGnomeGameBuilder;
+import gt.lastgnome.game.EditorLastGnomeGameBuilder;
 import gt.plugin.Hello;
 import gt.plugin.helloworld.KeyPressListener;
 import gt.plugin.listener.MultiListener;
@@ -43,11 +43,8 @@ public class HelloEditor extends JavaPlugin implements Listener {
 	/**
 	 * Initialization of our plugin
 	 */
-	public void onEnable() {
-		
-		Hello.setPlugin(this);
-	
-		MultiListener.initialize(this);
+	public void onEnable() {		
+		Hello.initialize(this);
 
 		// TODO simple world manager
 		worldManager = new WorldManager();
@@ -66,7 +63,7 @@ public class HelloEditor extends JavaPlugin implements Listener {
 										new KeyPressListener());
 		
 		
-		gameManager.startGame(new NullLastGnomeGameBuilder(), "lastgnome");
+		gameManager.startGame(new EditorLastGnomeGameBuilder(), "lastgnome");
 
 		printInformation();
 			
