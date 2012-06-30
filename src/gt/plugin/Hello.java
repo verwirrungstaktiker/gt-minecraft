@@ -2,13 +2,15 @@ package gt.plugin;
 
 import gt.general.world.WorldManager;
 
+import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public class Hello {
 
 	// TODO this must be revised!
-	private static Hello hello;
-	private JavaPlugin plugin = null;
+	private static Hello instance;
+	
+	private final JavaPlugin plugin;
 	private WorldManager worldManager;
 	
 	/**
@@ -18,13 +20,13 @@ public class Hello {
 	 * @return
 	 */
 	public static int ScheduleSyncTask(Runnable task, int initial, int ticks) {
-		return hello.plugin.getServer()
-		.getScheduler()
-		.scheduleSyncRepeatingTask(hello.plugin, task, initial, ticks);	
+		return Bukkit
+					.getScheduler()
+					.scheduleSyncRepeatingTask(Hello.getPlugin(), task, initial, ticks);	
 	}
 	
 	public static void cancelTask(int id) {
-		hello.plugin.getServer().getScheduler().cancelTask(id);
+		Bukkit.getScheduler().cancelTask(id);
 	}
 	
 	 public static WorldManager getWorldManager() {
@@ -32,15 +34,27 @@ public class Hello {
 	 }
 	 
 	 public static JavaPlugin getPlugin() {
-		 return hello.plugin;
+		 return Hello.getInstance().plugin;
 	 }
 	 
-	 public static void setPlugin (JavaPlugin plugin){
-		 hello.plugin = plugin;
+	 protected Hello (final JavaPlugin plugin) {
+		 this.plugin = plugin;
 	 }
 	 
-	 protected Hello () {
-		 //worldManager = new WorldManager(null);
+	 public static void initialize(final JavaPlugin plugin) {
+		 if (instance == null) {
+			 instance = new Hello(plugin);
+		 } else {
+			 throw new RuntimeException("Hello already initialized");
+		 }
+	 }
+	 
+	 public static Hello getInstance() {
+		 if (instance != null) {
+			 return instance;
+		 } else {
+			 throw new RuntimeException("Hello must be initialized");
+		 }
 	 }
 	
 	
