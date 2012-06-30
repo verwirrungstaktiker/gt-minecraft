@@ -1,11 +1,10 @@
 package gt.plugin.helloeditor;
 
-import gt.general.Game;
 import gt.general.GameManager;
 import gt.general.Spawn;
 import gt.general.character.TeamManager;
-import gt.general.world.WorldInstance;
 import gt.general.world.WorldManager;
+import gt.lastgnome.game.EditorLastGnomeGame;
 import gt.lastgnome.game.EditorLastGnomeGameBuilder;
 import gt.plugin.Hello;
 import gt.plugin.helloworld.KeyPressListener;
@@ -28,29 +27,23 @@ import org.getspout.spoutapi.inventory.SpoutItemStack;
  */
 public class HelloEditor extends JavaPlugin implements Listener {
 
-	private TeamManager teamManager;
-	
-	private WorldManager worldManager;
-	private WorldInstance worldInstance;
-	
 	private GameManager gameManager;
-	
-	/*private Spawn spawnBlock;
+	private EditorLastGnomeGame game;
 	
 	/**
 	 * Initialization of our plugin
 	 */
+
+
 	public void onEnable() {		
 		Hello.initialize(this);
-
-		// TODO simple world manager
-		worldManager = new WorldManager();
-		teamManager = new TeamManager();
 		
-		gameManager = new GameManager(worldManager, teamManager);
+		EditorLastGnomeGameBuilder builder = new EditorLastGnomeGameBuilder();
 		
-
-		gameManager.startGame(new EditorLastGnomeGameBuilder(), "lastgnome");
+		gameManager = new GameManager(new WorldManager(), new TeamManager());
+		gameManager.startGame(builder, "lastgnome");
+		
+		game = builder.getEditorGame();
 
 		
 
@@ -94,7 +87,7 @@ public class HelloEditor extends JavaPlugin implements Listener {
 		}
 		
 		if(isPlayer(sender) && commandEquals(cmd, "teleport")) {
-			((Player)sender).teleport(worldInstance.getSpawnLocation());
+			((Player)sender).teleport(game.getWorldInstance().getSpawnLocation());
 			return true;
 		}
 		
@@ -113,8 +106,9 @@ public class HelloEditor extends JavaPlugin implements Listener {
 			return true;
 		}
 		if(commandEquals(cmd, "save")) {
-			worldInstance.saveTriggerManager();
-			worldInstance.saveSpawn();
+
+			// TODO save command!
+			
 			System.out.println("saved.");
 			return true;
 		}

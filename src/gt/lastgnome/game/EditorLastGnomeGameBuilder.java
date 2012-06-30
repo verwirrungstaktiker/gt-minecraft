@@ -1,5 +1,6 @@
 package gt.lastgnome.game;
 
+import gt.general.Game;
 import gt.general.world.WorldManager;
 import gt.plugin.helloeditor.BuildManager;
 import gt.plugin.helloeditor.EditorTriggerManager;
@@ -43,7 +44,10 @@ public class EditorLastGnomeGameBuilder extends AbstractLastGnomeGameBuilder {
 
 	@Override
 	protected AbstractLastGnomeGame getAbstractGame() {
-		// TODO Auto-generated method stub
+		return game;
+	}
+
+	public EditorLastGnomeGame getEditorGame() {
 		return game;
 	}
 	
