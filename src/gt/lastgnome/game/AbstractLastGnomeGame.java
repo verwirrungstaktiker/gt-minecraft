@@ -8,6 +8,8 @@ import org.bukkit.entity.Player;
 
 public abstract class AbstractLastGnomeGame extends Game{
 
+	private ZombieManager zombieManager;
+
 	public AbstractLastGnomeGame(Team team) {
 		super(team);
 	}
@@ -17,9 +19,15 @@ public abstract class AbstractLastGnomeGame extends Game{
 	
 	public abstract void onEndSocketInteract(Player player);
 
-	public void setZombieManager(ZombieManager zombieManager) {
-		// TODO Auto-generated method stub
-		
+	/**
+	 * @return this game's ZombieManager
+	 */
+	public ZombieManager getZombieManager() {
+		return zombieManager;
+	}
+	
+	public void setZombieManager(final ZombieManager zombieManager) {
+		this.zombieManager = zombieManager;
 	}
 
 }

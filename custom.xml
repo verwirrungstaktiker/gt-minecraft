@@ -21,6 +21,20 @@
 		</exec>
 	</target>
 	
+	<target name="debugWorld" depends="build">
+        <mkdir dir="${bukkitDir}/plugins"/>
+    	<delete>
+    		<fileset dir="${bukkitDir}/plugins/" includes="Hello*" />
+    	</delete>
+    	
+        <jar destfile="${bukkitDir}/plugins/HelloWorld.jar" basedir="bin">
+        	<fileset file="res/helloworld/plugin.yml"  />
+        </jar>
+    	<exec dir="${bukkitDir}" executable="cmd">
+		  <arg line="/c DEBUG.bat"/>
+		</exec>
+	</target>
+	
     <target name="startHelloEditorPlugin" depends="build">
         <mkdir dir="${bukkitDir}/plugins"/>
     	<delete>

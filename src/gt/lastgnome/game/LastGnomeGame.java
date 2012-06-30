@@ -25,9 +25,6 @@ import org.bukkit.event.player.PlayerInteractEvent;
  * Game Controller for a Last-Gnome-Scenario
  */
 public class LastGnomeGame extends AbstractLastGnomeGame implements Listener{
-
-	
-	private WorldInstance worldInstance;
 	
 	private boolean gameRunning;
 	
@@ -35,9 +32,7 @@ public class LastGnomeGame extends AbstractLastGnomeGame implements Listener{
 
 	/** so that e.g. Zombies know who the Gnome-Bearer is */
 	private Hero gnomeBearer;
-	
-	private final ZombieManager zombieManager;
-	
+		
 	/**
 	 * initiates a new Last Gnome Game
 	 *
@@ -45,9 +40,6 @@ public class LastGnomeGame extends AbstractLastGnomeGame implements Listener{
 	 */
 	public LastGnomeGame(final Team team) {
 		super(team);
-		
-		// TODO
-		zombieManager = null;
 		
 		gnome = new GnomeItem();
 		gameRunning = true;
@@ -172,7 +164,7 @@ public class LastGnomeGame extends AbstractLastGnomeGame implements Listener{
 	 */
 	void setGnomeBearer(final Hero newBearer) {
 		gnomeBearer = newBearer;
-		zombieManager.setTarget(newBearer.getPlayer());
+		getZombieManager().setTarget(newBearer.getPlayer());
 	}
 
 	/**
@@ -233,37 +225,26 @@ public class LastGnomeGame extends AbstractLastGnomeGame implements Listener{
 	@Override
 	public void onEnd() {
 		// TODO Auto-generated method stub
-		zombieManager.cleanup();		
-	}
-
-
-	@Override
-	public WorldInstance getWorldInstance() {
-		return worldInstance;
+		getZombieManager().cleanup();		
 	}
 	
 	/**
 	 * @param worldInstance where to play the game
 	 */
 	public void setWorldWrapper(final WorldInstance worldInstance) {
-		this.worldInstance = worldInstance;
+		//this.worldInstance = worldInstance;
 		
-		//TODO:HACKY!!!!!
+		//TODO HACKY!!!!! and no longer called anywhere ;)
 		for (TriggerContext tc : worldInstance.getTriggerManager().getTriggerContexts()) {
 			for (Response response : tc.getResponses()) {
 				if (response instanceof ZombieSpawnResponse) {
-					((ZombieSpawnResponse) response).setZombieManager(zombieManager);
+					((ZombieSpawnResponse) response).setZombieManager(getZombieManager());
 				}
 			}
 		}
 	}
 	
-	/**
-	 * @return this game's ZombieManager
-	 */
-	public ZombieManager getZombieManager() {
-		return zombieManager;
-	}
+
 
 
 	@Override
