@@ -112,11 +112,11 @@ public abstract class Game implements Listener {
 	 * @return the world
 	 */
 	public WorldInstance getWorldInstance() {
-		// TODO
+		return world;
 	}
 	
-	public void setWorldInstance(WorldInstance world instance) {
-		// TODO
+	public void setWorldInstance(WorldInstance world) {
+		this.world = world;
 	}
 }
 

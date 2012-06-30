@@ -49,19 +49,11 @@ public class GameManager implements GameObserver{
 		WorldInstance worldInstance = worldManager.getWorld(worldName);
 		
 		builder.getGame().setWorldInstance(worldInstance);
-		builder.loadMetadata(worldInstance);
+		builder.loadWorldSpecific(worldInstance);
 		
-		runningGames.add(builder.finalizeGame());
-	}
-	
-	/**
-	 * @param game The Game to be initialized.
-	 */
-	protected void startGame(final Game game) {
-		WorldInstance world = game.getWorldInstance();
+		builder.finalizeGame();
 		
-		Spawn spawn = game.getWorldInstance().getSpawn();
-		spawn.spawnTeam(game.getTeam());
+		runningGames.add(builder.getGame());
 	}
 	
 	
@@ -84,8 +76,18 @@ public class GameManager implements GameObserver{
 	 * @param game The game to be ended
 	 */
 	public void endGame(final Game game) {
-		game.getTeam().teleportTo(initialWorld.getSpawnLocation());
+		
+		// TODO make this better
+		game.getTeam()
+			.teleportTo(worldManager.getInitialWorld()
+									.getSpawnLocation());
+		
 		teamManager.disband(game.getTeam());
+
+		
+		// TODO
+		WorldInstance world = game.getWorldInstance();
+		worldManager.disposeWorldInstance(world);	
 		
 		game.dispose();
 	}

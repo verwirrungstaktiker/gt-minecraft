@@ -1,12 +1,14 @@
 package gt.plugin.helloworld;
 
 import gt.general.Game;
+import gt.general.GameManager;
 import gt.general.character.Hero;
 import gt.general.character.HeroManager;
 import gt.general.character.Team;
 import gt.general.character.TeamManager;
 import gt.general.trigger.TriggerManager;
-import gt.lastgnome.LastGnomeGameManager;
+import gt.general.world.WorldManager;
+import gt.lastgnome.game.LastGnomeGameBuilder;
 import gt.plugin.Hello;
 import gt.plugin.listener.MultiListener;
 
@@ -31,9 +33,10 @@ public class HelloWorld extends JavaPlugin {
 	private Set<Game> runningGames;
 	private static TriggerManager triggerManager;
 	
-	private LastGnomeGameManager lastGnomeGameManager;
+	private GameManager gameManager;
 	
 	private TeamManager teamManager;
+	private WorldManager worldManager;
 		
 	/**
 	 * Initialization of our plugin
@@ -45,7 +48,7 @@ public class HelloWorld extends JavaPlugin {
 		heroManager = new HeroManager(this,runningGames);
 		triggerManager = new TriggerManager();
 		teamManager = new TeamManager();
-
+		worldManager = new WorldManager();
 		
 		MultiListener.initialize(this);
 		
@@ -58,7 +61,7 @@ public class HelloWorld extends JavaPlugin {
 
 		getServer().getScheduler().scheduleSyncRepeatingTask(this, heroManager, 0, 10);
 		
-		lastGnomeGameManager = new LastGnomeGameManager(getServer().getWorld("world"), teamManager);
+		gameManager = new GameManager(worldManager, teamManager);
 	}
 	
 	/** */
@@ -166,7 +169,9 @@ public class HelloWorld extends JavaPlugin {
 		}
 		
 		getServer().broadcastMessage("starting gnome game: " + starter.getPlayer().getName());
-		lastGnomeGameManager.startGame(team, "lastgnome");
+		
+		
+		gameManager.startGame(new LastGnomeGameBuilder(team), "lastgnome");
 	}
 
 	/**
@@ -175,7 +180,7 @@ public class HelloWorld extends JavaPlugin {
 	 */
 	private void endAllGames() {
 		System.out.println("ending games");
-		lastGnomeGameManager.endAllGames();
+		gameManager.endAllGames();
 	}
 	
 	/**

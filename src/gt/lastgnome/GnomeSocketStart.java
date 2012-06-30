@@ -6,6 +6,8 @@ import gt.general.world.ObservableBlock;
 import gt.general.world.ObservableBlock.BlockEvent;
 import gt.general.world.ObservableBlock.BlockEventType;
 import gt.general.world.WorldUniqueBlock;
+import gt.lastgnome.game.AbstractLastGnomeGame;
+import gt.lastgnome.game.LastGnomeGame;
 
 /**
  * Item-class for GnomeSocket
@@ -20,12 +22,12 @@ public class GnomeSocketStart extends WorldUniqueBlock {
 										  16);
 	}
 
-	private final LastGnomeGame game;
+	private final AbstractLastGnomeGame game;
 	
-	public GnomeSocketStart(final LastGnomeGame game) {
-		super(game.getWorldInstance().getWorld(), START_BLOCK);
+	public GnomeSocketStart(final AbstractLastGnomeGame game2) {
+		super(game2.getWorldInstance().getWorld(), START_BLOCK);
 		
-		this.game = game;
+		this.game = game2;
 	}
 	
 	@Override

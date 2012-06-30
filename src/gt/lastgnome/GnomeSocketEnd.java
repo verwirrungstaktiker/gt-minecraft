@@ -6,6 +6,7 @@ import gt.general.world.ObservableBlock;
 import gt.general.world.ObservableBlock.BlockEvent;
 import gt.general.world.ObservableBlock.BlockEventType;
 import gt.general.world.WorldUniqueBlock;
+import gt.lastgnome.game.AbstractLastGnomeGame;
 
 /**
  * Item-class for GnomeSocket

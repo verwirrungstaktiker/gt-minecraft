@@ -24,7 +24,7 @@ import org.getspout.spoutapi.SpoutManager;
 
 public class Spawn extends YamlSerializable implements BlockObserver {
 	
-	private static final ObservableBlock SPAWN_BLOCK;
+	public static final ObservableBlock SPAWN_BLOCK;
 	
 	static {
 		SPAWN_BLOCK = new ObservableBlock("spawn",

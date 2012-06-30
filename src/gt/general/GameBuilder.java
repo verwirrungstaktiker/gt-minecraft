@@ -7,7 +7,7 @@ public interface GameBuilder {
 
 	void instantiateGame();
 	
-	void loadMetadata(WorldInstance worldInstance);
+	void loadWorldSpecific(WorldInstance worldInstance);
 	
 	void updateGui();
 	

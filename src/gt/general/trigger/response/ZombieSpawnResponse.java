@@ -1,7 +1,7 @@
 package gt.general.trigger.response;
 
 import gt.general.character.ZombieManager;
-import gt.lastgnome.LastGnomeGame;
+import gt.lastgnome.game.LastGnomeGame;
 import gt.plugin.Hello;
 
 import java.util.HashMap;

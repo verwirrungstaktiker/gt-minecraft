@@ -7,6 +7,7 @@ import gt.general.PortableItem;
 import gt.general.character.Hero;
 import gt.general.character.Team;
 import gt.general.character.ZombieManager;
+import gt.lastgnome.game.LastGnomeGame;
 
 import java.util.HashSet;
 import java.util.Set;

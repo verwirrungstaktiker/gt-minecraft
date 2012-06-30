@@ -26,8 +26,8 @@ public class WorldManager {
 	/**
 	 * @param initialWorld the base world, where the initial spawn is
 	 */
-	public WorldManager(final World initialWorld) {
-		this.initialWorld = initialWorld;
+	public WorldManager() {
+		initialWorld = Bukkit.getWorld("world");
 
 		openWorlds = newHashSet();
 		instanceMapping = newHashMap();

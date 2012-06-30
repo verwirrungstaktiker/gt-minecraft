@@ -1,4 +1,4 @@
-package gt.lastgnome;
+package gt.lastgnome.game;
 
 import gt.general.character.Hero;
 import gt.general.character.HeroManager;
@@ -9,6 +9,7 @@ import gt.general.trigger.TriggerContext;
 import gt.general.trigger.response.Response;
 import gt.general.trigger.response.ZombieSpawnResponse;
 import gt.general.world.WorldInstance;
+import gt.lastgnome.GnomeItem;
 import gt.lastgnome.gui.SpeedBar;
 
 import java.util.Iterator;
@@ -45,7 +46,8 @@ public class LastGnomeGame extends AbstractLastGnomeGame implements Listener{
 	public LastGnomeGame(final Team team) {
 		super(team);
 		
-		this.zombieManager = zombieManager;
+		// TODO
+		zombieManager = null;
 		
 		gnome = new GnomeItem();
 		gameRunning = true;
