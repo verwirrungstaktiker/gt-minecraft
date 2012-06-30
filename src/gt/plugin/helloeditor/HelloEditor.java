@@ -106,9 +106,7 @@ public class HelloEditor extends JavaPlugin implements Listener {
 			return true;
 		}
 		if(commandEquals(cmd, "save")) {
-
-			// TODO save command!
-			
+			game.save();
 			System.out.println("saved.");
 			return true;
 		}

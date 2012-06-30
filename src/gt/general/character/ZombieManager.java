@@ -71,10 +71,16 @@ public class ZombieManager implements Listener, Runnable{
 
 	/**
 	 * Set a new target for Zombies
-	 * @param target the new target
+	 * @param hero the new target
 	 */
-	public void setTarget(LivingEntity target) {
-		this.target = target;
+	public void setTarget(Hero hero) {
+		
+		if(hero != null) {
+			target = hero.getPlayer();
+		} else {
+			// TODO yeah what else? target = null?
+		}
+		
 	}
 
 	/**

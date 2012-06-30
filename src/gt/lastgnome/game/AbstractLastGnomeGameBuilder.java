@@ -30,12 +30,15 @@ public abstract class AbstractLastGnomeGameBuilder implements GameBuilder {
 		
 		
 		GnomeSocketStart start = new GnomeSocketStart(game);
-		start.setup(worldInstance.loadMeta("start_socket.yml"),
+		start.setup(worldInstance.loadMeta(GnomeSocketStart.FILENAME),
 					worldInstance.getWorld());
+		game.setStartSocket(start);
+		
 		
 		GnomeSocketEnd end = new GnomeSocketEnd(game);
-		end.setup(worldInstance.loadMeta("end_socket.yml"),
+		end.setup(worldInstance.loadMeta(GnomeSocketEnd.FILENAME),
 				  worldInstance.getWorld());
+		game.setEndSocket(end);
 		
 		
 		ZombieManager zombieManager = new ZombieManager(worldInstance.getWorld());

@@ -3,7 +3,7 @@ package gt.general.world;
 import static com.google.common.collect.Sets.*;
 
 import gt.general.trigger.persistance.YamlSerializable;
-import gt.general.world.ObservableBlock.BlockEvent;
+import gt.general.world.ObservableCustomBlock.BlockEvent;
 
 import java.util.Map;
 import java.util.Set;
@@ -19,10 +19,10 @@ public class WorldUniqueBlock extends YamlSerializable implements BlockObserver 
 
 	private final World world;
 	
-	private final ObservableBlock base;
+	private final ObservableCustomBlock base;
 	private Block block = null;
 	
-	public WorldUniqueBlock(final World world, final ObservableBlock base) {
+	public WorldUniqueBlock(final World world, final ObservableCustomBlock base) {
 		this.world = world;
 		this.base = base;
 	}
@@ -31,7 +31,6 @@ public class WorldUniqueBlock extends YamlSerializable implements BlockObserver 
 	public void onBlockEvent(final BlockEvent blockEvent) {
 		switch (blockEvent.blockEventType) {
 		case PLAYER_BLOCK_PLACED:
-		case BLOCK_PLACED:
 
 			if (block == null) {
 				block = blockEvent.block;

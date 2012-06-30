@@ -12,7 +12,7 @@ public interface GameBuilder {
 	
 	void loadGameSpecific();
 	
-	void updateGui();
+	void buildGui();
 	
 	
 	void startGame();

@@ -1,9 +1,11 @@
 package gt.lastgnome.game;
 
+import static org.bukkit.ChatColor.*;
+
+
 import gt.general.character.Hero;
 import gt.general.character.HeroManager;
 import gt.general.character.Team;
-import gt.general.character.ZombieManager;
 import gt.general.gui.GuiElementType;
 import gt.general.trigger.TriggerContext;
 import gt.general.trigger.response.Response;
@@ -19,7 +21,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
-import org.bukkit.event.player.PlayerInteractEvent;
 
 /**
  * Game Controller for a Last-Gnome-Scenario
@@ -55,68 +56,6 @@ public class LastGnomeGame extends AbstractLastGnomeGame implements Listener{
 	public void upgradeGui(final Hero hero) {
 		SpeedBar speedBar = new SpeedBar();
 		hero.getGui().addGuiElement(GuiElementType.SPEEDBAR, speedBar);
-	}
-	
-	/**
-	 * initiates a new Last Gome Game with an initial GnomeBearer
-	 * @param team the Team playing the game
-	 * @param initialBearer the hero bearing the gnome from the start
-	 */
-/*	public LastGnomeGame(final Team team) {
-		this(team);
-		
-//		initialBearer.setActiveItem(gnome);
-//		setGnomeBearer(initialBearer);
-	}
-*/	
-	/**
-	 * handles gnome transfer from Start Socket to Player
-	 * @param event player rightclick event
-	 */
-	@EventHandler
-	public void getGnomeFromStartSocket(final PlayerInteractEvent event) {
-		/*
-		if(event.hasBlock() && event.getClickedBlock().getTypeId() == worldInstance.getStartSocket().getBlockId()) {
-			Player player = event.getPlayer();
-			Hero hero = HeroManager.getHero(player.getName());
-			
-			if (gnomeBearer == null && hero.canRecieveItem()) {
-
-				hero.setActiveItem(gnome);
-				//gnomeBearer = hero;
-				setGnomeBearer(hero);
-				
-				player.sendMessage(ChatColor.GREEN + "You obtained a Gnome for Testing");
-				
-			} else {
-			player.sendMessage(ChatColor.YELLOW + "nothing happens.");
-			}
-		}*/
-	}
-	
-	/**
-	 * handles gnome transfer from Player to End Socket
-	 * @param event	player right click event
-	 */
-	@EventHandler
-	public void giveGnomeToEndSocket(final PlayerInteractEvent event) {
-		/*
-		if(event.hasBlock() && event.getClickedBlock().getTypeId() == worldInstance.getEndSocket().getBlockId()) {
-			
-			Player player = event.getPlayer();
-			Hero hero = HeroManager.getHero(player.getName());
-			
-			if(hero.equals(gnomeBearer)) {	
-				
-				hero.removeActiveItem();
-				//gnomeBearer = null;
-				setGnomeBearer(null);
-				
-				player.sendMessage(ChatColor.GREEN + "The Gnome has been saved!");
-			} else {
-				player.sendMessage(ChatColor.YELLOW + "The mighty Gnome Socket demands the Gnome!");
-			}
-		}*/
 	}
 	
 	/**
@@ -164,7 +103,7 @@ public class LastGnomeGame extends AbstractLastGnomeGame implements Listener{
 	 */
 	void setGnomeBearer(final Hero newBearer) {
 		gnomeBearer = newBearer;
-		getZombieManager().setTarget(newBearer.getPlayer());
+		getZombieManager().setTarget(newBearer);
 	}
 
 	/**
@@ -245,16 +184,43 @@ public class LastGnomeGame extends AbstractLastGnomeGame implements Listener{
 	}
 	
 
-
-
+	/**
+	 * handles gnome transfer from Start Socket to Player
+	 * @param player who clicked the socket
+	 */
 	@Override
 	public void onStartSocketInteract(Player player) {
-		System.out.println(player.getName() + "klicked the start block");		
+		Hero hero = HeroManager.getHero(player);
+		
+		if (gnomeBearer == null && hero.canRecieveItem()) {
+
+			hero.setActiveItem(gnome);
+			setGnomeBearer(hero);
+			
+			player.sendMessage(GREEN + "You obtained a Gnome for Testing");
+			
+		} else {
+			player.sendMessage(YELLOW + "nothing happens.");
+		}
 	}
 
 
+	/**
+	 * handles gnome transfer from Player to End Socket
+	 * @param player who klicked the socket
+	 */
 	@Override
 	public void onEndSocketInteract(Player player) {
-		System.out.println(player.getName() + "klicked the end block");
+		Hero hero = HeroManager.getHero(player);
+		
+		if(hero.equals(gnomeBearer)) {	
+			
+			hero.removeActiveItem();
+			setGnomeBearer(null);
+			
+			player.sendMessage(GREEN + "The Gnome has been saved!");
+		} else {
+			player.sendMessage(YELLOW + "The mighty Gnome Socket demands the Gnome!");
+		}
 	}
 }

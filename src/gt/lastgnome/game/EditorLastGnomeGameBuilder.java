@@ -28,14 +28,11 @@ public class EditorLastGnomeGameBuilder extends AbstractLastGnomeGameBuilder {
 		MultiListener.registerListeners(playerManager,
 										buildManager);
 		
-		
-		// TODO must the Editor Trigger Manager be set up?
-		worldManager.setupWorldInstance(game.getWorldInstance(),
-										triggerManager);
+		game.getWorldInstance().init(triggerManager);
 	}
 	
 	@Override
-	public void updateGui() {}
+	public void buildGui() {}
 	
 	@Override
 	public void startGame() {}

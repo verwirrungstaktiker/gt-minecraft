@@ -1,6 +1,6 @@
 package gt.general.world;
 
-import gt.general.world.ObservableBlock.BlockEvent;
+import gt.general.world.ObservableCustomBlock.BlockEvent;
 
 public interface BlockObserver {
 

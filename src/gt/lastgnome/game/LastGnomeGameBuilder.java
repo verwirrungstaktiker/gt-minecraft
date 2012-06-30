@@ -26,12 +26,11 @@ public class LastGnomeGameBuilder extends AbstractLastGnomeGameBuilder {
 	public void buildWorldInstance(final WorldManager worldManager, final String worldName) {
 		super.buildWorldInstance(worldManager, worldName);
 				
-		worldManager.setupWorldInstance(game.getWorldInstance(),
-										new TriggerManager());
+		game.getWorldInstance().init(new TriggerManager());
 	}
 
 	@Override
-	public void updateGui() {
+	public void buildGui() {
 		for(Hero hero : team.getPlayers()) {
 			game.upgradeGui(hero);
 		}		

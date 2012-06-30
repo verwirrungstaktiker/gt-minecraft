@@ -46,14 +46,11 @@ public class WorldManager {
 	}	
 
 	public void setupWorldInstance(final WorldInstance worldInstance, final TriggerManager triggerManager) {
-		
-		triggerManager.setup("trigger.yml", worldInstance);
-		worldInstance.setTriggerManager(triggerManager);
-		
-		Spawn spawn = new Spawn();
-		spawn.setup("spawn.yml", worldInstance);
-		
-		worldInstance.setSpawn(spawn);
+		worldInstance.init(triggerManager);
+	}
+	
+	public void dumpWorldInstance(final WorldInstance worldInstance) {
+		worldInstance.save();
 	}
 	
 	/** 
@@ -62,8 +59,7 @@ public class WorldManager {
 	public void disposeWorldInstance(final WorldInstance worldInstance) {
 		instanceMapping.remove(worldInstance.getWorld());
 
-		worldInstance.getTriggerManager().dispose();
-		worldInstance.getSpawn().dispose();
+		worldInstance.dispose();
 	}
 	
 

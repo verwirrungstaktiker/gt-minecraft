@@ -2,9 +2,9 @@ package gt.lastgnome;
 
 import org.bukkit.entity.Player;
 
-import gt.general.world.ObservableBlock;
-import gt.general.world.ObservableBlock.BlockEvent;
-import gt.general.world.ObservableBlock.BlockEventType;
+import gt.general.world.ObservableCustomBlock;
+import gt.general.world.ObservableCustomBlock.BlockEvent;
+import gt.general.world.ObservableCustomBlock.BlockEventType;
 import gt.general.world.WorldUniqueBlock;
 import gt.lastgnome.game.AbstractLastGnomeGame;
 import gt.lastgnome.game.LastGnomeGame;
@@ -15,9 +15,11 @@ import gt.lastgnome.game.LastGnomeGame;
 public class GnomeSocketStart extends WorldUniqueBlock {
 
 	
-	public static final ObservableBlock START_BLOCK;
+	public static final String FILENAME = "start_socket.yml";
+	
+	public static final ObservableCustomBlock START_BLOCK;
 	static {
-		START_BLOCK = new ObservableBlock("start_socket",
+		START_BLOCK = new ObservableCustomBlock("start_socket",
 										  "http://dl.dropbox.com/u/29386658/gt/textures/gnome_socket_start_16x16.png",
 										  16);
 	}

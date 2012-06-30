@@ -50,12 +50,12 @@ public class GameManager implements GameObserver{
 		
 		builder.loadGameSpecific();
 		
+		builder.buildGui();
+		
 		builder.startGame();
 		
 		Game game = builder.getGame();
-		
-		runningGames.add(game);
-		
+		runningGames.add(game);		
 		return game;
 	}
 	

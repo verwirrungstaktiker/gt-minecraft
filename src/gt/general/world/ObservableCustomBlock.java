@@ -7,12 +7,13 @@ import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.entity.LivingEntity;
 import org.getspout.spoutapi.material.block.GenericCubeCustomBlock;
+import org.getspout.spoutapi.player.SpoutPlayer;
 
 import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Multimap;
 
 
-public class ObservableBlock extends GenericCubeCustomBlock {
+public class ObservableCustomBlock extends GenericCubeCustomBlock {
 
 	public enum BlockEventType {
 		PLAYER_BLOCK_PLACED,
@@ -35,7 +36,7 @@ public class ObservableBlock extends GenericCubeCustomBlock {
 	
 	Multimap<World, BlockObserver> observers = HashMultimap.create();
 	
-	public ObservableBlock(String name, String textureUrl, int textureSize){
+	public ObservableCustomBlock(String name, String textureUrl, int textureSize){
 		super(Hello.getPlugin(), name, textureUrl, textureSize);
 	}
 	
@@ -51,7 +52,18 @@ public class ObservableBlock extends GenericCubeCustomBlock {
 		fireBlockEvent(world,
 				new BlockEvent (world.getBlockAt(x, y, z),
 							 	null,
-							 	BlockEventType.PLAYER_BLOCK_PLACED));
+							 	BlockEventType.BLOCK_DESTROYED));
+	}
+	
+	
+	public boolean onBlockInteract(World world, int x, int y, int z, SpoutPlayer player) {
+		fireBlockEvent(world,
+				new BlockEvent (world.getBlockAt(x, y, z),
+							 	player,
+							 	BlockEventType.BLOCK_INTERACT));
+	
+		return true;
+		
 	}
 	
 	private void fireBlockEvent(final World world, final BlockEvent blockEvent) {

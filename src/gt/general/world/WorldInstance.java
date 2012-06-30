@@ -1,9 +1,7 @@
 package gt.general.world;
 
 import gt.general.Spawn;
-import gt.general.SpawnPersistance;
 import gt.general.trigger.TriggerManager;
-import gt.general.trigger.persistance.TriggerManagerPersistance;
 import gt.general.trigger.persistance.YamlSerializable;
 
 import java.io.File;
@@ -30,11 +28,9 @@ public class WorldInstance {
 	private World world;
 	private String name;
 	
-	private TriggerManager triggerManager;
-	private File triggerFile;
+	private TriggerManager triggerManager;	
+	private Spawn spawn;	
 	
-	private Spawn spawn;
-	private File spawnFile;
 	
 	/**
 	 * @param world the minecraft representation of this world
@@ -96,6 +92,27 @@ public class WorldInstance {
 	public Spawn getSpawn() {
 		return spawn;
 	}
+	
+	// TODO abstract file names
+	public void init(final TriggerManager triggerManager) {
+		triggerManager.setup("trigger.yml", this);
+		this.triggerManager = triggerManager;
+		
+		Spawn spawn = new Spawn();
+		spawn.setup("spawn.yml", this);
+		this.spawn = spawn;
+	}
+	
+	public void save() {
+		saveMeta("trigger.yml", triggerManager);
+		saveMeta("spawn.yml", spawn);
+	}
+	
+	public void dispose() {
+		triggerManager.dispose();
+		spawn.dispose();
+	}
+	
 
 	public Map<String, Object> loadMeta(final String fileName) {		
 		try {
@@ -128,13 +145,8 @@ public class WorldInstance {
 			throw new RuntimeException(e);
 		}
 	}
-
-	public void setSpawn(Spawn spawn) {
-		this.spawn = spawn;
+	
+	public void saveMeta(final String fileName, final YamlSerializable serializable) {
+		saveMeta(fileName, serializable.dump());
 	}
-
-	public void setTriggerManager(TriggerManager triggerManager) {
-		this.triggerManager = triggerManager;
-	}
-
 }

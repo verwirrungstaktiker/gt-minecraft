@@ -6,8 +6,8 @@ import gt.general.character.Hero;
 import gt.general.character.Team;
 import gt.general.trigger.persistance.YamlSerializable;
 import gt.general.world.BlockObserver;
-import gt.general.world.ObservableBlock;
-import gt.general.world.ObservableBlock.BlockEvent;
+import gt.general.world.ObservableCustomBlock;
+import gt.general.world.ObservableCustomBlock.BlockEvent;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -24,10 +24,10 @@ import org.getspout.spoutapi.SpoutManager;
 
 public class Spawn extends YamlSerializable implements BlockObserver {
 	
-	public static final ObservableBlock SPAWN_BLOCK;
+	public static final ObservableCustomBlock SPAWN_BLOCK;
 	
 	static {
-		SPAWN_BLOCK = new ObservableBlock("spawn",
+		SPAWN_BLOCK = new ObservableCustomBlock("spawn",
 										 "http://img27.imageshack.us/img27/4669/spawnpv.png",
 										 16);
 	}
@@ -73,6 +73,7 @@ public class Spawn extends YamlSerializable implements BlockObserver {
 		
 		SPAWN_BLOCK.removeObserver(this, world);
 		
+		// TODO this throws an concurrent modification exception - why?
 		for(Block block : getBlocks()) {
 			block.setType(Material.AIR);
 		}
