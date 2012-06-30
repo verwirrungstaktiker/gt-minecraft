@@ -34,5 +34,19 @@
 		  <arg line="/c RUN.bat"/>
 		</exec>
 	</target>
+	
+	<target name="debugEditor" depends="build">
+        <mkdir dir="${bukkitDir}/plugins"/>
+    	<delete>
+    		<fileset dir="${bukkitDir}/plugins/" includes="Hello*" />
+    	</delete>
+    	
+        <jar destfile="${bukkitDir}/plugins/HelloEditor.jar" basedir="bin">
+        	<fileset file="res/helloeditor/plugin.yml"  />
+        </jar>
+		<exec dir="${bukkitDir}" executable="cmd">
+		  <arg line="/c DEBUG.bat"/>
+		</exec>
+	</target>
         	
 </project>

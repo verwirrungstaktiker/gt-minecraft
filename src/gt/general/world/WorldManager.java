@@ -10,6 +10,7 @@ import java.util.Map;
 
 import org.bukkit.Bukkit;
 import org.bukkit.World;
+import org.bukkit.WorldCreator;
 
 public class WorldManager {
 
@@ -71,11 +72,18 @@ public class WorldManager {
 		
 		World world = Bukkit.getWorld(worldName);
 		
+		// if world is not loaded yet
+		if (world == null) {
+			WorldCreator worldCreator = new WorldCreator(worldName);
+			world = worldCreator.createWorld();
+		}
+		
 		if( instanceMapping.containsKey(world) ) {
 			return instanceMapping.get(world);
 		} else {
 			
 			WorldInstance worldInstance = new WorldInstance(world);
+			worldInstance.setName(worldName);
 			
 			instanceMapping.put(world, worldInstance);
 			return worldInstance;

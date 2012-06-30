@@ -19,11 +19,12 @@ public class WorldUniqueBlock extends YamlSerializable implements BlockObserver 
 
 	private final World world;
 	
-	private ObservableBlock base;
+	private final ObservableBlock base;
 	private Block block = null;
 	
 	public WorldUniqueBlock(final World world, final ObservableBlock base) {
 		this.world = world;
+		this.base = base;
 	}
 	
 	@Override

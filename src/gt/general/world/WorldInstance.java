@@ -152,7 +152,7 @@ public class WorldInstance {
 		} catch (ClassCastException e) {
 			throw new RuntimeException("cannot cast contents of " + fileName, e);
 		} catch (FileNotFoundException e) {
-			throw new RuntimeException(e);
+			return null;
 		}
 	}
 	
