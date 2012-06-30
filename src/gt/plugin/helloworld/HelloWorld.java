@@ -7,6 +7,7 @@ import gt.general.character.HeroManager;
 import gt.general.character.Team;
 import gt.general.character.TeamManager;
 import gt.general.trigger.TriggerManager;
+import gt.general.world.InstantiatingWorldManager;
 import gt.general.world.WorldManager;
 import gt.lastgnome.game.LastGnomeGameBuilder;
 import gt.plugin.Hello;
@@ -42,15 +43,15 @@ public class HelloWorld extends JavaPlugin {
 	 * Initialization of our plugin
 	 */
 	public void onEnable() {
+		MultiListener.initialize(this);
 		Hello.setPlugin(this);
 
 		runningGames = new HashSet<Game>();
 		heroManager = new HeroManager(this,runningGames);
 		triggerManager = new TriggerManager();
 		teamManager = new TeamManager();
-		worldManager = new WorldManager();
+		worldManager = new InstantiatingWorldManager();
 		
-		MultiListener.initialize(this);
 		
 		MultiListener.registerListeners(new KeyPressListener(),
 										new BlockListener(),
