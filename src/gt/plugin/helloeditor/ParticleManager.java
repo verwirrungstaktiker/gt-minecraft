@@ -10,73 +10,90 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
+import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.block.Block;
+import org.bukkit.entity.Player;
 import org.bukkit.util.Vector;
 import org.getspout.spoutapi.particle.Particle;
 import org.getspout.spoutapi.particle.Particle.ParticleType;
+import org.getspout.spoutapi.player.SpoutPlayer;
 
 
 public class ParticleManager {
-	
-	private Map<Location, HashSet<Particle>> highlightedLocs = new HashMap<Location, HashSet<Particle>>();
 	
 	public ParticleManager() {
 		
 	}
 	
-	public void addHighlight(TriggerContext context, ParticleType type) {
+	/**
+	 * highlight all blocks of a context
+	 * @param context	TriggerContext
+	 * @param type		Particle type
+	 * @param player	player that can see particles
+	 */
+	public void addHighlight(final TriggerContext context, final ParticleType type, final Player player) {
 		for(Trigger trigger : context.getTriggers()) {
-			addHighlight(trigger, type);
+			addHighlight(trigger, type, player);
 		}
 		for(Response response : context.getResponses()) {
-			addHighlight(response, type);
+			addHighlight(response, type, player);
 		}
+		player.sendMessage(ChatColor.YELLOW + "Highlighting " + context.getLabel());
 	}
 	
-	private void addHighlight(YamlSerializable serializable, ParticleType type) {
+	/**
+	 * highlight all blocks of a serializable object
+	 * @param serializable	trigger or response
+	 * @param type			particle type
+	 * @param player		player that can see particles
+	 */
+	private void addHighlight(final YamlSerializable serializable, final ParticleType type, final Player player) {
 		for(Block block: serializable.getBlocks()) {
-			addHighlight(block.getLocation(), type);
+			addHighlight(block.getLocation(), type, player);
 		}
 		
 	}
 
-	public void addHighlight(Location loc, ParticleType type) {
+	/**
+	 * Highlight a single block with particles
+	 * @param loc		Location of the block
+	 * @param type		particle type
+	 * @param player	player that can see particles
+	 */
+	public void addHighlight(final Location loc, final ParticleType type, final Player player) {
 
-		 HashSet<Particle> particles = getEdgeParticles(loc, type);
-		 
-		 highlightedLocs.put(loc, particles);
+		paintParticle(type, loc, new Vector(0, 0, 0), player);
+		paintParticle(type, loc, new Vector(0, 0, 1), player);
+		paintParticle(type, loc, new Vector(0, 1, 0), player);
+		paintParticle(type, loc, new Vector(0, 1, 1), player);
+		paintParticle(type, loc, new Vector(1, 0, 0), player);
+		paintParticle(type, loc, new Vector(1, 0, 1), player);
+		paintParticle(type, loc, new Vector(1, 1, 0), player);
+		paintParticle(type, loc, new Vector(1, 1, 1), player);
 	}
 
-	private HashSet<Particle> getEdgeParticles(Location loc, ParticleType type) {
-		HashSet<Particle> particles = new HashSet<Particle>();
-		
-		Particle particle = paintParticle(type, loc);
-//		particles.add(particle);
-		
-		particle = paintParticle(type, loc.add(0, 0, 1));
-		particle = paintParticle(type, loc.add(0, 1, 0));
-		particle = paintParticle(type, loc.add(0, 1, 1));
-		particle = paintParticle(type, loc.add(1, 0, 0));
-		particle = paintParticle(type, loc.add(1, 0, 1));
-		particle = paintParticle(type, loc.add(1, 1, 0));
-		particle = paintParticle(type, loc.add(1, 1, 1));
-		
-//		particles.add(particle);
-		
-		return particles;
-	}
+	/**
+	 * spawns a single particle
+	 * @param type	particle type
+	 * @param origin	location of the block that is highlighted
+	 * @param offset	an offset that specifies which edge of the block is highlighted
+	 * @param player	player that can see the particle
+	 */
+	private void paintParticle(final ParticleType type, final Location origin, final Vector offset, final Player player) {
 
-	private Particle paintParticle(ParticleType type, Location loc) {
-
-		Particle particle = new Particle(type, loc, new Vector(0,0,0));
+		Location newLoc = origin.clone().add(offset);
+		newLoc.subtract(0.04, 0.1, 0.04);	// looks much better with this additional offset
+		Particle particle = new Particle(type, newLoc, new Vector(0,0,0));
 		
-		particle.setScale(5);
+		particle.setScale(7);		// particle size
 		particle.setAmount(1);
-		particle.setRange(20.0);
-		particle.spawn();
+		// view range: this one is overwritten by client settings!
+		particle.setRange(50.0);	
+		particle.setMaxAge(60);		// lifetime in ticks
+		particle.setGravity(0);
 		
-		
-		return particle;
+		particle.spawn((SpoutPlayer) player);
+//		return particle;
 	}
 }

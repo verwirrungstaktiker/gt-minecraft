@@ -134,11 +134,14 @@ public class PlayerManager implements Listener{
 		}
 	}
 	
-	private void highlightContext(Player player) {
-		System.out.println("highlightin'");
+	/**
+	 * highlight the active context of a player
+	 * @param player a bukkit player
+	 */
+	private void highlightContext(final Player player) {
 		TriggerContext context = playerTriggerContexts.get(player.getName());
 		if(context!=null) {
-			particleManager.addHighlight(context, ParticleType.DRIPLAVA);
+			particleManager.addHighlight(context, ParticleType.DRIPLAVA, player);
 		}
 	}
 
