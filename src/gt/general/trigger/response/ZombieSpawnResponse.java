@@ -9,6 +9,7 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
+import org.bukkit.Effect;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.block.Block;
@@ -96,6 +97,10 @@ public class ZombieSpawnResponse extends Response{
 	public void setZombieManager(ZombieManager zm) {
 		this.zm = zm;
 	}
-	
+
+	@Override
+	public void highlight() {
+		spawnLocation.getWorld().playEffect(spawnLocation, Effect.MOBSPAWNER_FLAMES, 25);
+	}
 
 }

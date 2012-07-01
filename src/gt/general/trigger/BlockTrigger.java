@@ -3,9 +3,13 @@ package gt.general.trigger;
 import java.util.HashSet;
 import java.util.Set;
 
+import org.bukkit.Effect;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.event.Listener;
+import org.bukkit.util.Vector;
+import org.getspout.spoutapi.particle.Particle;
+import org.getspout.spoutapi.particle.Particle.ParticleType;
 
 /**
  *  Represents any Trigger that has exactly 1 corresponding Block
@@ -43,6 +47,13 @@ public abstract class BlockTrigger extends Trigger implements Listener {
 		blockSet.add(trigger);
 		
 		return blockSet;
+	}
+	
+	public void highlight() {
+		for(Block block : getBlocks()) {
+//			block.getWorld().playEffect(block.getLocation(), Effect.ENDER_SIGNAL, 25);
+			
+		}
 	}
 
 }

@@ -19,6 +19,7 @@ import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.getspout.spoutapi.event.input.KeyPressedEvent;
+import org.getspout.spoutapi.particle.Particle.ParticleType;
 
 public class PlayerManager implements Listener{
 	
@@ -36,11 +37,14 @@ public class PlayerManager implements Listener{
 
 	private EditorTriggerManager triggerManager;
 	
+	private ParticleManager particleManager;
+	
 	/**
 	 * @param triggerManager holds the TriggerContexts of the current map
 	 */
 	public PlayerManager(final EditorTriggerManager triggerManager) {
 		this.triggerManager = triggerManager;
+		this.particleManager = new ParticleManager();
 	}
 	
 	
@@ -122,11 +126,23 @@ public class PlayerManager implements Listener{
 		case KEY_F12:
 			cancelContext(player);
 			break; 
+		case KEY_F4:
+			highlightContext(player);
+			break;
 		default:
 			break;
 		}
 	}
 	
+	private void highlightContext(Player player) {
+		System.out.println("highlightin'");
+		TriggerContext context = playerTriggerContexts.get(player.getName());
+		if(context!=null) {
+			particleManager.addHighlight(context, ParticleType.DRIPLAVA);
+		}
+	}
+
+
 	/**
 	 * creates the triggerrelevant data for joining players
 	 * @param event a player joins the server

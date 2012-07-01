@@ -3,6 +3,7 @@ package gt.general.trigger.response;
 import java.util.HashSet;
 import java.util.Set;
 
+import org.bukkit.Effect;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.event.Listener;
@@ -43,6 +44,12 @@ public abstract class BlockResponse extends Response implements Listener {
 		blockSet.add(block);
 		
 		return blockSet;
+	}
+	
+	public void highlight() {
+		for(Block block : getBlocks()) {
+			block.getWorld().playEffect(block.getLocation(), Effect.MOBSPAWNER_FLAMES, 25);
+		}
 	}
 
 }

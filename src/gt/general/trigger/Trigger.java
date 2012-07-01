@@ -28,4 +28,6 @@ public abstract class Trigger extends YamlSerializable {
 		this.context = context;
 	}
 
+	public abstract void highlight();
+
 }

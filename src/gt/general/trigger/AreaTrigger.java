@@ -2,6 +2,7 @@ package gt.general.trigger;
 
 import gt.plugin.helloworld.HelloWorld;
 
+import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
@@ -98,8 +99,13 @@ public class AreaTrigger extends Trigger implements Runnable{
 
 	@Override
 	public Set<Block> getBlocks() {
+		return new HashSet<Block>();
+	}
+
+	@Override
+	public void highlight() {
 		// TODO Auto-generated method stub
-		return null;
+		
 	}
 
 

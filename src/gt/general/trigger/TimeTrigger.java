@@ -60,4 +60,10 @@ public class TimeTrigger extends Trigger{
 		return new HashSet<Block>();
 	}
 
+	@Override
+	public void highlight() {
+		// TODO Auto-generated method stub
+		
+	}
+
 }
