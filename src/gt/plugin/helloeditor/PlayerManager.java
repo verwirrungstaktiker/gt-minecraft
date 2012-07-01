@@ -73,6 +73,8 @@ public class PlayerManager implements Listener{
 				case STANDBY:
 					if(playerTriggerContexts.get(name) == context) {
 						System.out.println("Breaking serializable block.");
+						//kill block highlight
+						particleManager.removeHighlight(serializable, player);
 						//handle block break					
 						triggerManager.deleteBlock(block);
 
@@ -89,6 +91,9 @@ public class PlayerManager implements Listener{
 					//goto corresponding context
 					playerTriggerContexts.put(name, context);
 					playerTriggerStates.put(name, TriggerState.TRIGGER);
+					//add highlight for whole context
+					highlightContext(player);
+					
 					player.sendMessage(GREEN + "Switched to Context " + contextLabel+ " State: TRIGGER.");
 					event.setCancelled(true);
 					break;
@@ -97,12 +102,14 @@ public class PlayerManager implements Listener{
 		}
 	}
 	
-	public void addTrigger(Trigger trigger, TriggerContext context) {
+	public void addTrigger(Trigger trigger, TriggerContext context, Player player) {
 		triggerManager.addTrigger(trigger, context);
+		particleManager.addHighlight(trigger, ParticleType.DRIPLAVA, player);
 	}
 	
-	public void addResponse(Response response, TriggerContext context) {
+	public void addResponse(Response response, TriggerContext context, Player player) {
 		triggerManager.addResponse(response, context);
+		particleManager.addHighlight(response, ParticleType.DRIPLAVA, player);
 	}
 
 	/**
@@ -214,24 +221,27 @@ public class PlayerManager implements Listener{
 	 */
 	private void toggleContext(final Player player) {
 		String name = player.getName();
+		TriggerContext context = playerTriggerContexts.get(name);
 		
-		if(playerTriggerContexts.get(name) == null) {
+		if(context == null) {
 			
 			playerTriggerStates.put(name, TriggerState.TRIGGER);
 			
-			TriggerContext context = new TriggerContext();
+			context = new TriggerContext();
 			triggerManager.addTriggerContext(context);
 			playerTriggerContexts.put(name, context);
 			
-			player.sendMessage(YELLOW + "New Context.. BuildState: TRIGGER");
+			player.sendMessage(YELLOW + "New Context: " + context.getLabel() + "; BuildState: TRIGGER");
 			
 		} else {
-			if(playerTriggerContexts.get(name).isComplete()) {
+			if(context.isComplete()) {
 				// TODO actually handle the Context before deleting it
 				playerTriggerStates.put(name, TriggerState.IDLE);
 				playerTriggerContexts.put(name, null);
 				
-				player.sendMessage(YELLOW + "Handed over trigger context.");
+				particleManager.removeHighlight(context, player);
+				
+				player.sendMessage(YELLOW + "Handed over " + context.getLabel() + ".");
 			} else {
 				player.sendMessage(YELLOW + "Context not complete. Use [F12] to cancel.");
 				return;
