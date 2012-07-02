@@ -134,6 +134,19 @@ public class ZombieManager implements Listener, Runnable{
 	}
 	
 	/**
+	 * Modifies Speed of all Zombies
+	 * @param value Value to be added to Zombie speed
+	 */
+	public void addSpeedAll(Double value) {
+		for (ZombieCharacter zombie : zombies) {
+			zombie.addToAttribute(CharacterAttributes.SPEED, value);
+		}
+	}
+	
+
+	
+	
+	/**
 	 * Scheduled Method to make sure zombies attack right target
 	 */
 	@Override

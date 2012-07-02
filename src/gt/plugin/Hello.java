@@ -8,17 +8,16 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 public class Hello {
 
-	// TODO this must be revised!
 	private static Hello instance;
 	
 	private final JavaPlugin plugin;
 	private WorldManager worldManager;
 	
 	/**
-	 * 
-	 * @param task
-	 * @param ticks
-	 * @return
+	 * Schedules a synchron Task
+	 * @param task the task to be scheduled 
+	 * @param ticks task is executed every ticks ticks
+	 * @return taskId
 	 */
 	public static int ScheduleSyncTask(Runnable task, int initial, int ticks) {
 		return Bukkit
@@ -26,14 +25,30 @@ public class Hello {
 					.scheduleSyncRepeatingTask(Hello.getPlugin(), task, initial, ticks);	
 	}
 	
+	/**
+	 * Schedules a asynchron Task
+	 * @param task the task to be scheduled 
+	 * @param ticks task is executed every ticks ticks
+	 * @return taskId
+	 */
+	public static int ScheduleAsyncTask(Runnable task, int initial, int ticks) {
+		return Bukkit
+					.getScheduler()
+					.scheduleAsyncRepeatingTask(Hello.getPlugin(), task, initial, ticks);	
+	}	
+	
 	public static void cancelTask(int id) {
 		Bukkit.getScheduler().cancelTask(id);
 	}
 	
-	/*
+	
 	 public static WorldManager getWorldManager() {
-		 return hello.worldManager;
-	 }*/
+		 if (instance != null) {
+			 return instance.worldManager;
+		 } else {
+			 throw new RuntimeException("Hello must be initialized");
+		 }		 
+	 }
 	 
 	 public static JavaPlugin getPlugin() {
 		 return Hello.getInstance().plugin;

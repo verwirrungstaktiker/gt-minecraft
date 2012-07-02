@@ -1,6 +1,6 @@
 package gt.general.trigger;
 
-import gt.plugin.helloworld.HelloWorld;
+import gt.plugin.Hello;
 
 import java.util.HashSet;
 import java.util.Map;
@@ -83,7 +83,7 @@ public class AreaTrigger extends Trigger implements Runnable{
 	}
 	@Override
 	public void dispose() {
-		HelloWorld.getPlugin().getServer().getScheduler().cancelTask(taskID);
+		Hello.cancelTask(taskID);
 	}
 	@Override
 	public Map<String, Object> dump() {
@@ -92,8 +92,7 @@ public class AreaTrigger extends Trigger implements Runnable{
 	
 	@Override
 	public void setup(Map<String, Object> values, World world) {
-		taskID = HelloWorld.getPlugin().getServer().getScheduler()
-		.scheduleAsyncRepeatingTask(HelloWorld.getPlugin(), this, 0, 10);
+		taskID = Hello.ScheduleAsyncTask(this, 0, 10);
 		
 	}
 
