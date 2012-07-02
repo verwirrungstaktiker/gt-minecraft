@@ -7,6 +7,8 @@ import java.util.Vector;
 
 import org.bukkit.Location;
 import org.bukkit.World;
+import org.bukkit.entity.Entity;
+import org.bukkit.entity.EntityType;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Zombie;
@@ -154,7 +156,17 @@ public class ZombieManager implements Listener, Runnable{
 		if (target == null) return;
 		for (ZombieCharacter zombieChar : zombies) {
 			Zombie zombie = zombieChar.getZombie();
-			//I hope at least getTarget works
+			//See if any Players are nearby
+			for (Entity entity : zombie.getNearbyEntities(1.5, 1.5, 1.5)) {
+				if (entity.getType() == EntityType.PLAYER) {
+					//target players who are to close
+					if (!zombie.getTarget().equals(entity)) {
+						zombie.damage(0, entity);
+					}
+					return;
+				}
+			}
+			//If no player is to close, target the target
 			if (!zombie.getTarget().equals(target)) {
 				zombie.damage(0, target);
 			}
