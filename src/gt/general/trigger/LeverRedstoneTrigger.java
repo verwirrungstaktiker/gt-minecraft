@@ -13,7 +13,6 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockRedstoneEvent;
 import org.bukkit.material.Lever;
-import org.getspout.spout.Spout;
 import org.getspout.spoutapi.SpoutManager;
 
 /**
@@ -36,14 +35,15 @@ public class LeverRedstoneTrigger extends AttachableRedstoneTrigger implements L
 	/**
 	 * @param trigger the lever to be used as trigger
 	 */
-	public LeverRedstoneTrigger(final Block trigger) {
+	public LeverRedstoneTrigger(Block trigger, Block against) {
 		super("lever_trigger_", trigger);
+		
+		orientation = against.getFace(trigger);
+		
 		installSignal();
 	}
 	
-	public LeverRedstoneTrigger() {
-		
-	}
+	public LeverRedstoneTrigger() {}
 	
 	@Override
 	public void setup(final Map<String, Object> values, final World world) {

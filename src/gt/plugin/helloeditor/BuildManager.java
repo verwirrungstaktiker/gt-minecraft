@@ -66,7 +66,7 @@ public class BuildManager implements Listener {
 				break;
 				
 			case LEVER:
-				playerManager.addTrigger(new LeverRedstoneTrigger(block), activeContext, player);
+				playerManager.addTrigger(new LeverRedstoneTrigger(block, event.getBlockAgainst()), activeContext, player);
 				break;
 			case STONE_BUTTON:
 				playerManager.addTrigger(new ButtonRedstoneTrigger(block), activeContext, player);
