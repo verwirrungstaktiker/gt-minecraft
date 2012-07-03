@@ -39,7 +39,7 @@ public class ObservableCustomBlock extends GenericCubeCustomBlock {
 	public ObservableCustomBlock(String name, String textureUrl, int textureSize){
 		super(Hello.getPlugin(), name, textureUrl, textureSize);
 	}
-	
+
 	public void onBlockPlace(World world, int x, int y, int z, final LivingEntity living) {
 		
 		fireBlockEvent(world,

@@ -1,5 +1,7 @@
 package gt.general.trigger;
 
+import gt.general.world.ObservableCustomBlock;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -7,15 +9,27 @@ import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
-import org.bukkit.material.Button;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.Listener;
+import org.bukkit.event.block.BlockRedstoneEvent;
 import org.bukkit.material.Lever;
+import org.getspout.spout.Spout;
+import org.getspout.spoutapi.SpoutManager;
 
 /**
  * uses a minecraft lever or stone button as trigger
  * 
  * @author roman
  */
-public class LeverRedstoneTrigger extends AttachableRedstoneTrigger {
+public class LeverRedstoneTrigger extends AttachableRedstoneTrigger implements Listener {
+	
+	public final static ObservableCustomBlock GREEN_SIGNAL;
+	public final static ObservableCustomBlock RED_SIGNAL;
+	
+	static {
+		GREEN_SIGNAL = new ObservableCustomBlock("green_signal", "http://img703.imageshack.us/img703/5993/signalgreen.png", 16);
+		RED_SIGNAL = new ObservableCustomBlock("red_signal", "http://img213.imageshack.us/img213/5175/signalred.png", 16);
+	}
 	
 	private BlockFace orientation;
 	
@@ -24,7 +38,7 @@ public class LeverRedstoneTrigger extends AttachableRedstoneTrigger {
 	 */
 	public LeverRedstoneTrigger(final Block trigger) {
 		super("lever_trigger_", trigger);
-
+		installSignal();
 	}
 	
 	public LeverRedstoneTrigger() {
@@ -38,6 +52,7 @@ public class LeverRedstoneTrigger extends AttachableRedstoneTrigger {
 		orientation = (BlockFace) values.get("orientation");
 
 		updateOrientation();
+		installSignal();
 		//
 		System.out.println("load:" + orientation);
 	}
@@ -59,6 +74,7 @@ public class LeverRedstoneTrigger extends AttachableRedstoneTrigger {
 		return map;
 	}
 	
+
 	private void updateOrientation() {
 		Lever lever = (Lever) trigger.getState().getData();
 		lever.setFacingDirection(orientation);
@@ -66,4 +82,31 @@ public class LeverRedstoneTrigger extends AttachableRedstoneTrigger {
 		trigger.setData(lever.getData());
 	}
 
+	
+	@Override
+	public void dispose() {
+		super.dispose();
+		getBlock().getRelative(orientation.getOppositeFace()).setType(Material.AIR);
+	}
+	
+	
+	private void installSignal() {		
+		Block signalBlock = getBlock().getRelative(orientation.getOppositeFace());
+		SpoutManager.getMaterialManager().overrideBlock(signalBlock, RED_SIGNAL);
+	}
+	
+	@EventHandler
+	public void onBlockRedstoneChange(final BlockRedstoneEvent event) {
+		if(isBlockRedstoneEventHere(event)) {
+			super.onBlockRedstoneChange(event);
+			
+			Block signalBlock = getBlock().getRelative(orientation.getOppositeFace());
+			
+			if(event.getNewCurrent() > 0) {
+				SpoutManager.getMaterialManager().overrideBlock(signalBlock, GREEN_SIGNAL);
+			} else {
+				SpoutManager.getMaterialManager().overrideBlock(signalBlock, RED_SIGNAL);
+			}
+		}
+	}
 }

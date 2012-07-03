@@ -32,10 +32,14 @@ public abstract class RedstoneTrigger extends BlockTrigger implements Listener {
 	 */
 	@EventHandler
 	public void onBlockRedstoneChange(final BlockRedstoneEvent event) {		
-		if(getBlock().getLocation().equals(event.getBlock().getLocation())) {
+		if(isBlockRedstoneEventHere(event)) {
 			
 			getContext().updateTriggerState(this, event.getNewCurrent() > 0);
 		}
+	}
+
+	protected boolean isBlockRedstoneEventHere(final BlockRedstoneEvent event) {
+		return getBlock().getLocation().equals(event.getBlock().getLocation());
 	}
 	
 	@Override
