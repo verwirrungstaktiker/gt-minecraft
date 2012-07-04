@@ -1,7 +1,6 @@
 package gt.plugin.helloeditor;
 
 import gt.general.GameManager;
-import gt.general.Spawn;
 import gt.general.character.TeamManager;
 import gt.general.world.WorldManager;
 import gt.lastgnome.game.EditorLastGnomeGame;
@@ -17,9 +16,7 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
-import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.java.JavaPlugin;
-import org.getspout.spoutapi.inventory.SpoutItemStack;
 
 
 /**
@@ -83,6 +80,9 @@ public class HelloEditor extends JavaPlugin implements Listener {
 				"*[F12]Cancel Trigger Context");
 	}
 	
+	/**
+	 * configures CommandExecutors
+	 */
 	private void setupCommands() {
 		getCommand("helpme").setExecutor(new PlayerCommandExecutor() {
 			@Override

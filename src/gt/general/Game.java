@@ -31,8 +31,6 @@ public abstract class Game implements Listener {
 		disconnectedHeros = new HashMap<Player, Hero>();
 	}
 
-
-	
 	/**
 	 * Looks if the player belonged to this game, before a disconnect
 	 * @param player a player
@@ -115,7 +113,10 @@ public abstract class Game implements Listener {
 		return world;
 	}
 	
-	public void setWorldInstance(WorldInstance world) {
+	/**
+	 * @param world the WorldInstance to be set
+	 */
+	public void setWorldInstance(final WorldInstance world) {
 		this.world = world;
 	}
 }

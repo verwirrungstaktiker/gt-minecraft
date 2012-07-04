@@ -39,6 +39,9 @@ public class Spawn extends YamlSerializable implements BlockObserver {
 	private World world;
 	private final Set<Block> spawnBlocks;
 	
+	/**
+	 * creates a new spawn
+	 */
 	public Spawn() {
 		spawnBlocks = newHashSet();
 	}
@@ -90,6 +93,9 @@ public class Spawn extends YamlSerializable implements BlockObserver {
 		return spawnBlocks;
 	}
 
+	/**
+	 * @param team the team to be spawned
+	 */
 	public void spawnTeam(final Team team) {
 		Iterator<Block> blocks = spawnBlocks.iterator();
 		Iterator<Hero> heros = team.getPlayers().iterator();

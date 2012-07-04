@@ -61,26 +61,10 @@ public class WorldInstance {
 	}
 	
 	/**
-	 * shortcut
-	 * 
-	 * @return where the players spawn
+	 * intializes this world instance
+	 *  
+	 * @param triggerManager the Triggermanager to be used
 	 */
-	public Location getSpawnLocation() {
-		return world.getSpawnLocation();
-	};
-	
-	
-	/**
-	 * @return the triggerManager
-	 */
-	public TriggerManager getTriggerManager() {
-		return triggerManager;
-	}
-
-	public Spawn getSpawn() {
-		return spawn;
-	}
-	
 	public void init(final TriggerManager triggerManager) {
 		triggerManager.setup(TriggerManager.PERSISTANCE_FILE, this);
 		this.triggerManager = triggerManager;
@@ -90,17 +74,44 @@ public class WorldInstance {
 		this.spawn = spawn;
 	}
 	
+	/**
+	 * @return the triggerManager
+	 */
+	public TriggerManager getTriggerManager() {
+		return triggerManager;
+	}
+
+	/**
+	 * @return the Spawn associated with this Worldinstance
+	 */
+	public Spawn getSpawn() {
+		return spawn;
+	}
+
+	/**
+	 * saves this worldInstance
+	 */
 	public void save() {
 		saveMeta(TriggerManager.PERSISTANCE_FILE, triggerManager);
 		saveMeta(Spawn.PERSISTANCE_FILE, spawn);
+		
+		world.save();
 	}
 	
+	/**
+	 * disposes this worldInstance
+	 */
 	public void dispose() {
 		triggerManager.dispose();
 		spawn.dispose();
 	}
 	
-
+	/**
+	 * reads a yaml file into a map
+	 * 
+	 * @param fileName the file to load
+	 * @return a map representing the file contents
+	 */
 	public Map<String, Object> loadMeta(final String fileName) {		
 		try {
 			File path = new File(world.getWorldFolder(), fileName);
@@ -120,6 +131,12 @@ public class WorldInstance {
 		}
 	}
 	
+	/**
+	 * writes a map into a yaml file
+	 * 
+	 * @param fileName the file to write
+	 * @param values the data to write
+	 */
 	public void saveMeta(final String fileName, final Map<String, Object> values) {
 		try {
 			File path = new File(world.getWorldFolder(), fileName);
@@ -133,7 +150,22 @@ public class WorldInstance {
 		}
 	}
 	
+	/**
+	 * writes a YamlSerializable to a yaml file
+	 * 
+	 * @param fileName the file to write
+	 * @param serializable the object to write
+	 */
 	public void saveMeta(final String fileName, final YamlSerializable serializable) {
 		saveMeta(fileName, serializable.dump());
+	}
+
+	/**
+	 * shortcut
+	 * 
+	 * @return where the players spawn
+	 */
+	public Location getSpawnLocation() {
+		return world.getSpawnLocation();
 	}
 }

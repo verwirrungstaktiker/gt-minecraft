@@ -1,8 +1,6 @@
 package gt.general.world;
 
 import static com.google.common.collect.Maps.*;
-
-import gt.general.Spawn;
 import gt.general.trigger.TriggerManager;
 
 import java.util.Collection;
