@@ -1,14 +1,19 @@
 package gt.plugin;
 
+import gt.general.world.ObservableCustomBlock;
 import gt.plugin.listener.MultiListener;
 
 import org.bukkit.Bukkit;
+import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.getspout.spoutapi.inventory.SpoutItemStack;
 
 /**
  * Core singleton - must be initialized with Hello.initialize(JavaPlugin)
  */
 public final class Hello {
+	
+	private static ObservableCustomBlock INV_BLOCK;
 
 	private static Hello instance;
 	private final JavaPlugin plugin;
@@ -28,6 +33,9 @@ public final class Hello {
 
 			instance = new Hello(plugin);
 			MultiListener.initialize(plugin);
+			
+			INV_BLOCK = new ObservableCustomBlock("invisibleBlock", "https://dl.dropbox.com/u/29386658/gt/textures/invisible.png", 16);
+			INV_BLOCK.setOpaque(true);
 
 		} else {
 			throw new RuntimeException("Hello already initialized");
@@ -80,10 +88,18 @@ public final class Hello {
 		Bukkit.getScheduler().cancelTask(id);
 	}
 
+	
 	/**
-	 * @return the currently running plugin
+	 * Adds the Set of CustomBlocks to the player inventory
+	 * TODO: don't forget to add other CustomBlocks later
+	 * @param player a bukkit player
 	 */
-	public static JavaPlugin getPlugin() {
-		return getInstance().plugin;
+	public static void giveCustomBlocks(Player player) {
+		player.getInventory().setItemInHand(new SpoutItemStack(INV_BLOCK));
 	}
+	 
+	 public static JavaPlugin getPlugin() {
+		 return Hello.getInstance().plugin;
+	 }
+
 }
