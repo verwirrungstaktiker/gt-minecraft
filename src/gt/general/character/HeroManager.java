@@ -26,15 +26,12 @@ public class HeroManager implements Listener, Runnable {
 	
 	private final InventoryConnector inventoryConnector;
 	
-	private final Set<Game> runningGames;
 	/**
 	 * Creates a new HeroManager
 	 * @param plugin the plugin we run
-	 * @param runningGames all currently running games
 	 */
-	public HeroManager(final JavaPlugin plugin, final Set<Game>runningGames) {
+	public HeroManager(final JavaPlugin plugin) {
 		this.plugin = plugin;
-		this.runningGames = runningGames;
 		registerListener(this);
 
 		inventoryConnector = new InventoryConnector();
@@ -56,15 +53,15 @@ public class HeroManager implements Listener, Runnable {
 		Player player = ple.getPlayer();
 		
 		// TODO redo this
-		for (Game game : runningGames) {
-			Hero hero = game.getDisconnectedHero(player);
-			if (hero != null) {
-				registerListener(hero);
-				HEROS.put(player.getName().toLowerCase(), hero);
-				game.restoreHero(hero);
-				return;
-			}
-		}
+//		for (Game game : runningGames) {
+//			Hero hero = game.getDisconnectedHero(player);
+//			if (hero != null) {
+//				registerListener(hero);
+//				HEROS.put(player.getName().toLowerCase(), hero);
+//				game.restoreHero(hero);
+//				return;
+//			}
+//		}
 		
 		Hero hero = new Hero(player);
 		hero.getPlayer().getInventory().setMaxStackSize(1);

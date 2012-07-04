@@ -35,8 +35,6 @@ public class HelloEditor extends JavaPlugin implements Listener {
 	/**
 	 * Initialization of our plugin
 	 */
-
-
 	public void onEnable() {		
 		Hello.initialize(this);
 		
@@ -47,11 +45,45 @@ public class HelloEditor extends JavaPlugin implements Listener {
 		
 		game = builder.getEditorGame();
 
-		
-
 		MultiListener.registerListeners(new KeyPressListener());
 		printInformation();
 		
+		setupCommands();
+	}
+	
+	/** */
+	public void onDisable() {
+		gameManager.endAllGames();
+	}
+	
+	/**
+	 * help
+	 */
+	private void printInformation() {
+		System.out.println(
+				"\n  ********************** \n" +
+				"  Welcome to Build Mode \n" +
+				"   [F6]   -- Toggle Trigger Context Mode \n" +
+				"   [F7]   -- Toggle Player Trigger State (trigger/response)\n" +
+				"   [F9]   -- Toggle Context Input Function (and/or)\n" +
+				"   [F12]   -- Cancel Trigger Context Mode \n" +
+				"   /helpme -- show this information \n" +
+				"  **********************");
+	}
+
+	/**
+	 * @param player the player which needs some help
+	 */
+	private void printChatHelp(final Player player) {
+		player.sendMessage(
+				ChatColor.YELLOW + 
+				"* [F6]Toggle Trigger Context \n" +
+				"* [F7]Toggle Trigger State \n" +
+				"* [F9]Toggle Context Mode \n" +
+				"*[F12]Cancel Trigger Context");
+	}
+	
+	private void setupCommands() {
 		getCommand("helpme").setExecutor(new PlayerCommandExecutor() {
 			@Override
 			public boolean onPlayerCommand(final Player player, final Command cmd, final String label, final String[] args) {
@@ -85,39 +117,5 @@ public class HelloEditor extends JavaPlugin implements Listener {
 				return true;
 			}
 		});
-		
-		
-	}
-	
-	/**
-	 * help
-	 */
-	private void printInformation() {
-		System.out.println(
-				"\n  ********************** \n" +
-				"  Welcome to Build Mode \n" +
-				"   [F6]   -- Toggle Trigger Context Mode \n" +
-				"   [F7]   -- Toggle Player Trigger State (trigger/response)\n" +
-				"   [F9]   -- Toggle Context Input Function (and/or)\n" +
-				"   [F12]   -- Cancel Trigger Context Mode \n" +
-				"   /helpme -- show this information \n" +
-				"  **********************");
-	}
-
-	/** */
-	public void onDisable() {
-		gameManager.endAllGames();
-	}
-
-	/**
-	 * @param player the player which needs some help
-	 */
-	private void printChatHelp(final Player player) {
-		player.sendMessage(
-				ChatColor.YELLOW + 
-				"* [F6]Toggle Trigger Context \n" +
-				"* [F7]Toggle Trigger State \n" +
-				"* [F9]Toggle Context Mode \n" +
-				"*[F12]Cancel Trigger Context");
 	}
 }
