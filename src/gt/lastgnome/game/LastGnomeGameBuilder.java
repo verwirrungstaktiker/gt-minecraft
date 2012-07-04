@@ -42,7 +42,7 @@ public class LastGnomeGameBuilder extends AbstractLastGnomeGameBuilder {
 		MultiListener.registerListener(game);
 
 		ZombieManager zombieManager = game.getZombieManager();
-		int id = Hello.ScheduleSyncTask(zombieManager, 0, 10);
+		int id = Hello.scheduleSyncTask(zombieManager, 0, 10);
 		zombieManager.setTaskID(id);
 		
 	

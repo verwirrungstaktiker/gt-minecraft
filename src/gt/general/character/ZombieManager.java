@@ -121,7 +121,7 @@ public class ZombieManager implements Listener, Runnable{
 	
 	public void cleanup() {
 		clearZombies();
-		Hello.cancelTask(taskID);
+		Hello.cancelScheduledTask(taskID);
 		
 	}
 

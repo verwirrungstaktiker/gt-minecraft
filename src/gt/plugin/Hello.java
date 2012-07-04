@@ -1,83 +1,89 @@
 package gt.plugin;
 
-import gt.general.world.WorldManager;
 import gt.plugin.listener.MultiListener;
 
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 
-public class Hello {
+/**
+ * Core singleton - must be initialized with Hello.initialize(JavaPlugin)
+ */
+public final class Hello {
 
 	private static Hello instance;
-	
 	private final JavaPlugin plugin;
-	private WorldManager worldManager;
+
+	/**
+	 * @param plugin the currently running plugin
+	 */
+	private Hello(final JavaPlugin plugin) {
+		this.plugin = plugin;
+	}
+
+	/**
+	 * @param plugin the currently running plugin
+	 */
+	public static void initialize(final JavaPlugin plugin) {
+		if (instance == null) {
+
+			instance = new Hello(plugin);
+			MultiListener.initialize(plugin);
+
+		} else {
+			throw new RuntimeException("Hello already initialized");
+		}
+	}
+
+	/**
+	 * @return the instance of the singleton
+	 */
+	public static Hello getInstance() {
+		if (instance != null) {
+			return instance;
+		} else {
+			throw new RuntimeException("Hello must be initialized");
+		}
+	}
 	
 	/**
 	 * Schedules a synchron Task
-	 * @param task the task to be scheduled 
+	 * 
+	 * shortcut for BukkitScheduler#scheduleSyncRepeatingTask(JavaPlugin, Runnable, int, int)
+	 * 
+	 * @param task the task to be scheduled
+	 * @param initial number of ticks before the first schedule
 	 * @param ticks task is executed every ticks ticks
 	 * @return taskId
 	 */
-	public static int ScheduleSyncTask(Runnable task, int initial, int ticks) {
-		return Bukkit
-					.getScheduler()
-					.scheduleSyncRepeatingTask(Hello.getPlugin(), task, initial, ticks);	
+	public static int scheduleSyncTask(final Runnable task, final int initial, final int ticks) {
+		return Bukkit.getScheduler().scheduleSyncRepeatingTask(getPlugin(), task, initial, ticks);
 	}
-	
+
 	/**
 	 * Schedules a asynchron Task
-	 * @param task the task to be scheduled 
+	 * 
+	 * shortcut for BukkitScheduler#scheduleAsyncRepeatingTask(JavaPlugin, Runnable, int, int)
+	 * 
+	 * @param task the task to be scheduled
+	 * @param initial number of ticks before the first schedule
 	 * @param ticks task is executed every ticks ticks
 	 * @return taskId
 	 */
-	public static int ScheduleAsyncTask(Runnable task, int initial, int ticks) {
-		return Bukkit
-					.getScheduler()
-					.scheduleAsyncRepeatingTask(Hello.getPlugin(), task, initial, ticks);	
-	}	
-	
-	public static void cancelTask(int id) {
+	public static int scheduleAsyncTask(final Runnable task, final int initial, final int ticks) {
+		return Bukkit.getScheduler().scheduleAsyncRepeatingTask(getPlugin(), task, initial, ticks);
+	}
+
+	/**
+	 * @param id the id of the task to be cancelled
+	 */
+	public static void cancelScheduledTask(final int id) {
 		Bukkit.getScheduler().cancelTask(id);
 	}
-	
-	
-	 public static WorldManager getWorldManager() {
-		 if (instance != null) {
-			 return instance.worldManager;
-		 } else {
-			 throw new RuntimeException("Hello must be initialized");
-		 }		 
-	 }
-	 
-	 public static JavaPlugin getPlugin() {
-		 return Hello.getInstance().plugin;
-	 }
-	 
-	 protected Hello (final JavaPlugin plugin) {
-		 this.plugin = plugin;
-	 }
-	 
-	 public static void initialize(final JavaPlugin plugin) {
-		 if (instance == null) {
-			 
-			 instance = new Hello(plugin);
-			 MultiListener.initialize(plugin);
-			 
-		 } else {
-			 throw new RuntimeException("Hello already initialized");
-		 }
-	 }
-	 
-	 public static Hello getInstance() {
-		 if (instance != null) {
-			 return instance;
-		 } else {
-			 throw new RuntimeException("Hello must be initialized");
-		 }
-	 }
-	
-	
-	
-	
+
+	/**
+	 * @return the currently running plugin
+	 */
+	public static JavaPlugin getPlugin() {
+		return getInstance().plugin;
+	}
 }

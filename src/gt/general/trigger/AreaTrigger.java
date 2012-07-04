@@ -83,7 +83,7 @@ public class AreaTrigger extends Trigger implements Runnable{
 	}
 	@Override
 	public void dispose() {
-		Hello.cancelTask(taskID);
+		Hello.cancelScheduledTask(taskID);
 	}
 	@Override
 	public Map<String, Object> dump() {
@@ -92,7 +92,7 @@ public class AreaTrigger extends Trigger implements Runnable{
 	
 	@Override
 	public void setup(Map<String, Object> values, World world) {
-		taskID = Hello.ScheduleAsyncTask(this, 0, 10);
+		taskID = Hello.scheduleAsyncTask(this, 0, 10);
 		
 	}
 

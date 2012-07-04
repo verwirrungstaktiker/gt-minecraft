@@ -7,11 +7,13 @@ import gt.general.world.WorldManager;
 import gt.lastgnome.game.EditorLastGnomeGame;
 import gt.lastgnome.game.EditorLastGnomeGameBuilder;
 import gt.plugin.Hello;
+import gt.plugin.PlayerCommandExecutor;
 import gt.plugin.helloworld.KeyPressListener;
 import gt.plugin.listener.MultiListener;
 
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
+import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
@@ -49,6 +51,42 @@ public class HelloEditor extends JavaPlugin implements Listener {
 
 		MultiListener.registerListeners(new KeyPressListener());
 		printInformation();
+		
+		getCommand("helpme").setExecutor(new PlayerCommandExecutor() {
+			@Override
+			public boolean onPlayerCommand(final Player player, final Command cmd, final String label, final String[] args) {
+				printChatHelp(player);
+				return true;
+			}
+		});
+		
+		getCommand("teleport").setExecutor(new PlayerCommandExecutor() {
+			@Override
+			public boolean onPlayerCommand(final Player player, final Command cmd, final String label, final String[] args) {
+				player.teleport(game.getWorldInstance().getSpawnLocation());
+				return true;
+			}
+		});
+		
+		getCommand("blocks").setExecutor(new PlayerCommandExecutor() {
+			
+			@Override
+			public boolean onPlayerCommand(final Player player, final Command cmd, final String label, final String[] args) {
+				Hello.giveCustomBlocks(player);
+				return false;
+			}
+		});
+		
+		getCommand("save").setExecutor(new CommandExecutor() {
+			@Override
+			public boolean onCommand(final CommandSender sender, final Command cmd, final String label, final String[] args) {
+				game.save();
+				System.out.println("saved.");
+				return true;
+			}
+		});
+		
+		
 	}
 	
 	/**
@@ -70,52 +108,6 @@ public class HelloEditor extends JavaPlugin implements Listener {
 	public void onDisable() {
 		gameManager.endAllGames();
 	}
-	
-
-
-	/*
-	 * TODO this should be encapsuled in a extra class
-	 */
-	@Override
-	public boolean onCommand(final CommandSender sender, final Command cmd, final  String label, final String[] args) {
-		/*
-		 * set trigger input blocks
-		 */
-		if(isPlayer(sender) && commandEquals(cmd, "helpme")) {
-			printChatHelp((Player) sender);
-			return true;
-		}
-		
-		if(isPlayer(sender) && commandEquals(cmd, "teleport")) {
-			((Player)sender).teleport(game.getWorldInstance().getSpawnLocation());
-			return true;
-		}
-		
-		if(isPlayer(sender) && commandEquals(cmd, "spawn")) {
-			
-			System.out.println("generate spawn");
-			
-			ItemStack items = new SpoutItemStack(Spawn.SPAWN_BLOCK, 1);
-			getServer().getPlayer(sender.getName()).getInventory().addItem(items);
-			
-			return true;
-		}
-		
-		if(commandEquals(cmd, "dump")) {
-			// TODO ??
-			return true;
-		}
-		if(commandEquals(cmd, "save")) {
-			game.save();
-			System.out.println("saved.");
-			return true;
-		}
-		if(commandEquals(cmd, "load")) {
-			// TODO
-			return true;
-		}
-		return false;
-	}
 
 	/**
 	 * @param player the player which needs some help
@@ -128,21 +120,4 @@ public class HelloEditor extends JavaPlugin implements Listener {
 				"* [F9]Toggle Context Mode \n" +
 				"*[F12]Cancel Trigger Context");
 	}
-	
-	/**
-	 * @param cmd The Command to be matched.
-	 * @param string The case insensitive String to match the Command.
-	 * @return true if the Command matches the String
-	 */
-	private boolean commandEquals(final Command cmd, final String string) {
-		return cmd.getName().equalsIgnoreCase(string);
-	}
-
-	/**
-	 * @param commandSender the commandSender to be tested
-	 * @return true if commandSender is a subclass of Player
-	 */
-	private boolean isPlayer(final CommandSender commandSender) {
-		return commandSender instanceof Player;
-	}	
 }
