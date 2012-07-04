@@ -1,6 +1,6 @@
 package gt.general.trigger;
 
-import gt.plugin.Hello;
+import gt.plugin.meta.Hello;
 
 import java.util.HashSet;
 import java.util.Map;

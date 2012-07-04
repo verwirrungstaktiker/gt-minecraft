@@ -2,7 +2,7 @@ package gt.lastgnome;
 
 import gt.general.PortableItem;
 import gt.general.character.Hero;
-import gt.plugin.Hello;
+import gt.plugin.meta.Hello;
 
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.Plugin;

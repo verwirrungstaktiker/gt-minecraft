@@ -6,10 +6,10 @@ import gt.general.character.TeamManager;
 import gt.general.world.WorldManager;
 import gt.lastgnome.game.EditorLastGnomeGame;
 import gt.lastgnome.game.EditorLastGnomeGameBuilder;
-import gt.plugin.Hello;
-import gt.plugin.PlayerCommandExecutor;
 import gt.plugin.helloworld.KeyPressListener;
-import gt.plugin.listener.MultiListener;
+import gt.plugin.meta.Hello;
+import gt.plugin.meta.MultiListener;
+import gt.plugin.meta.PlayerCommandExecutor;
 
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;

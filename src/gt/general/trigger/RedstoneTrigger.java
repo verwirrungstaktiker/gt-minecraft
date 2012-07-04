@@ -1,6 +1,6 @@
 package gt.general.trigger;
 
-import gt.plugin.listener.MultiListener;
+import gt.plugin.meta.MultiListener;
 
 import java.util.Map;
 

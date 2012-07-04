@@ -2,7 +2,7 @@ package gt.general.trigger.response;
 
 import gt.general.character.ZombieManager;
 import gt.lastgnome.game.LastGnomeGame;
-import gt.plugin.Hello;
+import gt.plugin.meta.Hello;
 
 import java.util.HashMap;
 import java.util.HashSet;

@@ -5,8 +5,8 @@ import gt.general.character.Team;
 import gt.general.character.ZombieManager;
 import gt.general.trigger.TriggerManager;
 import gt.general.world.WorldManager;
-import gt.plugin.Hello;
-import gt.plugin.listener.MultiListener;
+import gt.plugin.meta.Hello;
+import gt.plugin.meta.MultiListener;
 
 public class LastGnomeGameBuilder extends AbstractLastGnomeGameBuilder {
 

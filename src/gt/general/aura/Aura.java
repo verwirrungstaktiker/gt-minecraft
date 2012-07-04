@@ -2,7 +2,7 @@ package gt.general.aura;
 
 import gt.general.character.Character;
 import gt.general.character.Hero;
-import gt.plugin.Hello;
+import gt.plugin.meta.Hello;
 
 import org.bukkit.Bukkit;
 

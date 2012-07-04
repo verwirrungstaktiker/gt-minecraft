@@ -1,4 +1,4 @@
-package gt.plugin.listener;
+package gt.plugin.meta;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;

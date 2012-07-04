@@ -1,7 +1,7 @@
 package gt.general.character;
 
 import gt.general.aura.Aura;
-import gt.plugin.Hello;
+import gt.plugin.meta.Hello;
 
 import java.util.Vector;
 

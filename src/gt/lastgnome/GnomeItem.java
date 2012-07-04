@@ -7,7 +7,7 @@ import gt.general.aura.EffectFactory;
 import gt.general.aura.GnomeCarrierEffect;
 import gt.general.aura.GnomeSlowEffect;
 import gt.general.character.Hero;
-import gt.plugin.Hello;
+import gt.plugin.meta.Hello;
 
 import java.util.Iterator;
 

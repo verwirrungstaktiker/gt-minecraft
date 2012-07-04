@@ -1,7 +1,7 @@
 package gt.general.gui;
 
 import gt.general.character.Hero;
-import gt.plugin.Hello;
+import gt.plugin.meta.Hello;
 
 import java.util.EnumMap;
 import java.util.Map;

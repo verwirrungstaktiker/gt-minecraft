@@ -6,7 +6,7 @@ import gt.general.character.HeroManager;
 import gt.general.character.Team;
 import gt.general.character.TeamManager;
 import gt.lastgnome.game.LastGnomeGameBuilder;
-import gt.plugin.PlayerCommandExecutor;
+import gt.plugin.meta.PlayerCommandExecutor;
 
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;

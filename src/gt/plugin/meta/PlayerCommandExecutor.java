@@ -1,4 +1,4 @@
-package gt.plugin;
+package gt.plugin.meta;
 
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -21,11 +21,11 @@ public abstract class PlayerCommandExecutor implements CommandExecutor {
 	/**
 	 * optional override
 	 * 
-	 * @param player
-	 * @param cmd
-	 * @param label
-	 * @param args
-	 * @return
+	 * @param player the player who called the command
+	 * @param cmd the command itself
+	 * @param label the label of the command
+	 * @param args passed arguments
+	 * @return true on success
 	 */
 	public abstract boolean onPlayerCommand(final Player player, final Command cmd, final String label, final String[] args);
 

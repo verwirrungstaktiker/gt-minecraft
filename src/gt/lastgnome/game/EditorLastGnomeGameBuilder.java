@@ -4,7 +4,7 @@ import gt.general.world.WorldManager;
 import gt.plugin.helloeditor.BuildManager;
 import gt.plugin.helloeditor.EditorTriggerManager;
 import gt.plugin.helloeditor.PlayerManager;
-import gt.plugin.listener.MultiListener;
+import gt.plugin.meta.MultiListener;
 
 
 public class EditorLastGnomeGameBuilder extends AbstractLastGnomeGameBuilder {

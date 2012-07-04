@@ -5,10 +5,10 @@ import gt.general.character.HeroManager;
 import gt.general.character.TeamManager;
 import gt.general.world.InstantiatingWorldManager;
 import gt.general.world.WorldManager;
-import gt.plugin.Hello;
 import gt.plugin.helloworld.command.StartGameCommandExecutor;
 import gt.plugin.helloworld.command.TeamCommandExecutor;
-import gt.plugin.listener.MultiListener;
+import gt.plugin.meta.Hello;
+import gt.plugin.meta.MultiListener;
 
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;

@@ -1,7 +1,7 @@
 package gt.general.world;
 
 
-import gt.plugin.Hello;
+import gt.plugin.meta.Hello;
 
 import org.bukkit.World;
 import org.bukkit.block.Block;

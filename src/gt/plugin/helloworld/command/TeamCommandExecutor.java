@@ -7,7 +7,7 @@ import gt.general.character.Hero;
 import gt.general.character.HeroManager;
 import gt.general.character.Team;
 import gt.general.character.TeamManager;
-import gt.plugin.PlayerCommandExecutor;
+import gt.plugin.meta.PlayerCommandExecutor;
 /**
  * Handles the <tt>/team</tt> command.
  * /team disband Deletes the team of the sender
