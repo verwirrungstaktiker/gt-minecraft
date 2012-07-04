@@ -16,6 +16,8 @@ import org.bukkit.block.Block;
  */
 public class TriggerManager extends YamlSerializable{
 
+	public final static String PERSISTANCE_FILE = "trigger.yml";
+	
 	private final Set<TriggerContext> triggerContexts;
 	
 	public TriggerManager() {

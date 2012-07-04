@@ -30,15 +30,12 @@ public class LastGnomeGameBuilder extends AbstractLastGnomeGameBuilder {
 	}
 
 	@Override
-	public void buildGui() {
-		for(Hero hero : team.getPlayers()) {
-			game.upgradeGui(hero);
-		}		
-	}
-
-	@Override
 	public void startGame() {
 
+		for(Hero hero : team.getPlayers()) {
+			game.upgradeGui(hero);
+		}	
+		
 		MultiListener.registerListener(game);
 
 		ZombieManager zombieManager = game.getZombieManager();

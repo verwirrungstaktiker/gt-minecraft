@@ -24,6 +24,10 @@ import org.getspout.spoutapi.SpoutManager;
 
 public class Spawn extends YamlSerializable implements BlockObserver {
 	
+	public static final String KEY_SPAWN = "spawn";
+	
+	public static final String PERSISTANCE_FILE = "spawn.yml";
+	
 	public static final ObservableCustomBlock SPAWN_BLOCK;
 	
 	static {
@@ -42,7 +46,7 @@ public class Spawn extends YamlSerializable implements BlockObserver {
 	@SuppressWarnings("unchecked")
 	@Override
 	public void setup(final Map<String, Object> values, final World world) {
-		List<Map<String, Object>> blocks = (List<Map<String, Object>>) values.get(SpawnPersistance.KEY_SPAWN);
+		List<Map<String, Object>> blocks = (List<Map<String, Object>>) values.get(KEY_SPAWN);
 		
 		for(Map<String, Object> coords : blocks) {
 			Block block = blockFromCoordinates(coords, world);
@@ -64,7 +68,7 @@ public class Spawn extends YamlSerializable implements BlockObserver {
 		}
 		
 		HashMap<String, Object> ret = newHashMap();
-		ret.put(SpawnPersistance.KEY_SPAWN, blocks);
+		ret.put(KEY_SPAWN, blocks);
 		return ret;
 	}
 

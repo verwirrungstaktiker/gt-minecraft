@@ -30,10 +30,7 @@ public class EditorLastGnomeGameBuilder extends AbstractLastGnomeGameBuilder {
 		
 		game.getWorldInstance().init(triggerManager);
 	}
-	
-	@Override
-	public void buildGui() {}
-	
+
 	@Override
 	public void startGame() {}
 

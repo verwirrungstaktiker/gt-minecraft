@@ -7,8 +7,6 @@ import gt.general.world.WorldManager;
 import java.util.HashSet;
 import java.util.Set;
 
-import org.bukkit.World;
-
 /**
  * Implements common functionality for managing game modes.
  * 
@@ -31,7 +29,7 @@ public class GameManager implements GameObserver{
 	}
 
 	/**
-	 * @param initialWorld the world with the initial spawn
+	 * @param worldManager the global WorldManager
 	 * @param teamManager the global TeamManager
 	 */
 	public GameManager(final WorldManager worldManager, final TeamManager teamManager) {
@@ -42,16 +40,18 @@ public class GameManager implements GameObserver{
 	}
 	
 	
+	/**
+	 * instantiates a new game and starts it
+	 * 
+	 * @param builder utilized to instantiate the game
+	 * @param worldName the world, where the game should take place
+	 * @return the recently started game
+	 */
 	public Game startGame(final GameBuilder builder, final String worldName) {
 		
 		builder.instantiateGame();
-		
 		builder.buildWorldInstance(worldManager, worldName);
-		
-		builder.loadGameSpecific();
-		
-		builder.buildGui();
-		
+		builder.loadGameSpecific();	
 		builder.startGame();
 		
 		Game game = builder.getGame();

@@ -37,18 +37,6 @@ public class WorldInstance {
 	 */
 	public WorldInstance(final World world) {
 		this.world = world;
-		
-		/*
-		// TODO refactor this -> init should not be done in this class -> controller
-		triggerFile = new File(world.getWorldFolder(), "trigger.yml");
-		this.triggerManager = triggerManager;
-		loadTriggerManager();
-		
-		spawnFile = new File(world.getWorldFolder(), "spawn.yml");
-		this.spawn = spawn;
-		
-		loadSpawn();
-		*/
 	}
 	
 	/**
@@ -93,19 +81,18 @@ public class WorldInstance {
 		return spawn;
 	}
 	
-	// TODO abstract file names
 	public void init(final TriggerManager triggerManager) {
-		triggerManager.setup("trigger.yml", this);
+		triggerManager.setup(TriggerManager.PERSISTANCE_FILE, this);
 		this.triggerManager = triggerManager;
 		
 		Spawn spawn = new Spawn();
-		spawn.setup("spawn.yml", this);
+		spawn.setup(Spawn.PERSISTANCE_FILE, this);
 		this.spawn = spawn;
 	}
 	
 	public void save() {
-		saveMeta("trigger.yml", triggerManager);
-		saveMeta("spawn.yml", spawn);
+		saveMeta(TriggerManager.PERSISTANCE_FILE, triggerManager);
+		saveMeta(Spawn.PERSISTANCE_FILE, spawn);
 	}
 	
 	public void dispose() {
