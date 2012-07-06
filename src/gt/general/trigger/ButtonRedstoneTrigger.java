@@ -38,32 +38,26 @@ public class ButtonRedstoneTrigger extends AttachableRedstoneTrigger {
 		orientation = (BlockFace) values.get("orientation");
 		
 		updateOrientation();
-		//
-		System.out.println("load:" + orientation);
+
 	}
 	
 	@Override
 	public Map<String, Object> dump() {
 		Map<String, Object> map = super.dump();//new HashMap<String,Object>();
-
-		map.putAll(coordinatesFromBlock(trigger));
-		map.put("material", material);
 		
-		Button button = (Button) trigger.getState().getData();
+		Button button = (Button) getBlock().getState().getData();
 		orientation = button.getFacing();
 		
 		map.put("orientation", orientation);
-		//
-		System.out.println("dump:" + orientation);
 
 		return map;
 	}
 	
 	private void updateOrientation() {
-		Button button = (Button) trigger.getState().getData();
+		Button button = (Button) getBlock().getState().getData();
 		button.setFacingDirection(orientation);
 		
-		trigger.setData(button.getData());
+		getBlock().setData(button.getData());
 	}
 
 }

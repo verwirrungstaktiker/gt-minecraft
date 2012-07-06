@@ -1,24 +1,24 @@
 package gt.general.trigger;
 
+import static com.google.common.collect.Maps.*;
+
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 
-import org.bukkit.Effect;
 import org.bukkit.Material;
+import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.event.Listener;
-import org.bukkit.util.Vector;
-import org.getspout.spoutapi.particle.Particle;
-import org.getspout.spoutapi.particle.Particle.ParticleType;
 
 /**
  *  Represents any Trigger that has exactly 1 corresponding Block
  * 
- * @author roman
+ * @author roman, sebastian
  */
 public abstract class BlockTrigger extends Trigger implements Listener {
-	protected Block trigger;
-	protected Material material;
+	private Block trigger;
+	private Material material;
 	
 	public BlockTrigger(String prefix, Block block) {
 		super(prefix);
@@ -32,11 +32,36 @@ public abstract class BlockTrigger extends Trigger implements Listener {
 	}
 
 	
+	@Override
+	public void setup(final Map<String, Object> values, final World world) {
+		trigger = blockFromCoordinates(values, world);
+		trigger.setType((Material) values.get("material"));
+	}
+
+	@Override
+	public Map<String, Object> dump() {
+		Map<String, Object> map = newHashMap();
+		
+		map.putAll(coordinatesFromBlock(trigger));
+		map.put("material", material);
+		return map;
+	}
+
+	@Override
+	public void dispose() {
+		getBlock().setType(Material.AIR);
+	}
+	
+	
 	/**
 	 * @return the block to be watched
 	 */
 	protected Block getBlock() {
 		return trigger;
+	}
+	
+	protected Material getMaterial() {
+		return material;
 	}
 	
 	/**

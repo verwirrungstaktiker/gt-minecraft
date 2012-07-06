@@ -51,19 +51,22 @@ public abstract class RedstoneTrigger extends BlockTrigger implements Listener {
 	
 	@Override
 	public void setup(final Map<String, Object> values, final World world) {
+		super.setup(values, world);
+		
 		MultiListener.registerListener(this);
 		inverted = (Boolean) values.get("inverted");
 	}
 	
 	@Override
 	public Map<String, Object> dump() {
-		Map<String, Object> map = new HashMap<String,Object>();
+		Map<String, Object> map = super.dump();
 		map.put("inverted", inverted);
 		return map;
 	}
 	
 	@Override
 	public void dispose() {
+		super.dispose();
 		MultiListener.unregisterListener(this);
 	}
 	

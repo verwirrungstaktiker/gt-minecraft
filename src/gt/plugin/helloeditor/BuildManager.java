@@ -4,11 +4,13 @@ import static org.bukkit.ChatColor.*;
 import gt.general.trigger.ButtonRedstoneTrigger;
 import gt.general.trigger.LeverRedstoneTrigger;
 import gt.general.trigger.PressurePlateRedstoneTrigger;
+import gt.general.trigger.QuestionTrigger;
 import gt.general.trigger.TriggerContext;
 import gt.general.trigger.response.BlockDisappearResponse;
 import gt.general.trigger.response.DoorResponse;
 import gt.general.trigger.response.RedstoneTorchResponse;
 import gt.general.trigger.response.SignResponse;
+import gt.general.world.ObservableCustomBlock;
 
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
@@ -60,33 +62,45 @@ public class BuildManager implements Listener {
 		TriggerContext activeContext = playerManager.getContext(player.getName());
 		
 		if(block instanceof SpoutCraftBlock) {
-			
 			SpoutCraftBlock sBlock = (SpoutCraftBlock) block;
-			CustomBlock cBlock = sBlock.getCustomBlock();
-			
-			@SuppressWarnings("unused")
-			int a = 2;
-			
-		}
-		
-		switch(block.getType()) {
-			case WOOD_PLATE:
-			case STONE_PLATE:
-				playerManager.addTrigger(new PressurePlateRedstoneTrigger(block), activeContext, player);
-				break;
+			// custom blocks
+			if(sBlock.getCustomBlock() instanceof ObservableCustomBlock) {
+				ObservableCustomBlock oBlock = (ObservableCustomBlock) sBlock.getCustomBlock();
+
+				switch (oBlock.getCustomBlockType()) {
+				case QUESTION_BLOCK:
+					playerManager.addTrigger(new QuestionTrigger(block), activeContext, player);
+					break;
+
+				default:
+					// fail feedback
+					player.sendMessage(RED + "This Block can't be used as Trigger.");
+					System.out.println("This Block can't be used as Trigger. (Custom block)");
+					return;
+				}
 				
-			case LEVER:
-				playerManager.addTrigger(new LeverRedstoneTrigger(block, event.getBlockAgainst()), activeContext, player);
-				break;
-			case STONE_BUTTON:
-				playerManager.addTrigger(new ButtonRedstoneTrigger(block), activeContext, player);
-				break;
-				
-			default: 
-				// fail feedback
-				player.sendMessage(RED + "This Block can't be used as Trigger.");
-				System.out.println("This Block can't be used as Trigger. --> " + block.getType());
-				return;
+			// vanilla minecraft block
+			} else {
+				switch(block.getType()) {
+					case WOOD_PLATE:
+					case STONE_PLATE:
+						playerManager.addTrigger(new PressurePlateRedstoneTrigger(block), activeContext, player);
+						break;
+						
+					case LEVER:
+						playerManager.addTrigger(new LeverRedstoneTrigger(block, event.getBlockAgainst()), activeContext, player);
+						break;
+					case STONE_BUTTON:
+						playerManager.addTrigger(new ButtonRedstoneTrigger(block), activeContext, player);
+						break;
+						
+					default: 
+						// fail feedback
+						player.sendMessage(RED + "This Block can't be used as Trigger.");
+						System.out.println("This Block can't be used as Trigger. --> " + block.getType());
+						return;
+				}
+		 }
 		}
 		// success feedback
 		player.sendMessage(GREEN + "Trigger has been added");

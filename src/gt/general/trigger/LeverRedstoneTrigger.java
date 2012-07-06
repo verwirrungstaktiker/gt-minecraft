@@ -45,17 +45,13 @@ public class LeverRedstoneTrigger extends AttachableRedstoneTrigger implements L
 
 		updateOrientation();
 		installSignal();
-		//
-		System.out.println("load:" + orientation);
 	}
 	
 	@Override
 	public Map<String, Object> dump() {
 		Map<String, Object> map = super.dump();//new HashMap<String,Object>();
-		map.putAll(coordinatesFromBlock(trigger));
-		map.put("material", material);
 		
-		Lever lever = (Lever) trigger.getState().getData();
+		Lever lever = (Lever) getBlock().getState().getData();
 		orientation = lever.getFacing();
 		
 		map.put("orientation", orientation);
@@ -67,10 +63,10 @@ public class LeverRedstoneTrigger extends AttachableRedstoneTrigger implements L
 	
 
 	private void updateOrientation() {
-		Lever lever = (Lever) trigger.getState().getData();
+		Lever lever = (Lever) getBlock().getState().getData();
 		lever.setFacingDirection(orientation);
 		
-		trigger.setData(lever.getData());
+		getBlock().setData(lever.getData());
 	}
 
 	
