@@ -74,12 +74,8 @@ public abstract class YamlSerializable {
 	 * @param world where the location can be found
 	 * @return the Location
 	 */
-	protected Location locationFromCoordinates(final Map<String, Object> values, final World world) {
-		int x = (Integer) values.get(KEY_X_COORDINATE);
-		int y = (Integer) values.get(KEY_Y_COORDINATE);
-		int z = (Integer) values.get(KEY_Z_COORDINATE);
-		
-		return world.getBlockAt(x, y, z).getLocation();
+	public Location locationFromCoordinates(final Map<String, Object> values, final World world) {
+		return blockFromCoordinates(values, world).getLocation();
 	}	
 	
 	/**
@@ -100,7 +96,7 @@ public abstract class YamlSerializable {
 	 * @param location the location to be serialized
 	 * @return mapping - e.g. to be used in the serialization process
 	 */
-	protected Map<String, Object> coordinatesFromPoint(final Location location) {
+	public Map<String, Object> coordinatesFromPoint(final Location location) {
 		Map<String, Object> map = new HashMap<String,Object>();
 
 		map.put(KEY_X_COORDINATE, location.getBlockX());

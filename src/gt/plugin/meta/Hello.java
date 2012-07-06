@@ -12,8 +12,6 @@ import org.getspout.spoutapi.inventory.SpoutItemStack;
  */
 public final class Hello {
 	
-	private static ObservableCustomBlock invisibleBlock;
-
 	private static Hello instance;
 	private final JavaPlugin plugin;
 
@@ -32,10 +30,7 @@ public final class Hello {
 
 			instance = new Hello(plugin);
 			MultiListener.initialize(plugin);
-			
-			invisibleBlock = new ObservableCustomBlock("invisibleBlock", "https://dl.dropbox.com/u/29386658/gt/textures/invisible.png", 16);
-			invisibleBlock.setOpaque(true);
-
+			CustomBlockType.instantiate();
 		} else {
 			throw new RuntimeException("Hello already initialized");
 		}
@@ -95,7 +90,7 @@ public final class Hello {
 	 * @param player a bukkit player
 	 */
 	public static void giveCustomBlocks(final Player player) {
-		player.getInventory().setItemInHand(new SpoutItemStack(invisibleBlock));
+		player.getInventory().setItemInHand(CustomBlockType.INVISIBLE_BLOCK.getItemStack());
 	}
 	 
 	/**

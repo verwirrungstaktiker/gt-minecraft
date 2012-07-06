@@ -1,8 +1,8 @@
 package gt.general.trigger;
 
 import gt.general.world.ObservableCustomBlock;
+import gt.plugin.meta.CustomBlockType;
 
-import java.util.HashMap;
 import java.util.Map;
 
 import org.bukkit.Material;
@@ -21,14 +21,6 @@ import org.getspout.spoutapi.SpoutManager;
  * @author roman
  */
 public class LeverRedstoneTrigger extends AttachableRedstoneTrigger implements Listener {
-	
-	public final static ObservableCustomBlock GREEN_SIGNAL;
-	public final static ObservableCustomBlock RED_SIGNAL;
-	
-	static {
-		GREEN_SIGNAL = new ObservableCustomBlock("green_signal", "http://img703.imageshack.us/img703/5993/signalgreen.png", 16);
-		RED_SIGNAL = new ObservableCustomBlock("red_signal", "http://img213.imageshack.us/img213/5175/signalred.png", 16);
-	}
 	
 	private BlockFace orientation;
 	
@@ -91,7 +83,9 @@ public class LeverRedstoneTrigger extends AttachableRedstoneTrigger implements L
 	
 	private void installSignal() {		
 		Block signalBlock = getBlock().getRelative(orientation.getOppositeFace());
-		SpoutManager.getMaterialManager().overrideBlock(signalBlock, RED_SIGNAL);
+		ObservableCustomBlock red = CustomBlockType.RED_SIGNAL.getCustomBlock();
+		
+		SpoutManager.getMaterialManager().overrideBlock(signalBlock, red);
 	}
 	
 	@EventHandler
@@ -102,9 +96,11 @@ public class LeverRedstoneTrigger extends AttachableRedstoneTrigger implements L
 			Block signalBlock = getBlock().getRelative(orientation.getOppositeFace());
 			
 			if(event.getNewCurrent() > 0) {
-				SpoutManager.getMaterialManager().overrideBlock(signalBlock, GREEN_SIGNAL);
+				ObservableCustomBlock green = CustomBlockType.GREEN_SIGNAL.getCustomBlock();
+				SpoutManager.getMaterialManager().overrideBlock(signalBlock, green);
 			} else {
-				SpoutManager.getMaterialManager().overrideBlock(signalBlock, RED_SIGNAL);
+				ObservableCustomBlock red = CustomBlockType.RED_SIGNAL.getCustomBlock();
+				SpoutManager.getMaterialManager().overrideBlock(signalBlock, red);
 			}
 		}
 	}

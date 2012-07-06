@@ -1,7 +1,6 @@
 package gt.plugin.helloeditor;
 
 import static org.bukkit.ChatColor.*;
-import gt.general.trigger.AttachableRedstoneTrigger;
 import gt.general.trigger.ButtonRedstoneTrigger;
 import gt.general.trigger.LeverRedstoneTrigger;
 import gt.general.trigger.PressurePlateRedstoneTrigger;
@@ -15,8 +14,9 @@ import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
+import org.getspout.spout.block.SpoutCraftBlock;
+import org.getspout.spoutapi.material.CustomBlock;
 
 
 public class BuildManager implements Listener {	
@@ -58,6 +58,16 @@ public class BuildManager implements Listener {
 		Player player = event.getPlayer();
 		Block block = event.getBlockPlaced();
 		TriggerContext activeContext = playerManager.getContext(player.getName());
+		
+		if(block instanceof SpoutCraftBlock) {
+			
+			SpoutCraftBlock sBlock = (SpoutCraftBlock) block;
+			CustomBlock cBlock = sBlock.getCustomBlock();
+			
+			@SuppressWarnings("unused")
+			int a = 2;
+			
+		}
 		
 		switch(block.getType()) {
 			case WOOD_PLATE:

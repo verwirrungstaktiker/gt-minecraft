@@ -1,7 +1,9 @@
 package gt.general.character;
 
 import gt.general.Game;
+import gt.general.gui.GuiElementType;
 import gt.general.gui.HeroGui;
+import gt.general.gui.Prompt;
 
 import java.util.HashMap;
 import java.util.HashSet;
@@ -71,6 +73,7 @@ public class HeroManager implements Listener, Runnable {
 		
 		registerListener(hero);
 		HEROS.put(player.getName().toLowerCase(), hero);
+		
 	}
 	
 	/**

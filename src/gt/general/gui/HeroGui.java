@@ -6,6 +6,8 @@ import gt.plugin.meta.Hello;
 import java.util.EnumMap;
 import java.util.Map;
 
+import org.getspout.spoutapi.gui.InGameHUD;
+import org.getspout.spoutapi.gui.PopupScreen;
 import org.getspout.spoutapi.gui.Widget;
 
 public class HeroGui {
@@ -15,12 +17,16 @@ public class HeroGui {
 	
 	private final Hero holder;
 	
+	private final Prompt prompt;
+	
 	/**
 	 * @param holder To which hero this Gui is coupled
 	 */
 	public HeroGui (final Hero holder) {
 		guiElements = new EnumMap<GuiElementType, GuiElement>(GuiElementType.class);
 		this.holder = holder;
+		
+		prompt = new Prompt(holder);
 	}
 	
 	/**
@@ -61,9 +67,7 @@ public class HeroGui {
 	 */
 	public void attachWidgets(final Widget... widgets) {
 		for(Widget widget : widgets) {
-			holder
-				.getSpoutPlayer()
-				.getMainScreen()
+			getMainScreen()
 				.attachWidget(Hello.getPlugin(), widget);
 		}
 	}
@@ -75,10 +79,34 @@ public class HeroGui {
 	 */
 	public void removeWidgets(final Widget... widgets) {
 		for(Widget widget : widgets) {
-			holder
-				.getSpoutPlayer()
-				.getMainScreen()
+			getMainScreen()
 				.removeWidget(widget);
 		}
-	}	
+	}
+	
+	public void prompt(String message) {
+		
+		prompt.setMessage(message);
+		
+		getMainScreen()
+			.attachPopupScreen(prompt.getPopup());
+	}
+	
+	public void closePrompt() {
+		closePopup(prompt.getPopup());
+	}
+	
+	public void closePopup(PopupScreen popup) {
+		if(getMainScreen().getActivePopup().equals(popup)) {
+			getMainScreen()
+				.closePopup();
+		}
+	}
+	
+	/**
+	 * @return the main screen of the holder
+	 */
+	private InGameHUD getMainScreen() {
+		return	holder.getSpoutPlayer().getMainScreen();
+	}
 }

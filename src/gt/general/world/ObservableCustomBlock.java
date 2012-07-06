@@ -1,6 +1,7 @@
 package gt.general.world;
 
 
+import gt.plugin.meta.CustomBlockType;
 import gt.plugin.meta.Hello;
 
 import org.bukkit.World;
@@ -15,6 +16,8 @@ import com.google.common.collect.Multimap;
 
 public class ObservableCustomBlock extends GenericCubeCustomBlock {
 
+	private CustomBlockType customBlockType;
+	
 	public enum BlockEventType {
 		PLAYER_BLOCK_PLACED,
 		BLOCK_PLACED,
@@ -35,6 +38,7 @@ public class ObservableCustomBlock extends GenericCubeCustomBlock {
 	}
 	
 	Multimap<World, BlockObserver> observers = HashMultimap.create();
+
 	
 	public ObservableCustomBlock(String name, String textureUrl, int textureSize){
 		super(Hello.getPlugin(), name, textureUrl, textureSize);
@@ -78,5 +82,13 @@ public class ObservableCustomBlock extends GenericCubeCustomBlock {
 	
 	public void removeObserver(final BlockObserver blockObserver, final World world) {
 		observers.remove(world, blockObserver);
+	}
+
+	public void setCustomBlockType(CustomBlockType customBlockType) {
+		this.customBlockType = customBlockType;
+	}
+	
+	public CustomBlockType getCustomBlockType() {
+		return customBlockType;
 	}
 }
