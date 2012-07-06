@@ -59,8 +59,7 @@ public class LeverRedstoneTrigger extends AttachableRedstoneTrigger implements L
 	
 	@Override
 	public Map<String, Object> dump() {
-		Map<String, Object> map = new HashMap<String,Object>();
-
+		Map<String, Object> map = super.dump();//new HashMap<String,Object>();
 		map.putAll(coordinatesFromBlock(trigger));
 		map.put("material", material);
 		
