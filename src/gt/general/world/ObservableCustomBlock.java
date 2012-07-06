@@ -65,7 +65,7 @@ public class ObservableCustomBlock extends GenericCubeCustomBlock {
 		BlockEvent e = new BlockEvent();
 		e.block = world.getBlockAt(x, y, z);
 		e.player = player;
-		e.blockEventType = BlockEventType.PLAYER_BLOCK_PLACED;
+		e.blockEventType = BlockEventType.BLOCK_INTERACT;
 		
 		fireBlockEvent(world, e);
 	

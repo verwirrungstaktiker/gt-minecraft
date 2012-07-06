@@ -2,6 +2,8 @@ package gt.plugin.meta;
 
 import gt.general.world.ObservableCustomBlock;
 
+import org.bukkit.block.Block;
+import org.getspout.spoutapi.SpoutManager;
 import org.getspout.spoutapi.inventory.SpoutItemStack;
 
 /**
@@ -83,6 +85,13 @@ public enum CustomBlockType {
 	}
 
 	/**
+	 * @param block the block to be replaced
+	 */
+	public void place(final Block block) {
+		SpoutManager.getMaterialManager().overrideBlock(block, blockInstance);
+	}
+	
+	/**
 	 * instatiates all custom blocks
 	 */
 	static void instantiate() {
@@ -98,5 +107,4 @@ public enum CustomBlockType {
 		blockInstance = instatiator.instantiate();
 		blockInstance.setCustomBlockType(this);
 	}
-
 }

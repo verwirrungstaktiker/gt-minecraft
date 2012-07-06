@@ -12,6 +12,7 @@ import java.util.Map;
 
 import org.bukkit.World;
 import org.bukkit.block.Block;
+import org.getspout.spoutapi.SpoutManager;
 
 
 public class QuestionTrigger extends BlockTrigger implements BlockObserver{
@@ -26,6 +27,10 @@ public class QuestionTrigger extends BlockTrigger implements BlockObserver{
 		super("question", block);
 		registerWithSubject();
 	}
+	
+	public QuestionTrigger() {
+		
+	}
 
 	@Override
 	public void setup(final Map<String, Object> values, final World world) {
@@ -33,6 +38,9 @@ public class QuestionTrigger extends BlockTrigger implements BlockObserver{
 		
 		question = (String) values.get(KEY_QUESTION);
 		answer = (String) values.get(KEY_ANSWER);
+		
+		
+		CustomBlockType.QUESTION_BLOCK.place(getBlock());
 		
 		registerWithSubject();
 	}
@@ -66,7 +74,11 @@ public class QuestionTrigger extends BlockTrigger implements BlockObserver{
 
 	@Override
 	public void onBlockEvent(final BlockEvent blockEvent) {
+		System.out.println("w00t");
+		
 		if(blockEvent.blockEventType == BlockEventType.BLOCK_INTERACT && blockEvent.block.equals(getBlock())) {
+			
+			System.out.println("clicked question");
 			
 			Hero hero = HeroManager.getHero(blockEvent.player);
 			hero.getGui().prompt(question);
