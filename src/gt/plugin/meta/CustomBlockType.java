@@ -107,4 +107,12 @@ public enum CustomBlockType {
 		blockInstance = instatiator.instantiate();
 		blockInstance.setCustomBlockType(this);
 	}
+	
+	public static abstract class CustomBlockInstatiator {
+		/**
+		 * @return a newly instantiated block
+		 */
+		public abstract ObservableCustomBlock instantiate();
+	}
+
 }
