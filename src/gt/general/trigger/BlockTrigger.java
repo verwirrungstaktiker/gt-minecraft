@@ -34,8 +34,12 @@ public abstract class BlockTrigger extends Trigger implements Listener {
 	
 	@Override
 	public void setup(final Map<String, Object> values, final World world) {
+
+		material = (Material) values.get("material");
+				
 		trigger = blockFromCoordinates(values, world);
-		trigger.setType((Material) values.get("material"));
+		trigger.setType(material);
+		
 	}
 
 	@Override
