@@ -1,5 +1,7 @@
 package gt.general.trigger;
 
+import gt.general.character.Hero;
+import gt.general.character.HeroManager;
 import gt.general.world.BlockObserver;
 import gt.general.world.ObservableCustomBlock;
 import gt.general.world.ObservableCustomBlock.BlockEvent;
@@ -65,7 +67,10 @@ public class QuestionTrigger extends BlockTrigger implements BlockObserver{
 	@Override
 	public void onBlockEvent(final BlockEvent blockEvent) {
 		if(blockEvent.blockEventType == BlockEventType.BLOCK_INTERACT && blockEvent.block.equals(getBlock())) {
-			System.out.println("clicked");
+			
+			Hero hero = HeroManager.getHero(blockEvent.player);
+			hero.getGui().prompt(question);
+			
 		}
 	}
 

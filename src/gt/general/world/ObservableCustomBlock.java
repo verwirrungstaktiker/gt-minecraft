@@ -7,6 +7,7 @@ import gt.plugin.meta.Hello;
 import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.entity.LivingEntity;
+import org.bukkit.entity.Player;
 import org.getspout.spoutapi.material.block.GenericCubeCustomBlock;
 import org.getspout.spoutapi.player.SpoutPlayer;
 
@@ -20,21 +21,16 @@ public class ObservableCustomBlock extends GenericCubeCustomBlock {
 	
 	public enum BlockEventType {
 		PLAYER_BLOCK_PLACED,
-		BLOCK_PLACED,
 		BLOCK_DESTROYED,
 		BLOCK_INTERACT
 	}
 	
+	// TODO this must be done better
 	public class BlockEvent {		
-		public BlockEvent(Block blockAt, LivingEntity living,
-				BlockEventType type) {
-			block = blockAt;
-			entity = living;
-			blockEventType = type;
-		}
-		public final Block block;
-		public final LivingEntity entity;
-		public final BlockEventType blockEventType;
+		public Block block;
+		public LivingEntity entity;
+		public BlockEventType blockEventType;
+		public Player player;
 	}
 	
 	Multimap<World, BlockObserver> observers = HashMultimap.create();
@@ -46,25 +42,32 @@ public class ObservableCustomBlock extends GenericCubeCustomBlock {
 
 	public void onBlockPlace(World world, int x, int y, int z, final LivingEntity living) {
 		
-		fireBlockEvent(world,
-						new BlockEvent (world.getBlockAt(x, y, z),
-									 	living,
-									 	BlockEventType.PLAYER_BLOCK_PLACED));
+		BlockEvent e = new BlockEvent();
+		e.block = world.getBlockAt(x, y, z);
+		e.entity = living;
+		e.blockEventType = BlockEventType.PLAYER_BLOCK_PLACED;
+		
+		fireBlockEvent(world, e);
 	}
 	
 	public void onBlockDestroyed(World world, int x, int y, int z) {
-		fireBlockEvent(world,
-				new BlockEvent (world.getBlockAt(x, y, z),
-							 	null,
-							 	BlockEventType.BLOCK_DESTROYED));
+		
+		BlockEvent e = new BlockEvent();
+		e.block = world.getBlockAt(x, y, z);
+		e.blockEventType = BlockEventType.BLOCK_DESTROYED;
+		
+		fireBlockEvent(world, e);
 	}
 	
 	
 	public boolean onBlockInteract(World world, int x, int y, int z, SpoutPlayer player) {
-		fireBlockEvent(world,
-				new BlockEvent (world.getBlockAt(x, y, z),
-							 	player,
-							 	BlockEventType.BLOCK_INTERACT));
+		
+		BlockEvent e = new BlockEvent();
+		e.block = world.getBlockAt(x, y, z);
+		e.player = player;
+		e.blockEventType = BlockEventType.PLAYER_BLOCK_PLACED;
+		
+		fireBlockEvent(world, e);
 	
 		return true;
 		
