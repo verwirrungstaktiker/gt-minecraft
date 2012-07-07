@@ -57,7 +57,6 @@ public class Hero extends Character implements Listener{
 		this.player = player;
 		
 		observers = new HashSet<HeroObserver>();
-		gui = new HeroGui(this);
 	}
 
 	/**

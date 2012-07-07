@@ -54,6 +54,39 @@ public enum CustomBlockType {
 			block.setOpaque(true);
 			return block;
 		}
+	}),
+
+	/** starts a gnome game */
+	GNOME_END_BLOCK(new CustomBlockInstatiator() {
+		@Override
+		public ObservableCustomBlock instantiate() {
+			return new ObservableCustomBlock(
+					"end_socket",
+					"http://dl.dropbox.com/u/29386658/gt/textures/gnome_socket_end_16x16.png",
+					16);
+		}
+	}),
+
+	/** ends a gnome game */
+	GNOME_START_BLOCK(new CustomBlockInstatiator() {
+		@Override
+		public ObservableCustomBlock instantiate() {
+			return new ObservableCustomBlock(
+					"start_socket",
+					"http://dl.dropbox.com/u/29386658/gt/textures/gnome_socket_start_16x16.png",
+					16);
+
+		}
+	}),
+
+	/** spawns players */
+	SPAWN_BLOCK(new CustomBlockInstatiator() {
+		@Override
+		public ObservableCustomBlock instantiate() {
+			return new ObservableCustomBlock("spawn",
+					"http://img27.imageshack.us/img27/4669/spawnpv.png", 16);
+
+		}
 	});
 
 	private final CustomBlockInstatiator instatiator;
@@ -78,6 +111,13 @@ public enum CustomBlockType {
 	}
 
 	/**
+	 * @return the singleton block
+	 */
+	public ObservableCustomBlock getObservableCustomBlock() {
+		return blockInstance;
+	}
+
+	/**
 	 * @return a new Item stack of the block
 	 */
 	public SpoutItemStack getItemStack() {
@@ -85,12 +125,13 @@ public enum CustomBlockType {
 	}
 
 	/**
-	 * @param block the block to be replaced
+	 * @param block
+	 *            the block to be replaced
 	 */
 	public void place(final Block block) {
 		SpoutManager.getMaterialManager().overrideBlock(block, blockInstance);
 	}
-	
+
 	/**
 	 * instatiates all custom blocks
 	 */
@@ -107,8 +148,8 @@ public enum CustomBlockType {
 		blockInstance = instatiator.instantiate();
 		blockInstance.setCustomBlockType(this);
 	}
-	
-	public static abstract class CustomBlockInstatiator {
+
+	public abstract static class CustomBlockInstatiator {
 		/**
 		 * @return a newly instantiated block
 		 */

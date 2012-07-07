@@ -34,15 +34,14 @@ public class HeroManager implements Listener, Runnable {
 	 */
 	public HeroManager(final JavaPlugin plugin) {
 		this.plugin = plugin;
-		registerListener(this);
 
 		inventoryConnector = new InventoryConnector();
 		
 		// simulate on each tick (?)
-		plugin
-			.getServer()
-			.getScheduler()
-			.scheduleSyncRepeatingTask(plugin, this, 0, 1);
+//		plugin
+//			.getServer()
+//			.getScheduler()
+//			.scheduleSyncRepeatingTask(plugin, this, 0, 1);
 	}
 
 	/**
