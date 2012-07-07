@@ -35,22 +35,12 @@ public class DoorResponse extends BlockResponse {
 	public void triggered(final boolean active) {
 
 		Door door = (Door) block.getState().getData();
-		Block otherhalf;
-		
-		if (door.isTopHalf()) {
-			otherhalf = block.getRelative(BlockFace.DOWN);			
-		} else {
-			otherhalf = block.getRelative(BlockFace.UP);
-		}		
 
 		door.setOpen(active);
 		// play the door toggle sound
 		block.getWorld().playEffect(block.getLocation(), Effect.DOOR_TOGGLE, 10); // we can set the radius here
 		
 		block.setData(door.getData(), true);
-		door.setTopHalf(!door.isTopHalf());
-		otherhalf.setData(door.getData(), true);
-
 	}
 	
 
