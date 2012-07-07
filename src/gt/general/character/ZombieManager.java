@@ -120,9 +120,8 @@ public class ZombieManager implements Listener, Runnable{
 	}
 	
 	public void cleanup() {
-		clearZombies();
 		Hello.cancelScheduledTask(taskID);
-		
+		clearZombies();
 	}
 
 	/**
@@ -131,8 +130,8 @@ public class ZombieManager implements Listener, Runnable{
 	public void clearZombies() {
 		for (ZombieCharacter zombie : zombies) {
 			zombie.getZombie().remove();
-			zombies.remove(zombie);
 		}
+		zombies.clear();
 	}
 	
 	/**

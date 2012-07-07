@@ -20,6 +20,7 @@ import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
 
 /**
@@ -133,7 +134,7 @@ public class LastGnomeGame extends AbstractLastGnomeGame implements Listener{
 	
 	@Override
 	public void dispose() {
-		
+		getZombieManager().cleanup();
 		gameRunning = false;
 		super.dispose();
 		
@@ -164,7 +165,7 @@ public class LastGnomeGame extends AbstractLastGnomeGame implements Listener{
 	@Override
 	public void onEnd() {
 		// TODO Auto-generated method stub
-		getZombieManager().cleanup();		
+		dispose();		
 	}
 	
 	/**
@@ -173,14 +174,17 @@ public class LastGnomeGame extends AbstractLastGnomeGame implements Listener{
 	public void setWorldWrapper(final WorldInstance worldInstance) {
 		//this.worldInstance = worldInstance;
 		
-		//TODO HACKY!!!!! and no longer called anywhere ;)
-		for (TriggerContext tc : worldInstance.getTriggerManager().getTriggerContexts()) {
-			for (Response response : tc.getResponses()) {
-				if (response instanceof ZombieSpawnResponse) {
-					((ZombieSpawnResponse) response).setZombieManager(getZombieManager());
-				}
-			}
+		
+	}
+	
+	@EventHandler
+	public void onPlayerDeath(PlayerDeathEvent event) {
+		/*Player player = event.getEntity();
+		if (player.equals(gnomeBearer.getPlayer())) {
+			return;
 		}
+		
+		player.teleport(gnomeBearer.getLocation());*/
 	}
 	
 
