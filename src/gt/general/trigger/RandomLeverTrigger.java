@@ -31,6 +31,7 @@ public class RandomLeverTrigger extends LeverRedstoneTrigger{
 	@Override
 	public Map<String, Object> dump() {
 		Map<String, Object> map = super.dump();
+		
 		map.put("signals", signals.size());
 		for (int i = 0;i<signals.size();++i) {
 			map.putAll(prefixedCoordinatesFromBlock("s"+i+"_",signals.get(i)));			

@@ -2,7 +2,6 @@ package gt.general.trigger;
 
 import gt.plugin.meta.MultiListener;
 
-import java.util.HashMap;
 import java.util.Map;
 
 import org.bukkit.World;
@@ -23,6 +22,7 @@ public abstract class RedstoneTrigger extends BlockTrigger implements Listener {
 	public RedstoneTrigger(String prefix, Block block) {
 		super(prefix, block);
 		MultiListener.registerListeners(this);
+		inverted = false;
 	}
 	
 	public RedstoneTrigger() {
