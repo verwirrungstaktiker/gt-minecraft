@@ -78,5 +78,9 @@ public abstract class RedstoneTrigger extends BlockTrigger implements Listener {
 		BlockRedstoneEvent event = new BlockRedstoneEvent(getBlock(), 0,getBlock().getBlockPower());
 		onBlockRedstoneChange(event);
 	}
+	
+	public void toggleInvert() {
+		inverted = !inverted;
+	}
 
 }
