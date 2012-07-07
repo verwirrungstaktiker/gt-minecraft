@@ -36,7 +36,7 @@ public class WorldUniqueBlock extends YamlSerializable implements BlockObserver 
 				block = blockEvent.block;
 			} else if( blockEvent.entity instanceof Player) {
 				// TODO maybe more output
-				((Player) blockEvent.entity ).sendMessage("there can be only one block of this tye");
+				((Player) blockEvent.entity ).sendMessage("there can be only one block of this type");
 			} else {
 				Bukkit.broadcastMessage("cannot place a block: " + base.getName());
 			}

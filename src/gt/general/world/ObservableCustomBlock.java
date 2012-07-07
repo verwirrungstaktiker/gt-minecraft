@@ -8,14 +8,16 @@ import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
+import org.getspout.spoutapi.block.design.GenericCubeBlockDesign;
 import org.getspout.spoutapi.material.block.GenericCubeCustomBlock;
+import org.getspout.spoutapi.material.block.GenericCustomBlock;
 import org.getspout.spoutapi.player.SpoutPlayer;
 
 import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Multimap;
 
 
-public class ObservableCustomBlock extends GenericCubeCustomBlock {
+public class ObservableCustomBlock extends GenericCustomBlock {
 
 	private CustomBlockType customBlockType;
 	
@@ -37,7 +39,15 @@ public class ObservableCustomBlock extends GenericCubeCustomBlock {
 
 	
 	public ObservableCustomBlock(String name, String textureUrl, int textureSize){
-		super(Hello.getPlugin(), name, textureUrl, textureSize);
+		//TODO: remove 1 (underlying block) if bug in spout is fixed
+		super(Hello.getPlugin(), name, 1, false);
+		
+		GenericCubeBlockDesign design = new GenericCubeBlockDesign(Hello.getPlugin(), textureUrl, textureSize);
+		design.setRenderPass(1);
+		//TODO: set these when updated to new spoutversion (old version has a bug here)
+		setBlockDesign(design);
+		
+		setOpaque(false);
 	}
 
 	public void onBlockPlace(World world, int x, int y, int z, final LivingEntity living) {

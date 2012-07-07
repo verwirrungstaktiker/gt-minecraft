@@ -1,5 +1,7 @@
 package gt.general.world;
 
+import gt.plugin.meta.Hello;
+
 import java.io.File;
 import java.io.IOException;
 
@@ -70,7 +72,7 @@ public class InstantiatingWorldManager extends WorldManager {
 		new File(newWorld,"uid.dat").delete();
 		
 		// experimental - may solve spout crashes
-		deleteDirectory(new File(newWorld, "spout_meta"));
+		Hello.deleteDirectory(new File(newWorld, "spout_meta"));
 		
 		WorldCreator wc = new WorldCreator(newName);		
 		return wc.createWorld();		
@@ -98,20 +100,5 @@ public class InstantiatingWorldManager extends WorldManager {
 		}
 	}		
 
-	/**
-	 * Deletes a directory including content
-	 * @param dir directory to be deleted
-	 */
-	private void deleteDirectory(final File dir) {
-				
-		for (File f : dir.listFiles()) {
-			if (f.isDirectory()) {		
-				deleteDirectory(f);
-			} else {
-				f.delete();
-			}
-		}
-		
-		dir.delete();
-	}
+
 }

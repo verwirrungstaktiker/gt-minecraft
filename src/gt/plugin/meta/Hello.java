@@ -1,5 +1,8 @@
 package gt.plugin.meta;
 
+import java.io.File;
+import java.io.FileFilter;
+
 import gt.general.world.ObservableCustomBlock;
 
 import org.bukkit.Bukkit;
@@ -31,6 +34,15 @@ public final class Hello {
 			instance = new Hello(plugin);
 			MultiListener.initialize(plugin);
 			CustomBlockType.instantiate();
+			
+			//Well, let's clean up on start
+			File worldsFolder = Bukkit.getServer().getWorldContainer();
+			for (File f : worldsFolder.listFiles()) {
+				if (f.isDirectory() && f.getName().contains("_")) {
+					deleteDirectory(f);
+				}
+			}
+			
 		} else {
 			throw new RuntimeException("Hello already initialized");
 		}
@@ -98,6 +110,23 @@ public final class Hello {
 	 */
 	public static JavaPlugin getPlugin() {
 		return Hello.getInstance().plugin;
+	}
+	
+	/**
+	 * Deletes a directory including content
+	 * @param dir directory to be deleted
+	 */
+	public static void deleteDirectory(final File dir) {
+		
+		for (File f : dir.listFiles()) {
+			if (f.isDirectory()) {		
+				deleteDirectory(f);
+			} else {
+				f.delete();
+			}
+		}
+		
+		dir.delete();
 	}
 
 }
