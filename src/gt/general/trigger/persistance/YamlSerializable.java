@@ -62,11 +62,6 @@ public abstract class YamlSerializable {
 	 * @return the Block
 	 */
 	public Block blockFromCoordinates(final Map<String, Object> values, final World world) {
-		/*int x = (Integer) values.get(KEY_X_COORDINATE);
-		int y = (Integer) values.get(KEY_Y_COORDINATE);
-		int z = (Integer) values.get(KEY_Z_COORDINATE);
-		
-		return world.getBlockAt(x, y, z);*/
 		return blockFromPrefixedCoordinates("", values, world);
 	}
 	
@@ -92,13 +87,7 @@ public abstract class YamlSerializable {
 	 * @return mapping - e.g. to be used in the serialization process
 	 */
 	public Map<String, Object> coordinatesFromBlock(final Block block) {
-		Map<String, Object> map = new HashMap<String,Object>();
-
-		map.put(KEY_X_COORDINATE, block.getX());
-		map.put(KEY_Y_COORDINATE, block.getY());
-		map.put(KEY_Z_COORDINATE, block.getZ());
-		
-		return map;
+		return prefixedCoordinatesFromBlock("", block);
 	}
 	
 	public Map<String, Object> prefixedCoordinatesFromBlock(final String prefix,final Block block) {

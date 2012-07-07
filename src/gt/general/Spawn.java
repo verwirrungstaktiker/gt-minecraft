@@ -9,8 +9,10 @@ import gt.general.world.BlockObserver;
 import gt.general.world.ObservableCustomBlock;
 import gt.general.world.ObservableCustomBlock.BlockEvent;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -77,14 +79,17 @@ public class Spawn extends YamlSerializable implements BlockObserver {
 
 	@Override
 	public void dispose() {
-		
 		SPAWN_BLOCK.removeObserver(this, world);
 		
-		// TODO this throws an concurrent modification exception - why?
-		for(Block block : getBlocks()) {
+		//workaround for concurrent modification exception
+		Block[] blocks = {};
+		blocks = getBlocks().toArray(blocks);
+		for(Block block : blocks) {
 			block.setType(Material.AIR);
 		}
+		
 		spawnBlocks.clear();
+		
 		
 	}
 

@@ -3,7 +3,10 @@ package gt.lastgnome.game;
 import gt.general.character.Hero;
 import gt.general.character.Team;
 import gt.general.character.ZombieManager;
+import gt.general.trigger.TriggerContext;
 import gt.general.trigger.TriggerManager;
+import gt.general.trigger.response.Response;
+import gt.general.trigger.response.ZombieSpawnResponse;
 import gt.general.world.WorldManager;
 import gt.plugin.meta.Hello;
 import gt.plugin.meta.MultiListener;
@@ -42,7 +45,15 @@ public class LastGnomeGameBuilder extends AbstractLastGnomeGameBuilder {
 		int id = Hello.scheduleSyncTask(zombieManager, 0, 10);
 		zombieManager.setTaskID(id);
 		
-	
+		//TODO Its a bit Hacky
+		for (TriggerContext tc : game.getWorldInstance().getTriggerManager().getTriggerContexts()) {
+			for (Response response : tc.getResponses()) {
+				if (response instanceof ZombieSpawnResponse) {
+					((ZombieSpawnResponse) response).setZombieManager(zombieManager);
+				}
+			}
+		}
+	    
 		// TODO actually do something
 		//new TeamLostTrigger(lastGnomeGame, HelloWorld.getTriggerManager());
 		
