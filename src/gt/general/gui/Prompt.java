@@ -1,103 +1,101 @@
 package gt.general.gui;
 
-import gt.general.character.Hero;
+import gt.general.gui.Prompt.PromptCallback.Action;
 import gt.plugin.meta.Hello;
 
 import org.bukkit.inventory.ItemStack;
 import org.getspout.spoutapi.event.screen.ButtonClickEvent;
-import org.getspout.spoutapi.gui.Color;
 import org.getspout.spoutapi.gui.ContainerType;
 import org.getspout.spoutapi.gui.GenericButton;
 import org.getspout.spoutapi.gui.GenericContainer;
 import org.getspout.spoutapi.gui.GenericLabel;
 import org.getspout.spoutapi.gui.GenericPopup;
 import org.getspout.spoutapi.gui.GenericTextField;
-import org.getspout.spoutapi.gui.PopupScreen;
 import org.getspout.spoutapi.gui.WidgetAnchor;
 
-public class Prompt {
+public class Prompt extends GenericPopup {
 
 	
-	public interface PromptResponse {
+	public interface PromptCallback {
 		
+		enum Action {
+			SUBMIT, ABORT;
+		}
+		
+		/**
+		 * @param action what led to the close
+		 * @param text what contained the textField at last
+		 */
+		void onClose(Action action, String text);
 	}
 	
-	private GenericPopup promptPopup = new GenericPopup() {
-		@Override
-		public void handleItemOnCursor(ItemStack itemOnCursor) {
-			super.handleItemOnCursor(itemOnCursor);
-			
-			System.out.println("CLOSE");
-		}
-	};
-	private GenericLabel question = new GenericLabel();
 	
-	Hero hero;
+	private final GenericLabel question;
+	private final GenericTextField textField;
+	private final GenericButton abortButton;
+	private final GenericButton submitButton;
 	
-	public Prompt(final Hero holder) {
-		hero = holder;
+	private final PromptCallback callback;
+	
+	/**
+	 * @param msg the question of the prompt
+	 * @param callback callback
+	 */
+	public Prompt(final String msg, final PromptCallback callback) {
 		
-		GenericTextField textField = new GenericTextField();
+		this.callback = callback;
 		
-		GenericButton abortButton = new GenericButton("Abort") {
+		question = new GenericLabel(msg);
+		question.setMaxWidth(200);
+		
+		textField = new GenericTextField();
+		textField.setMargin(2);
+		textField.setMinHeight(20);
+		
+		abortButton = new GenericButton("Abort") {
 			
-			public void onButtonClick(ButtonClickEvent event) {
-				System.out.println("CLICK abort");
+			public void onButtonClick(final ButtonClickEvent event) {
+				close(Action.ABORT);
 			}
 		};
 		abortButton.setMargin(2);
 		
-		GenericButton submitButton = new GenericButton("Submit") {
+		submitButton = new GenericButton("Submit") {
 			
-			public void onButtonClick(ButtonClickEvent event) {
-				System.out.println("CLICK submit");
-				
-				System.out.println(promptPopup.getWidth());
-				System.out.println(promptPopup.getHeight());
+			public void onButtonClick(final ButtonClickEvent event) {
+				close(Action.SUBMIT);
 			}
 		};
-		submitButton.setMargin(2);
 		
+		submitButton.setMargin(2);		
 		
 		GenericContainer buttons = new GenericContainer(abortButton, submitButton);
 		buttons.setLayout(ContainerType.HORIZONTAL);
-		buttons.setWidth(200).setHeight(20);
-		
-		promptPopup.attachWidget(Hello.getPlugin(), buttons);
+		buttons.setMinHeight(25);
 		
 		GenericContainer main = new GenericContainer(question, textField, buttons);
 		main.setLayout(ContainerType.VERTICAL);
 		main.setAnchor(WidgetAnchor.TOP_CENTER);
+		main.setWidth(200);
+		main.setX(-100).setY(50);
 		
-		promptPopup.attachWidget(Hello.getPlugin(), main);
-		
-		
-		System.out.println("!");
+		attachWidget(Hello.getPlugin(), main);
 		
 	}
 	
-	public void show(final String Question) {
-		
-		promptPopup.attachWidget(Hello.getPlugin(), question);
-		
-		hero.getSpoutPlayer().getMainScreen().attachPopupScreen(promptPopup);
-		//hero.getGui().attachWidgets(somePopup);
-		
-	//	hero.getGui().attachPopupScreen(promptPopup);
-	//
+	/*
+	 * handles close on esc
+	 */
+	@Override
+	public void handleItemOnCursor(final ItemStack itemOnCursor) {
+		close(Action.ABORT);
 	}
 	
-	public void hide() {
-	//	hero.getGui().closePopup(promptPopup);
+	/**
+	 * @param action what action led to the close
+	 */
+	private void close(final Action action) {
+		callback.onClose(action, textField.getText());
+		close();
 	}
-
-
-	public void setMessage(String message) {
-		question.setText(message);
-	}
-
-	public PopupScreen getPopup() {
-		return promptPopup;
-	}
-
 }

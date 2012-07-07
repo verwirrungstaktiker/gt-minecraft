@@ -1,7 +1,10 @@
 package gt.general.trigger;
 
+import static com.google.common.collect.Maps.*;
 import gt.general.character.Hero;
 import gt.general.character.HeroManager;
+import gt.general.gui.Prompt;
+import gt.general.gui.Prompt.PromptCallback;
 import gt.general.world.BlockObserver;
 import gt.general.world.ObservableCustomBlock;
 import gt.general.world.ObservableCustomBlock.BlockEvent;
@@ -12,25 +15,35 @@ import java.util.Map;
 
 import org.bukkit.World;
 import org.bukkit.block.Block;
-import org.getspout.spoutapi.SpoutManager;
 
 
+/** 
+ * @author Sebastian Fahnenschreiber
+ */
 public class QuestionTrigger extends BlockTrigger implements BlockObserver{
 	
 	private String question = "no question";
 	private String answer = "no answer";
 	
+	private boolean solved = false;
+	
 	private static final String KEY_QUESTION = "question";
 	private static final String KEY_ANSWER = "answer";
 	
+	private final  Map<Hero, Prompt> openPrompts = newHashMap();
+	
+	/**
+	 * @param block the newly placed block
+	 */
 	public QuestionTrigger(final Block block) {
 		super("question", block);
 		registerWithSubject();
 	}
 	
-	public QuestionTrigger() {
-		
-	}
+	/**
+	 * required for yaml persistance
+	 */
+	public QuestionTrigger() {}
 
 	@Override
 	public void setup(final Map<String, Object> values, final World world) {
@@ -58,15 +71,33 @@ public class QuestionTrigger extends BlockTrigger implements BlockObserver{
 	@Override
 	public void dispose() {
 		super.dispose();
-		unregisterWithSubject();
+		
+		unregisterFromSubject();
+		closeAllPrompts();
+	}
+
+	/**
+	 * hopefully self explaining
+	 */
+	private void closeAllPrompts() {
+		for(Hero h : openPrompts.keySet()) {
+			h.getGui().closePopup(openPrompts.get(h));
+		}
+		openPrompts.clear();
 	}
 	
-	private void  registerWithSubject() {
+	/**
+	 * registers this trigger with the question block
+	 */
+	private void registerWithSubject() {
 		ObservableCustomBlock questionBlock = CustomBlockType.QUESTION_BLOCK.getCustomBlock();
 		questionBlock.addObserver(this, getBlock().getWorld());
 	}
 	
-	private void unregisterWithSubject() {
+	/**
+	 * unregisters this trigger from the question block
+	 */
+	private void unregisterFromSubject() {
 		ObservableCustomBlock questionBlock = CustomBlockType.QUESTION_BLOCK.getCustomBlock();
 		questionBlock.removeObserver(this, getBlock().getWorld());
 
@@ -74,16 +105,26 @@ public class QuestionTrigger extends BlockTrigger implements BlockObserver{
 
 	@Override
 	public void onBlockEvent(final BlockEvent blockEvent) {
-		System.out.println("w00t");
-		
-		if(blockEvent.blockEventType == BlockEventType.BLOCK_INTERACT && blockEvent.block.equals(getBlock())) {
+
+		if(blockEvent.blockEventType == BlockEventType.BLOCK_INTERACT && blockEvent.block.equals(getBlock()) && !solved) {
 			
-			System.out.println("clicked question");
+			final Hero hero = HeroManager.getHero(blockEvent.player);			
+			Prompt prompt = new Prompt(question, new PromptCallback() {
+				
+				@Override
+				public void onClose(final Action action, final String text) {
+					openPrompts.remove(hero);
+					
+					if(action == Action.SUBMIT && text.equalsIgnoreCase(answer)) {
+						getContext().updateTriggerState(QuestionTrigger.this, true);
+						closeAllPrompts();
+						solved = true;
+					}
+				}
+			});
 			
-			Hero hero = HeroManager.getHero(blockEvent.player);
-			hero.getGui().prompt(question);
-			
+			openPrompts.put(hero, prompt);
+			hero.getGui().prompt(prompt);
 		}
 	}
-
 }

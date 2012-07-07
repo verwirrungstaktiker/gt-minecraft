@@ -17,8 +17,6 @@ public class HeroGui {
 	
 	private final Hero holder;
 	
-	private final Prompt prompt;
-	
 	/**
 	 * @param holder To which hero this Gui is coupled
 	 */
@@ -26,7 +24,6 @@ public class HeroGui {
 		guiElements = new EnumMap<GuiElementType, GuiElement>(GuiElementType.class);
 		this.holder = holder;
 		
-		prompt = new Prompt(holder);
 	}
 	
 	/**
@@ -84,19 +81,13 @@ public class HeroGui {
 		}
 	}
 	
-	public void prompt(String message) {
-		
-		prompt.setMessage(message);
+	public void prompt(final PopupScreen popup) {
 		
 		getMainScreen()
-			.attachPopupScreen(prompt.getPopup());
+			.attachPopupScreen(popup);
 	}
 	
-	public void closePrompt() {
-		closePopup(prompt.getPopup());
-	}
-	
-	public void closePopup(PopupScreen popup) {
+	public void closePopup(final PopupScreen popup) {
 		if(getMainScreen().getActivePopup().equals(popup)) {
 			getMainScreen()
 				.closePopup();
@@ -106,7 +97,7 @@ public class HeroGui {
 	/**
 	 * @return the main screen of the holder
 	 */
-	private InGameHUD getMainScreen() {
+	public InGameHUD getMainScreen() {
 		return	holder.getSpoutPlayer().getMainScreen();
 	}
 }
