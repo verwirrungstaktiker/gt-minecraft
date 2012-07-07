@@ -5,6 +5,7 @@ import gt.general.trigger.Trigger;
 import gt.general.trigger.TriggerContext;
 import gt.general.trigger.persistance.YamlSerializable;
 import gt.general.trigger.response.Response;
+import gt.plugin.meta.Hello;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -44,6 +45,7 @@ public class PlayerManager implements Listener{
 	public PlayerManager(final EditorTriggerManager triggerManager) {
 		this.triggerManager = triggerManager;
 		this.particleManager = new ParticleManager();
+		Hello.scheduleSyncTask(particleManager, 0, 20);
 	}
 	
 	
@@ -73,7 +75,7 @@ public class PlayerManager implements Listener{
 					if(playerTriggerContexts.get(name) == context) {
 						System.out.println("Breaking serializable block.");
 						//kill block highlight
-						particleManager.removeHighlight(serializable, player);
+						particleManager.removeSerializable(serializable, player);
 						//handle block break					
 						triggerManager.deleteBlock(block);
 
@@ -103,12 +105,12 @@ public class PlayerManager implements Listener{
 	
 	public void addTrigger(Trigger trigger, TriggerContext context, Player player) {
 		triggerManager.addTrigger(trigger, context);
-		particleManager.addHighlight(trigger, ParticleType.DRIPLAVA, player);
+		particleManager.addSerializable(trigger, ParticleType.DRIPLAVA, player);
 	}
 	
 	public void addResponse(Response response, TriggerContext context, Player player) {
 		triggerManager.addResponse(response, context);
-		particleManager.addHighlight(response, ParticleType.DRIPLAVA, player);
+		particleManager.addSerializable(response, ParticleType.DRIPLAVA, player);
 	}
 
 	/**
@@ -147,7 +149,7 @@ public class PlayerManager implements Listener{
 	private void highlightContext(final Player player) {
 		TriggerContext context = playerTriggerContexts.get(player.getName());
 		if(context!=null) {
-			particleManager.addHighlight(context, ParticleType.DRIPLAVA, player);
+			particleManager.addContext(context, ParticleType.DRIPLAVA, player);
 		}
 	}
 

@@ -5,9 +5,6 @@ import gt.general.trigger.TriggerContext;
 import gt.general.trigger.persistance.YamlSerializable;
 import gt.general.trigger.response.Response;
 
-import java.util.HashSet;
-import java.util.Set;
-
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.block.Block;
@@ -21,12 +18,12 @@ import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Multimap;
 
 
-public class ParticleManager {
-	
-	private Multimap<YamlSerializable, Particle> activeParticles;
+public class ParticleManager implements Runnable {
+
+	private Multimap<Player, Block> activeBlocks;
 	
 	public ParticleManager() {
-		activeParticles = HashMultimap.create();
+		activeBlocks = HashMultimap.create();
 	}
 	
 	/**
@@ -35,12 +32,12 @@ public class ParticleManager {
 	 * @param type		Particle type
 	 * @param player	player that can see particles
 	 */
-	public void addHighlight(final TriggerContext context, final ParticleType type, final Player player) {
+	public void addContext(final TriggerContext context, final ParticleType type, final Player player) {
 		for(Trigger trigger : context.getTriggers()) {
-			addHighlight(trigger, type, player);
+			addSerializable(trigger, type, player);
 		}
 		for(Response response : context.getResponses()) {
-			addHighlight(response, type, player);
+			addSerializable(response, type, player);
 		}
 		player.sendMessage(ChatColor.YELLOW + "Highlighting " + context.getLabel());
 	}
@@ -48,27 +45,49 @@ public class ParticleManager {
 	/**
 	 * despawns all particles of a context
 	 * @param context	a TriggerContext
+	 * @param player	the player which could see the particles
 	 */
 	public void removeHighlight(final TriggerContext context, final Player player) {
 		for(Trigger trigger : context.getTriggers()) {
-			removeHighlight(trigger, player);
+			removeSerializable(trigger, player);
 		}
 		for(Response response : context.getResponses()) {
-			removeHighlight(response, player);
+			removeSerializable(response, player);
 		}
+	}
+	
+	/**
+	 * highlights the edges of a block
+	 * @param block the block to highlight
+	 * @param player a bukkit player
+	 */
+	private void highlight(final Block block, final Player player) {
+		//TODO: variable effect?
+		ParticleType type = ParticleType.DRIPLAVA;
+		Location loc = block.getLocation();
+		
+		// yep, that's the 8 edges
+		paintParticle(type, loc, new Vector(0, 0, 0), player);
+		paintParticle(type, loc, new Vector(0, 0, 1), player);
+		paintParticle(type, loc, new Vector(0, 1, 0), player);
+		paintParticle(type, loc, new Vector(0, 1, 1), player);
+		paintParticle(type, loc, new Vector(1, 0, 0), player);
+		paintParticle(type, loc, new Vector(1, 0, 1), player);
+		paintParticle(type, loc, new Vector(1, 1, 0), player);
+		paintParticle(type, loc, new Vector(1, 1, 1), player);
+		
 	}
 	
 	/**
 	 * despawns all particles of a trigger/response
 	 * @param serializable	a trigger or response
+	 * @param player a bukkit player
 	 */
-	public void removeHighlight(final YamlSerializable serializable, final Player player) {
-		for(Particle particle : activeParticles.get(serializable)) {
-			//TODO: this doesn't work!
-			particle.setMaxAge(5);
-			particle.spawn((SpoutPlayer) player);
+	public void removeSerializable(final YamlSerializable serializable, final Player player) {
+		
+		for(Block block : activeBlocks.get(player)) {
+			activeBlocks.remove(player, block);
 		}
-		activeParticles.removeAll(serializable);
 	}
 	
 	/**
@@ -77,37 +96,9 @@ public class ParticleManager {
 	 * @param type			particle type
 	 * @param player		player that can see particles
 	 */
-	public void addHighlight(final YamlSerializable serializable, final ParticleType type, final Player player) {
-		Set<Particle> particles = new HashSet<Particle>();
+	public void addSerializable(final YamlSerializable serializable, final ParticleType type, final Player player) {
 		
-		for(Block block: serializable.getBlocks()) {
-			particles.addAll(addHighlight(block.getLocation(), type, player));
-		}
-		
-		activeParticles.putAll(serializable, particles);
-		
-	}
-
-	/**
-	 * Highlight a single block with particles
-	 * @param loc		Location of the block
-	 * @param type		particle type
-	 * @param player	player that can see particles
-	 * @return Set of all particles that highlight the location
-	 */
-	public Set<Particle> addHighlight(final Location loc, final ParticleType type, final Player player) {
-		Set<Particle> particles = new HashSet<Particle>();
-		// yep, that's the 8 edges
-		particles.add(paintParticle(type, loc, new Vector(0, 0, 0), player));
-		particles.add(paintParticle(type, loc, new Vector(0, 0, 1), player));
-		particles.add(paintParticle(type, loc, new Vector(0, 1, 0), player));
-		particles.add(paintParticle(type, loc, new Vector(0, 1, 1), player));
-		particles.add(paintParticle(type, loc, new Vector(1, 0, 0), player));
-		particles.add(paintParticle(type, loc, new Vector(1, 0, 1), player));
-		particles.add(paintParticle(type, loc, new Vector(1, 1, 0), player));
-		particles.add(paintParticle(type, loc, new Vector(1, 1, 1), player));
-		
-		return particles;
+		activeBlocks.putAll(player, serializable.getBlocks());
 	}
 
 	/**
@@ -128,11 +119,21 @@ public class ParticleManager {
 		particle.setAmount(1);
 		// view range: this one is overwritten by client settings!
 		particle.setRange(100.0);	
-		particle.setMaxAge(Integer.MAX_VALUE);		// lifetime in ticks
+		particle.setMaxAge(20);		// lifetime in ticks
 		particle.setGravity(0);
 		
 		particle.spawn((SpoutPlayer) player);
 		
 		return particle;
+	}
+
+	@Override
+	public void run() {
+		for (Player player : activeBlocks.keySet()) {
+			for (Block block : activeBlocks.get(player)) {
+				highlight(block, player);
+			}
+		}
+		
 	}
 }
