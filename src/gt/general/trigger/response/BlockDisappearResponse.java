@@ -1,7 +1,6 @@
 package gt.general.trigger.response;
 
 
-import java.util.HashMap;
 import java.util.Map;
 
 import org.bukkit.Effect;
@@ -11,6 +10,7 @@ import org.bukkit.block.Block;
 
 public class BlockDisappearResponse extends BlockResponse {
 
+	// TODO why has invert a different semantic as in RedstoneTorchResponse?
 	private boolean invert = false;		//true if block appears on trigger
 	
 	public BlockDisappearResponse() {
@@ -23,16 +23,10 @@ public class BlockDisappearResponse extends BlockResponse {
 
 	@Override
 	public void setup(final Map<String, Object> values, final World world) {
-		
-		material = (Material) values.get("material");
-		invert = (Boolean) values.get("invert");
-		
-		block = blockFromCoordinates(values, world);
+		super.setup(values, world);
 		
 		if(invert) {
-			block.setType(Material.AIR);
-		} else {
-			block.setType(material);
+			getBlock().setType(Material.AIR);
 		}
 	}
 
@@ -40,32 +34,24 @@ public class BlockDisappearResponse extends BlockResponse {
 	@Override
 	public void triggered(final boolean active) {
 		System.out.println("block triggered");
+		Block block = getBlock();
 		
 		if(active ^ invert) {
 			// block disappear
 			block.setType(Material.AIR);
 		} else {
 			// block appear
-			block.setType(material);
+			block.setType(getMaterial());
 		}
 		// play a fancy effect
 		block.getWorld().playEffect(block.getLocation(), Effect.POTION_BREAK, 10);
 	}
-	
-
-	@Override
-	public void  dispose() {
-		block.setType(Material.AIR);
-	}
 
 	@Override
 	public Map<String, Object> dump() {
-		Map<String, Object> map = new HashMap<String,Object>();
+		Map<String, Object> map = super.dump();
 		
-		map.putAll(coordinatesFromBlock(block));
-		map.put("material", material);
 		map.put("invert", invert);
-		
 		return map;
 	}
 

@@ -1,11 +1,9 @@
 package gt.general.trigger.response;
 
 
-import java.util.HashMap;
 import java.util.Map;
 
 import org.bukkit.Effect;
-import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.block.Sign;
@@ -29,23 +27,7 @@ public class SignResponse extends BlockResponse {
 		this.triggeredMessage = "\n triggered";
 	}
 	
-	public SignResponse() {
-		
-	}
-
-	@Override
-	public void setup(final Map<String, Object> values, final World world) {
-		
-		onWall = (Boolean) values.get("onWall");
-		
-		untriggeredMessage = (String) values.get("untriggered_message");
-		triggeredMessage = (String) values.get("triggered_message");
-		
-		block = blockFromCoordinates(values, world);
-
-		block.setType(material);
-
-	}
+	public SignResponse() {}
 
 	private void setSignMessage(Sign sign, String message) {
 		int end=0;
@@ -79,7 +61,7 @@ public class SignResponse extends BlockResponse {
 		isTriggered  = active;
 		
 		
-		Sign sign = (Sign) block.getState();
+		Sign sign = (Sign) getBlock().getState();
 		
 		if(active) {
 			setSignMessage(sign, triggeredMessage);
@@ -91,7 +73,7 @@ public class SignResponse extends BlockResponse {
 		sign.update();
 
 		// play a fancy effect
-		block.getWorld().playEffect(block.getLocation(), Effect.ENDER_SIGNAL, 10); // we can set the radius here
+		getBlock().getWorld().playEffect(getBlock().getLocation(), Effect.ENDER_SIGNAL, 10); // we can set the radius here
 	}
 	
 
@@ -102,22 +84,26 @@ public class SignResponse extends BlockResponse {
 		this.untriggeredMessage = untriggeredMessage;
 		
 		if(!isTriggered) {
-			Sign sign = (Sign) block.getState();
+			Sign sign = (Sign) getBlock().getState();
 			setSignMessage(sign, untriggeredMessage);
 			sign.update();
 		}
 	}
-
+	
 	@Override
-	public void  dispose() {
-		block.setType(Material.AIR);
+	public void setup(final Map<String, Object> values, final World world) {
+		super.setup(values, world);
+		
+		onWall = (Boolean) values.get("onWall");
+		
+		untriggeredMessage = (String) values.get("untriggered_message");
+		triggeredMessage = (String) values.get("triggered_message");
 	}
-
+	
 	@Override
 	public Map<String, Object> dump() {
-		Map<String, Object> map = new HashMap<String,Object>();
+		Map<String, Object> map = super.dump();
 		
-		map.putAll(coordinatesFromBlock(block));
 		map.put("onWall", onWall);
 		
 		map.put("untriggeredMessage", untriggeredMessage);

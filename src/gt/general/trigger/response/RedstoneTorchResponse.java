@@ -1,7 +1,6 @@
 package gt.general.trigger.response;
 
 
-import java.util.HashMap;
 import java.util.Map;
 
 import org.bukkit.Effect;
@@ -13,26 +12,22 @@ public class RedstoneTorchResponse extends BlockResponse {
 
 	private boolean invert = false;		//true if response is inverted
 	
+	private final static String KEY_INVERT = "invert";
 	
-	public RedstoneTorchResponse(Block torchBlock) {
+	public RedstoneTorchResponse(final Block torchBlock) {
 		super("redstone_torch", torchBlock);
-		this.block = torchBlock;
 	}
 	
-	public RedstoneTorchResponse() {
-		
-	}
+	public RedstoneTorchResponse() {}
 
 	@Override
 	public void setup(final Map<String, Object> values, final World world) {
+		super.setup(values, world);
+		invert = (Boolean) values.get(KEY_INVERT);
 		
-		block = blockFromCoordinates(values, world);
-		
-		if(invert) {
-			block.setType(material);
-		} else {
+		if( !invert ) {
 			//TODO: Maybe we can find another Material to represent a RedstoneTorch that's not glowing
-			block.setType(Material.AIR);
+			getBlock().setType(Material.AIR);
 		}
 	}
 
@@ -43,28 +38,20 @@ public class RedstoneTorchResponse extends BlockResponse {
 		
 		if(active ^ invert) {
 			// torch on
-			block.setType(material);
+			getBlock().setType(getMaterial());
 		} else {
 			// torch off
-			block.setType(Material.AIR);
+			getBlock().setType(Material.AIR);
 		}
 		// play a fancy effect
-		block.getWorld().playEffect(block.getLocation(), Effect.ENDER_SIGNAL, 20);
-	}
-	
-
-	@Override
-	public void  dispose() {
-		block.setType(Material.AIR);
+		getBlock().getWorld().playEffect(getBlock().getLocation(), Effect.ENDER_SIGNAL, 20);
 	}
 
 	@Override
 	public Map<String, Object> dump() {
-		Map<String, Object> map = new HashMap<String,Object>();
+		Map<String, Object> map = super.dump();
 		
-		map.putAll(coordinatesFromBlock(block));
-		map.put("invert", invert);
-		
+		map.put(KEY_INVERT, invert);
 		return map;
 	}
 
