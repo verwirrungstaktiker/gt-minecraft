@@ -8,13 +8,17 @@ import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.block.Sign;
 
+// TODO this needs an orientation !
 public class SignResponse extends BlockResponse {
 
 	private String untriggeredMessage;
 	private String triggeredMessage;
 	
-	private boolean onWall;
+	private boolean onWall; // is this inverted? at least in the persistance ...
 	private boolean isTriggered = false;
+	
+	private static final String KEY_UNTRIGGERED_MESSAGE = "untriggered_message";
+	private static final String KEY_TRIGGERED_MESSAGE = "triggered_message";
 	
 	/**
 	 * @param signBlock the bukkit block of the sign
@@ -22,27 +26,30 @@ public class SignResponse extends BlockResponse {
 	public SignResponse(final Block signBlock) {
 		super("sign", signBlock);
 
-		/// TODO: this is just for testing
+		// TODO this is just for testing
 		this.untriggeredMessage = "\n untriggered ";
 		this.triggeredMessage = "\n triggered";
 	}
 	
 	public SignResponse() {}
 
-	private void setSignMessage(Sign sign, String message) {
+	private void setSignMessage(final Sign sign, final String message) {
 		int end=0;
 		String line;
 		
-		for (int i=0; i<4; i++) {
-			if(message.contains("\n")) {
-				end = message.indexOf("\n");
-				line = message.substring(0, end);
+		
+		String rest = message;
+		
+		for (int i=0; i<4; i++) {			
+			if(rest.contains("\n")) {
+				end = rest.indexOf("\n");
+				line = rest.substring(0, end);
 				//set the line on the sign
 				sign.setLine(i, line);
 				
-				message = message.substring(end+1);
+				rest = rest.substring(end+1);
 			} else {
-				sign.setLine(i, message);
+				sign.setLine(i, rest);
 				clearSignMessage(sign, ++i);
 				break;
 			}
@@ -50,7 +57,7 @@ public class SignResponse extends BlockResponse {
 		sign.update();		
 	}
 	
-	private void clearSignMessage(Sign sign, int startingLine) {
+	private void clearSignMessage(final Sign sign, final int startingLine) {
 		for (int i=startingLine; i<4; i++) {
 			sign.setLine(i, "");
 		}
@@ -70,7 +77,6 @@ public class SignResponse extends BlockResponse {
 		}
 		
 		System.out.println(sign.getLine(1));
-		sign.update();
 
 		// play a fancy effect
 		getBlock().getWorld().playEffect(getBlock().getLocation(), Effect.ENDER_SIGNAL, 10); // we can set the radius here
@@ -86,7 +92,6 @@ public class SignResponse extends BlockResponse {
 		if(!isTriggered) {
 			Sign sign = (Sign) getBlock().getState();
 			setSignMessage(sign, untriggeredMessage);
-			sign.update();
 		}
 	}
 	
@@ -96,8 +101,8 @@ public class SignResponse extends BlockResponse {
 		
 		onWall = (Boolean) values.get("onWall");
 		
-		untriggeredMessage = (String) values.get("untriggered_message");
-		triggeredMessage = (String) values.get("triggered_message");
+		untriggeredMessage = (String) values.get(KEY_UNTRIGGERED_MESSAGE);
+		triggeredMessage = (String) values.get(KEY_TRIGGERED_MESSAGE);
 	}
 	
 	@Override
@@ -106,8 +111,8 @@ public class SignResponse extends BlockResponse {
 		
 		map.put("onWall", onWall);
 		
-		map.put("untriggeredMessage", untriggeredMessage);
-		map.put("triggeredMessage", triggeredMessage);
+		map.put(KEY_UNTRIGGERED_MESSAGE, untriggeredMessage);
+		map.put(KEY_TRIGGERED_MESSAGE, triggeredMessage);
 		
 		return map;
 	}

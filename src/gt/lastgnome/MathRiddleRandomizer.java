@@ -60,7 +60,7 @@ public class MathRiddleRandomizer {
 					sign.setUntriggeredMessage(var + " = " + number + " + " + variables.charAt(i-1));
 					intermediate += number;
 				} else {
-					sign.setUntriggeredMessage(var + " = " + number + " - " + variables.charAt(i-1));
+					sign.setUntriggeredMessage(var + " = " + variables.charAt(i-1) + " - " + number);
 					intermediate -= number;
 				}
 			}
