@@ -16,6 +16,7 @@ public class SignResponse extends BlockResponse {
 	private String triggeredMessage;
 	
 	private boolean onWall;
+	private boolean isTriggered = false;
 	
 	/**
 	 * @param signBlock the bukkit block of the sign
@@ -75,7 +76,9 @@ public class SignResponse extends BlockResponse {
 
 	@Override
 	public void triggered(final boolean active) {
-
+		isTriggered  = active;
+		
+		
 		Sign sign = (Sign) block.getState();
 		
 		if(active) {
@@ -91,6 +94,19 @@ public class SignResponse extends BlockResponse {
 		block.getWorld().playEffect(block.getLocation(), Effect.ENDER_SIGNAL, 10); // we can set the radius here
 	}
 	
+
+	/**
+	 * @param untriggeredMessage the untriggeredMessage to set
+	 */
+	public void setUntriggeredMessage(final String untriggeredMessage) {
+		this.untriggeredMessage = untriggeredMessage;
+		
+		if(!isTriggered) {
+			Sign sign = (Sign) block.getState();
+			setSignMessage(sign, untriggeredMessage);
+			sign.update();
+		}
+	}
 
 	@Override
 	public void  dispose() {

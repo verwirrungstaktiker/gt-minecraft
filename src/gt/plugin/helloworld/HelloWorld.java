@@ -74,20 +74,5 @@ public class HelloWorld extends JavaPlugin {
 				return true;
 			}
 		});
-		
-		
-		getCommand("prompt").setExecutor(new PlayerCommandExecutor() {
-			@Override
-			public boolean onPlayerCommand(Player player, Command cmd, String label,
-					String[] args) {
-
-				Hero hero = HeroManager.getHero(player);
-				
-				hero.getGui().prompt("hello");
-
-				
-				return true;
-			}
-		});
 	}
 }

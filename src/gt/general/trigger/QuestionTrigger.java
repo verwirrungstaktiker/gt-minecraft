@@ -127,4 +127,18 @@ public class QuestionTrigger extends BlockTrigger implements BlockObserver{
 			hero.getGui().prompt(prompt);
 		}
 	}
+
+	/**
+	 * @param question the question to set
+	 */
+	public void setQuestion(final String question) {
+		this.question = question;
+	}
+
+	/**
+	 * @param answer the answer to set
+	 */
+	public void setAnswer(final String answer) {
+		this.answer = answer;
+	}
 }
