@@ -62,13 +62,4 @@ public class TeamLostTrigger extends Trigger implements Listener{
 	public Set<Block> getBlocks() {
 		return new HashSet<Block>();
 	}
-
-	@Override
-	public void highlight() {
-		// TODO Auto-generated method stub
-		
-	}
-
-
-
 }
