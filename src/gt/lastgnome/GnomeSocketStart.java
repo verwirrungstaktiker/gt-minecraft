@@ -17,10 +17,13 @@ public class GnomeSocketStart extends WorldUniqueBlock {
 	public static final String FILENAME = "start_socket.yml";
 	private final AbstractLastGnomeGame game;
 	
-	public GnomeSocketStart(final AbstractLastGnomeGame game2) {
-		super(game2.getWorldInstance().getWorld(), CustomBlockType.GNOME_START_BLOCK.getObservableCustomBlock());
+	/**
+	 * @param game the game for which the new start socket is generated
+	 */
+	public GnomeSocketStart(final AbstractLastGnomeGame game) {
+		super(game.getWorldInstance().getWorld(), CustomBlockType.GNOME_START_BLOCK.getObservableCustomBlock());
 		
-		this.game = game2;
+		this.game = game;
 	}
 	
 	@Override

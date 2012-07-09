@@ -18,7 +18,9 @@ public class MathRiddleRandomizer {
 	private final TriggerManager triggerManager;
 	private final Random rand = new Random();
 	
-	
+	/**
+	 * @param triggerManager where to look for riddles
+	 */
 	public MathRiddleRandomizer(final TriggerManager triggerManager) {
 		this.triggerManager = triggerManager;
 	}
@@ -34,6 +36,9 @@ public class MathRiddleRandomizer {
 		}
 	}
 
+	/**
+	 * @param context the TriggerContext which contains the riddle
+	 */
 	private void randomizeRiddle(final TriggerContext context) {
 		
 		QuestionTrigger question = getQuestionTrigger(context);
@@ -71,7 +76,11 @@ public class MathRiddleRandomizer {
 		
 	}
 
-	private List<SignResponse> getSignResponses(TriggerContext context) {
+	/**
+	 * @param context where to look for sign responses
+	 * @return all found sign responses - orderd by their label
+	 */
+	private List<SignResponse> getSignResponses(final TriggerContext context) {
 		
 		List<SignResponse> signs = new ArrayList<SignResponse>();
 		

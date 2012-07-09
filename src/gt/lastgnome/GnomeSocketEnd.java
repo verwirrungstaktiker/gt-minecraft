@@ -17,6 +17,9 @@ public class GnomeSocketEnd extends WorldUniqueBlock {
 
 	private final AbstractLastGnomeGame game;
 
+	/**
+	 * @param game the game for which the new end socket is generated
+	 */
 	public GnomeSocketEnd(final AbstractLastGnomeGame game) {
 		super(game.getWorldInstance().getWorld(),
 				CustomBlockType.GNOME_END_BLOCK.getObservableCustomBlock());
