@@ -1,6 +1,6 @@
-package gt.general.trigger.trigger;
+package gt.general.logic.trigger;
 
-import gt.general.trigger.persistance.PersistanceMap;
+import gt.general.logic.persistance.PersistanceMap;
 import gt.general.world.ObservableCustomBlock;
 import gt.plugin.meta.CustomBlockType;
 

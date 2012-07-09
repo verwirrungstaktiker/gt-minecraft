@@ -1,11 +1,11 @@
-package gt.general.trigger.trigger;
+package gt.general.logic.trigger;
 
 import static com.google.common.collect.Maps.*;
 import gt.general.character.Hero;
 import gt.general.character.HeroManager;
 import gt.general.gui.Prompt;
 import gt.general.gui.Prompt.PromptCallback;
-import gt.general.trigger.persistance.PersistanceMap;
+import gt.general.logic.persistance.PersistanceMap;
 import gt.general.world.BlockObserver;
 import gt.general.world.ObservableCustomBlock;
 import gt.general.world.ObservableCustomBlock.BlockEvent;

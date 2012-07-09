@@ -1,10 +1,10 @@
 package gt.plugin.helloeditor;
 
 import static org.bukkit.ChatColor.*;
-import gt.general.trigger.TriggerContext;
-import gt.general.trigger.persistance.YamlSerializable;
-import gt.general.trigger.response.Response;
-import gt.general.trigger.trigger.Trigger;
+import gt.general.logic.TriggerContext;
+import gt.general.logic.persistance.YamlSerializable;
+import gt.general.logic.response.Response;
+import gt.general.logic.trigger.Trigger;
 import gt.plugin.meta.Hello;
 
 import java.util.HashMap;

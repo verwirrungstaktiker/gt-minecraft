@@ -2,7 +2,7 @@ package gt.lastgnome.game;
 
 import static com.google.common.collect.Sets.*;
 import gt.general.character.Team;
-import gt.general.trigger.persistance.YamlSerializable;
+import gt.general.logic.persistance.YamlSerializable;
 import gt.general.world.WorldInstance;
 import gt.lastgnome.GnomeSocketEnd;
 import gt.lastgnome.GnomeSocketStart;

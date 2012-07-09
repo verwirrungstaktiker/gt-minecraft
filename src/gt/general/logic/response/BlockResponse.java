@@ -1,6 +1,6 @@
-package gt.general.trigger.response;
+package gt.general.logic.response;
 
-import gt.general.trigger.persistance.PersistanceMap;
+import gt.general.logic.persistance.PersistanceMap;
 
 import java.util.HashSet;
 import java.util.Set;

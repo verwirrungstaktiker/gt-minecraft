@@ -1,7 +1,7 @@
-package gt.general.trigger.response;
+package gt.general.logic.response;
 
 import gt.general.character.ZombieManager;
-import gt.general.trigger.persistance.PersistanceMap;
+import gt.general.logic.persistance.PersistanceMap;
 
 import java.util.Set;
 

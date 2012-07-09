@@ -1,6 +1,6 @@
-package gt.general.trigger.trigger;
+package gt.general.logic.trigger;
 
-import gt.general.trigger.persistance.PersistanceMap;
+import gt.general.logic.persistance.PersistanceMap;
 
 import org.bukkit.World;
 import org.bukkit.block.Block;

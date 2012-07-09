@@ -1,4 +1,4 @@
-package gt.general.trigger.persistance;
+package gt.general.logic.persistance;
 
 import gt.general.world.WorldInstance;
 

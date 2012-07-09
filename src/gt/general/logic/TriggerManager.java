@@ -1,9 +1,9 @@
-package gt.general.trigger;
+package gt.general.logic;
 
 import static com.google.common.collect.Sets.*;
-import gt.general.trigger.persistance.PersistanceMap;
-import gt.general.trigger.persistance.TriggerManagerPersistance;
-import gt.general.trigger.persistance.YamlSerializable;
+import gt.general.logic.persistance.PersistanceMap;
+import gt.general.logic.persistance.TriggerManagerPersistance;
+import gt.general.logic.persistance.YamlSerializable;
 
 import java.util.Collection;
 import java.util.Set;

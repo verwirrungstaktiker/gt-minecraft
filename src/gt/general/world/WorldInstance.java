@@ -1,9 +1,9 @@
 package gt.general.world;
 
 import gt.general.Spawn;
-import gt.general.trigger.TriggerManager;
-import gt.general.trigger.persistance.PersistanceMap;
-import gt.general.trigger.persistance.YamlSerializable;
+import gt.general.logic.TriggerManager;
+import gt.general.logic.persistance.PersistanceMap;
+import gt.general.logic.persistance.YamlSerializable;
 
 import java.io.File;
 import java.io.FileNotFoundException;

@@ -2,8 +2,8 @@ package gt.general.world;
 
 import static com.google.common.collect.Sets.newHashSet;
 
-import gt.general.trigger.persistance.PersistanceMap;
-import gt.general.trigger.persistance.YamlSerializable;
+import gt.general.logic.persistance.PersistanceMap;
+import gt.general.logic.persistance.YamlSerializable;
 import gt.general.world.ObservableCustomBlock.BlockEvent;
 
 import java.util.Set;

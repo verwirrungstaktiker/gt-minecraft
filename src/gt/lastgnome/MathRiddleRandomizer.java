@@ -1,11 +1,11 @@
 package gt.lastgnome;
 
-import gt.general.trigger.TriggerContext;
-import gt.general.trigger.TriggerManager;
-import gt.general.trigger.response.Response;
-import gt.general.trigger.response.SignResponse;
-import gt.general.trigger.trigger.QuestionTrigger;
-import gt.general.trigger.trigger.Trigger;
+import gt.general.logic.TriggerContext;
+import gt.general.logic.TriggerManager;
+import gt.general.logic.response.Response;
+import gt.general.logic.response.SignResponse;
+import gt.general.logic.trigger.QuestionTrigger;
+import gt.general.logic.trigger.Trigger;
 
 import java.util.ArrayList;
 import java.util.Collections;

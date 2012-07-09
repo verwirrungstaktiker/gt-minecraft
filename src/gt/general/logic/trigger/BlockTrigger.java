@@ -1,7 +1,7 @@
-package gt.general.trigger.trigger;
+package gt.general.logic.trigger;
 
 import static com.google.common.collect.Sets.*;
-import gt.general.trigger.persistance.PersistanceMap;
+import gt.general.logic.persistance.PersistanceMap;
 
 import java.util.Set;
 

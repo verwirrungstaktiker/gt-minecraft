@@ -1,11 +1,13 @@
 package gt.general.trigger;
 
-import static gt.general.trigger.persistance.TriggerManagerPersistance.*;
+import static gt.general.logic.persistance.TriggerManagerPersistance.*;
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
-import gt.general.trigger.persistance.TriggerManagerPersistance;
-import gt.general.trigger.response.Response;
-import gt.general.trigger.trigger.Trigger;
+import gt.general.logic.TriggerContext;
+import gt.general.logic.TriggerManager;
+import gt.general.logic.persistance.TriggerManagerPersistance;
+import gt.general.logic.response.Response;
+import gt.general.logic.trigger.Trigger;
 import gt.plugin.meta.MultiListener;
 
 import java.util.Map;

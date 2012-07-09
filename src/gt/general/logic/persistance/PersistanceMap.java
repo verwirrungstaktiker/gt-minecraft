@@ -1,4 +1,4 @@
-package gt.general.trigger.persistance;
+package gt.general.logic.persistance;
 
 import static com.google.common.collect.Maps.*;
 

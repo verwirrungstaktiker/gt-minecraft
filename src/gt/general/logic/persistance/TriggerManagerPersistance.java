@@ -1,11 +1,11 @@
-package gt.general.trigger.persistance;
+package gt.general.logic.persistance;
 
 import static com.google.common.collect.Lists.*;
 import static com.google.common.collect.Maps.*;
-import gt.general.trigger.TriggerContext;
-import gt.general.trigger.TriggerManager;
-import gt.general.trigger.response.Response;
-import gt.general.trigger.trigger.Trigger;
+import gt.general.logic.TriggerContext;
+import gt.general.logic.TriggerManager;
+import gt.general.logic.response.Response;
+import gt.general.logic.trigger.Trigger;
 
 import java.util.List;
 import java.util.Map;

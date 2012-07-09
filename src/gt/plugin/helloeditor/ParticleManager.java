@@ -1,9 +1,9 @@
 package gt.plugin.helloeditor;
 
-import gt.general.trigger.TriggerContext;
-import gt.general.trigger.persistance.YamlSerializable;
-import gt.general.trigger.response.Response;
-import gt.general.trigger.trigger.Trigger;
+import gt.general.logic.TriggerContext;
+import gt.general.logic.persistance.YamlSerializable;
+import gt.general.logic.response.Response;
+import gt.general.logic.trigger.Trigger;
 
 import org.bukkit.ChatColor;
 import org.bukkit.Location;

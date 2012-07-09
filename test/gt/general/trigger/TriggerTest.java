@@ -2,6 +2,7 @@ package gt.general.trigger;
 
 import static org.junit.Assert.*;
 import gt.general.character.Hero;
+import gt.general.logic.TriggerManager;
 import gt.lastgnome.TeamLostTrigger;
 import gt.lastgnome.game.LastGnomeGame;
 

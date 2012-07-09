@@ -1,7 +1,7 @@
-package gt.general.trigger.trigger;
+package gt.general.logic.trigger;
 
-import gt.general.trigger.TriggerContext;
-import gt.general.trigger.persistance.PersistanceMap;
+import gt.general.logic.TriggerContext;
+import gt.general.logic.persistance.PersistanceMap;
 import gt.plugin.meta.MultiListener;
 
 import org.bukkit.World;

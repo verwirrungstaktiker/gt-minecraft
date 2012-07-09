@@ -1,4 +1,4 @@
-package gt.general.trigger.trigger;
+package gt.general.logic.trigger;
 
 import org.bukkit.block.Block;
 

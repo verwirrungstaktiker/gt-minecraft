@@ -1,6 +1,6 @@
-package gt.general.trigger.response;
+package gt.general.logic.response;
 
-import gt.general.trigger.persistance.YamlSerializable;
+import gt.general.logic.persistance.YamlSerializable;
 
 public abstract class Response extends YamlSerializable {
 
