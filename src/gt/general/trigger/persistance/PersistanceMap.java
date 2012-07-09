@@ -39,12 +39,26 @@ public class PersistanceMap {
 	public String getString(final String key) {
 		return (String) map.get(key);
 	}
+	
+	@SuppressWarnings("unchecked")
+	public Map<String, Object> getMap(final String key) {
+		return (Map<String, Object>) map.get(key);
+	}
+	
+	
 	public Block getBlock(final String key, final World world) {
-		return null;
+		Map<String, Object> coords = getMap(key);
+		return world.getBlockAt((Integer) coords.get(KEY_X_COORDINATE),
+								(Integer) coords.get(KEY_Y_COORDINATE),
+								(Integer) coords.get(KEY_Z_COORDINATE));
 	}
 	
 	public Location getLocation(final String key, final World world) {
-		return null;
+		Map<String, Object> coords = getMap(key);
+		return new Location(world,
+							(Double) coords.get(KEY_X_COORDINATE),
+							(Double) coords.get(KEY_Y_COORDINATE),
+							(Double) coords.get(KEY_Z_COORDINATE));	
 	}
 	
 	
@@ -52,10 +66,24 @@ public class PersistanceMap {
 		map.put(key, value);
 	}
 
-	public void put(final String key, final Block value) {
+	public void put(final String key, final Block block) {
+		Map<String, Object> coords = newHashMap();
+		
+		coords.put(KEY_X_COORDINATE, block.getX());
+		coords.put(KEY_Y_COORDINATE, block.getY());
+		coords.put(KEY_Z_COORDINATE, block.getZ());
+		
+		map.put(key, coords);
+		
 	}
 	
-	public void put(final String key, final Location value) {
+	public void put(final String key, final Location location) {
+		Map<String, Object> coords = newHashMap();
+		
+		coords.put(KEY_X_COORDINATE, location.getX());
+		coords.put(KEY_Y_COORDINATE, location.getY());
+		coords.put(KEY_Z_COORDINATE, location.getZ());
+		
+		map.put(key, coords);
 	}
-	
 }
