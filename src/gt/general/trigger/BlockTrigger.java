@@ -1,9 +1,9 @@
 package gt.general.trigger;
 
-import static com.google.common.collect.Maps.*;
+import static com.google.common.collect.Sets.*;
+import gt.general.trigger.persistance.PersistanceMap;
 
 import java.util.HashSet;
-import java.util.Map;
 import java.util.Set;
 
 import org.bukkit.Material;
@@ -17,13 +17,17 @@ import org.bukkit.event.Listener;
  * @author roman, sebastian
  */
 public abstract class BlockTrigger extends Trigger implements Listener {
-	private Block trigger;
+	
+	public static final String KEY_MATERIAL = "material";
+	public static final String KEY_BLOCK = "block";
+	
+	private Block block;
 	private Material material;
 	
-	public BlockTrigger(String prefix, Block block) {
+	public BlockTrigger(final String prefix, final Block block) {
 		super(prefix);
 		
-		this.trigger = block;
+		this.block = block;
 		this.material = block.getType();
 	}
 	
@@ -33,21 +37,21 @@ public abstract class BlockTrigger extends Trigger implements Listener {
 
 	
 	@Override
-	public void setup(final Map<String, Object> values, final World world) {
+	public void setup(final PersistanceMap values, final World world) {
 
-		material = (Material) values.get("material");
+		material = values.get(KEY_MATERIAL);
 				
-		trigger = blockFromCoordinates(values, world);
-		trigger.setType(material);
-		
+		block = values.getBlock(KEY_BLOCK, world);
+		block.setType(material);
 	}
 
 	@Override
-	public Map<String, Object> dump() {
-		Map<String, Object> map = newHashMap();
+	public PersistanceMap dump() {
+		PersistanceMap map = new PersistanceMap();
 		
-		map.putAll(coordinatesFromBlock(trigger));
-		map.put("material", material);
+		map.put(KEY_BLOCK, block);
+		map.put(KEY_MATERIAL, material);
+
 		return map;
 	}
 
@@ -61,9 +65,12 @@ public abstract class BlockTrigger extends Trigger implements Listener {
 	 * @return the block to be watched
 	 */
 	protected Block getBlock() {
-		return trigger;
+		return block;
 	}
 	
+	/**
+	 * @return the material of this block
+	 */
 	protected Material getMaterial() {
 		return material;
 	}
@@ -72,17 +79,9 @@ public abstract class BlockTrigger extends Trigger implements Listener {
 	 * @return set with the corresponding block
 	 */
 	public Set<Block> getBlocks() {
-		HashSet<Block> blockSet = new HashSet<Block>();
-		blockSet.add(trigger);
+		HashSet<Block> blockSet = newHashSet();
+		blockSet.add(block);
 		
 		return blockSet;
 	}
-	
-	public void highlight() {
-		for(Block block : getBlocks()) {
-//			block.getWorld().playEffect(block.getLocation(), Effect.ENDER_SIGNAL, 25);
-			
-		}
-	}
-
 }

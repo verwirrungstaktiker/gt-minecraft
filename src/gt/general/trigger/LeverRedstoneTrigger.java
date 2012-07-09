@@ -1,5 +1,6 @@
 package gt.general.trigger;
 
+import gt.general.trigger.persistance.PersistanceMap;
 import gt.general.world.ObservableCustomBlock;
 import gt.plugin.meta.CustomBlockType;
 
@@ -22,6 +23,8 @@ import org.getspout.spoutapi.SpoutManager;
  */
 public class LeverRedstoneTrigger extends AttachableRedstoneTrigger implements Listener {
 	
+	public static final String KEY_ORIENTATION = "orientation";
+	
 	private BlockFace orientation;
 	
 	/**
@@ -38,7 +41,7 @@ public class LeverRedstoneTrigger extends AttachableRedstoneTrigger implements L
 	public LeverRedstoneTrigger() {}
 	
 	@Override
-	public void setup(final Map<String, Object> values, final World world) {
+	public void setup(final PersistanceMap values, final World world) {
 		super.setup(values, world);
 		
 		orientation = (BlockFace) values.get("orientation");
@@ -48,15 +51,13 @@ public class LeverRedstoneTrigger extends AttachableRedstoneTrigger implements L
 	}
 	
 	@Override
-	public Map<String, Object> dump() {
-		Map<String, Object> map = super.dump();//new HashMap<String,Object>();
+	public PersistanceMap dump() {
+		PersistanceMap map = super.dump();//new HashMap<String,Object>();
 		
 		Lever lever = (Lever) getBlock().getState().getData();
 		orientation = lever.getFacing();
 		
-		map.put("orientation", orientation);
-		//
-		System.out.println("dump:" + orientation);
+		map.put(KEY_ORIENTATION, orientation);
 
 		return map;
 	}

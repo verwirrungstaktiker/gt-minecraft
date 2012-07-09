@@ -1,6 +1,5 @@
 package gt.general;
 
-import static com.google.common.collect.Maps.*;
 import static com.google.common.collect.Sets.*;
 import gt.general.character.Hero;
 import gt.general.character.Team;
@@ -11,11 +10,7 @@ import gt.general.world.ObservableCustomBlock;
 import gt.general.world.ObservableCustomBlock.BlockEvent;
 import gt.plugin.meta.CustomBlockType;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
 import java.util.Set;
 
 import org.bukkit.Location;
@@ -40,16 +35,11 @@ public class Spawn extends YamlSerializable implements BlockObserver {
 		spawnBlocks = newHashSet();
 	}
 
-	@SuppressWarnings("unchecked")
 	@Override
-	public void setup(final PersistanceMap values, final World world) {
-		List<Map<String, Object>> blocks = values.get(KEY_SPAWN);
-		
+	public void setup(final PersistanceMap values, final World world) {	
 		ObservableCustomBlock spawnBlock = CustomBlockType.SPAWN_BLOCK.getCustomBlock();
 		
-		for(Map<String, Object> coords : blocks) {
-			Block block = blockFromCoordinates(coords, world);
-			
+		for(Block block : values.getBlocks(KEY_SPAWN, world)) {	
 			SpoutManager.getMaterialManager().overrideBlock(block, spawnBlock);
 			
 			spawnBlocks.add(block);
@@ -59,15 +49,10 @@ public class Spawn extends YamlSerializable implements BlockObserver {
 	}
 
 	@Override
-	public Map<String, Object> dump() {
-		List<Object> blocks = new ArrayList<Object>();
+	public PersistanceMap dump() {	
+		PersistanceMap ret = new PersistanceMap();
+		ret.put(KEY_SPAWN, getBlocks());
 		
-		for(Block b : getBlocks()) {
-			blocks.add(coordinatesFromBlock(b));
-		}
-		
-		HashMap<String, Object> ret = newHashMap();
-		ret.put(KEY_SPAWN, blocks);
 		return ret;
 	}
 

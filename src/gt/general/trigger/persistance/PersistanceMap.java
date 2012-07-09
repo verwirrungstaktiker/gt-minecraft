@@ -2,6 +2,9 @@ package gt.general.trigger.persistance;
 
 import static com.google.common.collect.Maps.*;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 import java.util.Map;
 
 import org.bukkit.Location;
@@ -44,10 +47,29 @@ public class PersistanceMap {
 	
 	public Block getBlock(final String key, final World world) {
 		Map<String, Object> coords = get(key);
+		return blockFromCoords(coords, world);
+	}
+	
+	@SuppressWarnings("unchecked")
+	public Collection<Block> getBlocks(final String key, final World world) {
+		List<Map<String, Object>> values = (List<Map<String, Object>>) map.get(key);
+		List<Block> blocks = new ArrayList<Block>();
+		
+		for(Map<String, Object> coords : values) {
+			blocks.add(blockFromCoords(coords, world));
+		}
+		
+		return blocks;
+	}
+		
+	private Block blockFromCoords( Map<String, Object> coords, final World world) {
 		return world.getBlockAt((Integer) coords.get(KEY_X_COORDINATE),
 								(Integer) coords.get(KEY_Y_COORDINATE),
 								(Integer) coords.get(KEY_Z_COORDINATE));
 	}
+	
+	
+	
 	
 	public Location getLocation(final String key, final World world) {
 		Map<String, Object> coords = get(key);
@@ -63,14 +85,28 @@ public class PersistanceMap {
 	}
 
 	public void put(final String key, final Block block) {
+		map.put(key, coordsFromBlock(block));
+		
+	}
+	
+	public void put(final String key, final Collection<Block> block) {
+		List<Object> blocks = new ArrayList<Object>();
+		
+		for(Block b : block) {
+			blocks.add(coordsFromBlock(b));
+		}
+		
+		map.put(key, blocks);
+	}
+	
+	private Map<String, Object> coordsFromBlock(final Block block) {
 		Map<String, Object> coords = newHashMap();
 		
 		coords.put(KEY_X_COORDINATE, block.getX());
 		coords.put(KEY_Y_COORDINATE, block.getY());
 		coords.put(KEY_Z_COORDINATE, block.getZ());
 		
-		map.put(key, coords);
-		
+		return coords;
 	}
 	
 	public void put(final String key, final Location location) {
@@ -81,5 +117,15 @@ public class PersistanceMap {
 		coords.put(KEY_Z_COORDINATE, location.getZ());
 		
 		map.put(key, coords);
+	}
+	
+	
+	@SuppressWarnings("unchecked")
+	public <T> T remove(final String key) {
+		return (T) map.remove(key);
+	}
+	
+	public Map<String, Object> getMap() {
+		return map;
 	}
 }

@@ -45,7 +45,7 @@ public class TriggerManagerPersistance {
 		this.world = world;
 	}
 
-	public static void setupTriggerManager(final TriggerManager triggerManager, final Map<String, Object> values, final World world) {
+	public static void setupTriggerManager(final TriggerManager triggerManager, final PersistanceMap values, final World world) {
 		new TriggerManagerPersistance(triggerManager, world).setup(values);
 	}
 	
@@ -54,11 +54,11 @@ public class TriggerManagerPersistance {
 	}
 	
 	@SuppressWarnings("unchecked")
-	public void setup(final Map<String, Object> values) {
+	public void setup(final PersistanceMap values) {
 		try {
-			globalContexts = (Map<String, Object>) values.get(KEY_GLOBAL_CONTEXTS);
-			globalResponses = (Map<String, Object>) values.get(KEY_GLOBAL_RESPONSES);
-			globalTriggers = (Map<String, Object>) values.get(KEY_GLOBAL_TRIGGERS);
+			globalContexts = values.get(KEY_GLOBAL_CONTEXTS);
+			globalResponses = values.get(KEY_GLOBAL_RESPONSES);
+			globalTriggers = values.get(KEY_GLOBAL_TRIGGERS);
 			
 			for(String contextLabel : globalContexts.keySet()) {
 				loadTriggerContext(contextLabel);
@@ -108,13 +108,13 @@ public class TriggerManagerPersistance {
 	}
 	
 	@SuppressWarnings("unchecked")
-	private <T extends YamlSerializable> T loadSerializable(String label, Map<String, Object> map) throws InstantiationException, IllegalAccessException, ClassNotFoundException {
+	private <T extends YamlSerializable> T loadSerializable(final String label, final Map<String, Object> map) throws InstantiationException, IllegalAccessException, ClassNotFoundException {
 		
 		String className = (String) map.remove(KEY_CLASS);
 		
 		T serializable = (T) Class.forName(className).newInstance();
 		serializable.setLabel(label);
-		serializable.setup(map, world);
+		serializable.setup(new PersistanceMap(map), world);
 		
 		return serializable;
 	}
@@ -162,7 +162,7 @@ public class TriggerManagerPersistance {
 
 	private Map<String, Object> prepareDump(final YamlSerializable serializable) {
 		
-		Map<String, Object> ret = serializable.dump();
+		Map<String, Object> ret = serializable.dump().getMap();
 		ret.put(KEY_CLASS, serializable.getClass().getName());
 		
 		return ret;

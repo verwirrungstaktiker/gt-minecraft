@@ -1,5 +1,6 @@
 package gt.general.trigger;
 
+import gt.general.trigger.persistance.PersistanceMap;
 import gt.plugin.meta.MultiListener;
 
 import java.util.Map;
@@ -16,6 +17,8 @@ import org.bukkit.event.block.BlockRedstoneEvent;
  * @author Sebastian Fahnenschreiber
  */
 public abstract class RedstoneTrigger extends BlockTrigger implements Listener {	
+	
+	public final static String KEY_INVERTED = "inverted";
 	
 	private boolean inverted;
 	
@@ -50,17 +53,18 @@ public abstract class RedstoneTrigger extends BlockTrigger implements Listener {
 	}
 	
 	@Override
-	public void setup(final Map<String, Object> values, final World world) {
+	public void setup(final PersistanceMap values, final World world) {
 		super.setup(values, world);
 		
 		MultiListener.registerListener(this);
-		inverted = (Boolean) values.get("inverted");
+		inverted = values.get(KEY_INVERTED);
 	}
 	
 	@Override
-	public Map<String, Object> dump() {
-		Map<String, Object> map = super.dump();
-		map.put("inverted", inverted);
+	public PersistanceMap dump() {
+		PersistanceMap map = super.dump();
+		map.put(KEY_INVERTED, inverted);
+		
 		return map;
 	}
 	
