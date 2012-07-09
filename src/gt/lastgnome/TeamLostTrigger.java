@@ -10,8 +10,8 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.PlayerDeathEvent;
 
-import gt.general.trigger.Trigger;
 import gt.general.trigger.persistance.PersistanceMap;
+import gt.general.trigger.trigger.Trigger;
 import gt.lastgnome.game.LastGnomeGame;
 
 

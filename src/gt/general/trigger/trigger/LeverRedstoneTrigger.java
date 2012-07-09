@@ -1,4 +1,4 @@
-package gt.general.trigger;
+package gt.general.trigger.trigger;
 
 import gt.general.trigger.persistance.PersistanceMap;
 import gt.general.world.ObservableCustomBlock;

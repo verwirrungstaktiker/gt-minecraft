@@ -1,17 +1,17 @@
 package gt.plugin.helloeditor;
 
 import static org.bukkit.ChatColor.*;
-import gt.general.trigger.ButtonRedstoneTrigger;
-import gt.general.trigger.LeverRedstoneTrigger;
-import gt.general.trigger.PressurePlateRedstoneTrigger;
-import gt.general.trigger.QuestionTrigger;
-import gt.general.trigger.Trigger;
 import gt.general.trigger.TriggerContext;
 import gt.general.trigger.response.BlockDisappearResponse;
 import gt.general.trigger.response.DoorResponse;
 import gt.general.trigger.response.RedstoneTorchResponse;
 import gt.general.trigger.response.Response;
 import gt.general.trigger.response.SignResponse;
+import gt.general.trigger.trigger.ButtonRedstoneTrigger;
+import gt.general.trigger.trigger.LeverRedstoneTrigger;
+import gt.general.trigger.trigger.PressurePlateRedstoneTrigger;
+import gt.general.trigger.trigger.QuestionTrigger;
+import gt.general.trigger.trigger.Trigger;
 import gt.general.world.ObservableCustomBlock;
 
 import org.bukkit.block.Block;

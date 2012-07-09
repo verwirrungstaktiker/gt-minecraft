@@ -2,6 +2,7 @@ package gt.general.trigger;
 
 import gt.general.trigger.persistance.YamlSerializable;
 import gt.general.trigger.response.Response;
+import gt.general.trigger.trigger.Trigger;
 
 import java.util.Collection;
 import java.util.HashSet;
@@ -9,6 +10,10 @@ import java.util.Set;
 
 public class TriggerContext {
 
+	public enum InputFunction {
+		AND, OR
+	}
+	
 	private final Set<Trigger> triggers;
 	private final Set<Response> responses;
 	

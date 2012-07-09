@@ -2,11 +2,10 @@ package gt.general.trigger.persistance;
 
 import static com.google.common.collect.Lists.*;
 import static com.google.common.collect.Maps.*;
-import gt.general.trigger.InputFunction;
-import gt.general.trigger.Trigger;
 import gt.general.trigger.TriggerContext;
 import gt.general.trigger.TriggerManager;
 import gt.general.trigger.response.Response;
+import gt.general.trigger.trigger.Trigger;
 
 import java.util.List;
 import java.util.Map;
@@ -83,7 +82,7 @@ public class TriggerManagerPersistance {
 		Map<String, ? extends Object> contextMap = (Map<String, Object>) globalContexts.get(contextLabel);
 		
 		TriggerContext tc = new TriggerContext();
-		tc.setInputFunction(InputFunction.valueOf((String) contextMap.get(KEY_INPUT_FUNCTION)));
+		tc.setInputFunction(TriggerContext.InputFunction.valueOf((String) contextMap.get(KEY_INPUT_FUNCTION)));
 		tc.setLabel(contextLabel);
 		
 		

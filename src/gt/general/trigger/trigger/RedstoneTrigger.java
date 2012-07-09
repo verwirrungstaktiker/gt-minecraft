@@ -1,5 +1,6 @@
-package gt.general.trigger;
+package gt.general.trigger.trigger;
 
+import gt.general.trigger.TriggerContext;
 import gt.general.trigger.persistance.PersistanceMap;
 import gt.plugin.meta.MultiListener;
 

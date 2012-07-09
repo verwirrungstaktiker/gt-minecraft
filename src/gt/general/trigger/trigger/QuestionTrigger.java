@@ -1,4 +1,4 @@
-package gt.general.trigger;
+package gt.general.trigger.trigger;
 
 import static com.google.common.collect.Maps.*;
 import gt.general.character.Hero;

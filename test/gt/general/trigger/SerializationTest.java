@@ -5,6 +5,7 @@ import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
 import gt.general.trigger.persistance.TriggerManagerPersistance;
 import gt.general.trigger.response.Response;
+import gt.general.trigger.trigger.Trigger;
 import gt.plugin.meta.MultiListener;
 
 import java.util.Map;

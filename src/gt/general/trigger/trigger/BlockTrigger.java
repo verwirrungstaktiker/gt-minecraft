@@ -1,4 +1,4 @@
-package gt.general.trigger;
+package gt.general.trigger.trigger;
 
 import static com.google.common.collect.Sets.*;
 import gt.general.trigger.persistance.PersistanceMap;
@@ -79,9 +79,6 @@ public abstract class BlockTrigger extends Trigger implements Listener {
 	 * @return set with the corresponding block
 	 */
 	public Set<Block> getBlocks() {
-		HashSet<Block> blockSet = newHashSet();
-		blockSet.add(block);
-		
-		return blockSet;
+		return newHashSet(block);
 	}
 }
