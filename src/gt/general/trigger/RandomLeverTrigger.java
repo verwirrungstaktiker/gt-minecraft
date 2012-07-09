@@ -1,9 +1,10 @@
 package gt.general.trigger;
 
+import gt.general.trigger.persistance.PersistanceMap;
 import gt.general.world.ObservableCustomBlock;
 import gt.plugin.meta.CustomBlockType;
 
-import java.util.Map;
+import java.util.Collection;
 import java.util.Vector;
 
 import org.bukkit.World;
@@ -12,9 +13,9 @@ import org.getspout.spoutapi.SpoutManager;
 
 public class RandomLeverTrigger extends LeverRedstoneTrigger{
 	
-	private final Vector<Block> signals;
+	public static final String KEY_SIGNALS = "signals";
 	
-	
+	private Collection<Block> signals;
 	
 	public RandomLeverTrigger(Block trigger, Block against) {
 		super(trigger, against);
@@ -23,43 +24,35 @@ public class RandomLeverTrigger extends LeverRedstoneTrigger{
 	
 	public RandomLeverTrigger() {
 		super();
-		signals = new Vector<Block>();
 	}
 
-
-
 	@Override
-	public Map<String, Object> dump() {
-		Map<String, Object> map = super.dump();
-		
-		map.put("signals", signals.size());
-		for (int i = 0;i<signals.size();++i) {
-			map.putAll(prefixedCoordinatesFromBlock("s"+i+"_",signals.get(i)));			
-		}
-		
+	public PersistanceMap dump() {
+		PersistanceMap map = super.dump();
+		map.put(KEY_SIGNALS, signals);
 		return map;
 	}
 	
 	@Override
-	public void setup(final Map<String, Object> values, final World world) {
+	public void setup(final PersistanceMap values, final World world) {
 		super.setup(values, world);
-		int signalCount = (Integer) values.get("signals");
+		
+		signals = values.getBlocks(KEY_SIGNALS, world);
 				
-		ObservableCustomBlock signal;
+		ObservableCustomBlock signalBlock;
 		
 		long rnd = Math.round(Math.random());
 		if (rnd == 1) {
 			toggleInvert();
-			signal = CustomBlockType.RED_SIGNAL.getCustomBlock();
+			signalBlock = CustomBlockType.RED_SIGNAL.getCustomBlock();
 		} else {
-			signal = CustomBlockType.GREEN_SIGNAL.getCustomBlock();			
+			signalBlock = CustomBlockType.GREEN_SIGNAL.getCustomBlock();			
 		}
 		
-		for (int i = 0; i < signalCount; ++i) {
-			signals.add(blockFromPrefixedCoordinates("s"+i+"_", values, world));
-			SpoutManager.getMaterialManager().overrideBlock(signals.get(i), signal);
-		}
 		
+		for(Block signal : signals) {
+			SpoutManager.getMaterialManager().overrideBlock(signal, signalBlock);
+		}
 	}
 
 }
