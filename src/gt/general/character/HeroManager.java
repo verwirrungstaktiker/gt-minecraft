@@ -1,11 +1,9 @@
 package gt.general.character;
 
+import static com.google.common.collect.Maps.*;
 import gt.general.Game;
-import gt.general.gui.GuiElementType;
 import gt.general.gui.HeroGui;
-import gt.general.gui.Prompt;
 
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
@@ -22,7 +20,7 @@ import org.bukkit.plugin.java.JavaPlugin;
  */
 public class HeroManager implements Listener, Runnable {
 	/**Heros sorted by player*/
-	private static final Map<String, Hero> HEROS = new HashMap<String, Hero>();
+	private static final Map<String, Hero> HEROS = newHashMap();
 	/**The plugin the manager runs in*/
 	private final JavaPlugin plugin;
 	
@@ -36,12 +34,6 @@ public class HeroManager implements Listener, Runnable {
 		this.plugin = plugin;
 
 		inventoryConnector = new InventoryConnector();
-		
-		// simulate on each tick (?)
-//		plugin
-//			.getServer()
-//			.getScheduler()
-//			.scheduleSyncRepeatingTask(plugin, this, 0, 1);
 	}
 
 	/**
