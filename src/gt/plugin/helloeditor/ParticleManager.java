@@ -50,7 +50,7 @@ public class ParticleManager implements Runnable {
 	 * @param context	a TriggerContext
 	 * @param player	the player which could see the particles
 	 */
-	public void removeHighlight(final TriggerContext context, final Player player) {
+	public void removeContext(final TriggerContext context, final Player player) {
 		for(Trigger trigger : context.getTriggers()) {
 			removeSerializable(trigger, player);
 		}

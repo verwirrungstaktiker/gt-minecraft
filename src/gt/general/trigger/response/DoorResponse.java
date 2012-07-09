@@ -27,7 +27,7 @@ public class DoorResponse extends BlockResponse {
 
 		door.setOpen(active);
 		// play the door toggle sound
-		block.getWorld().playEffect(block.getLocation(), Effect.DOOR_TOGGLE, 10); // we can set the radius here
+		block.getWorld().playEffect(block.getLocation(), Effect.DOOR_TOGGLE, 25); // we can set the radius here
 		
 		block.setData(door.getData(), true);
 	}
