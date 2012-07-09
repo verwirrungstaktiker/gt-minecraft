@@ -27,7 +27,4 @@ public abstract class Trigger extends YamlSerializable {
 	public void setContext(TriggerContext context) {
 		this.context = context;
 	}
-
-	public abstract void highlight();
-
 }
