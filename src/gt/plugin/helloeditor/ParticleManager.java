@@ -22,6 +22,9 @@ public class ParticleManager implements Runnable {
 
 	private Multimap<Player, Block> activeBlocks;
 	
+	/**
+	 * generates a new particle manager
+	 */
 	public ParticleManager() {
 		activeBlocks = HashMultimap.create();
 	}
@@ -84,8 +87,7 @@ public class ParticleManager implements Runnable {
 	 * @param player a bukkit player
 	 */
 	public void removeSerializable(final YamlSerializable serializable, final Player player) {
-		
-		for(Block block : activeBlocks.get(player)) {
+		for(Block block : serializable.getBlocks()) {
 			activeBlocks.remove(player, block);
 		}
 	}
