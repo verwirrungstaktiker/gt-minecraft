@@ -113,7 +113,7 @@ public class WorldInstance {
 	 * @param fileName the file to load
 	 * @return a map representing the file contents
 	 */
-	public Map<String, Object> loadMeta(final String fileName) {		
+	public PersistanceMap loadMeta(final String fileName) {		
 		try {
 			File path = new File(world.getWorldFolder(), fileName);
 			Reader reader = Files.newReader(path, Charset.defaultCharset());
@@ -123,7 +123,7 @@ public class WorldInstance {
 			@SuppressWarnings("unchecked")
 			Map<String, Object> values = (Map<String, Object>) yaml.load(reader);
 			
-			return values;
+			return new PersistanceMap(values);
 		
 		} catch (ClassCastException e) {
 			throw new RuntimeException("cannot cast contents of " + fileName, e);

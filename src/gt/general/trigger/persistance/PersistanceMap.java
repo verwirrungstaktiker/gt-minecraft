@@ -36,25 +36,21 @@ public class PersistanceMap {
 		return ((Boolean)map.get(key)).booleanValue();
 	}
 	
-	public String getString(final String key) {
-		return (String) map.get(key);
-	}
-	
 	@SuppressWarnings("unchecked")
-	public Map<String, Object> getMap(final String key) {
-		return (Map<String, Object>) map.get(key);
+	public <T> T get(final String key) {
+		return (T) map.get(key);
 	}
 	
 	
 	public Block getBlock(final String key, final World world) {
-		Map<String, Object> coords = getMap(key);
+		Map<String, Object> coords = get(key);
 		return world.getBlockAt((Integer) coords.get(KEY_X_COORDINATE),
 								(Integer) coords.get(KEY_Y_COORDINATE),
 								(Integer) coords.get(KEY_Z_COORDINATE));
 	}
 	
 	public Location getLocation(final String key, final World world) {
-		Map<String, Object> coords = getMap(key);
+		Map<String, Object> coords = get(key);
 		return new Location(world,
 							(Double) coords.get(KEY_X_COORDINATE),
 							(Double) coords.get(KEY_Y_COORDINATE),

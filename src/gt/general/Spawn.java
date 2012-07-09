@@ -4,6 +4,7 @@ import static com.google.common.collect.Maps.*;
 import static com.google.common.collect.Sets.*;
 import gt.general.character.Hero;
 import gt.general.character.Team;
+import gt.general.trigger.persistance.PersistanceMap;
 import gt.general.trigger.persistance.YamlSerializable;
 import gt.general.world.BlockObserver;
 import gt.general.world.ObservableCustomBlock;
@@ -41,8 +42,8 @@ public class Spawn extends YamlSerializable implements BlockObserver {
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public void setup(final Map<String, Object> values, final World world) {
-		List<Map<String, Object>> blocks = (List<Map<String, Object>>) values.get(KEY_SPAWN);
+	public void setup(final PersistanceMap values, final World world) {
+		List<Map<String, Object>> blocks = values.get(KEY_SPAWN);
 		
 		ObservableCustomBlock spawnBlock = CustomBlockType.SPAWN_BLOCK.getCustomBlock();
 		
