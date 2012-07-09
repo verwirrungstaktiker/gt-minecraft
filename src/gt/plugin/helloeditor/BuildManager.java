@@ -5,10 +5,12 @@ import gt.general.trigger.ButtonRedstoneTrigger;
 import gt.general.trigger.LeverRedstoneTrigger;
 import gt.general.trigger.PressurePlateRedstoneTrigger;
 import gt.general.trigger.QuestionTrigger;
+import gt.general.trigger.Trigger;
 import gt.general.trigger.TriggerContext;
 import gt.general.trigger.response.BlockDisappearResponse;
 import gt.general.trigger.response.DoorResponse;
 import gt.general.trigger.response.RedstoneTorchResponse;
+import gt.general.trigger.response.Response;
 import gt.general.trigger.response.SignResponse;
 import gt.general.world.ObservableCustomBlock;
 
@@ -18,7 +20,6 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.getspout.spout.block.SpoutCraftBlock;
-import org.getspout.spoutapi.material.CustomBlock;
 
 
 public class BuildManager implements Listener {	
@@ -61,6 +62,8 @@ public class BuildManager implements Listener {
 		Block block = event.getBlockPlaced();
 		TriggerContext activeContext = playerManager.getContext(player.getName());
 		
+		Trigger newTrigger = null;
+		
 		if(block instanceof SpoutCraftBlock) {
 			SpoutCraftBlock sBlock = (SpoutCraftBlock) block;
 			// custom blocks
@@ -69,7 +72,7 @@ public class BuildManager implements Listener {
 
 				switch (oBlock.getCustomBlockType()) {
 				case QUESTION_BLOCK:
-					playerManager.addTrigger(new QuestionTrigger(block), activeContext, player);
+					newTrigger = new QuestionTrigger(block);
 					break;
 
 				default:
@@ -84,14 +87,14 @@ public class BuildManager implements Listener {
 				switch(block.getType()) {
 					case WOOD_PLATE:
 					case STONE_PLATE:
-						playerManager.addTrigger(new PressurePlateRedstoneTrigger(block), activeContext, player);
+						newTrigger = new PressurePlateRedstoneTrigger(block);
 						break;
 						
 					case LEVER:
-						playerManager.addTrigger(new LeverRedstoneTrigger(block, event.getBlockAgainst()), activeContext, player);
+						newTrigger = new LeverRedstoneTrigger(block, event.getBlockAgainst());
 						break;
 					case STONE_BUTTON:
-						playerManager.addTrigger(new ButtonRedstoneTrigger(block), activeContext, player);
+						newTrigger = new ButtonRedstoneTrigger(block);
 						break;
 						
 					default: 
@@ -100,10 +103,12 @@ public class BuildManager implements Listener {
 						System.out.println("This Block can't be used as Trigger. --> " + block.getType());
 						return;
 				}
-		 }
+			}
 		}
-		// success feedback
-		player.sendMessage(GREEN + "Trigger has been added");
+		
+		// success
+		playerManager.addTrigger(newTrigger, activeContext, player);
+		player.sendMessage(GREEN + "added Trigger: " + newTrigger.getLabel());
 	}
 
 	/**
@@ -116,23 +121,25 @@ public class BuildManager implements Listener {
 		Block block = event.getBlockPlaced();
 		TriggerContext activeContext = playerManager.getContext(player.getName());
 		
+		Response newResponse = null;
+		
 		switch(block.getType()) {
 			case WOOD_DOOR:
 			case WOODEN_DOOR:
 			case IRON_DOOR:
-			case IRON_DOOR_BLOCK: 
-				playerManager.addResponse(new DoorResponse(block), activeContext, player);
+			case IRON_DOOR_BLOCK:
+				newResponse = new DoorResponse(block);
 				break;
 			case DIAMOND_BLOCK:
-				playerManager.addResponse(new BlockDisappearResponse(block), activeContext, player);
+				newResponse = new BlockDisappearResponse(block);
 				break;
 			case REDSTONE_LAMP_OFF:
 			case REDSTONE_TORCH_ON:
-				playerManager.addResponse(new RedstoneTorchResponse(block), activeContext, player);
+				newResponse = new RedstoneTorchResponse(block);
 				break;
 			case WALL_SIGN:
 			case SIGN_POST:
-				playerManager.addResponse(new SignResponse(block), activeContext, player);
+				newResponse = new SignResponse(block);
 				break;
 			default:
 				// fail feedback
@@ -140,7 +147,9 @@ public class BuildManager implements Listener {
 				System.out.println("This Block can't be used as Response. --> " + block.getType());
 				return;
 		}
+		
 		// success message
-		player.sendMessage(GREEN + "Response has been added");
+		playerManager.addResponse(newResponse, activeContext, player);
+		player.sendMessage(GREEN + "added Response: " + newResponse.getLabel());
 	}
 }
