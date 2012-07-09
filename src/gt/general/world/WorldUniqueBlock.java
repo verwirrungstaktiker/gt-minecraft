@@ -22,6 +22,10 @@ public class WorldUniqueBlock extends YamlSerializable implements BlockObserver 
 	private final ObservableCustomBlock base;
 	private Block block = null;
 	
+	/**
+	 * @param world where the block be blacked
+	 * @param base the spout custom block
+	 */
 	public WorldUniqueBlock(final World world, final ObservableCustomBlock base) {
 		this.world = world;
 		this.base = base;

@@ -19,6 +19,7 @@ public class SignResponse extends BlockResponse {
 	
 	private static final String KEY_UNTRIGGERED_MESSAGE = "untriggered_message";
 	private static final String KEY_TRIGGERED_MESSAGE = "triggered_message";
+	private static final String KEY_ON_WALL = "on_wall";
 	
 	/**
 	 * @param signBlock the bukkit block of the sign
@@ -99,7 +100,7 @@ public class SignResponse extends BlockResponse {
 	public void setup(final Map<String, Object> values, final World world) {
 		super.setup(values, world);
 		
-		onWall = (Boolean) values.get("onWall");
+		onWall = (Boolean) values.get(KEY_ON_WALL);
 		
 		untriggeredMessage = (String) values.get(KEY_UNTRIGGERED_MESSAGE);
 		triggeredMessage = (String) values.get(KEY_TRIGGERED_MESSAGE);
@@ -109,7 +110,7 @@ public class SignResponse extends BlockResponse {
 	public Map<String, Object> dump() {
 		Map<String, Object> map = super.dump();
 		
-		map.put("onWall", onWall);
+		map.put(KEY_ON_WALL, onWall);
 		
 		map.put(KEY_UNTRIGGERED_MESSAGE, untriggeredMessage);
 		map.put(KEY_TRIGGERED_MESSAGE, triggeredMessage);
