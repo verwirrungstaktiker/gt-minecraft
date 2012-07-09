@@ -4,6 +4,9 @@ import static com.google.common.collect.Maps.*;
 
 import java.util.Map;
 
+import org.bukkit.Location;
+import org.bukkit.block.Block;
+
 
 public class PersistanceMap {
 
@@ -16,13 +19,38 @@ public class PersistanceMap {
 		this.map = map;
 	}
 	
-	@SuppressWarnings("unchecked")
-	public <T> T get(final String key) {
-		return (T) map.get(key);
+	public int getInt(final String key) {
+		return ((Integer)map.get(key)).intValue();
 	}
+	
+	public double getDouble(final String key) {
+		return ((Double)map.get(key)).doubleValue();
+	}
+	
+	public boolean getBoolean(final String key) {
+		return ((Boolean)map.get(key)).booleanValue();
+	}
+	
+	public String getString(final String key) {
+		return (String) map.get(key);
+	}
+	public Block getBlock(final String key) {
+		return null;
+	}
+	
+	public Location getLocation(final String key) {
+		return null;
+	}
+	
 	
 	public void put(final String key, final Object value) {
 		map.put(key, value);
 	}
 
+	public void put(final String key, final Block value) {
+	}
+	
+	public void put(final String key, final Location value) {
+	}
+	
 }
