@@ -119,7 +119,7 @@ public abstract class YamlSerializable {
 	 * @param values map containing coordinates & orientation
 	 * @param world the minecraft world
 	 */
-	public abstract void setup(Map<String, Object> values, World world);
+	public abstract void setup(PersistanceMap values, World world);
 	
 	
 	public void setup(final String file, final WorldInstance worldInstance) {
@@ -130,7 +130,7 @@ public abstract class YamlSerializable {
 	 * 
 	 * @return the corresponding map containing coordinates & orientation
 	 */
-	public abstract Map<String, Object> dump();
+	public abstract PersistanceMap dump();
 	
 	/**
 	 * delete the corresponding block in the world
