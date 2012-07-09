@@ -20,5 +20,8 @@ public abstract class Response extends YamlSerializable {
 	 */
 	public abstract void triggered(boolean active);
 
+	/**
+	 * highlight the blocks that are connected to this response with particles
+	 */
 	public abstract void highlight();
 }

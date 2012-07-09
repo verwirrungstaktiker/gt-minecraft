@@ -1,9 +1,6 @@
 package gt.general.trigger.response;
 
 import gt.general.character.ZombieManager;
-import gt.lastgnome.game.LastGnomeGame;
-import gt.plugin.meta.Hello;
-
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
@@ -14,6 +11,9 @@ import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.block.Block;
 
+/**
+ * Spawns the set number of Zombies if triggered.
+ */
 public class ZombieSpawnResponse extends Response{
 	private ZombieManager zm;
 	private Location spawnLocation;
@@ -34,7 +34,7 @@ public class ZombieSpawnResponse extends Response{
 	 * @param spawnLocation Location, where Zombies should be spawned
 	 * @param number Number of Zombies to spawn
 	 */
-	public ZombieSpawnResponse(ZombieManager zm,Location spawnLocation, int number) {
+	public ZombieSpawnResponse(final ZombieManager zm, final Location spawnLocation, final int number) {
 		this.zm = zm;
 		this.spawnLocation = spawnLocation;
 		this.number = number;
@@ -44,11 +44,11 @@ public class ZombieSpawnResponse extends Response{
 	/**
 	 * A Response for spawning Zombies
 	 * @param zm ZombieManager to be used
-	 * @param spawnLocation Location, where Zombies should be spawned
-	 * @param number Number of Zombies to spawn
+	 * @param spawnLocation Location where Zombies are spawned
+	 * @param number Number of Zombies that are spawned
 	 * @param speed Speed of the spawned Zombies
 	 */
-	public ZombieSpawnResponse(ZombieManager zm,Location spawnLocation, int number, double speed) {
+	public ZombieSpawnResponse(final ZombieManager zm, final Location spawnLocation, final int number, final double speed) {
 		this.zm = zm;
 		this.spawnLocation = spawnLocation;
 		this.number = number;
@@ -56,12 +56,7 @@ public class ZombieSpawnResponse extends Response{
 	}
 	
 	@Override
-	public void triggered(boolean active) {
-		//TODO:HAAACKY!!!!
-		/*if (zm==null) {
-			LastGnomeGame game = (LastGnomeGame)Hello.getPlugin().getRunningGames().iterator().next();
-			zm = game.getZombieManager();
-		}*/
+	public void triggered(final boolean active) {
 		if (active) {
 			for (int i=0;i<number;++i) {
 				zm.spawnZombie(spawnLocation, speed);
@@ -87,17 +82,23 @@ public class ZombieSpawnResponse extends Response{
 		return new HashSet<Block>();
 	}
 	@Override
-	public void setup(Map<String, Object> values, World world) {
+	public void setup(final Map<String, Object> values, final World world) {
 		number = (Integer) values.get("number");
 		speed = (Double) values.get("speed");
 		
 		spawnLocation = locationFromCoordinates(values, world);		
 	}
 	
-	public void setZombieManager(ZombieManager zm) {
+	/**
+	 * @param zm a ZombieManager
+	 */
+	public void setZombieManager(final ZombieManager zm) {
 		this.zm = zm;
 	}
 
+	/**
+	 * only spawn a flame effect at the spawn location as it has no blocks
+	 */
 	@Override
 	public void highlight() {
 		spawnLocation.getWorld().playEffect(spawnLocation, Effect.MOBSPAWNER_FLAMES, 25);

@@ -9,19 +9,26 @@ import java.util.Set;
 import org.bukkit.World;
 import org.bukkit.block.Block;
 
+/**
+ * Modifies the speed of all zombies if triggered.
+ */
 public class ZombieControlResponse extends Response {
 	
 	private ZombieManager zm;
 	private double value;
 	
+	/**
+	 * constructor
+	 */
 	public ZombieControlResponse() {
 		super();
 		value = 0;
 	}
 	
-	
-	
-	public void setZm(ZombieManager zm) {
+	/**
+	 * @param zm ZombieManager
+	 */
+	public void setZombieManager(final ZombieManager zm) {
 		this.zm = zm;
 	}
 
@@ -33,7 +40,7 @@ public class ZombieControlResponse extends Response {
 	}
 
 	@Override
-	public void triggered(boolean active) {
+	public void triggered(final boolean active) {
 		if (active) {
 			zm.addSpeedAll(value);
 		}		
@@ -58,8 +65,8 @@ public class ZombieControlResponse extends Response {
 	}
 
 	@Override
-	public void setup(Map<String, Object> values, World world) {
-		value = (Double) values.get("value");		
+	public void setup(final Map<String, Object> values, final World world) {
+		value = (Double) values.get("value");
 	}
 
 }
