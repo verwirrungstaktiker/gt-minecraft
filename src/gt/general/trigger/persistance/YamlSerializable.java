@@ -2,22 +2,14 @@ package gt.general.trigger.persistance;
 
 import gt.general.world.WorldInstance;
 
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Set;
 
-import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.yaml.snakeyaml.DumperOptions;
 import org.yaml.snakeyaml.DumperOptions.FlowStyle;
 
 public abstract class YamlSerializable {
-
-	public static final String KEY_X_COORDINATE = "x";
-	public static final String KEY_Y_COORDINATE = "y";
-	public static final String KEY_Z_COORDINATE = "z";
-	
 	private String label;
 	
 	public static final DumperOptions YAML_OPTIONS;
