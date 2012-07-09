@@ -1,7 +1,6 @@
 package gt.lastgnome;
 
 import java.util.HashSet;
-import java.util.Map;
 import java.util.Set;
 
 import org.bukkit.World;
@@ -12,6 +11,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.entity.PlayerDeathEvent;
 
 import gt.general.trigger.Trigger;
+import gt.general.trigger.persistance.PersistanceMap;
 import gt.lastgnome.game.LastGnomeGame;
 
 
@@ -22,8 +22,12 @@ public class TeamLostTrigger extends Trigger implements Listener{
 	/** the observed game*/
 	private LastGnomeGame game;
 
+	/**
+	 * register death of gnome bearer
+	 * @param event player plays game ... dies.
+	 */
 	@EventHandler
-	public void heroDeath(PlayerDeathEvent event) {
+	public void heroDeath(final PlayerDeathEvent event) {
 		Player gnomebearer = game.getGnomeBearer().getPlayer();
 		
 		if (gnomebearer.equals(event.getEntity())) {
@@ -31,7 +35,10 @@ public class TeamLostTrigger extends Trigger implements Listener{
 		}
 	}
 	
-	public void setGame(LastGnomeGame game) {
+	/**
+	 * @param game LastGnomeGame
+	 */
+	public void setGame(final LastGnomeGame game) {
 		this.game = game;		
 	}
 	
@@ -41,13 +48,13 @@ public class TeamLostTrigger extends Trigger implements Listener{
 	}
 
 	@Override
-	public Map<String, Object> dump() {
+	public PersistanceMap dump() {
 		
 		return null;
 	}
 
 	@Override
-	public void setup(Map<String, Object> values, World world) {
+	public void setup(final PersistanceMap values, final World world) {
 		
 	}
 

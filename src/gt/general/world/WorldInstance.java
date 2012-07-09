@@ -2,6 +2,7 @@ package gt.general.world;
 
 import gt.general.Spawn;
 import gt.general.trigger.TriggerManager;
+import gt.general.trigger.persistance.PersistanceMap;
 import gt.general.trigger.persistance.YamlSerializable;
 
 import java.io.File;
@@ -137,7 +138,7 @@ public class WorldInstance {
 	 * @param fileName the file to write
 	 * @param values the data to write
 	 */
-	public void saveMeta(final String fileName, final Map<String, Object> values) {
+	public void saveMeta(final String fileName, final PersistanceMap values) {
 		try {
 			File path = new File(world.getWorldFolder(), fileName);
 			Writer writer = Files.newWriter(path, Charset.defaultCharset());

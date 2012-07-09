@@ -1,6 +1,8 @@
 package gt.general.trigger.response;
 
 import gt.general.character.ZombieManager;
+import gt.general.trigger.persistance.PersistanceMap;
+
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
@@ -69,10 +71,10 @@ public class ZombieSpawnResponse extends Response{
 		//zm.clearZombies();
 	}
 	@Override
-	public Map<String, Object> dump() {
-		Map<String, Object> map = new HashMap<String,Object>();
+	public PersistanceMap dump() {
+		PersistanceMap map = new PersistanceMap();
 		
-		map.putAll(coordinatesFromPoint(spawnLocation));
+		map.put("location", spawnLocation);
 		map.put("number", number);
 		map.put("speed", speed);
 		return map;
@@ -80,13 +82,6 @@ public class ZombieSpawnResponse extends Response{
 	@Override
 	public Set<Block> getBlocks() {
 		return new HashSet<Block>();
-	}
-	@Override
-	public void setup(final Map<String, Object> values, final World world) {
-		number = (Integer) values.get("number");
-		speed = (Double) values.get("speed");
-		
-		spawnLocation = locationFromCoordinates(values, world);		
 	}
 	
 	/**
@@ -102,6 +97,14 @@ public class ZombieSpawnResponse extends Response{
 	@Override
 	public void highlight() {
 		spawnLocation.getWorld().playEffect(spawnLocation, Effect.MOBSPAWNER_FLAMES, 25);
+	}
+
+	@Override
+	public void setup(final PersistanceMap values, final World world) {
+		number = values.getInt("number");
+		speed = values.getDouble("speed");
+		
+		spawnLocation = values.getLocation("location", world);		
 	}
 
 }

@@ -1,11 +1,11 @@
 package gt.general.world;
 
-import static com.google.common.collect.Sets.*;
+import static com.google.common.collect.Sets.newHashSet;
 
+import gt.general.trigger.persistance.PersistanceMap;
 import gt.general.trigger.persistance.YamlSerializable;
 import gt.general.world.ObservableCustomBlock.BlockEvent;
 
-import java.util.Map;
 import java.util.Set;
 
 import org.bukkit.Bukkit;
@@ -21,6 +21,8 @@ public class WorldUniqueBlock extends YamlSerializable implements BlockObserver 
 	
 	private final ObservableCustomBlock base;
 	private Block block = null;
+	
+	private static final String KEY_LOCATION = "location";
 	
 	/**
 	 * @param world where the block be blacked
@@ -57,10 +59,10 @@ public class WorldUniqueBlock extends YamlSerializable implements BlockObserver 
 	}
 
 	@Override
-	public void setup(final Map<String, Object> values, final World world) {
+	public void setup(final PersistanceMap values, final World world) {
 		
 		if(values != null) {
-			block = blockFromCoordinates(values, world);
+			block = values.getBlock(KEY_LOCATION, world);
 			SpoutManager.getMaterialManager().overrideBlock(block, base);
 		}
 		
@@ -69,10 +71,12 @@ public class WorldUniqueBlock extends YamlSerializable implements BlockObserver 
 	}
 
 	@Override
-	public Map<String, Object> dump() {
+	public PersistanceMap dump() {
+		PersistanceMap map = new PersistanceMap();
 		
 		if(block != null) {
-			return coordinatesFromBlock(block);
+			map.put(KEY_LOCATION, block);
+			return map;
 		}
 		return null;
 	}
