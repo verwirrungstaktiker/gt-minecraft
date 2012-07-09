@@ -118,4 +118,14 @@ public class PersistanceMap {
 		
 		map.put(key, coords);
 	}
+	
+	
+	@SuppressWarnings("unchecked")
+	public <T> T remove(final String key) {
+		return (T) map.remove(key);
+	}
+	
+	public Map<String, Object> getMap() {
+		return map;
+	}
 }

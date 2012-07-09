@@ -144,7 +144,7 @@ public class WorldInstance {
 			Writer writer = Files.newWriter(path, Charset.defaultCharset());
 			
 			Yaml yaml = new Yaml(YamlSerializable.YAML_OPTIONS);
-			yaml.dump(values, writer);
+			yaml.dump(values.getMap(), writer);
 			
 		} catch (FileNotFoundException e) {
 			throw new RuntimeException(e);

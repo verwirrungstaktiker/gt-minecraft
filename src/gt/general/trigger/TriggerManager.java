@@ -1,11 +1,11 @@
 package gt.general.trigger;
 
 import static com.google.common.collect.Sets.*;
+import gt.general.trigger.persistance.PersistanceMap;
 import gt.general.trigger.persistance.TriggerManagerPersistance;
 import gt.general.trigger.persistance.YamlSerializable;
 
 import java.util.Collection;
-import java.util.Map;
 import java.util.Set;
 
 import org.bukkit.World;
@@ -49,7 +49,7 @@ public class TriggerManager extends YamlSerializable{
 	}
 
 	@Override
-	public void setup(final Map<String, Object> values, final World world) {
+	public void setup(final PersistanceMap values, final World world) {
 		
 		if(values != null) {
 			TriggerManagerPersistance.setupTriggerManager(this, values, world);
@@ -57,8 +57,8 @@ public class TriggerManager extends YamlSerializable{
 	}
 
 	@Override
-	public Map<String, Object> dump() {
-		return TriggerManagerPersistance.dumpTriggerManager(this);
+	public PersistanceMap dump() {
+		return new PersistanceMap(TriggerManagerPersistance.dumpTriggerManager(this));
 	}
 
 	@Override
