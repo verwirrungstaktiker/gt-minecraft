@@ -50,7 +50,7 @@ public class ParticleManager implements Runnable {
 	 * @param context	a TriggerContext
 	 * @param player	the player which could see the particles
 	 */
-	public void removeHighlight(final TriggerContext context, final Player player) {
+	public void removeContext(final TriggerContext context, final Player player) {
 		for(Trigger trigger : context.getTriggers()) {
 			removeSerializable(trigger, player);
 		}
@@ -65,7 +65,7 @@ public class ParticleManager implements Runnable {
 	 * @param player a bukkit player
 	 */
 	private void highlight(final Block block, final Player player) {
-		//TODO: variable effect?
+		//TODO variable effect?
 		ParticleType type = ParticleType.DRIPLAVA;
 		Location loc = block.getLocation();
 		

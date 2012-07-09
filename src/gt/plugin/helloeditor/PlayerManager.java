@@ -240,7 +240,7 @@ public class PlayerManager implements Listener{
 				playerTriggerStates.put(name, TriggerState.IDLE);
 				playerTriggerContexts.put(name, null);
 				
-				particleManager.removeHighlight(context, player);
+				particleManager.removeContext(context, player);
 				
 				player.sendMessage(YELLOW + "Handed over " + context.getLabel() + ".");
 			} else {
