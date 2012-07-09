@@ -21,6 +21,10 @@ public class StartGameCommandExecutor extends PlayerCommandExecutor {
 	private TeamManager teamManager;
 	private GameManager gameManager;
 
+	/**
+	 * @param teamManager the running team manager 
+	 * @param gameManager the running game manager
+	 */
 	public StartGameCommandExecutor(final TeamManager teamManager, final GameManager gameManager) {
 		this.teamManager = teamManager;
 		this.gameManager = gameManager;

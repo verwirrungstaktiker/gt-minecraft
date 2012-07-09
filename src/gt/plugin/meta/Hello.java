@@ -1,14 +1,10 @@
 package gt.plugin.meta;
 
 import java.io.File;
-import java.io.FileFilter;
-
-import gt.general.world.ObservableCustomBlock;
 
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
-import org.getspout.spoutapi.inventory.SpoutItemStack;
 
 /**
  * Core singleton - must be initialized with Hello.initialize(JavaPlugin)

@@ -17,6 +17,9 @@ public class TeamCommandExecutor extends PlayerCommandExecutor {
 
 	private TeamManager teamManager;
 
+	/**
+	 * @param teamManager the running team manager
+	 */
 	public TeamCommandExecutor(final TeamManager teamManager) {
 		this.teamManager = teamManager;
 	}

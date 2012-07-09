@@ -1,23 +1,18 @@
 package gt.plugin.helloworld;
 
 import gt.general.GameManager;
-import gt.general.character.Hero;
 import gt.general.character.HeroManager;
 import gt.general.character.TeamManager;
-import gt.general.gui.GuiElementType;
-import gt.general.gui.Prompt;
 import gt.general.world.InstantiatingWorldManager;
 import gt.general.world.WorldManager;
 import gt.plugin.helloworld.command.StartGameCommandExecutor;
 import gt.plugin.helloworld.command.TeamCommandExecutor;
 import gt.plugin.meta.Hello;
 import gt.plugin.meta.MultiListener;
-import gt.plugin.meta.PlayerCommandExecutor;
 
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
-import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
 
@@ -62,6 +57,9 @@ public class HelloWorld extends JavaPlugin {
 	/** */
 	public void onDisable() { }
 	
+	/**
+	 * initializes the commands associated with hello world
+	 */
 	private void setupCommands() {
 		getCommand("team").setExecutor(new TeamCommandExecutor(teamManager));
 		getCommand("gg").setExecutor(new StartGameCommandExecutor(teamManager, gameManager));
