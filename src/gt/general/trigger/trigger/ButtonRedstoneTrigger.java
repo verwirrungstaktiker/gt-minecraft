@@ -2,8 +2,6 @@ package gt.general.trigger.trigger;
 
 import gt.general.trigger.persistance.PersistanceMap;
 
-import java.util.Map;
-
 import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
@@ -28,16 +26,20 @@ public class ButtonRedstoneTrigger extends RedstoneTrigger {
 
 	}
 	
-	public ButtonRedstoneTrigger() {
-		
-	}
+	/** to be used for persistance */
+	public ButtonRedstoneTrigger() {}
 	
 	@Override
 	public void setup(final PersistanceMap values, final World world) {
 		super.setup(values, world);
 
 		orientation = values.get(KEY_ORIENTATION);
-		updateOrientation();
+
+		Button button = (Button) getBlock().getState().getData();
+		button.setFacingDirection(orientation);
+		
+		getBlock().setData(button.getData());
+		
 	}
 	
 	@Override
@@ -51,12 +53,4 @@ public class ButtonRedstoneTrigger extends RedstoneTrigger {
 
 		return map;
 	}
-	
-	private void updateOrientation() {
-		Button button = (Button) getBlock().getState().getData();
-		button.setFacingDirection(orientation);
-		
-		getBlock().setData(button.getData());
-	}
-
 }

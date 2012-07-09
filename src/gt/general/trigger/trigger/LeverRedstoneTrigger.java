@@ -4,8 +4,6 @@ import gt.general.trigger.persistance.PersistanceMap;
 import gt.general.world.ObservableCustomBlock;
 import gt.plugin.meta.CustomBlockType;
 
-import java.util.Map;
-
 import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.block.Block;
@@ -29,8 +27,9 @@ public class LeverRedstoneTrigger extends RedstoneTrigger implements Listener {
 	
 	/**
 	 * @param trigger the lever to be used as trigger
+	 * @param against against which block the player placed the trigger
 	 */
-	public LeverRedstoneTrigger(Block trigger, Block against) {
+	public LeverRedstoneTrigger(final Block trigger, final Block against) {
 		super("lever_trigger_", trigger);
 		
 		orientation = against.getFace(trigger);
@@ -38,6 +37,7 @@ public class LeverRedstoneTrigger extends RedstoneTrigger implements Listener {
 		installSignal();
 	}
 	
+	/** to be used for persistence */
 	public LeverRedstoneTrigger() {}
 	
 	@Override
@@ -46,13 +46,16 @@ public class LeverRedstoneTrigger extends RedstoneTrigger implements Listener {
 		
 		orientation = (BlockFace) values.get("orientation");
 
-		updateOrientation();
+		Lever lever = (Lever) getBlock().getState().getData();
+		lever.setFacingDirection(orientation);
+		getBlock().setData(lever.getData());
+		
 		installSignal();
 	}
 	
 	@Override
 	public PersistanceMap dump() {
-		PersistanceMap map = super.dump();//new HashMap<String,Object>();
+		PersistanceMap map = super.dump();
 		
 		Lever lever = (Lever) getBlock().getState().getData();
 		orientation = lever.getFacing();
@@ -62,22 +65,15 @@ public class LeverRedstoneTrigger extends RedstoneTrigger implements Listener {
 		return map;
 	}
 	
-
-	private void updateOrientation() {
-		Lever lever = (Lever) getBlock().getState().getData();
-		lever.setFacingDirection(orientation);
-		
-		getBlock().setData(lever.getData());
-	}
-
-	
 	@Override
 	public void dispose() {
 		super.dispose();
 		getBlock().getRelative(orientation.getOppositeFace()).setType(Material.AIR);
 	}
 	
-	
+	/**
+	 * installs the signal behind the trigger
+	 */
 	private void installSignal() {		
 		Block signalBlock = getBlock().getRelative(orientation.getOppositeFace());
 		ObservableCustomBlock red = CustomBlockType.RED_SIGNAL.getCustomBlock();
@@ -86,6 +82,7 @@ public class LeverRedstoneTrigger extends RedstoneTrigger implements Listener {
 	}
 	
 	@EventHandler
+	@Override
 	public void onBlockRedstoneChange(final BlockRedstoneEvent event) {
 		if(isBlockRedstoneEventHere(event)) {
 			super.onBlockRedstoneChange(event);

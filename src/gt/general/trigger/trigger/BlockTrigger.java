@@ -3,7 +3,6 @@ package gt.general.trigger.trigger;
 import static com.google.common.collect.Sets.*;
 import gt.general.trigger.persistance.PersistanceMap;
 
-import java.util.HashSet;
 import java.util.Set;
 
 import org.bukkit.Material;
@@ -24,6 +23,10 @@ public abstract class BlockTrigger extends Trigger implements Listener {
 	private Block block;
 	private Material material;
 	
+	/**
+	 * @param prefix the prefix of the new Trigger
+	 * @param block THE block of the trigger
+	 */
 	public BlockTrigger(final String prefix, final Block block) {
 		super(prefix);
 		
@@ -31,9 +34,8 @@ public abstract class BlockTrigger extends Trigger implements Listener {
 		this.material = block.getType();
 	}
 	
-	public BlockTrigger() {
-		super();
-	}
+	/** to be used in persistance*/
+	public BlockTrigger() {}
 
 	
 	@Override

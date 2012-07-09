@@ -17,14 +17,17 @@ public class RandomLeverTrigger extends LeverRedstoneTrigger{
 	
 	private Collection<Block> signals;
 	
-	public RandomLeverTrigger(Block trigger, Block against) {
+	/**
+	 * @param trigger the lever to be used as trigger
+	 * @param against against which block the player placed the trigger
+	 */
+	public RandomLeverTrigger(final Block trigger, final Block against) {
 		super(trigger, against);
 		signals = new Vector<Block>();
 	}
 	
-	public RandomLeverTrigger() {
-		super();
-	}
+	/** to be used for persistence */
+	public RandomLeverTrigger() {}
 
 	@Override
 	public PersistanceMap dump() {

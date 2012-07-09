@@ -1,10 +1,5 @@
 package gt.general.trigger.trigger;
 
-import java.util.HashMap;
-import java.util.Map;
-
-import org.bukkit.Material;
-import org.bukkit.World;
 import org.bukkit.block.Block;
 
 /**
@@ -21,8 +16,6 @@ public class PressurePlateRedstoneTrigger extends RedstoneTrigger {
 		super("pressure_plate", pressurePlate);
 	}
 	
-	
-	public PressurePlateRedstoneTrigger() {
-		super();
-	}
+	/** to be used for persistance */
+	public PressurePlateRedstoneTrigger() {}
 }

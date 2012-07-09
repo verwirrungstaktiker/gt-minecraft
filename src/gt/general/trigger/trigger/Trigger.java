@@ -12,20 +12,26 @@ public abstract class Trigger extends YamlSerializable {
 	
 	/**
 	 * Creates a trigger
+	 * @param labelPrefix the prefix for the new label
 	 */
 	public Trigger (final String labelPrefix) {
 		super(labelPrefix);
 	}
 	
-	public Trigger () {
-		
-	}
+	/** to be used in persistence */
+	public Trigger () {}
 
+	/**
+	 * @return who to notify if this triggers
+	 */
 	public TriggerContext getContext() {
 		return context;
 	}
 
-	public void setContext(TriggerContext context) {
+	/**
+	 * @param context who to notify if this triggers
+	 */
+	public void setContext(final TriggerContext context) {
 		this.context = context;
 	}
 }
