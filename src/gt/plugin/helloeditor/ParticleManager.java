@@ -65,7 +65,7 @@ public class ParticleManager implements Runnable {
 	 * @param player a bukkit player
 	 */
 	private void highlight(final Block block, final Player player) {
-		//TODO: variable effect?
+		//TODO variable effect?
 		ParticleType type = ParticleType.DRIPLAVA;
 		Location loc = block.getLocation();
 		

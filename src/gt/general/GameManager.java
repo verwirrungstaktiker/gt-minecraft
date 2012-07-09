@@ -86,11 +86,9 @@ public class GameManager implements GameObserver{
 									.getSpawnLocation());
 		
 		teamManager.disband(game.getTeam());
-
 		
-		// TODO
-		WorldInstance world = game.getWorldInstance();
-		worldManager.disposeWorldInstance(world);	
+		game.getWorldInstance()
+			.dispose();
 		
 		game.dispose();
 	}

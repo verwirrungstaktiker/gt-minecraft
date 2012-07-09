@@ -1,7 +1,6 @@
 package gt.general.world;
 
 import static com.google.common.collect.Maps.*;
-import gt.general.trigger.TriggerManager;
 
 import java.util.Collection;
 import java.util.Map;
@@ -17,11 +16,10 @@ public class WorldManager {
 	private final Map<World, WorldInstance> instanceMapping;
 
 	/**
-	 * @param initialWorld the base world, where the initial spawn is
+	 * generates a new WorldManager
 	 */
 	public WorldManager() {
 		initialWorld = Bukkit.getWorld("world");
-
 		instanceMapping = newHashMap();
 	}
 	
@@ -32,37 +30,25 @@ public class WorldManager {
 		return initialWorld;
 	}
 
+	/**
+	 * @return the internal mapping of active world instances
+	 */
 	protected Map<World, WorldInstance> getInstanceMapping() {
 		return instanceMapping;
 	}
 	
 	/**
-	 * @return all currnently open worlds
+	 * @return all currently open worlds
 	 */
 	public Collection<WorldInstance> getOpenWorlds() {
 		return instanceMapping.values();
 	}	
 
-	public void setupWorldInstance(final WorldInstance worldInstance, final TriggerManager triggerManager) {
-		worldInstance.init(triggerManager);
-	}
-	
-	public void dumpWorldInstance(final WorldInstance worldInstance) {
-		worldInstance.save();
-	}
-	
-	/** 
-	 * @param worldInstance will be disposed 
+	/**
+	 * @param worldName the name of the world instance to get
+	 * @return the world instance
 	 */
-	public void disposeWorldInstance(final WorldInstance worldInstance) {
-		instanceMapping.remove(worldInstance.getWorld());
-
-		worldInstance.dispose();
-	}
-	
-
-
-	public WorldInstance getWorld(String worldName) {
+	public WorldInstance getWorld(final String worldName) {
 		
 		World world = Bukkit.getWorld(worldName);
 		
