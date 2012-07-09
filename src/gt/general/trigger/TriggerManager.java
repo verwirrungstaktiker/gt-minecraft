@@ -16,7 +16,7 @@ import org.bukkit.block.Block;
  */
 public class TriggerManager extends YamlSerializable{
 
-	public final static String PERSISTANCE_FILE = "trigger.yml";
+	public static final String PERSISTANCE_FILE = "trigger.yml";
 	
 	private final Set<TriggerContext> triggerContexts;
 	
@@ -49,7 +49,7 @@ public class TriggerManager extends YamlSerializable{
 	}
 
 	@Override
-	public void setup(Map<String, Object> values, World world) {
+	public void setup(final Map<String, Object> values, final World world) {
 		
 		if(values != null) {
 			TriggerManagerPersistance.setupTriggerManager(this, values, world);
