@@ -21,7 +21,7 @@ import org.getspout.spoutapi.SpoutManager;
  * 
  * @author roman
  */
-public class LeverRedstoneTrigger extends AttachableRedstoneTrigger implements Listener {
+public class LeverRedstoneTrigger extends RedstoneTrigger implements Listener {
 	
 	public static final String KEY_ORIENTATION = "orientation";
 	

@@ -141,10 +141,4 @@ public class EditorTriggerManager extends TriggerManager {
 	public YamlSerializable getSerializable(Block block) {
 		return blockToSerializable.get(block);
 	}
-
-	public void dispose() {
-		// TODO Auto-generated method stub
-		
-	}
-
 }
