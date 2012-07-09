@@ -1,7 +1,7 @@
 package gt.general.trigger.response;
 
 
-import java.util.Map;
+import gt.general.trigger.persistance.PersistanceMap;
 
 import org.bukkit.Effect;
 import org.bukkit.Material;
@@ -10,23 +10,29 @@ import org.bukkit.block.Block;
 
 public class RedstoneTorchResponse extends BlockResponse {
 
-	private boolean invert = false;		//true if response is inverted
+	private boolean inverted = false;		//true if response is inverted
 	
-	private final static String KEY_INVERT = "invert";
+	private static final String KEY_INVERTED = "inverted";
 	
+	/**
+	 * @param torchBlock material.RedstoneTorch
+	 */
 	public RedstoneTorchResponse(final Block torchBlock) {
 		super("redstone_torch", torchBlock);
 	}
 	
+	/**
+	 * don't delete this anonymous constructor
+	 */
 	public RedstoneTorchResponse() {}
 
 	@Override
-	public void setup(final Map<String, Object> values, final World world) {
+	public void setup(final PersistanceMap values, final World world) {
 		super.setup(values, world);
-		invert = (Boolean) values.get(KEY_INVERT);
+		inverted = values.get(KEY_INVERTED);
 		
-		if( !invert ) {
-			//TODO: Maybe we can find another Material to represent a RedstoneTorch that's not glowing
+		if( !inverted ) {
+			//TODO Maybe we can find another Material to represent a RedstoneTorch that's not glowing
 			getBlock().setType(Material.AIR);
 		}
 	}
@@ -36,7 +42,7 @@ public class RedstoneTorchResponse extends BlockResponse {
 	public void triggered(final boolean active) {
 		System.out.println("block triggered");
 		
-		if(active ^ invert) {
+		if(active ^ inverted) {
 			// torch on
 			getBlock().setType(getMaterial());
 		} else {
@@ -48,19 +54,25 @@ public class RedstoneTorchResponse extends BlockResponse {
 	}
 
 	@Override
-	public Map<String, Object> dump() {
-		Map<String, Object> map = super.dump();
+	public PersistanceMap dump() {
+		PersistanceMap map = super.dump();
 		
-		map.put(KEY_INVERT, invert);
+		map.put(KEY_INVERTED, inverted);
 		return map;
 	}
 
-	public boolean isInvert() {
-		return invert;
+	/**
+	 * @return true if the logic of the torch is inverted
+	 */
+	public boolean isInverted() {
+		return inverted;
 	}
 
-	public void setInvert(boolean invert) {
-		this.invert = invert;
+	/**
+	 * @param inverted true if the logich of the torch is inverted
+	 */
+	public void setInvert(final boolean inverted) {
+		this.inverted = inverted;
 	}
 
 }

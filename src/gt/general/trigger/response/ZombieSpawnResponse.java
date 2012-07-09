@@ -3,12 +3,9 @@ package gt.general.trigger.response;
 import gt.general.character.ZombieManager;
 import gt.general.trigger.persistance.PersistanceMap;
 
-import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Map;
 import java.util.Set;
 
-import org.bukkit.Effect;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.block.Block;
@@ -21,6 +18,10 @@ public class ZombieSpawnResponse extends Response{
 	private Location spawnLocation;
 	private int number;
 	private double speed;
+	
+	private static final String KEY_LOCATION = "location";
+	private static final String KEY_NUMBER = "number";
+	private static final String KEY_SPEED = "speed";
 	
 	/**
 	 * Empty constructor for Serializable
@@ -74,9 +75,9 @@ public class ZombieSpawnResponse extends Response{
 	public PersistanceMap dump() {
 		PersistanceMap map = new PersistanceMap();
 		
-		map.put("location", spawnLocation);
-		map.put("number", number);
-		map.put("speed", speed);
+		map.put(KEY_LOCATION, spawnLocation);
+		map.put(KEY_NUMBER, number);
+		map.put(KEY_SPEED, speed);
 		return map;
 	}
 	@Override
@@ -91,20 +92,12 @@ public class ZombieSpawnResponse extends Response{
 		this.zm = zm;
 	}
 
-	/**
-	 * only spawn a flame effect at the spawn location as it has no blocks
-	 */
-	@Override
-	public void highlight() {
-		spawnLocation.getWorld().playEffect(spawnLocation, Effect.MOBSPAWNER_FLAMES, 25);
-	}
-
 	@Override
 	public void setup(final PersistanceMap values, final World world) {
-		number = values.getInt("number");
-		speed = values.getDouble("speed");
+		number = values.get(KEY_LOCATION);
+		speed = values.get(KEY_SPEED);
 		
-		spawnLocation = values.getLocation("location", world);		
+		spawnLocation = values.getLocation(KEY_LOCATION, world);		
 	}
 
 }

@@ -1,23 +1,44 @@
 package gt.general.trigger.response;
 
 
-import java.util.Map;
+import gt.general.trigger.persistance.PersistanceMap;
 
 import org.bukkit.Effect;
+import org.bukkit.World;
 import org.bukkit.block.Block;
+import org.bukkit.block.BlockFace;
 import org.bukkit.material.Door;
 
-
-//TODO what about the orientation on setup?
 public class DoorResponse extends BlockResponse {
+
+	private static final String KEY_ORIENTATION = "orientation";
+	private BlockFace orientation;
 	
-	public DoorResponse(Block doorBlock) {
+	/**
+	 * @param doorBlock material.Door
+	 */
+	public DoorResponse(final Block doorBlock) {
 		super("door", doorBlock);
 	}
 
+	/**
+	 * don't delete this anonymous constructor
+	 */
 	public DoorResponse() {
 	}
 
+	@Override
+	public void setup(final PersistanceMap values, final World world) {
+		super.setup(values, world);
+		
+		orientation = values.get(KEY_ORIENTATION);
+		
+		Block block = getBlock();
+		Door door = (Door) block.getState().getData();
+		door.setFacingDirection(orientation);
+		
+	}
+	
 	@Override
 	public void triggered(final boolean active) {
 
@@ -33,11 +54,11 @@ public class DoorResponse extends BlockResponse {
 	}
 
 	@Override
-	public Map<String, Object> dump() {
-		Map<String, Object> map = super.dump();
+	public PersistanceMap dump() {
+		PersistanceMap map = super.dump();
 		
 		Door door = (Door) getBlock().getState().getData();
-		map.put("orientation", door.getFacing());
+		map.put(KEY_ORIENTATION, door.getFacing());
 		
 		return map;
 	}

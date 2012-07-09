@@ -1,11 +1,12 @@
 package gt.general.trigger.response;
 
 
-import java.util.Map;
+import gt.general.trigger.persistance.PersistanceMap;
 
 import org.bukkit.Effect;
 import org.bukkit.World;
 import org.bukkit.block.Block;
+import org.bukkit.block.BlockFace;
 import org.bukkit.block.Sign;
 
 // TODO this needs an orientation !
@@ -17,6 +18,9 @@ public class SignResponse extends BlockResponse {
 	private boolean onWall; // is this inverted? at least in the persistance ...
 	private boolean isTriggered = false;
 	
+	private BlockFace orientation;
+
+	private static final String KEY_ORIENTATION = "orientation";
 	private static final String KEY_UNTRIGGERED_MESSAGE = "untriggered_message";
 	private static final String KEY_TRIGGERED_MESSAGE = "triggered_message";
 	private static final String KEY_ON_WALL = "on_wall";
@@ -32,8 +36,15 @@ public class SignResponse extends BlockResponse {
 		this.triggeredMessage = "\n triggered";
 	}
 	
+	/**
+	 * don't delete anonymous constructor
+	 */
 	public SignResponse() {}
 
+	/**
+	 * @param sign material.Sign
+	 * @param message messagge on sign (may contain newlines)
+	 */
 	private void setSignMessage(final Sign sign, final String message) {
 		int end=0;
 		String line;
@@ -58,6 +69,11 @@ public class SignResponse extends BlockResponse {
 		sign.update();		
 	}
 	
+	/**
+	 * clears lines of a sign beginning, doesn't update visual
+	 * @param sign a mc sign
+	 * @param startingLine line from where the clear starts
+	 */
 	private void clearSignMessage(final Sign sign, final int startingLine) {
 		for (int i=startingLine; i<4; i++) {
 			sign.setLine(i, "");
@@ -97,25 +113,42 @@ public class SignResponse extends BlockResponse {
 	}
 	
 	@Override
-	public void setup(final Map<String, Object> values, final World world) {
+	public void setup(final PersistanceMap values, final World world) {
 		super.setup(values, world);
 		
-		onWall = (Boolean) values.get(KEY_ON_WALL);
+		onWall = values.get(KEY_ON_WALL);
 		
-		untriggeredMessage = (String) values.get(KEY_UNTRIGGERED_MESSAGE);
-		triggeredMessage = (String) values.get(KEY_TRIGGERED_MESSAGE);
+		untriggeredMessage = values.get(KEY_UNTRIGGERED_MESSAGE);
+		triggeredMessage = values.get(KEY_TRIGGERED_MESSAGE);
+		
+		orientation = values.get(KEY_ORIENTATION);
+		updateOrientation();
+		
+
 	}
 	
 	@Override
-	public Map<String, Object> dump() {
-		Map<String, Object> map = super.dump();
+	public PersistanceMap dump() {
+		PersistanceMap map = super.dump();
 		
 		map.put(KEY_ON_WALL, onWall);
 		
 		map.put(KEY_UNTRIGGERED_MESSAGE, untriggeredMessage);
 		map.put(KEY_TRIGGERED_MESSAGE, triggeredMessage);
+
+		map.put(KEY_ORIENTATION, orientation);
 		
 		return map;
+	}
+	
+	/**
+	 * update the orientation of the sign
+	 */
+	private void updateOrientation() {
+		org.bukkit.material.Sign sign = (org.bukkit.material.Sign) getBlock().getState().getData();
+		sign.setFacingDirection(orientation);
+		
+		getBlock().setData(sign.getData());
 	}
 
 }

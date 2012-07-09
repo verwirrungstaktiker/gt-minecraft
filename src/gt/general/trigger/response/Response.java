@@ -4,11 +4,16 @@ import gt.general.trigger.persistance.YamlSerializable;
 
 public abstract class Response extends YamlSerializable {
 
-	
+	/**
+	 * don't delete this anonymous constructor
+	 */
 	public Response() {
 		super();
 	}
 	
+	/**
+	 * @param labelPrefix prefix of the label
+	 */
 	public Response(final String labelPrefix) {
 		super(labelPrefix);
 	}
@@ -20,8 +25,4 @@ public abstract class Response extends YamlSerializable {
 	 */
 	public abstract void triggered(boolean active);
 
-	/**
-	 * highlight the blocks that are connected to this response with particles
-	 */
-	public abstract void highlight();
 }

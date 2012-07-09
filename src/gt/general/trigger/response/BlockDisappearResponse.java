@@ -1,7 +1,7 @@
 package gt.general.trigger.response;
 
 
-import java.util.Map;
+import gt.general.trigger.persistance.PersistanceMap;
 
 import org.bukkit.Effect;
 import org.bukkit.Material;
@@ -10,22 +10,27 @@ import org.bukkit.block.Block;
 
 public class BlockDisappearResponse extends BlockResponse {
 
-	// TODO why has invert a different semantic as in RedstoneTorchResponse?
-	private boolean invert = false;		//true if block appears on trigger
+	private boolean inverted = false;		//true if block appears on trigger
 	
+	/**
+	 * do not delete this anonymous constructor
+	 */
 	public BlockDisappearResponse() {
 		super();
 	}
 	
-	public BlockDisappearResponse(Block block) {
+	/**
+	 * @param block bukkit block
+	 */
+	public BlockDisappearResponse(final Block block) {
 		super("appearable_block", block);
 	}
 
 	@Override
-	public void setup(final Map<String, Object> values, final World world) {
+	public void setup(final PersistanceMap values, final World world) {
 		super.setup(values, world);
 		
-		if(invert) {
+		if(inverted) {
 			getBlock().setType(Material.AIR);
 		}
 	}
@@ -36,7 +41,7 @@ public class BlockDisappearResponse extends BlockResponse {
 		System.out.println("block triggered");
 		Block block = getBlock();
 		
-		if(active ^ invert) {
+		if(active ^ inverted) {
 			// block disappear
 			block.setType(Material.AIR);
 		} else {
@@ -48,19 +53,25 @@ public class BlockDisappearResponse extends BlockResponse {
 	}
 
 	@Override
-	public Map<String, Object> dump() {
-		Map<String, Object> map = super.dump();
+	public PersistanceMap dump() {
+		PersistanceMap map = super.dump();
 		
-		map.put("invert", invert);
+		map.put("invert", inverted);
 		return map;
 	}
 
-	public boolean isInvert() {
-		return invert;
+	/**
+	 * @return true if response is inverted
+	 */
+	public boolean isInverted() {
+		return inverted;
 	}
 
-	public void setInvert(boolean invert) {
-		this.invert = invert;
+	/**
+	 * @param inverted true if response is inverted
+	 */
+	public void setInverted(final boolean inverted) {
+		this.inverted = inverted;
 	}
 
 }

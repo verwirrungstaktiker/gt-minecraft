@@ -135,15 +135,5 @@ public class TriggerContext {
 			response.dispose();
 		}
 	}
-
-	public void highlight() {
-		for(Trigger trigger : triggers) {
-			trigger.highlight();
-		}
-		for(Response response : responses) {
-			response.highlight();
-		}
-
-	}
 	
 }

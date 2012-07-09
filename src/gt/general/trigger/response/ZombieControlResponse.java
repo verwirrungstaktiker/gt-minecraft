@@ -1,9 +1,8 @@
 package gt.general.trigger.response;
 
 import gt.general.character.ZombieManager;
+import gt.general.trigger.persistance.PersistanceMap;
 
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Set;
 
 import org.bukkit.World;
@@ -16,6 +15,8 @@ public class ZombieControlResponse extends Response {
 	
 	private ZombieManager zm;
 	private double value;
+	
+	private static final String KEY_VALUE = "value";
 	
 	/**
 	 * constructor
@@ -32,13 +33,6 @@ public class ZombieControlResponse extends Response {
 		this.zm = zm;
 	}
 
-
-	@Override
-	public void highlight() {
-		// TODO How?!
-		
-	}
-
 	@Override
 	public void triggered(final boolean active) {
 		if (active) {
@@ -52,10 +46,10 @@ public class ZombieControlResponse extends Response {
 	}
 
 	@Override
-	public Map<String, Object> dump() {
-		Map<String, Object> map = new HashMap<String,Object>();
+	public PersistanceMap dump() {
+		PersistanceMap map = new PersistanceMap();
 		
-		map.put("value", value);
+		map.put(KEY_VALUE, value);
 		return map;
 	}
 
@@ -65,8 +59,8 @@ public class ZombieControlResponse extends Response {
 	}
 
 	@Override
-	public void setup(final Map<String, Object> values, final World world) {
-		value = (Double) values.get("value");
+	public void setup(final PersistanceMap values, final World world) {
+		value = (Double) values.get(KEY_VALUE);
 	}
 
 }
