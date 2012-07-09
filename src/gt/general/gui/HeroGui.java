@@ -81,12 +81,18 @@ public class HeroGui {
 		}
 	}
 	
-	public void prompt(final PopupScreen popup) {
+	/**
+	 * @param popup the popup screen to attach to the hero
+	 */
+	public void popup(final PopupScreen popup) {
 		
 		getMainScreen()
 			.attachPopupScreen(popup);
 	}
 	
+	/**
+	 * @param popup the popup screen to close
+	 */
 	public void closePopup(final PopupScreen popup) {
 		if(getMainScreen().getActivePopup().equals(popup)) {
 			getMainScreen()

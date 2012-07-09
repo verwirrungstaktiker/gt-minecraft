@@ -1,11 +1,11 @@
 package gt.general.trigger;
 
+import static com.google.common.collect.Sets.*;
 import gt.general.trigger.persistance.YamlSerializable;
 import gt.general.trigger.response.Response;
 import gt.general.trigger.trigger.Trigger;
 
 import java.util.Collection;
-import java.util.HashSet;
 import java.util.Set;
 
 public class TriggerContext {
@@ -14,28 +14,20 @@ public class TriggerContext {
 		AND, OR
 	}
 	
-	private final Set<Trigger> triggers;
-	private final Set<Response> responses;
+	private final Set<Trigger> triggers = newHashSet();
+	private final Set<Response> responses = newHashSet();
 	
-	private InputFunction inputFunction;
+	private InputFunction inputFunction = InputFunction.OR;
 
 	private String label;
 	
-	private final Set<Trigger> activeTriggers;
+	private final Set<Trigger> activeTriggers = newHashSet();
 	
 	/**
 	 * Generates a new TriggerContext
-	 * 
 	 */
-	public TriggerContext() {
-		triggers = new HashSet<Trigger>();
-		responses = new HashSet<Response>();
-		
-		activeTriggers = new HashSet<Trigger>();
-		
+	public TriggerContext() {		
 		setLabel("context_" + hashCode());
-		
-		inputFunction = InputFunction.OR;
 	}
 
 	/**
@@ -63,6 +55,10 @@ public class TriggerContext {
 		}
 	}
 	
+	/**
+	 * @param trigger trigger which changes its state
+	 * @param state new state of the trigger
+	 */
 	public void updateTriggerState(final Trigger trigger, final boolean state) {		
 		boolean oldState = evalInputFuntion();
 		
@@ -78,16 +74,19 @@ public class TriggerContext {
 				response.triggered(newState);
 			}
 		}
-		
-		
 	}
 	
+	/**
+	 * @return true if the context should be considered triggered
+	 */
 	private boolean evalInputFuntion() {
 		switch (inputFunction) {
 		case OR:
 			return activeTriggers.size() != 0;
 		case AND:
 			return activeTriggers.size() == triggers.size();
+		default:
+			break;
 		}
 		return false;
 	}
@@ -99,38 +98,62 @@ public class TriggerContext {
 		return !triggers.isEmpty() && !responses.isEmpty();
 	}
 
+	/**
+	 * @return the triggers of this context
+	 */
 	public Collection<Trigger> getTriggers() {
 		return triggers;
 	}
 
+	/**
+	 * @return the responses of this context
+	 */
 	public Collection<Response> getResponses() {
 		return responses;
 	}
 	
-	public void removeSerializable(YamlSerializable serializable) {
+	/**
+	 * @param serializable the serializable to be removed
+	 */
+	public void removeSerializable(final YamlSerializable serializable) {
 		triggers.remove(serializable);
 		responses.remove(serializable);
 		activeTriggers.remove(serializable);
 		serializable.dispose();
 	}
 	
+	/**
+	 * @return the label of this context
+	 */
 	public String getLabel() {
 		return label;
 	}
 	
+	/**
+	 * @param label the label of this context
+	 */
 	public void setLabel(final String label) {
 		this.label = label;
 	}
 	
+	/**
+	 * @param trigger the trigger to add
+	 */
 	public void addTrigger(final Trigger trigger) {
 		triggers.add(trigger);
 		trigger.setContext(this);
 	}
 	
+	/**
+	 * @param response the response to add
+	 */
 	public void addResponse(final Response response) {
 		responses.add(response);
 	}
 
+	/**
+	 * disposes all triggers and responses
+	 */
 	public void dispose() {
 		for(Trigger trigger : triggers) {
 			trigger.dispose();

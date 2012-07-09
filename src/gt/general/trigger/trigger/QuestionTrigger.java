@@ -124,7 +124,7 @@ public class QuestionTrigger extends BlockTrigger implements BlockObserver{
 			});
 			
 			openPrompts.put(hero, prompt);
-			hero.getGui().prompt(prompt);
+			hero.getGui().popup(prompt);
 		}
 	}
 

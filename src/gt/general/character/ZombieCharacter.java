@@ -20,7 +20,7 @@ public class ZombieCharacter extends Character{
 	}
 	
 	private int speedToAmplifier(double speed) {
-		int Result = 0;
+		int result = 0;
 		
 		//~25% Faster
 		if (speed>1.1) {
@@ -28,13 +28,13 @@ public class ZombieCharacter extends Character{
 		}
 		
 		if (speed < 0.9) {
-			Result = (int)Math.round(((1-speed)/0.15));
-			Result = Result - 1;
-			return Result;
+			result = (int)Math.round(((1-speed)/0.15));
+			result = result - 1;
+			return result;
 		}
 
 		
-		return Result;
+		return result;
 	}
 	
 	@Override

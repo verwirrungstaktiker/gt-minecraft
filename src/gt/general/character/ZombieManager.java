@@ -32,12 +32,12 @@ public class ZombieManager implements Listener, Runnable{
 	 * Creates a new ZombieManager
 	 * @param world the world, where the Zombies will be spawned
 	 */
-	public ZombieManager(World world) {
+	public ZombieManager(final World world) {
 		zombies = new Vector<ZombieCharacter>();
 		this.world = world;
 	}
 	
-	public void setTaskID(int id) {
+	public void setTaskID(final int id) {
 		taskID = id;
 	}
 
@@ -47,7 +47,7 @@ public class ZombieManager implements Listener, Runnable{
 	 * @param event an EntityDamageByEntity Event
 	 */
 	@EventHandler
-	public void damageEntityEvent(EntityDamageByEntityEvent event) {
+	public void damageEntityEvent(final EntityDamageByEntityEvent event) {
 		//On hit, Zombie drains 1/3 MaxHealth
 		if (event.getDamager() instanceof Zombie) {
 			LivingEntity p = (LivingEntity) event.getEntity();
@@ -75,7 +75,7 @@ public class ZombieManager implements Listener, Runnable{
 	 * Set a new target for Zombies
 	 * @param hero the new target
 	 */
-	public void setTarget(Hero hero) {
+	public void setTarget(final Hero hero) {
 		
 		if(hero != null) {
 			target = hero.getPlayer();
@@ -89,7 +89,7 @@ public class ZombieManager implements Listener, Runnable{
 	 * Spawns a Zombie
 	 * @param spawnpoint location, where zombie should be spawned
 	 */
-	public void spawnZombie(Location spawnpoint) {
+	public void spawnZombie(final Location spawnpoint) {
 		spawnZombie(spawnpoint,1.0);
 	}
 	
@@ -98,7 +98,7 @@ public class ZombieManager implements Listener, Runnable{
 	 * @param spawnpoint location, where zombie should be spawned
 	 * @param speed the Zombies basic speed-multiplicator
 	 */
-	public void spawnZombie(Location spawnpoint,double speed) {
+	public void spawnZombie(final Location spawnpoint, final double speed) {
 		spawnZombie(spawnpoint, null, speed);
 	}
 	
@@ -109,7 +109,7 @@ public class ZombieManager implements Listener, Runnable{
 	 * @param speed the Zombies basic speed-multiplicator
 	 * 
 	 */
-	public void spawnZombie(Location spawnpoint, Aura aura, double speed) {
+	public void spawnZombie(final Location spawnpoint, final Aura aura, final double speed) {
 		ZombieCharacter zombie = new ZombieCharacter(world.spawn(spawnpoint, Zombie.class));
 		zombie.setAttribute(CharacterAttributes.SPEED, speed);
 		//make sure not to add null-auras
@@ -138,7 +138,7 @@ public class ZombieManager implements Listener, Runnable{
 	 * Modifies Speed of all Zombies
 	 * @param value Value to be added to Zombie speed
 	 */
-	public void addSpeedAll(Double value) {
+	public void addSpeedAll(final Double value) {
 		for (ZombieCharacter zombie : zombies) {
 			zombie.addToAttribute(CharacterAttributes.SPEED, value);
 		}
@@ -152,7 +152,10 @@ public class ZombieManager implements Listener, Runnable{
 	 */
 	@Override
 	public void run() {
-		if (target == null) return;
+		if (target == null) {
+			return;
+		}
+		
 		for (ZombieCharacter zombieChar : zombies) {
 			Zombie zombie = zombieChar.getZombie();
 			//See if any Players are nearby
