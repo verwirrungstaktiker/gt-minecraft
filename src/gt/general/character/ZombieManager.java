@@ -37,6 +37,10 @@ public class ZombieManager implements Listener, Runnable{
 		this.world = world;
 	}
 	
+	/**
+	 * set the id of this task
+	 * @param id task id
+	 */
 	public void setTaskID(final int id) {
 		taskID = id;
 	}
@@ -79,10 +83,7 @@ public class ZombieManager implements Listener, Runnable{
 		
 		if(hero != null) {
 			target = hero.getPlayer();
-		} else {
-			// TODO yeah what else? target = null?
-		}
-		
+		}		
 	}
 
 	/**
@@ -119,6 +120,9 @@ public class ZombieManager implements Listener, Runnable{
 		zombies.add(zombie);
 	}
 	
+	/**
+	 * remove all zombies & cancel the schedule
+	 */
 	public void cleanup() {
 		Hello.cancelScheduledTask(taskID);
 		clearZombies();

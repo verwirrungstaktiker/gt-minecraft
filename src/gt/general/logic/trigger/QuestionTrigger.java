@@ -1,6 +1,6 @@
 package gt.general.logic.trigger;
 
-import static com.google.common.collect.Maps.*;
+import static com.google.common.collect.Maps.newHashMap;
 import gt.general.character.Hero;
 import gt.general.character.HeroManager;
 import gt.general.gui.Prompt;

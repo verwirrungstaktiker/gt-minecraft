@@ -1,6 +1,6 @@
 package gt.general.logic;
 
-import static com.google.common.collect.Sets.*;
+import static com.google.common.collect.Sets.newHashSet;
 import gt.general.logic.persistance.PersistanceMap;
 import gt.general.logic.persistance.TriggerManagerPersistance;
 import gt.general.logic.persistance.YamlSerializable;
@@ -20,15 +20,24 @@ public class TriggerManager extends YamlSerializable{
 	
 	private final Set<TriggerContext> triggerContexts;
 	
+	/**
+	 * creates a new TriggerManager
+	 */
 	public TriggerManager() {
 		triggerContexts = newHashSet();
 	}
 	
+	/**
+	 * create a new TriggerManager
+	 * @param triggerContexts the registered triggers/responses
+	 */
 	public TriggerManager(final Set<TriggerContext> triggerContexts) {
 		this.triggerContexts = triggerContexts;
 	}
 	
-
+	/**
+	 * @return scheduled triggers/responses
+	 */
 	public Collection<TriggerContext> getTriggerContexts() {
 		return triggerContexts;
 	}

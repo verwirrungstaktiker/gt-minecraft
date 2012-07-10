@@ -5,21 +5,33 @@ import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
 
-
+/**
+ * wraps a bukkit zombie and modifies its speed
+ */
 public class ZombieCharacter extends Character{
 	private final Zombie zombie;
 	private PotionEffect  speedEffect;
 	
-	
-	public ZombieCharacter(Zombie zombie) {
+	/**
+	 * create a new zombie
+	 * @param zombie bukkit zombie
+	 */
+	public ZombieCharacter(final Zombie zombie) {
 		this.zombie = zombie;
 	}
 	
+	/**
+	 * @return the wrapped zombie
+	 */
 	public Zombie getZombie() {
 		return zombie;
 	}
 	
-	private int speedToAmplifier(double speed) {
+	/**
+	 * @param speed speed of the zombie
+	 * @return the amplifier that is necessary to get a specific speed
+	 */
+	private int speedToAmplifier(final double speed) {
 		int result = 0;
 		
 		//~25% Faster

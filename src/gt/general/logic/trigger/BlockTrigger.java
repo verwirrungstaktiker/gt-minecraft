@@ -1,6 +1,6 @@
 package gt.general.logic.trigger;
 
-import static com.google.common.collect.Sets.*;
+import static com.google.common.collect.Sets.newHashSet;
 import gt.general.logic.persistance.PersistanceMap;
 
 import java.util.Set;
