@@ -1,7 +1,6 @@
 package gt.general;
 
 import gt.general.character.TeamManager;
-import gt.general.world.WorldInstance;
 import gt.general.world.WorldManager;
 
 import java.util.HashSet;

@@ -1,30 +1,32 @@
 package gt.lastgnome.game;
 
-import static com.google.common.collect.Sets.*;
 import gt.general.character.Team;
-import gt.general.logic.persistance.YamlSerializable;
 import gt.general.world.WorldInstance;
 import gt.lastgnome.GnomeSocketEnd;
 import gt.lastgnome.GnomeSocketStart;
 
-import java.util.Set;
-
 import org.bukkit.entity.Player;
 
+/**
+ * A type of LastGnome Game that works with the Editor
+ */
 public class EditorLastGnomeGame extends AbstractLastGnomeGame {
 	
+	/**
+	 * Instantiate a new LastGnomeGame that works with the Editor
+	 */
 	public EditorLastGnomeGame() {
 		super(new Team());
 	}
 
 	@Override
-	public void onStartSocketInteract(Player player) {
+	public void onStartSocketInteract(final Player player) {
 		// TODO Auto-generated method stub
 
 	}
 
 	@Override
-	public void onEndSocketInteract(Player player) {
+	public void onEndSocketInteract(final Player player) {
 		// TODO Auto-generated method stub
 
 	}
@@ -34,6 +36,9 @@ public class EditorLastGnomeGame extends AbstractLastGnomeGame {
 		// TODO Auto-generated method stub
 	}
 	
+	/**
+	 * save all TriggerContexts to Yaml
+	 */
 	public void save() {
 		WorldInstance worldInstance = getWorldInstance();
 		

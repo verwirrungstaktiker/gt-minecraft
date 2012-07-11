@@ -1,15 +1,12 @@
 package gt.lastgnome.game;
 
-import static org.bukkit.ChatColor.*;
-
+import static org.bukkit.ChatColor.GREEN;
+import static org.bukkit.ChatColor.YELLOW;
 
 import gt.general.character.Hero;
 import gt.general.character.HeroManager;
 import gt.general.character.Team;
 import gt.general.gui.GuiElementType;
-import gt.general.logic.TriggerContext;
-import gt.general.logic.response.Response;
-import gt.general.logic.response.ZombieSpawnResponse;
 import gt.general.world.WorldInstance;
 import gt.lastgnome.GnomeItem;
 import gt.lastgnome.gui.SpeedBar;
@@ -177,8 +174,12 @@ public class LastGnomeGame extends AbstractLastGnomeGame implements Listener{
 		
 	}
 	
+	/**
+	 * Detect Player Death
+	 * @param event player dies
+	 */
 	@EventHandler
-	public void onPlayerDeath(PlayerDeathEvent event) {
+	public void onPlayerDeath(final PlayerDeathEvent event) {
 		/*Player player = event.getEntity();
 		if (player.equals(gnomeBearer.getPlayer())) {
 			return;
@@ -193,7 +194,7 @@ public class LastGnomeGame extends AbstractLastGnomeGame implements Listener{
 	 * @param player who clicked the socket
 	 */
 	@Override
-	public void onStartSocketInteract(Player player) {
+	public void onStartSocketInteract(final Player player) {
 		Hero hero = HeroManager.getHero(player);
 		
 		if (gnomeBearer == null && hero.canRecieveItem()) {
@@ -214,7 +215,7 @@ public class LastGnomeGame extends AbstractLastGnomeGame implements Listener{
 	 * @param player who klicked the socket
 	 */
 	@Override
-	public void onEndSocketInteract(Player player) {
+	public void onEndSocketInteract(final Player player) {
 		Hero hero = HeroManager.getHero(player);
 		
 		if(hero.equals(gnomeBearer)) {	

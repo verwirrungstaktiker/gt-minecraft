@@ -1,7 +1,7 @@
 package gt.general.logic.persistance;
 
-import static com.google.common.collect.Lists.*;
-import static com.google.common.collect.Maps.*;
+import static com.google.common.collect.Lists.newArrayList;
+import static com.google.common.collect.Maps.newHashMap;
 import gt.general.logic.TriggerContext;
 import gt.general.logic.TriggerManager;
 import gt.general.logic.response.Response;
@@ -39,20 +39,38 @@ public class TriggerManagerPersistance {
 		this.triggerManager = triggerManager;
 	}
 
-	public TriggerManagerPersistance(TriggerManager triggerManager, World world) {
+	/**
+	 * @param triggerManager the TriggerManager to be persisted
+	 * @param world the World in which the TriggerManager operates
+	 */
+	public TriggerManagerPersistance(final TriggerManager triggerManager, final World world) {
 		this.triggerManager = triggerManager;
 		this.world = world;
 	}
 
+	/**
+	 * Make the TriggerManager read for work
+	 * @param triggerManager the TriggerManager that is set up
+	 * @param values the data for the TriggerManager
+	 * @param world the world in which the TriggerManager operates
+	 */
 	public static void setupTriggerManager(final TriggerManager triggerManager, final PersistanceMap values, final World world) {
 		new TriggerManagerPersistance(triggerManager, world).setup(values);
 	}
 	
+	/**
+	 * Save the TriggerManagers Data in a Serializable Object
+	 * @param triggerManager the TriggerManager to be saved
+	 * @return the data in a Serializable Object
+	 */
 	public static Map<String, Object> dumpTriggerManager(final TriggerManager triggerManager) {
 		return new TriggerManagerPersistance(triggerManager).dump();
 	}
 	
-	@SuppressWarnings("unchecked")
+	/**
+	 * Load data
+	 * @param values PersistanceMap that contains the data that is loaded
+	 */
 	public void setup(final PersistanceMap values) {
 		try {
 			globalContexts = values.get(KEY_GLOBAL_CONTEXTS);
@@ -74,6 +92,13 @@ public class TriggerManagerPersistance {
 		}
 	}
 
+	/**
+	 * load a TriggerContext
+	 * @param contextLabel name/label of the TriggerContext
+	 * @throws InstantiationException thrown if loading of a Serializable fails
+	 * @throws IllegalAccessException thrown if loading of a Serializable fails
+	 * @throws ClassNotFoundException thrown if loading of a Serializable fails
+	 */
 	@SuppressWarnings("unchecked")
 	private void loadTriggerContext(final String contextLabel)
 			throws InstantiationException, IllegalAccessException,
@@ -106,6 +131,16 @@ public class TriggerManagerPersistance {
 		triggerManager.addTriggerContext(tc);
 	}
 	
+	/**
+	 * Load Serializable Object
+	 * @param label name of the field to be loaded
+	 * @param map data is loaded from here
+	 * @param <T> type of the loaded Serializable Object
+	 * @return a Serializable Object
+	 * @throws InstantiationException thrown if Serializable Object can't be instantiated
+	 * @throws IllegalAccessException thrown if Serializable Object can't be instantiated
+	 * @throws ClassNotFoundException thrown for unknown class Type <T>
+	 */
 	@SuppressWarnings("unchecked")
 	private <T extends YamlSerializable> T loadSerializable(final String label, final Map<String, Object> map) throws InstantiationException, IllegalAccessException, ClassNotFoundException {
 		
@@ -134,7 +169,10 @@ public class TriggerManagerPersistance {
 		return finalizeMap();
 	}
 
-
+	/**
+	 * Save a TriggerContext
+	 * @param triggerContext TriggerContext to be saved
+	 */
 	private void serializeTriggerContext(final TriggerContext triggerContext) {
 		List<String> itsTriggers = newArrayList();
 		for(Trigger t : triggerContext.getTriggers()) {
@@ -158,7 +196,11 @@ public class TriggerManagerPersistance {
 		globalContexts.put(triggerContext.getLabel(), c);
 	}
 
-
+	/**
+	 * Get the data that is necessary for a dump
+	 * @param serializable the YamlSerializable that is dumped
+	 * @return data for dump
+	 */
 	private Map<String, Object> prepareDump(final YamlSerializable serializable) {
 		
 		Map<String, Object> ret = serializable.dump().getMap();
@@ -167,6 +209,9 @@ public class TriggerManagerPersistance {
 		return ret;
 	}
 
+	/**
+	 * @return the whole data as a Map
+	 */
 	private Map<String, Object> finalizeMap() {
 		Map<String, Object> global = newHashMap();
 		global.put(KEY_GLOBAL_TRIGGERS, globalTriggers);

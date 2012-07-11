@@ -34,23 +34,35 @@ public class ObservableCustomBlock extends GenericCustomBlock {
 		public Player player;
 	}
 	
-	Multimap<World, BlockObserver> observers = HashMultimap.create();
+	private Multimap<World, BlockObserver> observers = HashMultimap.create();
 
-	
-	public ObservableCustomBlock(String name, String textureUrl, int textureSize){
-		//TODO: remove 1 (underlying block) if bug in spout is fixed
+	/**
+	 * Construct a new Custom block
+	 * @param name			name of the new block
+	 * @param textureUrl	texture of the new block
+	 * @param textureSize	texture size of the new block
+	 */
+	public ObservableCustomBlock(final String name, final String textureUrl, final int textureSize){
+		//TODO remove 1 (underlying block) if bug in spout is fixed
 		super(Hello.getPlugin(), name, 1, false);
 		
 		GenericCubeBlockDesign design = new GenericCubeBlockDesign(Hello.getPlugin(), textureUrl, textureSize);
 		design.setRenderPass(1);
-		//TODO: set these when updated to new spoutversion (old version has a bug here)
+		//TODO set these when updated to new spoutversion (old version has a bug here)
 		setBlockDesign(design);
 		
 		setOpaque(false);
 	}
 
-	public void onBlockPlace(World world, int x, int y, int z, final LivingEntity living) {
-		
+	/**
+	 * Fire a BlockPlayedEvent if someone places the block
+	 * @param world world where the block was placed
+	 * @param x		x-coordinate of the placed block
+	 * @param y 	y-coordinate of the placed block
+	 * @param z		z-coordinate of the placed block
+	 * @param living	entity that placed the block
+	 */
+	public void onBlockPlace(final World world, final int x, final int y, final int z, final LivingEntity living) {
 		BlockEvent e = new BlockEvent();
 		e.block = world.getBlockAt(x, y, z);
 		e.entity = living;
@@ -59,7 +71,14 @@ public class ObservableCustomBlock extends GenericCustomBlock {
 		fireBlockEvent(world, e);
 	}
 	
-	public void onBlockDestroyed(World world, int x, int y, int z) {
+	/**
+	 * Fire a BlockDestroyedEvent if someone breaks the block
+	 * @param world	world where the block was broken
+	 * @param x		x-coordinate of the block
+	 * @param y		y-coordinate of the block
+	 * @param z		z-coordinate of the block
+	 */
+	public void onBlockDestroyed(final World world, final int x, final int y, final int z) {
 		
 		BlockEvent e = new BlockEvent();
 		e.block = world.getBlockAt(x, y, z);
@@ -68,8 +87,16 @@ public class ObservableCustomBlock extends GenericCustomBlock {
 		fireBlockEvent(world, e);
 	}
 	
-	
-	public boolean onBlockInteract(World world, int x, int y, int z, SpoutPlayer player) {
+	/**
+	 * Fire a BlockInteractEvent if someone interacts with it
+	 * @param world	world where the block stands
+	 * @param x		x-coordinate of the block
+	 * @param y		y-coordinate of the block
+	 * @param z		z-coordinate of the block
+	 * @param player	SpoutPlayer that interacted with the block
+	 * @return always true
+	 */
+	public boolean onBlockInteract(final World world, final int x, final int y, final int z, final SpoutPlayer player) {
 		
 		BlockEvent e = new BlockEvent();
 		e.block = world.getBlockAt(x, y, z);
@@ -82,24 +109,43 @@ public class ObservableCustomBlock extends GenericCustomBlock {
 		
 	}
 	
+	/**
+	 * Fire a certain Event
+	 * @param world			world that holds the block
+	 * @param blockEvent	event to be fired
+	 */
 	private void fireBlockEvent(final World world, final BlockEvent blockEvent) {
 		for(BlockObserver o : observers.get(world)) {
 			o.onBlockEvent(blockEvent);
 		}
 	}
 	
+	/**
+	 * @param blockObserver	Observer to be added
+	 * @param world			world that holds the block
+	 */
 	public void addObserver(final BlockObserver blockObserver, final World world) {
 		observers.put(world, blockObserver);
 	}
 	
+	/**
+	 * @param blockObserver	Observer to be deleted
+	 * @param world			world that holds the block
+	 */
 	public void removeObserver(final BlockObserver blockObserver, final World world) {
 		observers.remove(world, blockObserver);
 	}
 
-	public void setCustomBlockType(CustomBlockType customBlockType) {
+	/**
+	 * @param customBlockType the type of the custom block
+	 */
+	public void setCustomBlockType(final CustomBlockType customBlockType) {
 		this.customBlockType = customBlockType;
 	}
 	
+	/**
+	 * @return the type of this custom block
+	 */
 	public CustomBlockType getCustomBlockType() {
 		return customBlockType;
 	}

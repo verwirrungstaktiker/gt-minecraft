@@ -39,6 +39,9 @@ public class EditorLastGnomeGameBuilder extends AbstractLastGnomeGameBuilder {
 		return game;
 	}
 
+	/**
+	 * @return the game that is wrapped
+	 */
 	public EditorLastGnomeGame getEditorGame() {
 		return game;
 	}

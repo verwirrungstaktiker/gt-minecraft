@@ -1,6 +1,6 @@
 package gt.general;
 
-import static com.google.common.collect.Sets.*;
+import static com.google.common.collect.Sets.newHashSet;
 import gt.general.character.Hero;
 import gt.general.character.Team;
 import gt.general.logic.persistance.PersistanceMap;

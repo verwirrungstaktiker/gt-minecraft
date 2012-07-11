@@ -1,6 +1,6 @@
 package gt.general.character;
 
-import static com.google.common.collect.Maps.*;
+import static com.google.common.collect.Maps.newHashMap;
 import gt.general.Game;
 import gt.general.gui.HeroGui;
 

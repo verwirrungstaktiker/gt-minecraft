@@ -4,6 +4,8 @@ import static com.google.common.collect.Sets.newHashSet;
 import gt.general.logic.persistance.PersistanceMap;
 import gt.general.logic.persistance.TriggerManagerPersistance;
 import gt.general.logic.persistance.YamlSerializable;
+import gt.general.logic.response.Response;
+import gt.general.logic.trigger.Trigger;
 
 import java.util.Collection;
 import java.util.Set;
@@ -42,11 +44,19 @@ public class TriggerManager extends YamlSerializable{
 		return triggerContexts;
 	}
 	
-	public void addTriggerContext(TriggerContext context) {
+	/**
+	 * Adds a TriggerContext to the schedule
+	 * @param context the TriggerContext to be scheduled
+	 */
+	public void addTriggerContext(final TriggerContext context) {
 		triggerContexts.add(context);
 	}
 	
-	public void deleteTriggerContext(TriggerContext context) {
+	/**
+	 * Deletes a TriggerContext of the schedule
+	 * @param context the TriggerContext to be deleted
+	 */
+	public void deleteTriggerContext(final TriggerContext context) {
 		triggerContexts.remove(context);
 	}
 
@@ -72,8 +82,17 @@ public class TriggerManager extends YamlSerializable{
 
 	@Override
 	public Set<Block> getBlocks() {
-		// TODO Auto-generated method stub
-		return null;
+		Set<Block> blocks = newHashSet();
+		for(TriggerContext context : triggerContexts) {
+			for (Trigger trigger : context.getTriggers()) {
+				blocks.addAll(trigger.getBlocks());
+			}
+			for (Response response : context.getResponses()) {
+				blocks.addAll(response.getBlocks());
+			}
+		}
+		
+		return blocks;
 	}
 
 }

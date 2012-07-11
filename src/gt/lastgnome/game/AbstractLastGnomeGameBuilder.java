@@ -8,8 +8,15 @@ import gt.general.world.WorldManager;
 import gt.lastgnome.GnomeSocketEnd;
 import gt.lastgnome.GnomeSocketStart;
 
+/**
+ * Builds a suitable LastGnome Game
+ * see Builder Pattern (AbstractBuilder)
+ */
 public abstract class AbstractLastGnomeGameBuilder implements GameBuilder {
 
+	/**
+	 * @return the LastGnomeGame that was build
+	 */
 	protected abstract AbstractLastGnomeGame getAbstractGame();
 	
 	@Override

@@ -13,7 +13,11 @@ import com.google.common.io.Files;
 
 public class InstantiatingWorldManager extends WorldManager {
 	
-	public WorldInstance getWorld(String worldName) {
+	/**
+	 * @param worldName name of the world that is instantiated
+	 * @return a new Instance of the World with Triggers, metadata, etc.
+	 */
+	public WorldInstance getWorld(final String worldName) {
 		WorldInstance worldInstance = instantiateWorld(worldName);
 		
 		getInstanceMapping().put(worldInstance.getWorld(),

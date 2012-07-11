@@ -15,13 +15,23 @@ public abstract class AbstractLastGnomeGame extends Game{
 	private GnomeSocketStart startSocket;
 	private GnomeSocketEnd endSocket;
 
-	public AbstractLastGnomeGame(Team team) {
+	/**
+	 * @param team team that will play the game
+	 */
+	public AbstractLastGnomeGame(final Team team) {
 		super(team);
 	}
 	
+	/**
+	 * player interacts with StartSocket
+	 * @param player bukkit player
+	 */
 	public abstract void onStartSocketInteract(Player player);
 	
-	
+	/**
+	 * player interacts with EndSocket
+	 * @param player bukkit player
+	 */
 	public abstract void onEndSocketInteract(Player player);
 
 	/**
@@ -31,6 +41,9 @@ public abstract class AbstractLastGnomeGame extends Game{
 		return zombieManager;
 	}
 	
+	/**
+	 * @param zombieManager the used ZombieManager
+	 */
 	public void setZombieManager(final ZombieManager zombieManager) {
 		this.zombieManager = zombieManager;
 	}
@@ -45,7 +58,7 @@ public abstract class AbstractLastGnomeGame extends Game{
 	/**
 	 * @param startSocket the startSocket to set
 	 */
-	public void setStartSocket(GnomeSocketStart startSocket) {
+	public void setStartSocket(final GnomeSocketStart startSocket) {
 		this.startSocket = startSocket;
 	}
 
@@ -59,7 +72,7 @@ public abstract class AbstractLastGnomeGame extends Game{
 	/**
 	 * @param endSocket the endSocket to set
 	 */
-	public void setEndSocket(GnomeSocketEnd endSocket) {
+	public void setEndSocket(final GnomeSocketEnd endSocket) {
 		this.endSocket = endSocket;
 	}
 }

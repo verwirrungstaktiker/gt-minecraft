@@ -17,6 +17,9 @@ public class LastGnomeGameBuilder extends AbstractLastGnomeGameBuilder {
 	private LastGnomeGame game;
 	private final Team team;
 	
+	/**
+	 * @param team team that starts a new game
+	 */
 	public LastGnomeGameBuilder(final Team team) {
 		this.team = team;
 	}

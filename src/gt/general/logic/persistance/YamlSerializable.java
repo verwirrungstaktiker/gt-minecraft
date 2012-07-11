@@ -55,7 +55,11 @@ public abstract class YamlSerializable {
 	 */
 	public abstract void setup(PersistanceMap values, World world);
 	
-	
+	/**
+	 * load Metadata from a Yaml File
+	 * @param file a Yaml File that is read
+	 * @param worldInstance the WorldInstance that will get the loaded data
+	 */
 	public void setup(final String file, final WorldInstance worldInstance) {
 		setup(worldInstance.loadMeta(file), worldInstance.getWorld());
 	}
