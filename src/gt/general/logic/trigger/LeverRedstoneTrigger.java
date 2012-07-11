@@ -68,7 +68,10 @@ public class LeverRedstoneTrigger extends RedstoneTrigger implements Listener {
 	@Override
 	public void dispose() {
 		super.dispose();
-		getBlock().getRelative(orientation.getOppositeFace()).setType(Material.AIR);
+		SpoutManager
+			.getMaterialManager()
+			.removeBlockOverride(getBlock()
+									.getRelative(orientation.getOppositeFace()));
 	}
 	
 	/**

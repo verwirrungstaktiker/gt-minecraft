@@ -62,7 +62,7 @@ public class WorldUniqueBlock extends YamlSerializable implements BlockObserver 
 	public void setup(final PersistanceMap values, final World world) {
 		
 		// TODO bad style
-		if(values.getMap() != null) {
+		if(values.getMap() != null && values.getMap().containsKey(KEY_LOCATION)) {
 			block = values.getBlock(KEY_LOCATION, world);
 			SpoutManager.getMaterialManager().overrideBlock(block, base);
 		}
