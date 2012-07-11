@@ -85,7 +85,9 @@ public class WorldUniqueBlock extends YamlSerializable implements BlockObserver 
 	@Override
 	public void dispose() {
 		
-		block.setType(Material.AIR);
+		if(block != null) {
+			block.setType(Material.AIR);
+		}
 		base.removeObserver(this, world);
 		
 	}

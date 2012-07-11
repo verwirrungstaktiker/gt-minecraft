@@ -10,6 +10,7 @@ import gt.plugin.meta.MultiListener;
 public class EditorLastGnomeGameBuilder extends AbstractLastGnomeGameBuilder {
 
 	private EditorLastGnomeGame game;
+	private EditorTriggerManager triggerManager;
 	
 	
 	@Override
@@ -21,7 +22,7 @@ public class EditorLastGnomeGameBuilder extends AbstractLastGnomeGameBuilder {
 	public void buildWorldInstance(final WorldManager worldManager, final String worldName) {
 		super.buildWorldInstance(worldManager, worldName);
 				
-		EditorTriggerManager triggerManager = new EditorTriggerManager();
+		triggerManager = new EditorTriggerManager();
 		PlayerManager playerManager = new PlayerManager(triggerManager);
 		BuildManager buildManager = new BuildManager(playerManager);
 		
@@ -44,6 +45,14 @@ public class EditorLastGnomeGameBuilder extends AbstractLastGnomeGameBuilder {
 	 */
 	public EditorLastGnomeGame getEditorGame() {
 		return game;
+	}
+	
+	public void reload() {
+		game.getWorldInstance().dispose();
+		game.dispose();
+				
+		loadGameSpecific();
+		game.getWorldInstance().init(triggerManager);
 	}
 	
 }

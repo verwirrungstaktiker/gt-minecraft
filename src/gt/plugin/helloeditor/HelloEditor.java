@@ -27,6 +27,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 public class HelloEditor extends JavaPlugin implements Listener {
 
 	private GameManager gameManager;
+	private EditorLastGnomeGameBuilder gameBuilder;
 	private EditorLastGnomeGame game;
 	
 	/**
@@ -35,12 +36,12 @@ public class HelloEditor extends JavaPlugin implements Listener {
 	public void onEnable() {		
 		Hello.initialize(this);
 		
-		EditorLastGnomeGameBuilder builder = new EditorLastGnomeGameBuilder();
+		gameBuilder = new EditorLastGnomeGameBuilder();
 		
 		gameManager = new GameManager(new WorldManager(), new TeamManager());
-		gameManager.startGame(builder, "lastgnome");
+		gameManager.startGame(gameBuilder, "lastgnome");
 		
-		game = builder.getEditorGame();
+		game = gameBuilder.getEditorGame();
 
 		MultiListener.registerListeners(new KeyPressListener());
 		printInformation();
@@ -117,5 +118,17 @@ public class HelloEditor extends JavaPlugin implements Listener {
 				return true;
 			}
 		});
+		
+		getCommand("load").setExecutor(new CommandExecutor() {
+			@Override
+			public boolean onCommand(final CommandSender sender, final Command cmd, final String label, final String[] args) {
+				
+				System.out.println("reload");
+				gameBuilder.reload();
+				
+				return true;
+			}
+		});
+		
 	}
 }
