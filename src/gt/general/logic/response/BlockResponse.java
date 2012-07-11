@@ -68,9 +68,9 @@ public abstract class BlockResponse extends Response implements Listener {
 	@Override
 	public void setup(final PersistanceMap values, final World world) {
 		
-		material = values.get("material");
+		material = values.get(KEY_MATERIAL);
 		
-		block = values.get("location");
+		block = values.getBlock(KEY_LOCATION, world);
 		block.setType(material);
 	}
 
@@ -78,7 +78,7 @@ public abstract class BlockResponse extends Response implements Listener {
 	public PersistanceMap dump() {
 		PersistanceMap map = new PersistanceMap();
 		
-		map.put("material", material);
+		map.put(KEY_MATERIAL, material);
 		map.put(KEY_LOCATION, block);
 		
 		return map;
