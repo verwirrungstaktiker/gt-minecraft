@@ -77,8 +77,8 @@ public class BuildManager implements Listener {
 
 				default:
 					// fail feedback
-					player.sendMessage(RED + "This Block can't be used as Trigger.");
-					System.out.println("This Block can't be used as Trigger. (Custom block)");
+					player.sendMessage(RED + "This CustomBlock can't be used as Trigger.");
+					System.out.println("This CustomBlock can't be used as Trigger. --> " + sBlock.getName());
 					return;
 				}
 				

@@ -89,7 +89,7 @@ public abstract class RedstoneTrigger extends BlockTrigger implements Listener {
 	}
 	
 	/**
-	 * inverts the inverted state - invertception
+	 * toggle the inverted state - invertception
 	 */
 	public void toggleInvert() {
 		inverted = !inverted;
