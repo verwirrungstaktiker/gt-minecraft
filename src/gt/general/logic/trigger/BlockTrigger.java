@@ -41,9 +41,9 @@ public abstract class BlockTrigger extends Trigger implements Listener {
 	@Override
 	public void setup(final PersistanceMap values, final World world) {
 
-		material = values.get(KEY_MATERIAL);
-				
+		material = values.get(KEY_MATERIAL);	
 		block = values.getBlock(KEY_BLOCK, world);
+		
 		block.setType(material);
 	}
 
