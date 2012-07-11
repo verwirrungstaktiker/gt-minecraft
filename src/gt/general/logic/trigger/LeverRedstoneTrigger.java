@@ -48,6 +48,7 @@ public class LeverRedstoneTrigger extends RedstoneTrigger implements Listener {
 
 		Lever lever = (Lever) getBlock().getState().getData();
 		lever.setFacingDirection(orientation);
+		
 		getBlock().setData(lever.getData());
 		
 		installSignal();
@@ -56,10 +57,7 @@ public class LeverRedstoneTrigger extends RedstoneTrigger implements Listener {
 	@Override
 	public PersistanceMap dump() {
 		PersistanceMap map = super.dump();
-		
-		Lever lever = (Lever) getBlock().getState().getData();
-		orientation = lever.getFacing();
-		
+
 		map.put(KEY_ORIENTATION, orientation);
 
 		return map;

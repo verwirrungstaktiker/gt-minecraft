@@ -20,10 +20,12 @@ public class ButtonRedstoneTrigger extends RedstoneTrigger {
 	
 	/**
 	 * @param trigger the lever to be used as trigger
+	 * @param against the block to which the button is attached
 	 */
-	public ButtonRedstoneTrigger(final Block trigger) {
+	public ButtonRedstoneTrigger(final Block trigger, final Block against) {
 		super("button_trigger_", trigger);
-
+		
+		orientation = against.getFace(trigger);
 	}
 	
 	/** to be used for persistance */
@@ -45,10 +47,7 @@ public class ButtonRedstoneTrigger extends RedstoneTrigger {
 	@Override
 	public PersistanceMap dump() {
 		PersistanceMap map = super.dump();
-		
-		Button button = (Button) getBlock().getState().getData();
-		orientation = button.getFacing();
-		
+
 		map.put(KEY_ORIENTATION, orientation);
 
 		return map;
