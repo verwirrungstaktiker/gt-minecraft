@@ -77,9 +77,9 @@ public class WorldUniqueBlock extends YamlSerializable implements BlockObserver 
 		
 		if(block != null) {
 			map.put(KEY_LOCATION, block);
-			return map;
 		}
-		return null;
+		
+		return map;
 	}
 
 	@Override
