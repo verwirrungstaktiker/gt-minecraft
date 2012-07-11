@@ -86,18 +86,7 @@ public abstract class Game implements Listener {
 	 * ensures there are no internal dependencies to prevent the game from garbage collection
 	 * e.g. removes related tasks from the scheduler
 	 */
-	public void dispose() {
-		
-		// this has nothing to do here
-		/*
-		Server server = HelloWorld.getPlugin().getServer();
-		
-		DeleteWorldTask dwt = new DeleteWorldTask(world.getWorldFolder()); 
-		server.getScheduler().scheduleSyncDelayedTask(HelloWorld.getPlugin(), dwt, 80);
-		
-		server.unloadWorld(world, true);
-		*/		
-	}
+	public abstract void dispose();
 
 	/**
 	 * @return the team

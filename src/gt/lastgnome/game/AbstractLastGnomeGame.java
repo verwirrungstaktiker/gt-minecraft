@@ -75,4 +75,10 @@ public abstract class AbstractLastGnomeGame extends Game{
 	public void setEndSocket(final GnomeSocketEnd endSocket) {
 		this.endSocket = endSocket;
 	}
+	
+	@Override
+	public void dispose() {
+		startSocket.dispose();
+		endSocket.dispose();
+	}
 }
