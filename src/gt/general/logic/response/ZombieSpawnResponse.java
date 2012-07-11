@@ -69,7 +69,7 @@ public class ZombieSpawnResponse extends Response{
 	@Override
 	public void dispose() {
 		//Nothing to do, maybe clearing Zombies?
-		//zm.clearZombies();
+		zm.clearZombies();
 	}
 	@Override
 	public PersistanceMap dump() {

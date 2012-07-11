@@ -7,18 +7,25 @@ import org.bukkit.Effect;
 import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.block.Block;
+import org.bukkit.block.BlockFace;
+import org.bukkit.material.RedstoneTorch;
 
 public class RedstoneTorchResponse extends BlockResponse {
 
 	private boolean inverted = false;		//true if response is inverted
+	private BlockFace orientation;
 	
 	private static final String KEY_INVERTED = "inverted";
+	private static final String KEY_ORIENTATION = "orientation";
 	
 	/**
 	 * @param torchBlock material.RedstoneTorch
+	 * @param against	 the block that holds the torch
 	 */
-	public RedstoneTorchResponse(final Block torchBlock) {
+	public RedstoneTorchResponse(final Block torchBlock, final Block against) {
 		super("redstone_torch", torchBlock);
+		
+		orientation = against.getFace(torchBlock);
 	}
 	
 	/**
@@ -29,11 +36,16 @@ public class RedstoneTorchResponse extends BlockResponse {
 	@Override
 	public void setup(final PersistanceMap values, final World world) {
 		super.setup(values, world);
-		inverted = values.get(KEY_INVERTED);
 		
+		inverted = values.get(KEY_INVERTED);
+		orientation = values.get(KEY_ORIENTATION);
+				
 		if( !inverted ) {
 			//TODO Maybe we can find another Material to represent a RedstoneTorch that's not glowing
 			getBlock().setType(Material.AIR);
+		} else {
+			RedstoneTorch torch = (RedstoneTorch) getBlock().getState().getData();
+			torch.setFacingDirection(orientation);
 		}
 	}
 
@@ -45,6 +57,7 @@ public class RedstoneTorchResponse extends BlockResponse {
 		if(active ^ inverted) {
 			// torch on
 			getBlock().setType(getMaterial());
+			//TODO do we need to set the orientation here?
 		} else {
 			// torch off
 			getBlock().setType(Material.AIR);
@@ -58,6 +71,8 @@ public class RedstoneTorchResponse extends BlockResponse {
 		PersistanceMap map = super.dump();
 		
 		map.put(KEY_INVERTED, inverted);
+		map.put(KEY_ORIENTATION, orientation);
+		
 		return map;
 	}
 
@@ -69,7 +84,7 @@ public class RedstoneTorchResponse extends BlockResponse {
 	}
 
 	/**
-	 * @param inverted true if the logich of the torch is inverted
+	 * @param inverted true if the logic of the torch is inverted (disappears on power)
 	 */
 	public void setInvert(final boolean inverted) {
 		this.inverted = inverted;

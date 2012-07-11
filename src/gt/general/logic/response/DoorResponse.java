@@ -19,6 +19,7 @@ public class DoorResponse extends BlockResponse {
 	 */
 	public DoorResponse(final Block doorBlock) {
 		super("door", doorBlock);
+		// the orientation cannot be read here as it is not there yet
 	}
 
 	/**
@@ -33,10 +34,10 @@ public class DoorResponse extends BlockResponse {
 		
 		orientation = values.get(KEY_ORIENTATION);
 		
-		Block block = getBlock();
-		Door door = (Door) block.getState().getData();
-		door.setFacingDirection(orientation);
+		Door door = (Door) getBlock().getState().getData();
+		door.setFacingDirection(orientation);	
 		
+		getBlock().setData(door.getData());
 	}
 	
 	@Override
@@ -56,7 +57,7 @@ public class DoorResponse extends BlockResponse {
 	@Override
 	public PersistanceMap dump() {
 		PersistanceMap map = super.dump();
-		
+		// the orientation has to be read right before saving
 		Door door = (Door) getBlock().getState().getData();
 		map.put(KEY_ORIENTATION, door.getFacing());
 		

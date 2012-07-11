@@ -129,10 +129,11 @@ public class ZombieManager implements Listener, Runnable{
 	}
 
 	/**
-	 * Removes all Zombies
+	 * Kills and removes all Zombies
 	 */
 	public void clearZombies() {
 		for (ZombieCharacter zombie : zombies) {
+			zombie.getZombie().damage(20);
 			zombie.getZombie().remove();
 		}
 		zombies.clear();
