@@ -11,6 +11,7 @@ import org.bukkit.block.Block;
 public class BlockDisappearResponse extends BlockResponse {
 
 	private boolean inverted = false;		//true if block appears on trigger
+	private static final String KEY_INVERTED = "inverted";
 	
 	/**
 	 * do not delete this anonymous constructor
@@ -29,6 +30,8 @@ public class BlockDisappearResponse extends BlockResponse {
 	@Override
 	public void setup(final PersistanceMap values, final World world) {
 		super.setup(values, world);
+		
+		inverted = values.get(KEY_INVERTED);
 		
 		if(inverted) {
 			getBlock().setType(Material.AIR);
@@ -56,7 +59,7 @@ public class BlockDisappearResponse extends BlockResponse {
 	public PersistanceMap dump() {
 		PersistanceMap map = super.dump();
 		
-		map.put("invert", inverted);
+		map.put(KEY_INVERTED, inverted);
 		return map;
 	}
 

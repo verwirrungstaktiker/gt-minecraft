@@ -1,6 +1,8 @@
 package gt.editor;
 
-import static org.bukkit.ChatColor.*;
+import static org.bukkit.ChatColor.GREEN;
+import static org.bukkit.ChatColor.RED;
+
 import gt.general.logic.TriggerContext;
 import gt.general.logic.response.BlockDisappearResponse;
 import gt.general.logic.response.DoorResponse;
@@ -135,7 +137,7 @@ public class BuildManager implements Listener {
 				break;
 			case REDSTONE_LAMP_OFF:
 			case REDSTONE_TORCH_ON:
-				newResponse = new RedstoneTorchResponse(block);
+				newResponse = new RedstoneTorchResponse(block, event.getBlockAgainst());
 				break;
 			case WALL_SIGN:
 			case SIGN_POST:

@@ -4,6 +4,7 @@ package gt.general.logic.response;
 import gt.general.logic.persistance.PersistanceMap;
 
 import org.bukkit.Effect;
+import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
@@ -34,6 +35,8 @@ public class SignResponse extends BlockResponse {
 		// TODO this is just for testing
 		this.untriggeredMessage = "\n untriggered ";
 		this.triggeredMessage = "\n triggered";
+		
+		onWall = (getBlock().getType()==Material.WALL_SIGN);
 	}
 	
 	/**
@@ -43,7 +46,7 @@ public class SignResponse extends BlockResponse {
 
 	/**
 	 * @param sign material.Sign
-	 * @param message messagge on sign (may contain newlines)
+	 * @param message message on sign (may contain newlines)
 	 */
 	private void setSignMessage(final Sign sign, final String message) {
 		int end=0;
@@ -84,7 +87,6 @@ public class SignResponse extends BlockResponse {
 	public void triggered(final boolean active) {
 		isTriggered  = active;
 		
-		
 		Sign sign = (Sign) getBlock().getState();
 		
 		if(active) {
@@ -92,11 +94,9 @@ public class SignResponse extends BlockResponse {
 		} else {
 			setSignMessage(sign, untriggeredMessage);
 		}
-		
-		System.out.println(sign.getLine(1));
 
 		// play a fancy effect
-		getBlock().getWorld().playEffect(getBlock().getLocation(), Effect.ENDER_SIGNAL, 10); // we can set the radius here
+		getBlock().getWorld().playEffect(getBlock().getLocation(), Effect.ENDER_SIGNAL, 25); // we can set the radius here
 	}
 	
 
@@ -109,6 +109,18 @@ public class SignResponse extends BlockResponse {
 		if(!isTriggered) {
 			Sign sign = (Sign) getBlock().getState();
 			setSignMessage(sign, untriggeredMessage);
+		}
+	}
+	
+	/**
+	 * @param triggeredMessage the triggeredMessage to set
+	 */
+	public void setTriggeredMessage(final String triggeredMessage) {
+		this.triggeredMessage = triggeredMessage;
+		
+		if(isTriggered) {
+			Sign sign = (Sign) getBlock().getState();
+			setSignMessage(sign, triggeredMessage);
 		}
 	}
 	
