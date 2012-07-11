@@ -1,9 +1,9 @@
 package gt.lastgnome.game;
 
+import gt.editor.BuildManager;
+import gt.editor.EditorTriggerManager;
+import gt.editor.PlayerManager;
 import gt.general.world.WorldManager;
-import gt.plugin.helloeditor.BuildManager;
-import gt.plugin.helloeditor.EditorTriggerManager;
-import gt.plugin.helloeditor.PlayerManager;
 import gt.plugin.meta.MultiListener;
 
 

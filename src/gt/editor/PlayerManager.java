@@ -1,4 +1,4 @@
-package gt.plugin.helloeditor;
+package gt.editor;
 
 import static org.bukkit.ChatColor.*;
 import gt.general.logic.TriggerContext;

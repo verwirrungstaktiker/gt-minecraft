@@ -1,4 +1,4 @@
-package gt.plugin.helloeditor;
+package gt.editor;
 
 import gt.general.logic.TriggerContext;
 import gt.general.logic.TriggerManager;
