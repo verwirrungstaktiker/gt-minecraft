@@ -46,5 +46,4 @@ public class EditorLastGnomeGame extends AbstractLastGnomeGame {
 		worldInstance.saveMeta(GnomeSocketStart.FILENAME, getStartSocket());
 		worldInstance.saveMeta(GnomeSocketEnd.FILENAME, getEndSocket());
 	}
-
 }
