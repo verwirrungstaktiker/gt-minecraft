@@ -1,5 +1,6 @@
 package gt.general;
 
+import gt.general.logic.persistance.exceptions.PersistanceException;
 import gt.general.world.WorldManager;
 
 public interface GameBuilder {
@@ -14,13 +15,15 @@ public interface GameBuilder {
 	 * 
 	 * @param worldManager the world manager to load the world
 	 * @param worldName the name of the world
+	 * @throws PersistanceException 
 	 */
-	void buildWorldInstance(WorldManager worldManager, String worldName);
+	void buildWorldInstance(WorldManager worldManager, String worldName) throws PersistanceException;
 	
 	/**
 	 * after this step, the game should be ready to be started
+	 * @throws PersistanceException 
 	 */
-	void loadGameSpecific();
+	void loadGameSpecific() throws PersistanceException;
 	
 	/**
 	 * after this final step, the game should be up and running

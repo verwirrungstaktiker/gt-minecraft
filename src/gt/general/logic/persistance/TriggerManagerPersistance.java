@@ -4,6 +4,7 @@ import static com.google.common.collect.Lists.newArrayList;
 import static com.google.common.collect.Maps.newHashMap;
 import gt.general.logic.TriggerContext;
 import gt.general.logic.TriggerManager;
+import gt.general.logic.persistance.exceptions.PersistanceException;
 import gt.general.logic.response.Response;
 import gt.general.logic.trigger.Trigger;
 
@@ -75,20 +76,16 @@ public class TriggerManagerPersistance {
 		try {
 			globalContexts = values.get(KEY_GLOBAL_CONTEXTS);
 			globalResponses = values.get(KEY_GLOBAL_RESPONSES);
-			globalTriggers = values.get(KEY_GLOBAL_TRIGGERS);
+			globalTriggers = values.get(KEY_GLOBAL_TRIGGERS);				
+		} catch (PersistanceException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+			 
 			
-			for(String contextLabel : globalContexts.keySet()) {
+			
+		for(String contextLabel : globalContexts.keySet()) {
 				loadTriggerContext(contextLabel);
-				
-			}
-		} catch (ClassCastException e) {
-			throw new RuntimeException("bad file format", e);
-		} catch (InstantiationException e) {
-			throw new RuntimeException(e);
-		} catch (IllegalAccessException e) {
-			throw new RuntimeException(e);
-		} catch (ClassNotFoundException e) {
-			throw new RuntimeException(e);
 		}
 	}
 
@@ -100,9 +97,7 @@ public class TriggerManagerPersistance {
 	 * @throws ClassNotFoundException thrown if loading of a Serializable fails
 	 */
 	@SuppressWarnings("unchecked")
-	private void loadTriggerContext(final String contextLabel)
-			throws InstantiationException, IllegalAccessException,
-			ClassNotFoundException {
+	private void loadTriggerContext(final String contextLabel) {
 		
 		Map<String, ? extends Object> contextMap = (Map<String, Object>) globalContexts.get(contextLabel);
 		
@@ -114,7 +109,25 @@ public class TriggerManagerPersistance {
 			for(String triggerLabel : (List<String>) contextMap.get(KEY_TRIGGERS)) {
 				
 				Map<String, Object> triggerMap = (Map<String, Object>) globalTriggers.get(triggerLabel);
-				Trigger t = loadSerializable(triggerLabel, triggerMap);
+				Trigger t = null;
+				try {
+					t = loadSerializable(triggerLabel, triggerMap);
+				} catch (PersistanceException e) {
+					System.err.println("Error loading field "+e.getKey()+" in Trigger "
+							+triggerLabel+" in Context "+contextLabel+": field is null");
+				} catch (InstantiationException e) {
+					e.printStackTrace();
+					System.err.println("Error loading Trigger "
+							+triggerLabel+" in Context "+contextLabel+": InstantiationException");
+				} catch (IllegalAccessException e) {
+					e.printStackTrace();
+					System.err.println("Error loading Trigger "
+							+triggerLabel+" in Context "+contextLabel+": IllegalAccessException");
+				} catch (ClassNotFoundException e) {
+					e.printStackTrace();
+					System.err.println("Error loading Trigger "
+							+triggerLabel+" in Context "+contextLabel+": Class not found");
+				}
 				t.setContext(tc);
 				
 				tc.addTrigger(t);
@@ -123,7 +136,25 @@ public class TriggerManagerPersistance {
 			for(String responseLabel : (List<String>) contextMap.get(KEY_RESPONSES)) {
 				Map<String, Object> responseMap = (Map<String, Object>) globalResponses.get(responseLabel);
 
-				tc.addResponse((Response) loadSerializable(responseLabel, responseMap));
+				try {
+					tc.addResponse((Response) loadSerializable(responseLabel, responseMap));
+				} catch (PersistanceException e) {
+					e.printStackTrace();
+					System.err.println("Error loading field "+e.getKey()+" in Response "
+							+responseLabel+" in Context "+contextLabel+": field is null");					
+				} catch (InstantiationException e) {
+					e.printStackTrace();
+					System.err.println("Error loading Response "
+							+responseLabel+" in Context "+contextLabel+": InstantiationException");
+				} catch (IllegalAccessException e) {
+					e.printStackTrace();
+					System.err.println("Error loading Response "
+							+responseLabel+" in Context "+contextLabel+": IllegalAccessException");
+				} catch (ClassNotFoundException e) {
+					e.printStackTrace();
+					System.err.println("Error loading Response "
+							+responseLabel+" in Context "+contextLabel+": Class not found");
+				}
 			}
 			
 
@@ -140,9 +171,10 @@ public class TriggerManagerPersistance {
 	 * @throws InstantiationException thrown if Serializable Object can't be instantiated
 	 * @throws IllegalAccessException thrown if Serializable Object can't be instantiated
 	 * @throws ClassNotFoundException thrown for unknown class Type <T>
+	 * @throws PersistanceException 
 	 */
 	@SuppressWarnings("unchecked")
-	private <T extends YamlSerializable> T loadSerializable(final String label, final Map<String, Object> map) throws InstantiationException, IllegalAccessException, ClassNotFoundException {
+	private <T extends YamlSerializable> T loadSerializable(final String label, final Map<String, Object> map) throws InstantiationException, IllegalAccessException, ClassNotFoundException, PersistanceException {
 		
 		String className = (String) map.remove(KEY_CLASS);
 		
