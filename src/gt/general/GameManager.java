@@ -1,6 +1,7 @@
 package gt.general;
 
 import gt.general.character.TeamManager;
+import gt.general.logic.persistance.exceptions.PersistanceException;
 import gt.general.world.WorldManager;
 
 import java.util.HashSet;
@@ -49,8 +50,14 @@ public class GameManager implements GameObserver{
 	public Game startGame(final GameBuilder builder, final String worldName) {
 		
 		builder.instantiateGame();
-		builder.buildWorldInstance(worldManager, worldName);
-		builder.loadGameSpecific();	
+		try {
+			builder.buildWorldInstance(worldManager, worldName);
+			builder.loadGameSpecific();
+		} catch (PersistanceException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+			
 		builder.startGame();
 		
 		Game game = builder.getGame();

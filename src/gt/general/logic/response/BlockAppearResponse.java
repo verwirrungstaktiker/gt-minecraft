@@ -2,6 +2,7 @@ package gt.general.logic.response;
 
 
 import gt.general.logic.persistance.PersistanceMap;
+import gt.general.logic.persistance.exceptions.PersistanceException;
 
 import org.bukkit.Effect;
 import org.bukkit.Material;
@@ -28,7 +29,7 @@ public class BlockAppearResponse extends BlockResponse {
 	}
 
 	@Override
-	public void setup(final PersistanceMap values, final World world) {
+	public void setup(final PersistanceMap values, final World world) throws PersistanceException {
 		super.setup(values, world);
 		
 		inverted = values.get(KEY_INVERTED);

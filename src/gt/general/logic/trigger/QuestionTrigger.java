@@ -6,6 +6,7 @@ import gt.general.character.HeroManager;
 import gt.general.gui.Prompt;
 import gt.general.gui.Prompt.PromptCallback;
 import gt.general.logic.persistance.PersistanceMap;
+import gt.general.logic.persistance.exceptions.PersistanceException;
 import gt.general.world.BlockObserver;
 import gt.general.world.ObservableCustomBlock;
 import gt.general.world.ObservableCustomBlock.BlockEvent;
@@ -47,7 +48,7 @@ public class QuestionTrigger extends BlockTrigger implements BlockObserver{
 	public QuestionTrigger() {}
 
 	@Override
-	public void setup(final PersistanceMap values, final World world) {
+	public void setup(final PersistanceMap values, final World world) throws PersistanceException {
 		super.setup(values, world);
 		
 		question = values.get(KEY_QUESTION);

@@ -2,6 +2,7 @@ package gt.general.logic.trigger;
 
 import static com.google.common.collect.Sets.newHashSet;
 import gt.general.logic.persistance.PersistanceMap;
+import gt.general.logic.persistance.exceptions.PersistanceException;
 
 import java.util.Set;
 
@@ -39,7 +40,7 @@ public abstract class BlockTrigger extends Trigger implements Listener {
 
 	
 	@Override
-	public void setup(final PersistanceMap values, final World world) {
+	public void setup(final PersistanceMap values, final World world) throws PersistanceException {
 
 		material = values.get(KEY_MATERIAL);	
 		block = values.getBlock(KEY_BLOCK, world);

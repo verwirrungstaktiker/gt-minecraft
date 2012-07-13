@@ -1,6 +1,7 @@
 package gt.general.logic.trigger;
 
 import gt.general.logic.persistance.PersistanceMap;
+import gt.general.logic.persistance.exceptions.PersistanceException;
 import gt.general.world.ObservableCustomBlock;
 import gt.plugin.meta.CustomBlockType;
 
@@ -37,7 +38,7 @@ public class RandomLeverTrigger extends LeverRedstoneTrigger{
 	}
 	
 	@Override
-	public void setup(final PersistanceMap values, final World world) {
+	public void setup(final PersistanceMap values, final World world) throws PersistanceException {
 		super.setup(values, world);
 		
 		signals = values.getBlocks(KEY_SIGNALS, world);

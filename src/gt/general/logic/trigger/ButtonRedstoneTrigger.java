@@ -1,6 +1,7 @@
 package gt.general.logic.trigger;
 
 import gt.general.logic.persistance.PersistanceMap;
+import gt.general.logic.persistance.exceptions.PersistanceException;
 
 import org.bukkit.World;
 import org.bukkit.block.Block;
@@ -32,7 +33,7 @@ public class ButtonRedstoneTrigger extends RedstoneTrigger {
 	public ButtonRedstoneTrigger() {}
 	
 	@Override
-	public void setup(final PersistanceMap values, final World world) {
+	public void setup(final PersistanceMap values, final World world) throws PersistanceException {
 		super.setup(values, world);
 
 		orientation = values.get(KEY_ORIENTATION);

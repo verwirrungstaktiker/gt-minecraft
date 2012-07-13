@@ -2,6 +2,7 @@ package gt.general.logic.response;
 
 import gt.general.character.ZombieManager;
 import gt.general.logic.persistance.PersistanceMap;
+import gt.general.logic.persistance.exceptions.PersistanceException;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -93,7 +94,7 @@ public class ZombieSpawnResponse extends Response{
 	}
 
 	@Override
-	public void setup(final PersistanceMap values, final World world) {
+	public void setup(final PersistanceMap values, final World world) throws PersistanceException {
 		number = values.get(KEY_LOCATION);
 		speed = values.get(KEY_SPEED);
 		
