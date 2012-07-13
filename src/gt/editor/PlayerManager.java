@@ -313,5 +313,4 @@ public class PlayerManager implements Listener{
 	public TriggerState getState(final String name) {
 		return playerTriggerStates.get(name);
 	}
-	
 }

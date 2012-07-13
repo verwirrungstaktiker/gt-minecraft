@@ -1,5 +1,7 @@
 package gt.editor;
 
+import static com.google.common.collect.Maps.*;
+import static com.google.common.collect.Sets.*;
 import gt.general.logic.TriggerContext;
 import gt.general.logic.TriggerManager;
 import gt.general.logic.persistance.YamlSerializable;
@@ -7,7 +9,6 @@ import gt.general.logic.response.Response;
 import gt.general.logic.trigger.Trigger;
 
 import java.util.Collection;
-import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
@@ -19,9 +20,9 @@ import org.bukkit.block.Block;
  */
 public class EditorTriggerManager extends TriggerManager {
 	
-	Map<Block, TriggerContext> blockToContext = new HashMap<Block, TriggerContext>();
-	
-	Map<Block, YamlSerializable> blockToSerializable = new HashMap<Block, YamlSerializable>();
+	private Map<Block, TriggerContext> blockToContext = newHashMap();
+	private Map<Block, YamlSerializable> blockToSerializable = newHashMap();
+	private Set<TriggerManagerObserver> observers = newHashSet();
 
 	
 	public EditorTriggerManager() {
@@ -41,6 +42,8 @@ public class EditorTriggerManager extends TriggerManager {
 	public void addTriggerContext(final TriggerContext context) {
 		super.addTriggerContext(context);
 		addBlockContextMapping(context);
+		
+		notifyTriggerContextChanged();
 	}
 	
 	/**
@@ -90,6 +93,8 @@ public class EditorTriggerManager extends TriggerManager {
 	public void deleteTriggerContext(final TriggerContext context) {
 		super.deleteTriggerContext(context);
 		deleteBlockContextMapping(context);
+		
+		notifyTriggerContextChanged();
 	}
 	
 	/**
@@ -141,4 +146,19 @@ public class EditorTriggerManager extends TriggerManager {
 	public YamlSerializable getSerializable(Block block) {
 		return blockToSerializable.get(block);
 	}
+	
+	public void addTriggerContextObserver(final TriggerManagerObserver observer) {
+		observers.add(observer);
+	}
+	
+	public void removeTriggerContextObserver(final TriggerManagerObserver observer) {
+		observers.remove(observer);
+	}
+	
+	private void notifyTriggerContextChanged() {
+		for(TriggerManagerObserver observer : observers) {
+			observer.update();
+		}
+	}
+	
 }
