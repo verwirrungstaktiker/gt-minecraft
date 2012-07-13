@@ -42,18 +42,14 @@ public class TriggerOverlay extends GenericPopup implements TriggerManagerObserv
 		}
 	}
 	
-	
-	public void dispose() {
-		System.out.println(getScreen().getClass().getName());
-
-		
-		triggerManager.removeTriggerContextObserver(this);		
-	}
-	
 	@Override
 	@EventHandler
 	public void onScreenClose(final ScreenCloseEvent event){
 		super.onScreenClose(event);
+		
+		MultiListener.unregisterListener(this);
+		triggerManager.removeTriggerContextObserver(this);		
+
 		
 		System.out.println("CLOSE");
 	}

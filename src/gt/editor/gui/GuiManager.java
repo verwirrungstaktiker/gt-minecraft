@@ -2,7 +2,6 @@ package gt.editor.gui;
 
 import static com.google.common.collect.Maps.*;
 import gt.editor.EditorTriggerManager;
-import gt.plugin.meta.Hello;
 
 import java.util.Map;
 
@@ -28,25 +27,18 @@ public class GuiManager implements BindingExecutionDelegate {
 	
 	@Override
 	public void keyPressed(final KeyBindingEvent evt) {
-		System.out.println("ding");
-		System.out.println(evt.getScreenType());
 		
-		boolean overlayOpen = openOverlays.containsKey(evt.getPlayer());
 		
-		if(evt.getPlayer().getActiveScreen() == ScreenType.GAME_SCREEN || overlayOpen) {
+		boolean triggerOverlayOpen = evt.getPlayer().getMainScreen().getActivePopup() instanceof TriggerOverlay;
+		
+		if(evt.getPlayer().getActiveScreen() == ScreenType.GAME_SCREEN) {
+			evt.getPlayer()
+				.getMainScreen()
+				.attachPopupScreen(new TriggerOverlay(evt.getPlayer(), triggerManager));
 			
-			if(! overlayOpen) {
-				TriggerOverlay triggerOverlay = new TriggerOverlay(evt.getPlayer(), triggerManager);
-				
-				evt.getPlayer()
-					.getMainScreen()
-					.attachPopupScreen(triggerOverlay);
-				
-			} else {
-				evt.getPlayer().getMainScreen().closePopup();
-				evt.getPlayer().openScreen(ScreenType.GAME_SCREEN);
-				
-			}
+		} else if(triggerOverlayOpen) {
+			evt.getPlayer().getMainScreen().closePopup();
+			evt.getPlayer().openScreen(ScreenType.GAME_SCREEN);	
 		}
 	}
 	
