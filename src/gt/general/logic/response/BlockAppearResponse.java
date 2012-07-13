@@ -8,7 +8,7 @@ import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.block.Block;
 
-public class BlockDisappearResponse extends BlockResponse {
+public class BlockAppearResponse extends BlockResponse {
 
 	private boolean inverted = false;		//true if block appears on trigger
 	private static final String KEY_INVERTED = "inverted";
@@ -16,14 +16,14 @@ public class BlockDisappearResponse extends BlockResponse {
 	/**
 	 * do not delete this anonymous constructor
 	 */
-	public BlockDisappearResponse() {
+	public BlockAppearResponse() {
 		super();
 	}
 	
 	/**
 	 * @param block bukkit block
 	 */
-	public BlockDisappearResponse(final Block block) {
+	public BlockAppearResponse(final Block block) {
 		super("appearable_block", block);
 	}
 

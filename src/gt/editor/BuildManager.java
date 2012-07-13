@@ -4,7 +4,7 @@ import static org.bukkit.ChatColor.GREEN;
 import static org.bukkit.ChatColor.RED;
 
 import gt.general.logic.TriggerContext;
-import gt.general.logic.response.BlockDisappearResponse;
+import gt.general.logic.response.BlockAppearResponse;
 import gt.general.logic.response.DoorResponse;
 import gt.general.logic.response.RedstoneTorchResponse;
 import gt.general.logic.response.Response;
@@ -133,7 +133,7 @@ public class BuildManager implements Listener {
 				newResponse = new DoorResponse(block);
 				break;
 			case DIAMOND_BLOCK:
-				newResponse = new BlockDisappearResponse(block);
+				newResponse = new BlockAppearResponse(block);
 				break;
 			case REDSTONE_LAMP_OFF:
 			case REDSTONE_TORCH_ON:
