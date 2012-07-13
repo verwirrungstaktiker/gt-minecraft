@@ -2,38 +2,39 @@ package gt.general.logic.response;
 
 
 import gt.general.logic.persistance.PersistanceMap;
+import gt.general.logic.persistance.exceptions.PersistanceException;
 
 import org.bukkit.Effect;
 import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.block.Block;
 
-public class BlockDisappearResponse extends BlockResponse {
+public class BlockAppearResponse extends BlockResponse {
 
-	private boolean inverted = false;		//true if block appears on trigger
+	private boolean inverted = false;		//true if block disappears on trigger
 	private static final String KEY_INVERTED = "inverted";
 	
 	/**
 	 * do not delete this anonymous constructor
 	 */
-	public BlockDisappearResponse() {
+	public BlockAppearResponse() {
 		super();
 	}
 	
 	/**
 	 * @param block bukkit block
 	 */
-	public BlockDisappearResponse(final Block block) {
+	public BlockAppearResponse(final Block block) {
 		super("appearable_block", block);
 	}
 
 	@Override
-	public void setup(final PersistanceMap values, final World world) {
+	public void setup(final PersistanceMap values, final World world) throws PersistanceException {
 		super.setup(values, world);
 		
 		inverted = values.get(KEY_INVERTED);
 		
-		if(inverted) {
+		if(!inverted) {
 			getBlock().setType(Material.AIR);
 		}
 	}

@@ -1,6 +1,7 @@
 package gt.general.logic.trigger;
 
 import gt.general.logic.persistance.PersistanceMap;
+import gt.general.logic.persistance.exceptions.PersistanceException;
 import gt.general.world.ObservableCustomBlock;
 import gt.plugin.meta.CustomBlockType;
 
@@ -41,7 +42,7 @@ public class LeverRedstoneTrigger extends RedstoneTrigger implements Listener {
 	public LeverRedstoneTrigger() {}
 	
 	@Override
-	public void setup(final PersistanceMap values, final World world) {
+	public void setup(final PersistanceMap values, final World world) throws PersistanceException {
 		super.setup(values, world);
 		
 		orientation = (BlockFace) values.get("orientation");

@@ -3,6 +3,7 @@ package gt.plugin.helloeditor;
 import gt.editor.gui.TriggerOverlay;
 import gt.general.GameManager;
 import gt.general.character.TeamManager;
+import gt.general.logic.persistance.exceptions.PersistanceException;
 import gt.general.world.WorldManager;
 import gt.lastgnome.game.EditorLastGnomeGame;
 import gt.lastgnome.game.EditorLastGnomeGameBuilder;
@@ -131,7 +132,12 @@ public class HelloEditor extends JavaPlugin implements Listener {
 			public boolean onCommand(final CommandSender sender, final Command cmd, final String label, final String[] args) {
 				
 				System.out.println("reload");
-				gameBuilder.reload();
+				try {
+					gameBuilder.reload();
+				} catch (PersistanceException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 				
 				return true;
 			}

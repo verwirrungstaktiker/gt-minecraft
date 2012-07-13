@@ -1,16 +1,16 @@
 package gt.lastgnome.game;
 
-import org.getspout.spoutapi.SpoutManager;
-import org.getspout.spoutapi.keyboard.Keyboard;
-
 import gt.editor.BuildManager;
 import gt.editor.EditorTriggerManager;
 import gt.editor.PlayerManager;
 import gt.editor.gui.GuiManager;
-import gt.editor.gui.TriggerOverlay;
+import gt.general.logic.persistance.exceptions.PersistanceException;
 import gt.general.world.WorldManager;
 import gt.plugin.meta.Hello;
 import gt.plugin.meta.MultiListener;
+
+import org.getspout.spoutapi.SpoutManager;
+import org.getspout.spoutapi.keyboard.Keyboard;
 
 
 public class EditorLastGnomeGameBuilder extends AbstractLastGnomeGameBuilder {
@@ -25,7 +25,7 @@ public class EditorLastGnomeGameBuilder extends AbstractLastGnomeGameBuilder {
 	}
 
 	@Override
-	public void buildWorldInstance(final WorldManager worldManager, final String worldName) {
+	public void buildWorldInstance(final WorldManager worldManager, final String worldName) throws PersistanceException {
 		super.buildWorldInstance(worldManager, worldName);
 				
 		triggerManager = new EditorTriggerManager();
@@ -63,7 +63,7 @@ public class EditorLastGnomeGameBuilder extends AbstractLastGnomeGameBuilder {
 		return game;
 	}
 	
-	public void reload() {
+	public void reload() throws PersistanceException {
 		game.getWorldInstance().dispose();
 		game.dispose();
 				

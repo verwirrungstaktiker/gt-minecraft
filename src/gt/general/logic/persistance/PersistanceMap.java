@@ -2,6 +2,8 @@ package gt.general.logic.persistance;
 
 import static com.google.common.collect.Maps.newHashMap;
 
+import gt.general.logic.persistance.exceptions.PersistanceException;
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -40,7 +42,11 @@ public class PersistanceMap {
 	 * @return value corresponding to the key
 	 */
 	public int getInt(final String key) {
-		return ((Integer)map.get(key)).intValue();
+		Integer Result = (Integer)map.get(key);
+		if (Result == null) {
+			
+		}
+		return Result.intValue();
 	}
 	
 	/**
@@ -48,7 +54,11 @@ public class PersistanceMap {
 	 * @return value corresponding to the key
 	 */
 	public double getDouble(final String key) {
-		return ((Double)map.get(key)).doubleValue();
+		Double Result = (Double)map.get(key);
+		if (Result == null) {
+			
+		}
+		return Result.doubleValue();
 	}
 	
 	/**
@@ -56,7 +66,11 @@ public class PersistanceMap {
 	 * @return value corresponding to the key
 	 */
 	public boolean getBoolean(final String key) {
-		return ((Boolean)map.get(key)).booleanValue();
+		Boolean Result = (Boolean)map.get(key);
+		if (Result == null) {
+			
+		}
+		return Result.booleanValue();
 	}
 	
 	/**
@@ -64,10 +78,15 @@ public class PersistanceMap {
 	 * @param key name of the field
 	 * @param <T> type of the value that shall be returned
 	 * @return value corresponding to the key
+	 * @throws PersistanceException 
 	 */
 	@SuppressWarnings("unchecked")
-	public <T> T get(final String key) {
-		return (T) map.get(key);
+	public <T> T get(final String key) throws PersistanceException {
+		T Result = (T) map.get(key);
+		if (Result == null) {
+			throw new PersistanceException(key);
+		}
+		return Result;
 	}
 	
 	/**
@@ -75,8 +94,9 @@ public class PersistanceMap {
 	 * @param key name of the field
 	 * @param world world that holds the block
 	 * @return bukkit block to the key
+	 * @throws PersistanceException 
 	 */
-	public Block getBlock(final String key, final World world) {
+	public Block getBlock(final String key, final World world) throws PersistanceException {
 		Map<String, Object> coords = get(key);
 		return blockFromCoords(coords, world);
 	}
@@ -116,8 +136,9 @@ public class PersistanceMap {
 	 * @param key name of the field
 	 * @param world world that holds the location
 	 * @return location that corresponds to a key
+	 * @throws PersistanceException 
 	 */
-	public Location getLocation(final String key, final World world) {
+	public Location getLocation(final String key, final World world) throws PersistanceException {
 		Map<String, Object> coords = get(key);
 		return new Location(world,
 							(Double) coords.get(KEY_X_COORDINATE),
@@ -131,6 +152,9 @@ public class PersistanceMap {
 	 * @param value the Object that is saved
 	 */
 	public void put(final String key, final Object value) {
+		if (value == null) {
+			//TODO throw Exception
+		}
 		map.put(key, value);
 	}
 
@@ -140,6 +164,9 @@ public class PersistanceMap {
 	 * @param block the Block that is saved
 	 */
 	public void put(final String key, final Block block) {
+		if (block == null) {
+			//TODO throw Exception
+		}		
 		map.put(key, coordsFromBlock(block));
 		
 	}

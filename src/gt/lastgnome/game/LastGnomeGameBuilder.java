@@ -5,6 +5,7 @@ import gt.general.character.Team;
 import gt.general.character.ZombieManager;
 import gt.general.logic.TriggerContext;
 import gt.general.logic.TriggerManager;
+import gt.general.logic.persistance.exceptions.PersistanceException;
 import gt.general.logic.response.Response;
 import gt.general.logic.response.ZombieSpawnResponse;
 import gt.general.world.WorldManager;
@@ -30,7 +31,7 @@ public class LastGnomeGameBuilder extends AbstractLastGnomeGameBuilder {
 	}
 
 	@Override
-	public void buildWorldInstance(final WorldManager worldManager, final String worldName) {
+	public void buildWorldInstance(final WorldManager worldManager, final String worldName) throws PersistanceException {
 		super.buildWorldInstance(worldManager, worldName);
 				
 		game.getWorldInstance().init(new TriggerManager());

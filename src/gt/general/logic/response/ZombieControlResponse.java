@@ -2,6 +2,7 @@ package gt.general.logic.response;
 
 import gt.general.character.ZombieManager;
 import gt.general.logic.persistance.PersistanceMap;
+import gt.general.logic.persistance.exceptions.PersistanceException;
 
 import java.util.Set;
 
@@ -59,7 +60,7 @@ public class ZombieControlResponse extends Response {
 	}
 
 	@Override
-	public void setup(final PersistanceMap values, final World world) {
+	public void setup(final PersistanceMap values, final World world) throws PersistanceException {
 		value = (Double) values.get(KEY_VALUE);
 	}
 

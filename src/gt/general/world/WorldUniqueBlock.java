@@ -4,6 +4,7 @@ import static com.google.common.collect.Sets.newHashSet;
 
 import gt.general.logic.persistance.PersistanceMap;
 import gt.general.logic.persistance.YamlSerializable;
+import gt.general.logic.persistance.exceptions.PersistanceException;
 import gt.general.world.ObservableCustomBlock.BlockEvent;
 
 import java.util.Set;
@@ -59,7 +60,7 @@ public class WorldUniqueBlock extends YamlSerializable implements BlockObserver 
 	}
 
 	@Override
-	public void setup(final PersistanceMap values, final World world) {
+	public void setup(final PersistanceMap values, final World world) throws PersistanceException {
 		
 		// TODO bad style
 		if(values.getMap() != null && values.getMap().containsKey(KEY_LOCATION)) {

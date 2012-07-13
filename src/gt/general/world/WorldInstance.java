@@ -4,6 +4,7 @@ import gt.general.Spawn;
 import gt.general.logic.TriggerManager;
 import gt.general.logic.persistance.PersistanceMap;
 import gt.general.logic.persistance.YamlSerializable;
+import gt.general.logic.persistance.exceptions.PersistanceException;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -65,8 +66,9 @@ public class WorldInstance {
 	 * intializes this world instance
 	 *  
 	 * @param triggerManager the Triggermanager to be used
+	 * @throws PersistanceException 
 	 */
-	public void init(final TriggerManager triggerManager) {
+	public void init(final TriggerManager triggerManager) throws PersistanceException {
 		triggerManager.setup(TriggerManager.PERSISTANCE_FILE, this);
 		this.triggerManager = triggerManager;
 		
