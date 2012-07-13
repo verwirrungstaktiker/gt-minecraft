@@ -1,5 +1,7 @@
 package gt.plugin.meta;
 
+import static com.google.common.collect.Sets.*;
+
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.HashSet;
@@ -141,7 +143,7 @@ public final class MultiListener implements Listener, EventExecutor {
 			throws EventException {
 		try {
 
-			for (AtomicListener al : events.get(event.getClass())) {
+			for (AtomicListener al : newHashSet(events.get(event.getClass()))) {
 				al.method.invoke(al.listener, event);
 			}
 
