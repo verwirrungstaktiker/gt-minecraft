@@ -10,7 +10,7 @@ import org.bukkit.block.Block;
 
 public class BlockAppearResponse extends BlockResponse {
 
-	private boolean inverted = false;		//true if block appears on trigger
+	private boolean inverted = false;		//true if block disappears on trigger
 	private static final String KEY_INVERTED = "inverted";
 	
 	/**
@@ -33,7 +33,7 @@ public class BlockAppearResponse extends BlockResponse {
 		
 		inverted = values.get(KEY_INVERTED);
 		
-		if(inverted) {
+		if(!inverted) {
 			getBlock().setType(Material.AIR);
 		}
 	}
