@@ -11,6 +11,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.bukkit.GameMode;
+import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -18,6 +19,8 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
+import org.bukkit.inventory.Inventory;
+import org.bukkit.inventory.ItemStack;
 import org.getspout.spoutapi.event.input.KeyPressedEvent;
 import org.getspout.spoutapi.particle.Particle.ParticleType;
 
@@ -38,6 +41,23 @@ public class PlayerManager implements Listener{
 	private EditorTriggerManager triggerManager;
 	
 	private ParticleManager particleManager;
+	/** player inventories are saved here when they build TriggerContexts **/
+	private Map<String, ItemStack[]> playerInventories = new HashMap<String, ItemStack[]>();
+	
+	private static final ItemStack[] TRIGGER_BLOCKS = new ItemStack[]{
+			new ItemStack(Material.LEVER),
+			new ItemStack(Material.STONE_BUTTON),
+			new ItemStack(Material.WOOD_PLATE),
+			new ItemStack(Material.STONE_PLATE)
+	};
+	
+	private static final ItemStack[] RESPONSE_BLOCKS = new ItemStack[]{
+			new ItemStack(Material.WOOD_DOOR),
+			new ItemStack(Material.IRON_DOOR),
+			new ItemStack(Material.DIAMOND_BLOCK),
+			new ItemStack(Material.REDSTONE_TORCH_ON),
+			new ItemStack(Material.SIGN)
+	};
 	
 	/**
 	 * @param triggerManager holds the TriggerContexts of the current map
@@ -103,12 +123,24 @@ public class PlayerManager implements Listener{
 		}
 	}
 	
-	public void addTrigger(Trigger trigger, TriggerContext context, Player player) {
+	/**
+	 * add a Trigger to a TriggerContext
+	 * @param trigger the Trigger that is added
+	 * @param context the TriggerContext
+	 * @param player bukkit player
+	 */
+	public void addTrigger(final Trigger trigger, final TriggerContext context, final Player player) {
 		triggerManager.addTrigger(trigger, context);
 		particleManager.addSerializable(trigger, ParticleType.DRIPLAVA, player);
 	}
 	
-	public void addResponse(Response response, TriggerContext context, Player player) {
+	/**
+	 * add a Response to a TriggerContext
+	 * @param response the Response that is added
+	 * @param context the TriggerContext
+	 * @param player bukkit player
+	 */
+	public void addResponse(final Response response, final TriggerContext context, final Player player) {
 		triggerManager.addResponse(response, context);
 		particleManager.addSerializable(response, ParticleType.DRIPLAVA, player);
 	}
@@ -225,8 +257,7 @@ public class PlayerManager implements Listener{
 		TriggerContext context = playerTriggerContexts.get(name);
 		
 		if(context == null) {
-			
-			playerTriggerStates.put(name, TriggerState.TRIGGER);
+			changeTriggerState(player, TriggerState.TRIGGER);
 			
 			context = new TriggerContext();
 			triggerManager.addTriggerContext(context);
@@ -251,6 +282,39 @@ public class PlayerManager implements Listener{
 	}
 
 	/**
+	 * change the triggerState for a player
+	 * @param player bukkit player
+	 * @param state the new triggerState
+	 */
+	private void changeTriggerState(final Player player, final TriggerState state) {
+		Inventory inv = player.getInventory();
+		TriggerState oldState = playerTriggerStates.get(player.getName());
+		
+		if(oldState == TriggerState.STANDBY || oldState == TriggerState.IDLE) {
+			saveInventory(player);
+		}
+		
+		switch (state) {
+		case TRIGGER:
+			inv.setContents(TRIGGER_BLOCKS);
+			break;
+
+		case RESPONSE:
+			inv.setContents(RESPONSE_BLOCKS);
+			break;
+
+		case STANDBY:
+			loadInventory(player);
+			break;
+		default:
+			break;
+		}
+		
+		playerTriggerStates.put(player.getName(), state);
+		player.sendMessage(YELLOW + "" +  state + " :");
+	}
+	
+	/**
 	 * Toggles a players TriggerState unless it is idle
 	 * @param player the bukkit player
 	 */
@@ -259,24 +323,42 @@ public class PlayerManager implements Listener{
 	
 		switch (playerTriggerStates.get(name)) {
 		case TRIGGER:
-			playerTriggerStates.put(name, TriggerState.RESPONSE);
-			player.sendMessage(YELLOW + "BuildState: RESPONSE");
+			changeTriggerState(player, TriggerState.RESPONSE);
 			return;
 			
 		case RESPONSE:
-			playerTriggerStates.put(name, TriggerState.STANDBY);
-			player.sendMessage(YELLOW + "BuildState: STANDBY");
+			changeTriggerState(player, TriggerState.STANDBY);
+			
+			loadInventory(player);
 			return;
 			
 		case STANDBY:
-			playerTriggerStates.put(name, TriggerState.TRIGGER);
-			player.sendMessage(YELLOW + "BuildState: TRIGGER");
+			changeTriggerState(player, TriggerState.TRIGGER);
 			return;
 			
 		default:
-			player.sendMessage(YELLOW + "No active TriggerContext");
+			player.sendMessage(YELLOW + "No active TriggerContext.");
 			break;
 		}		
+	}
+	
+	/**
+	 * save the players inventory
+	 * @param player bukkit player
+	 */
+	private void saveInventory(final Player player) {
+		playerInventories.put(player.getName(), player.getInventory().getContents());
+	}
+	
+	/**
+	 * load the players old inventory and set it
+	 * @param player bukkit player
+	 */
+	private void loadInventory(final Player player) {
+		ItemStack[] items = playerInventories.remove(player.getName());
+		if(items!=null) {
+			player.getInventory().setContents(items);
+		}
 	}
 	
 	/**
