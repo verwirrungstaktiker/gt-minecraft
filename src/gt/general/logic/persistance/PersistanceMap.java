@@ -106,9 +106,10 @@ public class PersistanceMap {
 	 * @param key name of the field
 	 * @param world world that holds the block
 	 * @return all blocks that correspond to the key
+	 * @throws PersistanceException 
 	 */
 	@SuppressWarnings("unchecked")
-	public Collection<Block> getBlocks(final String key, final World world) {
+	public Collection<Block> getBlocks(final String key, final World world) throws PersistanceException {
 		List<Map<String, Object>> values = (List<Map<String, Object>>) map.get(key);
 		List<Block> blocks = new ArrayList<Block>();
 		
@@ -124,11 +125,22 @@ public class PersistanceMap {
 	 * @param coords coordinates of the block
 	 * @param world world that holds the block
 	 * @return bukkit block at the specified location
+	 * @throws PersistanceException 
 	 */
-	private Block blockFromCoords( final Map<String, Object> coords, final World world) {
-		return world.getBlockAt((Integer) coords.get(KEY_X_COORDINATE),
-								(Integer) coords.get(KEY_Y_COORDINATE),
-								(Integer) coords.get(KEY_Z_COORDINATE));
+	private Block blockFromCoords( final Map<String, Object> coords, final World world) throws PersistanceException {
+		Integer x = (Integer) coords.get(KEY_X_COORDINATE);
+		if (x == null) {
+			throw new PersistanceException(KEY_X_COORDINATE);
+		}
+		Integer y = (Integer) coords.get(KEY_Y_COORDINATE);
+		if (y == null) {
+			throw new PersistanceException(KEY_Y_COORDINATE);
+		}
+		Integer z = (Integer) coords.get(KEY_Z_COORDINATE);
+		if (z == null) {
+			throw new PersistanceException(KEY_Z_COORDINATE);
+		}
+		return world.getBlockAt(x,y,z);
 	}
 	
 	/**

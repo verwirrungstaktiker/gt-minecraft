@@ -5,6 +5,7 @@ import gt.general.character.Hero;
 import gt.general.character.Team;
 import gt.general.logic.persistance.PersistanceMap;
 import gt.general.logic.persistance.YamlSerializable;
+import gt.general.logic.persistance.exceptions.PersistanceException;
 import gt.general.world.BlockObserver;
 import gt.general.world.ObservableCustomBlock;
 import gt.general.world.ObservableCustomBlock.BlockEvent;
@@ -36,7 +37,7 @@ public class Spawn extends YamlSerializable implements BlockObserver {
 	}
 
 	@Override
-	public void setup(final PersistanceMap values, final World world) {	
+	public void setup(final PersistanceMap values, final World world) throws PersistanceException {	
 		ObservableCustomBlock spawnBlock = CustomBlockType.SPAWN_BLOCK.getCustomBlock();
 		
 		for(Block block : values.getBlocks(KEY_SPAWN, world)) {	
