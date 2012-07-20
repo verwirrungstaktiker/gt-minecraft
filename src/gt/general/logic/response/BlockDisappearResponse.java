@@ -9,22 +9,22 @@ import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.block.Block;
 
-public class BlockAppearResponse extends BlockResponse {
+public class BlockDisappearResponse extends BlockResponse {
 
-	private boolean inverted = false;		//true if block disappears on trigger
+	private boolean inverted = false;		//true if block appears on trigger
 	private static final String KEY_INVERTED = "inverted";
 	
 	/**
 	 * do not delete this anonymous constructor
 	 */
-	public BlockAppearResponse() {
+	public BlockDisappearResponse() {
 		super();
 	}
 	
 	/**
 	 * @param block bukkit block
 	 */
-	public BlockAppearResponse(final Block block) {
+	public BlockDisappearResponse(final Block block) {
 		super("appearable_block", block);
 	}
 
@@ -34,7 +34,7 @@ public class BlockAppearResponse extends BlockResponse {
 		
 		inverted = values.get(KEY_INVERTED);
 		
-		if(!inverted) {
+		if(inverted) {
 			getBlock().setType(Material.AIR);
 		}
 	}
