@@ -24,7 +24,7 @@ public class ButtonRedstoneTrigger extends RedstoneTrigger {
 	 * @param against the block to which the button is attached
 	 */
 	public ButtonRedstoneTrigger(final Block trigger, final Block against) {
-		super("button_trigger_", trigger);
+		super("button_trigger", trigger);
 		
 		orientation = against.getFace(trigger);
 	}

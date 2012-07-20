@@ -136,8 +136,6 @@ public class SignResponse extends BlockResponse {
 		
 		orientation = values.get(KEY_ORIENTATION);
 		updateOrientation();
-		
-
 	}
 	
 	@Override
@@ -148,7 +146,8 @@ public class SignResponse extends BlockResponse {
 		
 		map.put(KEY_UNTRIGGERED_MESSAGE, untriggeredMessage);
 		map.put(KEY_TRIGGERED_MESSAGE, triggeredMessage);
-
+		
+		readOrientation();
 		map.put(KEY_ORIENTATION, orientation);
 		
 		return map;
@@ -164,4 +163,11 @@ public class SignResponse extends BlockResponse {
 		getBlock().setData(sign.getData());
 	}
 
+	/**
+	 * fill the attribute "orientation" with the facing direction of the sign block
+	 */
+	private void readOrientation() {
+		org.bukkit.material.Sign sign = (org.bukkit.material.Sign) getBlock().getState().getData();
+		orientation = sign.getFacing();
+	}
 }
