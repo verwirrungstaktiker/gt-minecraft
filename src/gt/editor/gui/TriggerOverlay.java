@@ -1,20 +1,20 @@
 package gt.editor.gui;
 
-import static com.google.common.collect.Maps.*;
 import gt.editor.EditorTriggerManager;
 import gt.editor.TriggerManagerObserver;
 import gt.general.logic.TriggerContext;
+import gt.general.logic.persistance.YamlSerializable;
+import gt.general.logic.response.Response;
+import gt.general.logic.trigger.Trigger;
 import gt.plugin.meta.Hello;
 import gt.plugin.meta.MultiListener;
-
-import java.util.Map;
 
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.getspout.spoutapi.event.screen.ScreenCloseEvent;
-import org.getspout.spoutapi.gui.GenericListWidget;
+import org.getspout.spoutapi.gui.Color;
+import org.getspout.spoutapi.gui.GenericLabel;
 import org.getspout.spoutapi.gui.GenericPopup;
-import org.getspout.spoutapi.gui.ListWidget;
 import org.getspout.spoutapi.gui.ListWidgetItem;
 import org.getspout.spoutapi.gui.WidgetAnchor;
 import org.getspout.spoutapi.player.SpoutPlayer;
@@ -27,48 +27,18 @@ public class TriggerOverlay extends GenericPopup implements TriggerManagerObserv
 	private static final int LIST_MARGIN_X = 5;
 	private static final int LIST_MARGIN_Y = 10;
 	
-	/**
-	 * inner class to keep track of selected contexts
-	 */
-	private class ContextListWidget extends GenericListWidget {
-		private Map<ListWidgetItem, TriggerContext> map = newHashMap();
-		
+	private static final String NO_CONTEXT = "No Context selected";
+	
+	private SelectionListWidget<TriggerContext> contextList = new SelectionListWidget<TriggerContext>() {
 		@Override
 		public void onSelected(final int item, final boolean doubleClick) {
 			super.onSelected(item, doubleClick);			
-			buildItemList(map.get(getItem(item)));
+			buildItemList();
 		}
-		
-		/**
-		 * @param context the context to be added
-		 */
-		public void addContext(final TriggerContext context) {
-			ListWidgetItem item = new ListWidgetItem(context.getLabel(), "");
-			super.addItem(item);
-			map.put(item, context);
-		}
-		
-		/**
-		 * @return the currently selected trigger context
-		 */
-		public TriggerContext getSelectedContext() {
-			return map.get(getSelectedItem());
-		}
-		
-		@Override
-		public ListWidget addItem(final ListWidgetItem item) {
-			throw new UnsupportedOperationException();
-		}
-		
-		@Override
-		public void clear() {
-			super.clear();
-			map.clear();
-		}
-	}
+	};
+	private SelectionListWidget<YamlSerializable> itemList = new SelectionListWidget<YamlSerializable>();
 	
-	private ContextListWidget contextList = new ContextListWidget();
-	private GenericListWidget itemList = new GenericListWidget();
+	private GenericLabel currentContext = new GenericLabel();
 
 	/**
 	 * 
@@ -98,6 +68,16 @@ public class TriggerOverlay extends GenericPopup implements TriggerManagerObserv
 		attachWidget(Hello.getPlugin(), itemList);
 		
 		
+		currentContext.setWidth(200)
+					  .shiftXPos(- (currentContext.getWidth() + LIST_MARGIN_X))
+					  .shiftYPos(contextList.getHeight() + 2 * LIST_MARGIN_Y);
+		
+		currentContext.setTextColor(new Color(0, 128, 0));
+		currentContext.setAlign(WidgetAnchor.TOP_LEFT);
+
+		currentContext.setAnchor(WidgetAnchor.TOP_CENTER);
+		attachWidget(Hello.getPlugin(), currentContext);
+		
 		buildContextList();
 		triggerManager.addTriggerContextObserver(this);
 		MultiListener.registerListener(this);
@@ -109,27 +89,62 @@ public class TriggerOverlay extends GenericPopup implements TriggerManagerObserv
 		buildContextList();
 	}
 
+	/**
+	 * updates the context list, preserves the selection
+	 */
 	private void buildContextList() {
 		
-		TriggerContext oldSelectedContext = contextList.getSelectedContext();
+		TriggerContext oldSelectedContext = contextList.getSelectedObject();
 		
 		contextList.clear();
+		contextList.clearSelection();
 		
 		for(TriggerContext context : triggerManager.getTriggerContexts()) {
-			contextList.addContext(context);
+			contextList.add(new ListWidgetItem(context.getLabel(), ""), context);
 			
 			if (context == oldSelectedContext) {
 				int position = contextList.getItems().length - 1;
 				contextList.setSelection(position);
 			}
 		}
+		
+		buildItemList();
 	}
 	
-	private void buildItemList(final TriggerContext context) {
-		System.out.println(context.getLabel());
+	/**
+	 * updates the item list, preserves the selecton
+	 */
+	private void buildItemList() {
+		/*
+		 * TODO autoupdate this list
+		 */
+		TriggerContext selected = contextList.getSelectedObject();
 		
+		YamlSerializable oldSelected = itemList.getSelectedObject();
 		itemList.clear();
+		itemList.clearSelection();
 		
+		if(selected != null) {
+			
+			for(Trigger trigger : selected.getTriggers()) {
+				itemList.add(new ListWidgetItem(trigger.getLabel(), ""), trigger);
+				
+				if (trigger == oldSelected) {
+					int position = itemList.getItems().length - 1;
+					itemList.setSelection(position);
+				}
+			}
+			
+			for(Response response : selected.getResponses()) {
+				itemList.add(new ListWidgetItem(response.getLabel(), ""), response);
+				
+				if (response == oldSelected) {
+					int position = itemList.getItems().length - 1;
+					itemList.setSelection(position);
+				}
+			}
+			
+		}
 	}
 	
 	@EventHandler
@@ -139,8 +154,6 @@ public class TriggerOverlay extends GenericPopup implements TriggerManagerObserv
 			
 			MultiListener.unregisterListener(this);
 			triggerManager.removeTriggerContextObserver(this);
-			
-			System.out.println("CLOSE");
 		}
 	}
 	
