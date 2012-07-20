@@ -1,23 +1,16 @@
 package gt.editor.gui;
 
-import static com.google.common.collect.Maps.*;
 import gt.editor.EditorTriggerManager;
 
-import java.util.Map;
-
-import org.bukkit.entity.Player;
 import org.getspout.spoutapi.event.input.KeyBindingEvent;
 import org.getspout.spoutapi.gui.ScreenType;
 import org.getspout.spoutapi.keyboard.BindingExecutionDelegate;
 
-public class GuiManager implements BindingExecutionDelegate {
+public class EditorGuiManager implements BindingExecutionDelegate {
 
 	private EditorTriggerManager triggerManager;
 
-	private Map<Player, TriggerOverlay> openOverlays = newHashMap();
-	
-	
-	public GuiManager(final EditorTriggerManager triggerManager) {
+	public EditorGuiManager(final EditorTriggerManager triggerManager) {
 		this.triggerManager = triggerManager;
 	}
 	

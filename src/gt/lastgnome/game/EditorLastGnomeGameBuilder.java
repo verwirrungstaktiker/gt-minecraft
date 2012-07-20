@@ -3,7 +3,7 @@ package gt.lastgnome.game;
 import gt.editor.BuildManager;
 import gt.editor.EditorTriggerManager;
 import gt.editor.PlayerManager;
-import gt.editor.gui.GuiManager;
+import gt.editor.gui.EditorGuiManager;
 import gt.general.logic.persistance.exceptions.PersistanceException;
 import gt.general.world.WorldManager;
 import gt.plugin.meta.Hello;
@@ -46,9 +46,8 @@ public class EditorLastGnomeGameBuilder extends AbstractLastGnomeGameBuilder {
 			.registerBinding("triggerOverlay",
 								Keyboard.KEY_C, 
 								"trigger overlay",
-								new GuiManager(triggerManager),
+								new EditorGuiManager(triggerManager),
 								Hello.getPlugin());
-		
 	}
 
 	@Override
