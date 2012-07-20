@@ -11,6 +11,8 @@ import gt.general.logic.trigger.Trigger;
 import java.util.List;
 import java.util.Map;
 
+import javax.management.RuntimeErrorException;
+
 import org.bukkit.World;
 
 public class TriggerManagerPersistance {
@@ -109,23 +111,26 @@ public class TriggerManagerPersistance {
 			for(String triggerLabel : (List<String>) contextMap.get(KEY_TRIGGERS)) {
 				
 				Map<String, Object> triggerMap = (Map<String, Object>) globalTriggers.get(triggerLabel);
+				
+				if (triggerMap == null) {
+					throw new RuntimeErrorException(null,"Error loading Trigger "
+							+triggerLabel+" in Context "+contextLabel+": trigger is missing");					
+				}
+				
 				Trigger t = null;
 				try {
 					t = loadSerializable(triggerLabel, triggerMap);
 				} catch (PersistanceException e) {
-					System.err.println("Error loading field "+e.getKey()+" in Trigger "
-							+triggerLabel+" in Context "+contextLabel+": field is null");
+					throw new RuntimeErrorException(null,"Error loading field '"+e.getKey()+"' in Trigger "
+							+triggerLabel+" in Context "+contextLabel+": field is null or missing");
 				} catch (InstantiationException e) {
-					e.printStackTrace();
-					System.err.println("Error loading Trigger "
+					throw new RuntimeErrorException(null,"Error loading Trigger "
 							+triggerLabel+" in Context "+contextLabel+": InstantiationException");
 				} catch (IllegalAccessException e) {
-					e.printStackTrace();
-					System.err.println("Error loading Trigger "
+					throw new RuntimeErrorException(null,"Error loading Trigger "
 							+triggerLabel+" in Context "+contextLabel+": IllegalAccessException");
 				} catch (ClassNotFoundException e) {
-					e.printStackTrace();
-					System.err.println("Error loading Trigger "
+					throw new RuntimeErrorException(null,"Error loading Trigger "
 							+triggerLabel+" in Context "+contextLabel+": Class not found");
 				}
 				t.setContext(tc);
@@ -136,23 +141,24 @@ public class TriggerManagerPersistance {
 			for(String responseLabel : (List<String>) contextMap.get(KEY_RESPONSES)) {
 				Map<String, Object> responseMap = (Map<String, Object>) globalResponses.get(responseLabel);
 
+				if (responseMap == null) {
+					throw new RuntimeErrorException(null,"Error loading Response "
+							+responseLabel+" in Context "+contextLabel+": Response is missing");					
+				}
+				
 				try {
 					tc.addResponse((Response) loadSerializable(responseLabel, responseMap));
 				} catch (PersistanceException e) {
-					e.printStackTrace();
-					System.err.println("Error loading field "+e.getKey()+" in Response "
-							+responseLabel+" in Context "+contextLabel+": field is null");					
+					throw new RuntimeErrorException(null, "Error loading field '"+e.getKey()+"' in Response "
+							+responseLabel+" in Context "+contextLabel+": field is null or missing");					
 				} catch (InstantiationException e) {
-					e.printStackTrace();
-					System.err.println("Error loading Response "
+					throw new RuntimeErrorException(null,"Error loading Response "
 							+responseLabel+" in Context "+contextLabel+": InstantiationException");
 				} catch (IllegalAccessException e) {
-					e.printStackTrace();
-					System.err.println("Error loading Response "
+					throw new RuntimeErrorException(null,"Error loading Response "
 							+responseLabel+" in Context "+contextLabel+": IllegalAccessException");
 				} catch (ClassNotFoundException e) {
-					e.printStackTrace();
-					System.err.println("Error loading Response "
+					throw new RuntimeErrorException(null,"Error loading Response "
 							+responseLabel+" in Context "+contextLabel+": Class not found");
 				}
 			}
@@ -177,6 +183,10 @@ public class TriggerManagerPersistance {
 	private <T extends YamlSerializable> T loadSerializable(final String label, final Map<String, Object> map) throws InstantiationException, IllegalAccessException, ClassNotFoundException, PersistanceException {
 		
 		String className = (String) map.remove(KEY_CLASS);
+		
+		if (className == null) {
+			throw new PersistanceException(KEY_CLASS);
+		}
 		
 		T serializable = (T) Class.forName(className).newInstance();
 		serializable.setLabel(label);

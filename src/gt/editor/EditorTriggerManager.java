@@ -1,7 +1,7 @@
 package gt.editor;
 
-import static com.google.common.collect.Maps.*;
-import static com.google.common.collect.Sets.*;
+import static com.google.common.collect.Maps.newHashMap;
+import static com.google.common.collect.Sets.newHashSet;
 import gt.general.logic.TriggerContext;
 import gt.general.logic.TriggerManager;
 import gt.general.logic.persistance.YamlSerializable;
@@ -24,11 +24,16 @@ public class EditorTriggerManager extends TriggerManager {
 	private Map<Block, YamlSerializable> blockToSerializable = newHashMap();
 	private Set<TriggerManagerObserver> observers = newHashSet();
 
-	
+	/**
+	 * Do not delete this anonymous constructor
+	 */
 	public EditorTriggerManager() {
 		super();
 	}
 	
+	/**
+	 * @param triggerContexts active contexts
+	 */
 	public EditorTriggerManager(final Set<TriggerContext> triggerContexts) {
 		super(triggerContexts);
 		for(TriggerContext context : triggerContexts) {
@@ -64,8 +69,8 @@ public class EditorTriggerManager extends TriggerManager {
 	}
 	
 	/**
-	 * Adds all blocks of a trigger object to the maps
-	 * @param serializable trigger
+	 * Adds all blocks of a trigger to the maps
+	 * @param trigger the added trigger
 	 * @param context a triggerContext
 	 */
 	public void addTrigger(final Trigger trigger, final TriggerContext context) {
@@ -77,6 +82,11 @@ public class EditorTriggerManager extends TriggerManager {
 		}
 	}
 	
+	/**
+	 * Adds all blocks of a response to the maps
+	 * @param response the added response
+	 * @param context a triggerContext
+	 */
 	public void addResponse(final Response response, final TriggerContext context) {
 		for(Block block : response.getBlocks()) {
 			context.addResponse(response);
@@ -116,16 +126,21 @@ public class EditorTriggerManager extends TriggerManager {
 
 	/**
 	 * Delete all blocks of a serializable object from the maps
+	 * @param serializable YamlSerializable
 	 * @param context a triggerContext
 	 */
-	private void deleteSerializable(YamlSerializable serializable, TriggerContext context) {
+	private void deleteSerializable(final YamlSerializable serializable, final TriggerContext context) {
 		for(Block block : serializable.getBlocks()) {
 			blockToContext.remove(block);
 			blockToSerializable.remove(block);
 		}
 	}
 	
-	public void deleteBlock(Block block) {
+	/**
+	 * Delete a single block from the maps
+	 * @param block bukkit block
+	 */
+	public void deleteBlock(final Block block) {
 		TriggerContext context = getContext(block);
 		YamlSerializable serializable = getSerializable(block);
 		
@@ -135,26 +150,49 @@ public class EditorTriggerManager extends TriggerManager {
 		blockToSerializable.remove(block);
 	}
 	
-	public boolean isSerializable(Block block) {
+	/**
+	 * @param block bukkit block
+	 * @return true if a block is part of a serializable
+	 */
+	public boolean isSerializable(final Block block) {
 		return blockToContext.containsKey(block);
 	}
 	
-	public TriggerContext getContext(Block block) {
+	/**
+	 * @param block bukkit block
+	 * @return The context that corresponds to the block, null if it isn't part of a context
+	 */
+	public TriggerContext getContext(final Block block) {
 		return blockToContext.get(block);
 	}
 	
-	public YamlSerializable getSerializable(Block block) {
+	/**
+	 * @param block bukkit block
+	 * @return The serializable that corresponds to the block, null if it isn't part of a serializable
+	 */
+	public YamlSerializable getSerializable(final Block block) {
 		return blockToSerializable.get(block);
 	}
 	
+	/**
+	 * Adds an Observer
+	 * @param observer the Observer that is added
+	 */
 	public void addTriggerContextObserver(final TriggerManagerObserver observer) {
 		observers.add(observer);
 	}
 	
+	/**
+	 * Deletes and Observer
+	 * @param observer the Observer that is deleted
+	 */
 	public void removeTriggerContextObserver(final TriggerManagerObserver observer) {
 		observers.remove(observer);
 	}
 	
+	/**
+	 * Notify the Observers on context modification
+	 */
 	private void notifyTriggerContextChanged() {
 		for(TriggerManagerObserver observer : observers) {
 			observer.update();
