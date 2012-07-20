@@ -94,9 +94,6 @@ public class TriggerManagerPersistance {
 	/**
 	 * load a TriggerContext
 	 * @param contextLabel name/label of the TriggerContext
-	 * @throws InstantiationException thrown if loading of a Serializable fails
-	 * @throws IllegalAccessException thrown if loading of a Serializable fails
-	 * @throws ClassNotFoundException thrown if loading of a Serializable fails
 	 */
 	@SuppressWarnings("unchecked")
 	private void loadTriggerContext(final String contextLabel) {
