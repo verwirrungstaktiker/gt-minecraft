@@ -11,9 +11,9 @@ import gt.plugin.meta.MultiListener;
 
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.getspout.spoutapi.event.screen.ButtonClickEvent;
 import org.getspout.spoutapi.event.screen.ScreenCloseEvent;
-import org.getspout.spoutapi.gui.Color;
-import org.getspout.spoutapi.gui.GenericLabel;
+import org.getspout.spoutapi.gui.GenericButton;
 import org.getspout.spoutapi.gui.GenericPopup;
 import org.getspout.spoutapi.gui.ListWidgetItem;
 import org.getspout.spoutapi.gui.WidgetAnchor;
@@ -24,10 +24,10 @@ public class TriggerOverlay extends GenericPopup implements TriggerManagerObserv
 	private EditorTriggerManager triggerManager;
 	private SpoutPlayer player;
 		
-	private static final int LIST_MARGIN_X = 5;
-	private static final int LIST_MARGIN_Y = 10;
+	private static final int MARGIN_X = 5;
+	private static final int MARGIN_Y = 10;
 	
-	private static final String NO_CONTEXT = "No Context selected";
+	private static final String NO_CONTEXT = "No Context";
 	
 	private SelectionListWidget<TriggerContext> contextList = new SelectionListWidget<TriggerContext>() {
 		@Override
@@ -38,8 +38,38 @@ public class TriggerOverlay extends GenericPopup implements TriggerManagerObserv
 	};
 	private SelectionListWidget<YamlSerializable> itemList = new SelectionListWidget<YamlSerializable>();
 	
-	private GenericLabel currentContext = new GenericLabel();
+	private GenericButton left1 = new GenericButton("Rename selected context") {
+		public void onButtonClick(final ButtonClickEvent event) {
+			System.out.println("LEFT 1");
+		};
+	};
+	private GenericButton left2 = new GenericButton() {
+		public void onButtonClick(final ButtonClickEvent event) {
+			System.out.println("LEFT 2");
+		};
+	};
+	private GenericButton left3 = new GenericButton("Toggle Highlight [on]") {
+		public void onButtonClick(final ButtonClickEvent event) {
+			System.out.println("LEFT 3");
+		};
+	};
 
+	private GenericButton right1 = new GenericButton("Rename selected item") {
+		public void onButtonClick(final ButtonClickEvent event) {
+			System.out.println("right 1");
+		};
+	};
+	private GenericButton right2 = new GenericButton() {
+		public void onButtonClick(final ButtonClickEvent event) {
+			System.out.println("right 2");
+		};
+	};
+	private GenericButton right3 = new GenericButton("Select blocks ...") {
+		public void onButtonClick(final ButtonClickEvent event) {
+			System.out.println("right 3");
+		};
+	};
+	
 	/**
 	 * 
 	 * @param player the player who opened this overlay
@@ -52,8 +82,8 @@ public class TriggerOverlay extends GenericPopup implements TriggerManagerObserv
 		// setup context list
 		contextList.setWidth(200)
 					.setHeight(200)
-					.shiftXPos(- (contextList.getWidth() + LIST_MARGIN_X))
-					.shiftYPos(LIST_MARGIN_Y);
+					.shiftXPos(- (contextList.getWidth() + MARGIN_X))
+					.shiftYPos(MARGIN_Y);
 		
 		contextList.setAnchor(WidgetAnchor.TOP_CENTER);
 		attachWidget(Hello.getPlugin(), contextList);
@@ -61,22 +91,66 @@ public class TriggerOverlay extends GenericPopup implements TriggerManagerObserv
 		// setup item list
 		itemList.setWidth(200)
 				.setHeight(200)
-				.shiftXPos(LIST_MARGIN_X)
-				.shiftYPos(LIST_MARGIN_Y);
+				.shiftXPos(MARGIN_X)
+				.shiftYPos(MARGIN_Y);
 		
 		itemList.setAnchor(WidgetAnchor.TOP_CENTER);
 		attachWidget(Hello.getPlugin(), itemList);
 		
+		// left 1
+		left1.setWidth(200)
+			 .setHeight(20)
+			 .shiftXPos(- (left1.getWidth() + MARGIN_X))
+			 .shiftYPos(contextList.getHeight() + 2 * MARGIN_Y);
 		
-		currentContext.setWidth(200)
-					  .shiftXPos(- (currentContext.getWidth() + LIST_MARGIN_X))
-					  .shiftYPos(contextList.getHeight() + 2 * LIST_MARGIN_Y);
+		left1.setAnchor(WidgetAnchor.TOP_CENTER);
+		attachWidget(Hello.getPlugin(), left1);
 		
-		currentContext.setTextColor(new Color(0, 128, 0));
-		currentContext.setAlign(WidgetAnchor.TOP_LEFT);
-
-		currentContext.setAnchor(WidgetAnchor.TOP_CENTER);
-		attachWidget(Hello.getPlugin(), currentContext);
+		// left 2
+		left2.setWidth(200)
+			 .setHeight(20)
+			 .shiftXPos(- (left2.getWidth() + MARGIN_X))
+			 .shiftYPos(contextList.getHeight() + left1.getHeight()+ 3 * MARGIN_Y);
+		
+		left2.setAnchor(WidgetAnchor.TOP_CENTER);
+		attachWidget(Hello.getPlugin(), left2);
+		
+		// left 3
+		left3.setWidth(200)
+			 .setHeight(20)
+			 .shiftXPos(- (left3.getWidth() + MARGIN_X))
+			 .shiftYPos(contextList.getHeight() + left1.getHeight() + left2.getHeight() + 4 * MARGIN_Y);
+		
+		left3.setAnchor(WidgetAnchor.TOP_CENTER);
+		attachWidget(Hello.getPlugin(), left3);
+		
+		// right 1
+		right1.setWidth(200)
+			 .setHeight(20)
+			 .shiftXPos(MARGIN_X)
+			 .shiftYPos(itemList.getHeight() + 2 * MARGIN_Y);
+		
+		right1.setAnchor(WidgetAnchor.TOP_CENTER);
+		attachWidget(Hello.getPlugin(), right1);
+		
+		// right 2
+		right2.setWidth(200)
+			 .setHeight(20)
+			 .shiftXPos(MARGIN_X)
+			 .shiftYPos(itemList.getHeight() + right1.getHeight()+ 3 * MARGIN_Y);
+		
+		right2.setAnchor(WidgetAnchor.TOP_CENTER);
+		attachWidget(Hello.getPlugin(), right2);
+		
+		// right 3
+		right3.setWidth(200)
+			 .setHeight(20)
+			 .shiftXPos(MARGIN_X)
+			 .shiftYPos(itemList.getHeight() + right1.getHeight() + right2.getHeight() + 4 * MARGIN_Y);
+		
+		right3.setAnchor(WidgetAnchor.TOP_CENTER);
+		attachWidget(Hello.getPlugin(), right3);
+		
 		
 		buildContextList();
 		triggerManager.addTriggerContextObserver(this);
@@ -98,6 +172,9 @@ public class TriggerOverlay extends GenericPopup implements TriggerManagerObserv
 		
 		contextList.clear();
 		contextList.clearSelection();
+		
+		contextList.addItem(new ListWidgetItem(NO_CONTEXT, ""));
+		contextList.setSelection(0);
 		
 		for(TriggerContext context : triggerManager.getTriggerContexts()) {
 			contextList.add(new ListWidgetItem(context.getLabel(), ""), context);

@@ -5,7 +5,6 @@ import static com.google.common.collect.Maps.*;
 import java.util.Map;
 
 import org.getspout.spoutapi.gui.GenericListWidget;
-import org.getspout.spoutapi.gui.ListWidget;
 import org.getspout.spoutapi.gui.ListWidgetItem;
 
 /**
@@ -28,11 +27,6 @@ class SelectionListWidget <T> extends GenericListWidget {
 	 */
 	public T getSelectedObject() {
 		return map.get(getSelectedItem());
-	}
-	
-	@Override
-	public ListWidget addItem(final ListWidgetItem item) {
-		throw new UnsupportedOperationException();
 	}
 	
 	@Override
