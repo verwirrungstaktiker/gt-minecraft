@@ -42,11 +42,11 @@ public class PersistanceMap {
 	 * @return value corresponding to the key
 	 */
 	public int getInt(final String key) {
-		Integer Result = (Integer)map.get(key);
-		if (Result == null) {
+		Integer result = (Integer)map.get(key);
+		if (result == null) {
 			
 		}
-		return Result.intValue();
+		return result.intValue();
 	}
 	
 	/**
@@ -54,11 +54,11 @@ public class PersistanceMap {
 	 * @return value corresponding to the key
 	 */
 	public double getDouble(final String key) {
-		Double Result = (Double)map.get(key);
-		if (Result == null) {
+		Double result = (Double)map.get(key);
+		if (result == null) {
 			
 		}
-		return Result.doubleValue();
+		return result.doubleValue();
 	}
 	
 	/**
@@ -66,11 +66,11 @@ public class PersistanceMap {
 	 * @return value corresponding to the key
 	 */
 	public boolean getBoolean(final String key) {
-		Boolean Result = (Boolean)map.get(key);
-		if (Result == null) {
+		Boolean result = (Boolean)map.get(key);
+		if (result == null) {
 			
 		}
-		return Result.booleanValue();
+		return result.booleanValue();
 	}
 	
 	/**
@@ -82,11 +82,11 @@ public class PersistanceMap {
 	 */
 	@SuppressWarnings("unchecked")
 	public <T> T get(final String key) throws PersistanceException {
-		T Result = (T) map.get(key);
-		if (Result == null) {
+		T result = (T) map.get(key);
+		if (result == null) {
 			throw new PersistanceException(key);
 		}
-		return Result;
+		return result;
 	}
 	
 	/**
