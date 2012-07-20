@@ -9,7 +9,7 @@ public class PersistanceException extends Exception{
 	
 	private final String key;
 	
-	public PersistanceException(String key) {
+	public PersistanceException(final String key) {
 		super();
 		this.key = key;
 	}
