@@ -5,6 +5,7 @@ import static com.google.common.collect.Maps.newHashMap;
 import gt.general.logic.TriggerContext;
 import gt.general.logic.TriggerManager;
 import gt.general.logic.persistance.exceptions.PersistanceException;
+import gt.general.logic.persistance.exceptions.PersistanceTypeException;
 import gt.general.logic.response.Response;
 import gt.general.logic.trigger.Trigger;
 
@@ -94,9 +95,6 @@ public class TriggerManagerPersistance {
 	/**
 	 * load a TriggerContext
 	 * @param contextLabel name/label of the TriggerContext
-	 * @throws InstantiationException thrown if loading of a Serializable fails
-	 * @throws IllegalAccessException thrown if loading of a Serializable fails
-	 * @throws ClassNotFoundException thrown if loading of a Serializable fails
 	 */
 	@SuppressWarnings("unchecked")
 	private void loadTriggerContext(final String contextLabel) {
@@ -120,6 +118,9 @@ public class TriggerManagerPersistance {
 				Trigger t = null;
 				try {
 					t = loadSerializable(triggerLabel, triggerMap);
+				} catch (PersistanceTypeException e) {
+					throw new RuntimeErrorException(null,"Error loading field '"+e.getKey()+"' in Trigger "
+							+triggerLabel+" in Context "+contextLabel+": Wrong Type");
 				} catch (PersistanceException e) {
 					throw new RuntimeErrorException(null,"Error loading field '"+e.getKey()+"' in Trigger "
 							+triggerLabel+" in Context "+contextLabel+": field is null or missing");
@@ -148,6 +149,9 @@ public class TriggerManagerPersistance {
 				
 				try {
 					tc.addResponse((Response) loadSerializable(responseLabel, responseMap));
+				} catch (PersistanceTypeException e) {
+					throw new RuntimeErrorException(null,"Error loading field '"+e.getKey()+"' in Response "
+							+responseLabel+" in Context "+contextLabel+": Wrong Type");
 				} catch (PersistanceException e) {
 					throw new RuntimeErrorException(null, "Error loading field '"+e.getKey()+"' in Response "
 							+responseLabel+" in Context "+contextLabel+": field is null or missing");					

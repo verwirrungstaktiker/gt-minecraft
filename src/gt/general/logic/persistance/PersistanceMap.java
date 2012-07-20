@@ -3,6 +3,7 @@ package gt.general.logic.persistance;
 import static com.google.common.collect.Maps.newHashMap;
 
 import gt.general.logic.persistance.exceptions.PersistanceException;
+import gt.general.logic.persistance.exceptions.PersistanceTypeException;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -19,6 +20,7 @@ public class PersistanceMap {
 	public static final String KEY_X_COORDINATE = "x";
 	public static final String KEY_Y_COORDINATE = "y";
 	public static final String KEY_Z_COORDINATE = "z";
+	public static final String [] KEY_COORDINATES = {"x","y","z"};
 	
 	private Map<String, Object> map;
 
@@ -42,11 +44,11 @@ public class PersistanceMap {
 	 * @return value corresponding to the key
 	 */
 	public int getInt(final String key) {
-		Integer Result = (Integer)map.get(key);
-		if (Result == null) {
+		Integer result = (Integer)map.get(key);
+		if (result == null) {
 			
 		}
-		return Result.intValue();
+		return result.intValue();
 	}
 	
 	/**
@@ -54,11 +56,11 @@ public class PersistanceMap {
 	 * @return value corresponding to the key
 	 */
 	public double getDouble(final String key) {
-		Double Result = (Double)map.get(key);
-		if (Result == null) {
+		Double result = (Double)map.get(key);
+		if (result == null) {
 			
 		}
-		return Result.doubleValue();
+		return result.doubleValue();
 	}
 	
 	/**
@@ -66,11 +68,11 @@ public class PersistanceMap {
 	 * @return value corresponding to the key
 	 */
 	public boolean getBoolean(final String key) {
-		Boolean Result = (Boolean)map.get(key);
-		if (Result == null) {
+		Boolean result = (Boolean)map.get(key);
+		if (result == null) {
 			
 		}
-		return Result.booleanValue();
+		return result.booleanValue();
 	}
 	
 	/**
@@ -82,11 +84,19 @@ public class PersistanceMap {
 	 */
 	@SuppressWarnings("unchecked")
 	public <T> T get(final String key) throws PersistanceException {
-		T Result = (T) map.get(key);
-		if (Result == null) {
+		T result = null;
+		
+		try {
+		result = (T) map.get(key);
+		} catch (ClassCastException e) {
+			throw new PersistanceTypeException(key);
+		}
+		
+		if (result == null) {
 			throw new PersistanceException(key);
 		}
-		return Result;
+		
+		return result;
 	}
 	
 	/**
@@ -128,19 +138,20 @@ public class PersistanceMap {
 	 * @throws PersistanceException 
 	 */
 	private Block blockFromCoords( final Map<String, Object> coords, final World world) throws PersistanceException {
-		Integer x = (Integer) coords.get(KEY_X_COORDINATE);
-		if (x == null) {
-			throw new PersistanceException(KEY_X_COORDINATE);
+		Integer x[] = {0,0,0};
+		
+		for (int i=0; i<3;i++) {
+			try {
+				x[i] = (Integer) coords.get(KEY_COORDINATES[i]);
+			} catch (ClassCastException e) {
+				throw new PersistanceTypeException(KEY_COORDINATES[i]);
+			}
+			if (x[i] == null) {
+				throw new PersistanceException(KEY_COORDINATES[i]);
+			}
 		}
-		Integer y = (Integer) coords.get(KEY_Y_COORDINATE);
-		if (y == null) {
-			throw new PersistanceException(KEY_Y_COORDINATE);
-		}
-		Integer z = (Integer) coords.get(KEY_Z_COORDINATE);
-		if (z == null) {
-			throw new PersistanceException(KEY_Z_COORDINATE);
-		}
-		return world.getBlockAt(x,y,z);
+				
+		return world.getBlockAt(x[0],x[1],x[2]);
 	}
 	
 	/**
