@@ -23,7 +23,9 @@ public class PersistanceMap {
 	public static final String [] KEY_COORDINATES = {"x","y","z"};
 	
 	private Map<String, Object> map;
+	private String lastKey;
 
+	
 	/**
 	 * creates a new PersistanceMap
 	 */
@@ -84,13 +86,10 @@ public class PersistanceMap {
 	 */
 	@SuppressWarnings("unchecked")
 	public <T> T get(final String key) throws PersistanceException {
-		T result = null;
+		lastKey = key;
 		
-		try {
-		result = (T) map.get(key);
-		} catch (ClassCastException e) {
-			throw new PersistanceTypeException(key);
-		}
+		T result = (T) map.get(key);
+		
 		
 		if (result == null) {
 			throw new PersistanceException(key);
@@ -255,5 +254,9 @@ public class PersistanceMap {
 	 */
 	public Map<String, Object> getMap() {
 		return map;
+	}
+	
+	public String getLastKey() {
+		return lastKey;
 	}
 }

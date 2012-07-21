@@ -5,7 +5,6 @@ import static com.google.common.collect.Maps.newHashMap;
 import gt.general.logic.TriggerContext;
 import gt.general.logic.TriggerManager;
 import gt.general.logic.persistance.exceptions.PersistanceException;
-import gt.general.logic.persistance.exceptions.PersistanceTypeException;
 import gt.general.logic.response.Response;
 import gt.general.logic.trigger.Trigger;
 
@@ -81,8 +80,7 @@ public class TriggerManagerPersistance {
 			globalResponses = values.get(KEY_GLOBAL_RESPONSES);
 			globalTriggers = values.get(KEY_GLOBAL_TRIGGERS);				
 		} catch (PersistanceException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			throw new RuntimeErrorException(null,"Error loading "+e.getKey());
 		}
 			 
 			
@@ -108,7 +106,8 @@ public class TriggerManagerPersistance {
 		
 			for(String triggerLabel : (List<String>) contextMap.get(KEY_TRIGGERS)) {
 				
-				Map<String, Object> triggerMap = (Map<String, Object>) globalTriggers.get(triggerLabel);
+				PersistanceMap triggerMap = new PersistanceMap(
+						(Map<String, Object>) globalResponses.get(triggerLabel));
 				
 				if (triggerMap == null) {
 					throw new RuntimeErrorException(null,"Error loading Trigger "
@@ -118,9 +117,9 @@ public class TriggerManagerPersistance {
 				Trigger t = null;
 				try {
 					t = loadSerializable(triggerLabel, triggerMap);
-				} catch (PersistanceTypeException e) {
-					throw new RuntimeErrorException(null,"Error loading field '"+e.getKey()+"' in Trigger "
-							+triggerLabel+" in Context "+contextLabel+": Wrong Type");
+				} catch (ClassCastException e) {
+					throw new RuntimeErrorException(null,"Error loading field '"+triggerMap.getLastKey()
+							+"' in Trigger "+triggerLabel+" in Context "+contextLabel+": Wrong Type");
 				} catch (PersistanceException e) {
 					throw new RuntimeErrorException(null,"Error loading field '"+e.getKey()+"' in Trigger "
 							+triggerLabel+" in Context "+contextLabel+": field is null or missing");
@@ -140,7 +139,8 @@ public class TriggerManagerPersistance {
 			}
 			
 			for(String responseLabel : (List<String>) contextMap.get(KEY_RESPONSES)) {
-				Map<String, Object> responseMap = (Map<String, Object>) globalResponses.get(responseLabel);
+				PersistanceMap responseMap = new PersistanceMap(
+						(Map<String, Object>) globalResponses.get(responseLabel));
 
 				if (responseMap == null) {
 					throw new RuntimeErrorException(null,"Error loading Response "
@@ -149,9 +149,9 @@ public class TriggerManagerPersistance {
 				
 				try {
 					tc.addResponse((Response) loadSerializable(responseLabel, responseMap));
-				} catch (PersistanceTypeException e) {
-					throw new RuntimeErrorException(null,"Error loading field '"+e.getKey()+"' in Response "
-							+responseLabel+" in Context "+contextLabel+": Wrong Type");
+				} catch (ClassCastException e) {
+					throw new RuntimeErrorException(null,"Error loading field '"+responseMap.getLastKey()
+							+"' in Response "+responseLabel+" in Context "+contextLabel+": Wrong Type");
 				} catch (PersistanceException e) {
 					throw new RuntimeErrorException(null, "Error loading field '"+e.getKey()+"' in Response "
 							+responseLabel+" in Context "+contextLabel+": field is null or missing");					
@@ -184,7 +184,7 @@ public class TriggerManagerPersistance {
 	 * @throws PersistanceException 
 	 */
 	@SuppressWarnings("unchecked")
-	private <T extends YamlSerializable> T loadSerializable(final String label, final Map<String, Object> map) throws InstantiationException, IllegalAccessException, ClassNotFoundException, PersistanceException {
+	private <T extends YamlSerializable> T loadSerializable(final String label, final PersistanceMap map) throws InstantiationException, IllegalAccessException, ClassNotFoundException, PersistanceException {
 		
 		String className = (String) map.remove(KEY_CLASS);
 		
@@ -194,7 +194,7 @@ public class TriggerManagerPersistance {
 		
 		T serializable = (T) Class.forName(className).newInstance();
 		serializable.setLabel(label);
-		serializable.setup(new PersistanceMap(map), world);
+		serializable.setup(map, world);
 		
 		return serializable;
 	}
