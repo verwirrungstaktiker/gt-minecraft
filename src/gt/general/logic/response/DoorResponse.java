@@ -32,13 +32,19 @@ public class DoorResponse extends BlockResponse {
 	@Override
 	public void setup(final PersistanceMap values, final World world) throws PersistanceException {
 		super.setup(values, world);
+		// take care of the upper half of the door
+		Block upperBlock = getBlock().getRelative(BlockFace.UP);
+		upperBlock.setType(getMaterial());
+		Door upperDoor = (Door) upperBlock.getState().getData();
+		upperDoor.setTopHalf(true);
+		upperBlock.setData(upperDoor.getData());
 		
 		orientation = values.get(KEY_ORIENTATION);
 		
-		Door door = (Door) getBlock().getState().getData();
-		door.setFacingDirection(orientation);	
+		Door lowerDoor = (Door) getBlock().getState().getData();
+		lowerDoor.setFacingDirection(orientation);	
 		
-		getBlock().setData(door.getData());
+		getBlock().setData(lowerDoor.getData());
 	}
 	
 	@Override
