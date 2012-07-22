@@ -29,6 +29,10 @@ class SelectionListWidget <T> extends GenericListWidget {
 		return map.get(getSelectedItem());
 	}
 	
+	public T getObject(final ListWidgetItem item) {
+		return map.get(item);
+	}
+	
 	@Override
 	public void clear() {
 		super.clear();

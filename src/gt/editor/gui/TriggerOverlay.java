@@ -2,6 +2,7 @@ package gt.editor.gui;
 
 import gt.editor.EditorTriggerManager;
 import gt.editor.LogicObserver;
+import gt.editor.PlayerManager;
 import gt.general.logic.TriggerContext;
 import gt.general.logic.persistance.YamlSerializable;
 import gt.general.logic.response.Response;
@@ -21,21 +22,49 @@ import org.getspout.spoutapi.player.SpoutPlayer;
 
 public class TriggerOverlay extends GenericPopup implements LogicObserver, Listener {
 
-	private EditorTriggerManager triggerManager;
-	private SpoutPlayer player;
+	private final EditorTriggerManager triggerManager;
+	private final PlayerManager playerManager;
+	private final SpoutPlayer player;
 		
 	private static final int MARGIN_X = 5;
 	private static final int MARGIN_Y = 10;
 	
 	private static final String NO_CONTEXT = "No Context";
-	
-	private SelectionListWidget<TriggerContext> contextList = new SelectionListWidget<TriggerContext>() {
+
+	/**
+	 * special selection behaviour: only the currently active context may be selected
+	 */
+	private class ContextListWidget extends SelectionListWidget<TriggerContext> {
+
+		private int oldSelectedIndex = 0;
+		
 		@Override
-		public void onSelected(final int item, final boolean doubleClick) {
-			super.onSelected(item, doubleClick);			
-			buildItemList();
+		public void onSelected(final int selectedIndex, final boolean doubleClick) {			
+			TriggerContext oldSelected = getObject(getItem(oldSelectedIndex));
+
+			// only allow to change if empty element, context is complete or current is reselected
+			if(oldSelected == null || oldSelected.isComplete() || selectedIndex == oldSelectedIndex) {
+				super.onSelected(selectedIndex, doubleClick);
+
+				oldSelectedIndex = selectedIndex;
+				buildItemList();
+			} else {
+				setSelection(oldSelectedIndex);
+			}
 		}
+		
+		/**
+		 * resets overrides the context constraint
+		 * @param n the new selection
+		 */
+		public void forceSelection(final int n) {
+			oldSelectedIndex = n;
+			super.setSelection(n);
+		}
+		
 	};
+	
+	private ContextListWidget contextList = new ContextListWidget();
 	private SelectionListWidget<YamlSerializable> itemList = new SelectionListWidget<YamlSerializable>();
 	
 	private GenericButton left1 = new GenericButton("Rename selected context") {
@@ -43,11 +72,32 @@ public class TriggerOverlay extends GenericPopup implements LogicObserver, Liste
 			System.out.println("LEFT 1");
 		};
 	};
-	private GenericButton left2 = new GenericButton() {
-		public void onButtonClick(final ButtonClickEvent event) {
-			System.out.println("LEFT 2");
-		};
+	
+	private class ContextButton extends GenericButton {
+		
+		/** updates the textx of this button */
+		public void updateText() {
+			if(playerManager.canCreateContext(player)) {
+				setText("New Context");
+			} else {
+				setText("Delete selected Context!");
+			}
+		}
+
+		@Override
+		public void onButtonClick(final ButtonClickEvent event) {			
+			if(playerManager.canCreateContext(player)) {
+				playerManager.createContext(player);
+			} else {
+				playerManager.cancelContext(player);
+			}
+			
+			buildContextList();
+			updateText();
+		};	
 	};
+	private ContextButton left2 = new ContextButton();
+	
 	private GenericButton left3 = new GenericButton("Toggle Highlight [on]") {
 		public void onButtonClick(final ButtonClickEvent event) {
 			System.out.println("LEFT 3");
@@ -74,110 +124,24 @@ public class TriggerOverlay extends GenericPopup implements LogicObserver, Liste
 	 * 
 	 * @param player the player who opened this overlay
 	 * @param triggerManager the currently running trigger manager
+	 * @param playerManager the currently running player manager
 	 */
-	public TriggerOverlay(final SpoutPlayer player, final EditorTriggerManager triggerManager) {
+	public TriggerOverlay(final SpoutPlayer player, final EditorTriggerManager triggerManager, final PlayerManager playerManager) {
 		this.player = player;
 		this.triggerManager = triggerManager;
+		this.playerManager = playerManager;
 				
-		// setup context list
-		contextList.setWidth(200)
-					.setHeight(200)
-					.shiftXPos(- (contextList.getWidth() + MARGIN_X))
-					.shiftYPos(MARGIN_Y);
-		
-		contextList.setAnchor(WidgetAnchor.TOP_CENTER);
-		attachWidget(Hello.getPlugin(), contextList);
-		
-		// setup item list
-		itemList.setWidth(200)
-				.setHeight(200)
-				.shiftXPos(MARGIN_X)
-				.shiftYPos(MARGIN_Y);
-		
-		itemList.setAnchor(WidgetAnchor.TOP_CENTER);
-		attachWidget(Hello.getPlugin(), itemList);
-		
-		// left 1
-		left1.setWidth(200)
-			 .setHeight(20)
-			 .shiftXPos(- (left1.getWidth() + MARGIN_X))
-			 .shiftYPos(contextList.getHeight() + 2 * MARGIN_Y);
-		
-		left1.setAnchor(WidgetAnchor.TOP_CENTER);
-		attachWidget(Hello.getPlugin(), left1);
-		
-		// left 2
-		left2.setWidth(200)
-			 .setHeight(20)
-			 .shiftXPos(- (left2.getWidth() + MARGIN_X))
-			 .shiftYPos(contextList.getHeight() + left1.getHeight()+ 3 * MARGIN_Y);
-		
-		left2.setAnchor(WidgetAnchor.TOP_CENTER);
-		attachWidget(Hello.getPlugin(), left2);
-		
-		// left 3
-		left3.setWidth(200)
-			 .setHeight(20)
-			 .shiftXPos(- (left3.getWidth() + MARGIN_X))
-			 .shiftYPos(contextList.getHeight() + left1.getHeight() + left2.getHeight() + 4 * MARGIN_Y);
-		
-		left3.setAnchor(WidgetAnchor.TOP_CENTER);
-		attachWidget(Hello.getPlugin(), left3);
-		
-		// right 1
-		right1.setWidth(200)
-			 .setHeight(20)
-			 .shiftXPos(MARGIN_X)
-			 .shiftYPos(itemList.getHeight() + 2 * MARGIN_Y);
-		
-		right1.setAnchor(WidgetAnchor.TOP_CENTER);
-		attachWidget(Hello.getPlugin(), right1);
-		
-		// right 2
-		right2.setWidth(200)
-			 .setHeight(20)
-			 .shiftXPos(MARGIN_X)
-			 .shiftYPos(itemList.getHeight() + right1.getHeight()+ 3 * MARGIN_Y);
-		
-		right2.setAnchor(WidgetAnchor.TOP_CENTER);
-		attachWidget(Hello.getPlugin(), right2);
-		
-		// right 3
-		right3.setWidth(200)
-			 .setHeight(20)
-			 .shiftXPos(MARGIN_X)
-			 .shiftYPos(itemList.getHeight() + right1.getHeight() + right2.getHeight() + 4 * MARGIN_Y);
-		
-		right3.setAnchor(WidgetAnchor.TOP_CENTER);
-		attachWidget(Hello.getPlugin(), right3);
-		
+		setupGui();
 		
 		buildContextList();
-		triggerManager.addTriggerContextObserver(this);
+		triggerManager.addLogicObserver(this);
+		playerManager.addLogicObserver(this);
 		MultiListener.registerListener(this);
 	}
 
 	@Override
-	public void update(final Observee type, final Object what) {
-		
-		switch (type) {
-		case TRIGGER_MANAGER:
-			System.out.println("UPDATE CONTEXT LIST");
-			buildContextList();
-			break;
-
-		case TRIGGER_CONTEXT:
-			if(contextList.getSelectedObject() == what) {
-				System.out.println("UPDATE ITEM LIST");
-				buildItemList();
-			}
-			break;
-			
-			
-		default:break;
-		}
-		
-
+	public void update(final Observee type, final Object what) {		
+		buildContextList();
 	}
 
 	/**
@@ -185,20 +149,23 @@ public class TriggerOverlay extends GenericPopup implements LogicObserver, Liste
 	 */
 	private void buildContextList() {
 		
-		TriggerContext oldSelectedContext = contextList.getSelectedObject();
-		
 		contextList.clear();
-		contextList.clearSelection();
-		
 		contextList.addItem(new ListWidgetItem(NO_CONTEXT, ""));
-		contextList.setSelection(0);
+		contextList.forceSelection(0);
 		
 		for(TriggerContext context : triggerManager.getTriggerContexts()) {
-			contextList.add(new ListWidgetItem(context.getLabel(), ""), context);
 			
-			if (context == oldSelectedContext) {
+			String subtext = "";
+			
+			if(!context.isComplete()) {
+				subtext = "Context not complete - cannot save!";
+			}
+			
+			contextList.add(new ListWidgetItem(context.getLabel(), subtext), context);
+			
+			if (context == playerManager.getcontext(player)) {
 				int position = contextList.getItems().length - 1;
-				contextList.setSelection(position);
+				contextList.forceSelection(position);
 			}
 		}
 		
@@ -244,7 +211,8 @@ public class TriggerOverlay extends GenericPopup implements LogicObserver, Liste
 			super.onScreenClose(event);
 			
 			MultiListener.unregisterListener(this);
-			triggerManager.removeTriggerContextObserver(this);
+			triggerManager.removeLogicObserver(this);
+			playerManager.removeLogicObserver(this);
 		}
 	}
 	
@@ -252,6 +220,81 @@ public class TriggerOverlay extends GenericPopup implements LogicObserver, Liste
 	public void onTick() {
 		super.onTick();
 		setDirty(true);
+	}
+
+	private void setupGui() {
+		// setup context list
+		contextList.setWidth(200)
+					.setHeight(200)
+					.shiftXPos(- (contextList.getWidth() + MARGIN_X))
+					.shiftYPos(MARGIN_Y);
+		
+		contextList.setAnchor(WidgetAnchor.TOP_CENTER);
+		attachWidget(Hello.getPlugin(), contextList);
+		
+		// setup item list
+		itemList.setWidth(200)
+				.setHeight(200)
+				.shiftXPos(MARGIN_X)
+				.shiftYPos(MARGIN_Y);
+		
+		itemList.setAnchor(WidgetAnchor.TOP_CENTER);
+		attachWidget(Hello.getPlugin(), itemList);
+		
+		// left 1
+		left1.setWidth(200)
+			 .setHeight(20)
+			 .shiftXPos(- (left1.getWidth() + MARGIN_X))
+			 .shiftYPos(contextList.getHeight() + 2 * MARGIN_Y);
+		
+		left1.setAnchor(WidgetAnchor.TOP_CENTER);
+		attachWidget(Hello.getPlugin(), left1);
+		
+		// left 2
+		left2.setWidth(200)
+			 .setHeight(20)
+			 .shiftXPos(- (left2.getWidth() + MARGIN_X))
+			 .shiftYPos(contextList.getHeight() + left1.getHeight()+ 3 * MARGIN_Y);
+		
+		left2.setAnchor(WidgetAnchor.TOP_CENTER);
+		left2.updateText();
+		attachWidget(Hello.getPlugin(), left2);
+		
+		// left 3
+		left3.setWidth(200)
+			 .setHeight(20)
+			 .shiftXPos(- (left3.getWidth() + MARGIN_X))
+			 .shiftYPos(contextList.getHeight() + left1.getHeight() + left2.getHeight() + 4 * MARGIN_Y);
+		
+		left3.setAnchor(WidgetAnchor.TOP_CENTER);
+		attachWidget(Hello.getPlugin(), left3);
+		
+		// right 1
+		right1.setWidth(200)
+			 .setHeight(20)
+			 .shiftXPos(MARGIN_X)
+			 .shiftYPos(itemList.getHeight() + 2 * MARGIN_Y);
+		
+		right1.setAnchor(WidgetAnchor.TOP_CENTER);
+		attachWidget(Hello.getPlugin(), right1);
+		
+		// right 2
+		right2.setWidth(200)
+			 .setHeight(20)
+			 .shiftXPos(MARGIN_X)
+			 .shiftYPos(itemList.getHeight() + right1.getHeight()+ 3 * MARGIN_Y);
+		
+		right2.setAnchor(WidgetAnchor.TOP_CENTER);
+		attachWidget(Hello.getPlugin(), right2);
+		
+		// right 3
+		right3.setWidth(200)
+			 .setHeight(20)
+			 .shiftXPos(MARGIN_X)
+			 .shiftYPos(itemList.getHeight() + right1.getHeight() + right2.getHeight() + 4 * MARGIN_Y);
+		
+		right3.setAnchor(WidgetAnchor.TOP_CENTER);
+		attachWidget(Hello.getPlugin(), right3);
 	}
 	
 	

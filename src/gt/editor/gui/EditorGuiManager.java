@@ -1,6 +1,7 @@
 package gt.editor.gui;
 
 import gt.editor.EditorTriggerManager;
+import gt.editor.PlayerManager;
 
 import org.getspout.spoutapi.event.input.KeyBindingEvent;
 import org.getspout.spoutapi.gui.ScreenType;
@@ -9,9 +10,11 @@ import org.getspout.spoutapi.keyboard.BindingExecutionDelegate;
 public class EditorGuiManager implements BindingExecutionDelegate {
 
 	private EditorTriggerManager triggerManager;
+	private PlayerManager playerManager;
 
-	public EditorGuiManager(final EditorTriggerManager triggerManager) {
+	public EditorGuiManager(final EditorTriggerManager triggerManager, final PlayerManager playerManager) {
 		this.triggerManager = triggerManager;
+		this.playerManager = playerManager;
 	}
 	
 		
@@ -27,7 +30,7 @@ public class EditorGuiManager implements BindingExecutionDelegate {
 		if(evt.getPlayer().getActiveScreen() == ScreenType.GAME_SCREEN) {
 			evt.getPlayer()
 				.getMainScreen()
-				.attachPopupScreen(new TriggerOverlay(evt.getPlayer(), triggerManager));
+				.attachPopupScreen(new TriggerOverlay(evt.getPlayer(), triggerManager, playerManager));
 			
 		} else if(triggerOverlayOpen) {
 			evt.getPlayer().getMainScreen().closePopup();

@@ -179,7 +179,7 @@ public class EditorTriggerManager extends TriggerManager {
 	 * Adds an Observer
 	 * @param observer the Observer that is added
 	 */
-	public void addTriggerContextObserver(final LogicObserver observer) {
+	public void addLogicObserver(final LogicObserver observer) {
 		observers.add(observer);
 	}
 	
@@ -187,7 +187,7 @@ public class EditorTriggerManager extends TriggerManager {
 	 * Deletes and Observer
 	 * @param observer the Observer that is deleted
 	 */
-	public void removeTriggerContextObserver(final LogicObserver observer) {
+	public void removeLogicObserver(final LogicObserver observer) {
 		observers.remove(observer);
 	}
 	

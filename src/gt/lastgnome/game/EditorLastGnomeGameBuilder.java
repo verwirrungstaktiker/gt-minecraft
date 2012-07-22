@@ -17,6 +17,7 @@ public class EditorLastGnomeGameBuilder extends AbstractLastGnomeGameBuilder {
 
 	private EditorLastGnomeGame game;
 	private EditorTriggerManager triggerManager;
+	private PlayerManager playerManager;
 	
 	
 	@Override
@@ -29,7 +30,7 @@ public class EditorLastGnomeGameBuilder extends AbstractLastGnomeGameBuilder {
 		super.buildWorldInstance(worldManager, worldName);
 				
 		triggerManager = new EditorTriggerManager();
-		PlayerManager playerManager = new PlayerManager(triggerManager);
+		playerManager = new PlayerManager(triggerManager);
 		BuildManager buildManager = new BuildManager(playerManager);
 		
 		MultiListener.registerListeners(playerManager,
@@ -46,7 +47,7 @@ public class EditorLastGnomeGameBuilder extends AbstractLastGnomeGameBuilder {
 			.registerBinding("triggerOverlay",
 								Keyboard.KEY_C, 
 								"trigger overlay",
-								new EditorGuiManager(triggerManager),
+								new EditorGuiManager(triggerManager, playerManager),
 								Hello.getPlugin());
 	}
 

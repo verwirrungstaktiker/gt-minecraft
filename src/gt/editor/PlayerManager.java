@@ -266,14 +266,8 @@ public class PlayerManager implements Listener{
 		String name = player.getName();
 		TriggerContext context = playerTriggerContexts.get(name);
 		
-		if(context == null) {
-			changeTriggerState(player, TriggerState.TRIGGER);
-			
-			context = new TriggerContext();
-			triggerManager.addTriggerContext(context);
-			playerTriggerContexts.put(name, context);
-			
-			player.sendMessage(YELLOW + "New Context: " + context.getLabel() + "; BuildState: TRIGGER");
+		if(canCreateContext(player)) {
+			createContext(player);
 			
 		} else {
 			if(context.isComplete()) {
@@ -289,6 +283,32 @@ public class PlayerManager implements Listener{
 				return;
 			}
 		}
+	}
+
+	/**
+	 * @param player the player to be checked
+	 * @return true if the player can create a new context
+	 */
+	public boolean canCreateContext(final Player player) {
+		return getcontext(player) == null;
+	}
+	
+	/**
+	 * WARNING: DOES NOT PERFORM CHECKS
+	 * 
+	 * @param player the player for which the context should be created
+	 * @return the created context
+	 */
+	public TriggerContext createContext(final Player player) {
+		changeTriggerState(player, TriggerState.TRIGGER);
+		
+		TriggerContext context = new TriggerContext();
+		triggerManager.addTriggerContext(context);
+		playerTriggerContexts.put(player.getName(), context);
+		
+		player.sendMessage(YELLOW + "New Context: " + context.getLabel() + "; BuildState: TRIGGER");
+		
+		return context;
 	}
 
 	/**
@@ -375,7 +395,7 @@ public class PlayerManager implements Listener{
 	 * deregisters the current context of a player
 	 * @param player bukkit player
 	 */
-	private void cancelContext(final Player player) {
+	public void cancelContext(final Player player) {
 		String name = player.getName();
 		if(playerTriggerStates.get(name) == TriggerState.IDLE) {
 			player.sendMessage(YELLOW + "No active TriggerContext");
@@ -396,6 +416,10 @@ public class PlayerManager implements Listener{
 	 */
 	public TriggerContext getContext(final String name) {
 		return playerTriggerContexts.get(name);
+	}
+	
+	public TriggerContext getcontext(final Player player) {
+		return getContext(player.getName());
 	}
 	
 	/**
