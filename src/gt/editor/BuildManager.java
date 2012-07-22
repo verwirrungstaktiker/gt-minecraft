@@ -133,6 +133,7 @@ public class BuildManager implements Listener {
 				newResponse = new DoorResponse(block);
 				break;
 			case DIAMOND_BLOCK:
+			case IRON_FENCE:
 				newResponse = new BlockDisappearResponse(block);
 				break;
 			case REDSTONE_LAMP_OFF:
