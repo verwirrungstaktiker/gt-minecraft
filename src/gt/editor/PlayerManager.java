@@ -1,14 +1,17 @@
 package gt.editor;
 
+import static com.google.common.collect.Maps.*;
+import static com.google.common.collect.Sets.*;
 import static org.bukkit.ChatColor.*;
+import gt.editor.LogicObserver.Observee;
 import gt.general.logic.TriggerContext;
 import gt.general.logic.persistance.YamlSerializable;
 import gt.general.logic.response.Response;
 import gt.general.logic.trigger.Trigger;
 import gt.plugin.meta.Hello;
 
-import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 
 import org.bukkit.GameMode;
 import org.bukkit.Material;
@@ -34,15 +37,17 @@ public class PlayerManager implements Listener{
 	}
 	
 	/** contains all player's current TriggerStates **/
-	private Map<String, TriggerState> playerTriggerStates = new HashMap<String, TriggerState>();
+	private Map<String, TriggerState> playerTriggerStates = newHashMap();
 	/** contains all player's current TriggerContext's **/
-	private Map<String, TriggerContext> playerTriggerContexts = new HashMap<String, TriggerContext>();
+	private Map<String, TriggerContext> playerTriggerContexts = newHashMap();
 
 	private EditorTriggerManager triggerManager;
 	
 	private ParticleManager particleManager;
 	/** player inventories are saved here when they build TriggerContexts **/
-	private Map<String, ItemStack[]> playerInventories = new HashMap<String, ItemStack[]>();
+	private Map<String, ItemStack[]> playerInventories = newHashMap();
+	
+	private Set<LogicObserver> observers = newHashSet();
 	
 	private static final ItemStack[] TRIGGER_BLOCKS = new ItemStack[]{
 			new ItemStack(Material.LEVER),
@@ -98,6 +103,7 @@ public class PlayerManager implements Listener{
 						particleManager.removeSerializable(serializable, player);
 						//handle block break					
 						triggerManager.deleteBlock(block);
+						notifyLogicChanged(context);
 
 						player.sendMessage(YELLOW + "Deleted " + serLabel + " from " + contextLabel);
 					} else {
@@ -132,6 +138,8 @@ public class PlayerManager implements Listener{
 	public void addTrigger(final Trigger trigger, final TriggerContext context, final Player player) {
 		triggerManager.addTrigger(trigger, context);
 		particleManager.addSerializable(trigger, ParticleType.DRIPLAVA, player);
+		
+		notifyLogicChanged(context);
 	}
 	
 	/**
@@ -143,6 +151,8 @@ public class PlayerManager implements Listener{
 	public void addResponse(final Response response, final TriggerContext context, final Player player) {
 		triggerManager.addResponse(response, context);
 		particleManager.addSerializable(response, ParticleType.DRIPLAVA, player);
+		
+		notifyLogicChanged(context);
 	}
 
 	/**
@@ -395,4 +405,30 @@ public class PlayerManager implements Listener{
 	public TriggerState getState(final String name) {
 		return playerTriggerStates.get(name);
 	}
+	
+	/**
+	 * Adds an Observer
+	 * @param observer the Observer that is added
+	 */
+	public void addLogicObserver(final LogicObserver observer) {
+		observers.add(observer);
+	}
+	
+	/**
+	 * Deletes and Observer
+	 * @param observer the Observer that is deleted
+	 */
+	public void removeLogicObserver(final LogicObserver observer) {
+		observers.remove(observer);
+	}
+	
+	/**
+	 * @param context which context changed
+	 */
+	private void notifyLogicChanged(final TriggerContext context) {
+		for(LogicObserver observer : observers) {
+			observer.update(Observee.TRIGGER_CONTEXT, context);
+		}
+	}
+	
 }

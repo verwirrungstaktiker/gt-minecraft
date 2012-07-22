@@ -2,6 +2,7 @@ package gt.editor;
 
 import static com.google.common.collect.Maps.newHashMap;
 import static com.google.common.collect.Sets.newHashSet;
+import gt.editor.LogicObserver.Observee;
 import gt.general.logic.TriggerContext;
 import gt.general.logic.TriggerManager;
 import gt.general.logic.persistance.YamlSerializable;
@@ -22,7 +23,7 @@ public class EditorTriggerManager extends TriggerManager {
 	
 	private Map<Block, TriggerContext> blockToContext = newHashMap();
 	private Map<Block, YamlSerializable> blockToSerializable = newHashMap();
-	private Set<TriggerManagerObserver> observers = newHashSet();
+	private Set<LogicObserver> observers = newHashSet();
 
 	/**
 	 * Do not delete this anonymous constructor
@@ -178,7 +179,7 @@ public class EditorTriggerManager extends TriggerManager {
 	 * Adds an Observer
 	 * @param observer the Observer that is added
 	 */
-	public void addTriggerContextObserver(final TriggerManagerObserver observer) {
+	public void addTriggerContextObserver(final LogicObserver observer) {
 		observers.add(observer);
 	}
 	
@@ -186,7 +187,7 @@ public class EditorTriggerManager extends TriggerManager {
 	 * Deletes and Observer
 	 * @param observer the Observer that is deleted
 	 */
-	public void removeTriggerContextObserver(final TriggerManagerObserver observer) {
+	public void removeTriggerContextObserver(final LogicObserver observer) {
 		observers.remove(observer);
 	}
 	
@@ -194,8 +195,8 @@ public class EditorTriggerManager extends TriggerManager {
 	 * Notify the Observers on context modification
 	 */
 	private void notifyTriggerContextChanged() {
-		for(TriggerManagerObserver observer : observers) {
-			observer.update();
+		for(LogicObserver observer : observers) {
+			observer.update(Observee.TRIGGER_MANAGER, this);
 		}
 	}
 	

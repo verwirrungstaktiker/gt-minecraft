@@ -1,7 +1,7 @@
 package gt.editor.gui;
 
 import gt.editor.EditorTriggerManager;
-import gt.editor.TriggerManagerObserver;
+import gt.editor.LogicObserver;
 import gt.general.logic.TriggerContext;
 import gt.general.logic.persistance.YamlSerializable;
 import gt.general.logic.response.Response;
@@ -19,7 +19,7 @@ import org.getspout.spoutapi.gui.ListWidgetItem;
 import org.getspout.spoutapi.gui.WidgetAnchor;
 import org.getspout.spoutapi.player.SpoutPlayer;
 
-public class TriggerOverlay extends GenericPopup implements TriggerManagerObserver, Listener {
+public class TriggerOverlay extends GenericPopup implements LogicObserver, Listener {
 
 	private EditorTriggerManager triggerManager;
 	private SpoutPlayer player;
@@ -158,9 +158,26 @@ public class TriggerOverlay extends GenericPopup implements TriggerManagerObserv
 	}
 
 	@Override
-	public void update() {
-		System.out.println("UPDATE CONTEXT LIST");
-		buildContextList();
+	public void update(final Observee type, final Object what) {
+		
+		switch (type) {
+		case TRIGGER_MANAGER:
+			System.out.println("UPDATE CONTEXT LIST");
+			buildContextList();
+			break;
+
+		case TRIGGER_CONTEXT:
+			if(contextList.getSelectedObject() == what) {
+				System.out.println("UPDATE ITEM LIST");
+				buildItemList();
+			}
+			break;
+			
+			
+		default:break;
+		}
+		
+
 	}
 
 	/**
@@ -192,9 +209,6 @@ public class TriggerOverlay extends GenericPopup implements TriggerManagerObserv
 	 * updates the item list, preserves the selecton
 	 */
 	private void buildItemList() {
-		/*
-		 * TODO autoupdate this list
-		 */
 		TriggerContext selected = contextList.getSelectedObject();
 		
 		YamlSerializable oldSelected = itemList.getSelectedObject();
