@@ -47,6 +47,7 @@ public class RedstoneTorchResponse extends BlockResponse {
 		} else {
 			RedstoneTorch torch = (RedstoneTorch) getBlock().getState().getData();
 			torch.setFacingDirection(orientation);
+			getBlock().setData(torch.getData());
 		}
 	}
 

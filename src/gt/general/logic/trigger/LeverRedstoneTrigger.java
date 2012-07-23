@@ -5,7 +5,6 @@ import gt.general.logic.persistance.exceptions.PersistanceException;
 import gt.general.world.ObservableCustomBlock;
 import gt.plugin.meta.CustomBlockType;
 
-import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
@@ -31,7 +30,7 @@ public class LeverRedstoneTrigger extends RedstoneTrigger implements Listener {
 	 * @param against against which block the player placed the trigger
 	 */
 	public LeverRedstoneTrigger(final Block trigger, final Block against) {
-		super("lever_trigger_", trigger);
+		super("lever_trigger", trigger);
 		
 		orientation = against.getFace(trigger);
 		
@@ -45,7 +44,7 @@ public class LeverRedstoneTrigger extends RedstoneTrigger implements Listener {
 	public void setup(final PersistanceMap values, final World world) throws PersistanceException {
 		super.setup(values, world);
 		
-		orientation = (BlockFace) values.get("orientation");
+		orientation = values.get(KEY_ORIENTATION);
 
 		Lever lever = (Lever) getBlock().getState().getData();
 		lever.setFacingDirection(orientation);

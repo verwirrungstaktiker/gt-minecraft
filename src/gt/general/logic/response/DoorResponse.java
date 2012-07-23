@@ -1,74 +1,107 @@
 package gt.general.logic.response;
 
 
+import java.util.HashSet;
+import java.util.Set;
+
 import gt.general.logic.persistance.PersistanceMap;
 import gt.general.logic.persistance.exceptions.PersistanceException;
 
 import org.bukkit.Effect;
+import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.material.Door;
 
-public class DoorResponse extends BlockResponse {
+public class DoorResponse extends Response {
 
 	private static final String KEY_ORIENTATION = "orientation";
+	private static final String KEY_MATERIAL = "material";
+	private static final String KEY_LOCATION = "location";
+	
+	private Block lowerBlock, upperBlock;
+	private Material material;
 	private BlockFace orientation;
 	
 	/**
-	 * @param doorBlock material.Door
+	 * @param lowerBlock the lower block of a door
 	 */
-	public DoorResponse(final Block doorBlock) {
-		super("door", doorBlock);
+	public DoorResponse(final Block lowerBlock) {
+		super("door_response");
+		
+		this.lowerBlock = lowerBlock;
+		this.material = lowerBlock.getType();
+		
+		this.upperBlock = lowerBlock.getRelative(BlockFace.UP);
 		// the orientation cannot be read here as it is not there yet
 	}
 
 	/**
 	 * don't delete this anonymous constructor
 	 */
-	public DoorResponse() {
-	}
+	public DoorResponse() {}
 
 	@Override
 	public void setup(final PersistanceMap values, final World world) throws PersistanceException {
-		super.setup(values, world);
-		// take care of the upper half of the door
-		Block upperBlock = getBlock().getRelative(BlockFace.UP);
-		upperBlock.setType(getMaterial());
+
+		lowerBlock = values.getBlock(KEY_LOCATION, world);
+		upperBlock = lowerBlock.getRelative(BlockFace.UP);
+		
+		material = values.get(KEY_MATERIAL);
+		orientation = values.get(KEY_ORIENTATION);
+
+		lowerBlock.setType(material);
+		upperBlock.setType(material);
+		//NOTE: the order is important here: upper -> lower
 		Door upperDoor = (Door) upperBlock.getState().getData();
 		upperDoor.setTopHalf(true);
 		upperBlock.setData(upperDoor.getData());
-		
-		orientation = values.get(KEY_ORIENTATION);
-		
-		Door lowerDoor = (Door) getBlock().getState().getData();
-		lowerDoor.setFacingDirection(orientation);	
-		
-		getBlock().setData(lowerDoor.getData());
+
+		Door lowerDoor = (Door) lowerBlock.getState().getData();
+		lowerDoor.setFacingDirection(orientation);
+		lowerBlock.setData(lowerDoor.getData());
 	}
 	
 	@Override
 	public void triggered(final boolean active) {
-
-		Block block = getBlock();
 		
-		Door door = (Door) block.getState().getData();
+		Door door = (Door) lowerBlock.getState().getData();
 
 		door.setOpen(active);
 		// play the door toggle sound
-		block.getWorld().playEffect(block.getLocation(), Effect.DOOR_TOGGLE, 25); // we can set the radius here
+		lowerBlock.getWorld().playEffect(lowerBlock.getLocation(), Effect.DOOR_TOGGLE, 25); // we can set the radius here
 		
-		block.setData(door.getData(), true);
+		lowerBlock.setData(door.getData(), true);
 	}
 
 	@Override
 	public PersistanceMap dump() {
-		PersistanceMap map = super.dump();
+		PersistanceMap map = new PersistanceMap();
+		
+		map.put(KEY_LOCATION, lowerBlock);
+		map.put(KEY_MATERIAL, material);
+		
 		// the orientation has to be read right before saving
-		Door door = (Door) getBlock().getState().getData();
+		Door door = (Door) lowerBlock.getState().getData();
 		map.put(KEY_ORIENTATION, door.getFacing());
 		
 		return map;
+	}
+
+	@Override
+	public void dispose() {
+		lowerBlock.setType(Material.AIR);
+		upperBlock.setType(Material.AIR);
+	}
+
+	@Override
+	public Set<Block> getBlocks() {
+		Set<Block> blocks = new HashSet<Block>();
+		blocks.add(lowerBlock);
+		blocks.add(upperBlock);
+		
+		return blocks;
 	}
 
 }
