@@ -1,5 +1,7 @@
 package gt.lastgnome.game;
 
+import org.bukkit.GameMode;
+
 import gt.general.character.Hero;
 import gt.general.character.Team;
 import gt.general.character.ZombieManager;
@@ -70,6 +72,11 @@ public class LastGnomeGameBuilder extends AbstractLastGnomeGameBuilder {
 		game.getWorldInstance()
 			.getSpawn()
 			.spawnTeam(game.getTeam());
+		
+		//Set on correct GameMode
+		for (Hero hero: game.getTeam().getPlayers()) {
+			hero.getPlayer().setGameMode(GameMode.SURVIVAL);
+		}
 		
 	}
 
