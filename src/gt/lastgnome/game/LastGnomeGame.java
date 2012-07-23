@@ -2,6 +2,8 @@ package gt.lastgnome.game;
 
 import static org.bukkit.ChatColor.GREEN;
 import static org.bukkit.ChatColor.YELLOW;
+import static org.bukkit.ChatColor.RED;
+
 
 import gt.general.character.Hero;
 import gt.general.character.HeroManager;
@@ -180,15 +182,29 @@ public class LastGnomeGame extends AbstractLastGnomeGame implements Listener{
 	 */
 	@EventHandler
 	public void onPlayerDeath(final PlayerDeathEvent event) {
-		/*Player player = event.getEntity();
+		Player player = event.getEntity();
 		if (player.equals(gnomeBearer.getPlayer())) {
-			return;
+			lose();
 		}
 		
-		player.teleport(gnomeBearer.getLocation());*/
+		//player.teleport(gnomeBearer.getLocation());
 	}
 	
 
+	private void lose() {
+		for (Hero hero: getTeam().getPlayers()) {
+			hero.getPlayer().sendMessage(RED + "The Gnome has been eaten! You lost!");			
+		}		
+		dispose();
+	}
+	
+	private void win() {
+		for (Hero hero: getTeam().getPlayers()) {
+			hero.getPlayer().sendMessage(GREEN + "The Gnome has been saved!");			
+		}
+		dispose();	   	
+	}
+	
 	/**
 	 * handles gnome transfer from Start Socket to Player
 	 * @param player who clicked the socket
@@ -223,7 +239,8 @@ public class LastGnomeGame extends AbstractLastGnomeGame implements Listener{
 			hero.removeActiveItem();
 			setGnomeBearer(null);
 			
-			player.sendMessage(GREEN + "The Gnome has been saved!");
+			//player.sendMessage(GREEN + "The Gnome has been saved!");
+			win();
 		} else {
 			player.sendMessage(YELLOW + "The mighty Gnome Socket demands the Gnome!");
 		}

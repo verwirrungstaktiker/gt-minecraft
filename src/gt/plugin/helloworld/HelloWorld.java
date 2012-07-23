@@ -13,6 +13,7 @@ import gt.plugin.meta.MultiListener;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
 
@@ -64,6 +65,17 @@ public class HelloWorld extends JavaPlugin {
 		getCommand("team").setExecutor(new TeamCommandExecutor(teamManager));
 		getCommand("gg").setExecutor(new StartGameCommandExecutor(teamManager, gameManager));
 		
+		getCommand("fly").setExecutor(new CommandExecutor() {
+			@Override
+			public boolean onCommand(final CommandSender arg0, final Command arg1, final String arg2, final String[] arg3) {
+				if (arg0 instanceof Player) {
+					((Player) arg0).setAllowFlight(true);
+					return true;
+				}
+				return false;
+			}
+		});		
+		
 		getCommand("end").setExecutor(new CommandExecutor() {
 			@Override
 			public boolean onCommand(final CommandSender arg0, final Command arg1, final String arg2, final String[] arg3) {
@@ -72,5 +84,8 @@ public class HelloWorld extends JavaPlugin {
 				return true;
 			}
 		});
+		
+
+
 	}
 }

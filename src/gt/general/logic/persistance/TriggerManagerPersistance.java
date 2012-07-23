@@ -152,7 +152,7 @@ public class TriggerManagerPersistance {
 					tc.addResponse((Response) loadSerializable(responseLabel, responseMap));
 				} catch (ClassCastException e) {
 					throw new RuntimeErrorException(null,"Error loading field '"+responseMap.getLastKey()
-							+"' in Response "+responseLabel+" in Context "+contextLabel+": Wrong Type");
+							+"' in Response "+responseLabel+" in Context "+contextLabel+": Wrong Type ("+ e.getMessage() +")");
 				} catch (PersistanceException e) {
 					throw new RuntimeErrorException(null, "Error loading field '"+e.getKey()+"' in Response "
 							+responseLabel+" in Context "+contextLabel+": field is null or missing");					

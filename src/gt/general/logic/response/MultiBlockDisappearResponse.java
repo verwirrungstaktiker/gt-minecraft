@@ -21,8 +21,8 @@ public class MultiBlockDisappearResponse extends Response {
 	private static final String KEY_LOC_MIN = "min";
 	private static final String KEY_LOC_MAX = "max";
 	private Material material;
-	private Location min;
-	private Location max;
+	private Block min;
+	private Block max;
 	
 	public MultiBlockDisappearResponse() {
 		super();
@@ -66,8 +66,8 @@ public class MultiBlockDisappearResponse extends Response {
 			z2 = temp;
 		}
 		
-		min = new Location(loc1.getWorld(), x1, y1, z1);
-		max = new Location(loc1.getWorld(), x2, y2, z2);
+		min = loc1.getWorld().getBlockAt(x1, y1, z1);
+		max = loc1.getWorld().getBlockAt(x2, y2, z2);
 	}
 
 	@Override
@@ -109,9 +109,9 @@ public class MultiBlockDisappearResponse extends Response {
 	}
 
 	public void loadBlocks(final World world) {
-		for (int x=min.getBlockX();x<=max.getBlockX();x++) {
-			for (int y=min.getBlockY();y<=max.getBlockY();y++) {
-				for (int z=min.getBlockZ();z<=max.getBlockZ();z++) {
+		for (int x=min.getX();x<=max.getX();x++) {
+			for (int y=min.getY();y<=max.getY();y++) {
+				for (int z=min.getZ();z<=max.getZ();z++) {
 					Block block = world.getBlockAt(x, y, z);
 					blocks.add(block);					
 				}				
@@ -126,8 +126,8 @@ public class MultiBlockDisappearResponse extends Response {
 		inverted = values.get(KEY_INVERTED);
 		material = values.get(KEY_MATERIAL);
 		
-		min = values.getLocation(KEY_LOC_MIN, world);
-		max = values.getLocation(KEY_LOC_MAX, world);
+		min = values.getBlock(KEY_LOC_MIN, world);
+		max = values.getBlock(KEY_LOC_MAX, world);
 		
 		blocks = new HashSet<Block>();
 		
