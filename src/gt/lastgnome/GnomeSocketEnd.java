@@ -6,8 +6,6 @@ import gt.general.world.WorldUniqueBlock;
 import gt.lastgnome.game.AbstractLastGnomeGame;
 import gt.plugin.meta.CustomBlockType;
 
-import org.bukkit.entity.Player;
-
 /**
  * Item-class for GnomeSocket
  */
@@ -31,9 +29,8 @@ public class GnomeSocketEnd extends WorldUniqueBlock {
 	public void onBlockEvent(final BlockEvent blockEvent) {
 		super.onBlockEvent(blockEvent);
 
-		if (blockEvent.blockEventType == BlockEventType.BLOCK_INTERACT
-				&& blockEvent.entity instanceof Player) {
-			game.onEndSocketInteract((Player) blockEvent.entity);
+		if (blockEvent.blockEventType == BlockEventType.BLOCK_INTERACT) {
+			game.onEndSocketInteract(blockEvent.player);
 		}
 
 	}
