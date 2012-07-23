@@ -30,7 +30,7 @@ public class LeverRedstoneTrigger extends RedstoneTrigger implements Listener {
 	 * @param against against which block the player placed the trigger
 	 */
 	public LeverRedstoneTrigger(final Block trigger, final Block against) {
-		super("lever_trigger_", trigger);
+		super("lever_trigger", trigger);
 		
 		orientation = against.getFace(trigger);
 		
