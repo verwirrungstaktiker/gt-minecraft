@@ -10,6 +10,7 @@ import gt.general.logic.response.RedstoneTorchResponse;
 import gt.general.logic.response.Response;
 import gt.general.logic.response.SignResponse;
 import gt.general.logic.trigger.ButtonRedstoneTrigger;
+import gt.general.logic.trigger.GnomeTrigger;
 import gt.general.logic.trigger.LeverRedstoneTrigger;
 import gt.general.logic.trigger.PressurePlateRedstoneTrigger;
 import gt.general.logic.trigger.QuestionTrigger;
@@ -76,6 +77,9 @@ public class BuildManager implements Listener {
 				case QUESTION_BLOCK:
 					newTrigger = new QuestionTrigger(block);
 					break;
+                case GNOME_TRIGGER_NEGATIVE:
+                    newTrigger = new GnomeTrigger(block);
+                    break;
 
 				default:
 					// fail feedback
