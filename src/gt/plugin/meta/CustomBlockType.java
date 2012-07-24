@@ -109,6 +109,16 @@ public enum CustomBlockType {
 					"http://img27.imageshack.us/img27/4669/spawnpv.png", 16);
 
 		}
+	}),
+	
+	/** spawns players */
+	ZOMBIESPAWN_BLOCK(new CustomBlockInstatiator() {
+		@Override
+		public ObservableCustomBlock instantiate() {
+			return new ObservableCustomBlock("zombiespawn",
+					"http://img27.imageshack.us/img27/4669/spawnpv.png", 16);
+
+		}
 	});
 
 	private final CustomBlockInstatiator instatiator;

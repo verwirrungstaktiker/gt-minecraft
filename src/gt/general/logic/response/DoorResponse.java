@@ -53,14 +53,15 @@ public class DoorResponse extends Response {
 
 		lowerBlock.setType(material);
 		upperBlock.setType(material);
-		//NOTE: the order is important here: upper -> lower
-		Door upperDoor = (Door) upperBlock.getState().getData();
-		upperDoor.setTopHalf(true);
-		upperBlock.setData(upperDoor.getData());
 
-		Door lowerDoor = (Door) lowerBlock.getState().getData();
-		lowerDoor.setFacingDirection(orientation);
-		lowerBlock.setData(lowerDoor.getData());
+		Door door = new Door(material);
+
+		
+		door.setTopHalf(true);
+		upperBlock.setData(door.getData(),true);
+		door.setTopHalf(false);
+		door.setFacingDirection(orientation);		
+		lowerBlock.setData(door.getData(),true);
 	}
 	
 	@Override
@@ -78,7 +79,6 @@ public class DoorResponse extends Response {
 	@Override
 	public PersistanceMap dump() {
 		PersistanceMap map = new PersistanceMap();
-		
 		map.put(KEY_LOCATION, lowerBlock);
 		map.put(KEY_MATERIAL, material);
 		

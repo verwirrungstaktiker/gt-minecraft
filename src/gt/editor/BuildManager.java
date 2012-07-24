@@ -9,6 +9,7 @@ import gt.general.logic.response.DoorResponse;
 import gt.general.logic.response.RedstoneTorchResponse;
 import gt.general.logic.response.Response;
 import gt.general.logic.response.SignResponse;
+import gt.general.logic.response.ZombieSpawnResponse;
 import gt.general.logic.trigger.ButtonRedstoneTrigger;
 import gt.general.logic.trigger.GnomeTrigger;
 import gt.general.logic.trigger.LeverRedstoneTrigger;
@@ -129,30 +130,55 @@ public class BuildManager implements Listener {
 		
 		Response newResponse = null;
 		
-		switch(block.getType()) {
-			case WOOD_DOOR:
-			case WOODEN_DOOR:
-			case IRON_DOOR:
-			case IRON_DOOR_BLOCK:
-				newResponse = new DoorResponse(block);
-				break;
-			case DIAMOND_BLOCK:
-			case IRON_FENCE:
-				newResponse = new BlockDisappearResponse(block);
-				break;
-			case REDSTONE_LAMP_OFF:
-			case REDSTONE_TORCH_ON:
-				newResponse = new RedstoneTorchResponse(block, event.getBlockAgainst());
-				break;
-			case WALL_SIGN:
-			case SIGN_POST:
-				newResponse = new SignResponse(block);
-				break;
-			default:
-				// fail feedback
-				player.sendMessage(RED + "This Block can't be used as Response.");
-				System.out.println("This Block can't be used as Response. --> " + block.getType());
-				return;
+		if(block instanceof SpoutCraftBlock) {
+			SpoutCraftBlock sBlock = (SpoutCraftBlock) block;
+			// custom blocks
+			if(sBlock.getCustomBlock() instanceof ObservableCustomBlock) {
+				ObservableCustomBlock oBlock = (ObservableCustomBlock) sBlock.getCustomBlock();
+
+				switch (oBlock.getCustomBlockType()) {
+				case ZOMBIESPAWN_BLOCK:
+					newResponse = new ZombieSpawnResponse(null,block.getLocation(),1);
+					event.setCancelled(true);
+					break;
+
+				default:
+					// fail feedback
+					player.sendMessage(RED + "This CustomBlock can't be used as Trigger.");
+					System.out.println("This CustomBlock can't be used as Trigger. --> " + sBlock.getName());
+					return;
+				}
+			//	vanilla minecraft block
+			} else {
+				switch(block.getType()) {
+				case WOOD_DOOR:
+				case WOODEN_DOOR:
+				case IRON_DOOR:
+				case IRON_DOOR_BLOCK:
+					newResponse = new DoorResponse(block);
+					break;
+				case DIAMOND_BLOCK:
+				case IRON_FENCE:
+					newResponse = new BlockDisappearResponse(block);
+					break;
+				case REDSTONE_LAMP_OFF:
+				case REDSTONE_TORCH_ON:
+					newResponse = new RedstoneTorchResponse(block, event.getBlockAgainst());
+					break;
+				case WALL_SIGN:
+				case SIGN_POST:
+					newResponse = new SignResponse(block);
+					break;
+				default:
+					// fail feedback
+					player.sendMessage(RED + "This Block can't be used as Response.");
+					System.out.println("This Block can't be used as Response. --> " + block.getType());
+					return;
+				}	
+			}	
+			
+			
+
 		}
 		
 		// success message

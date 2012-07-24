@@ -5,6 +5,7 @@ import gt.general.character.Team;
 import gt.general.character.ZombieManager;
 import gt.lastgnome.GnomeSocketEnd;
 import gt.lastgnome.GnomeSocketStart;
+import gt.plugin.meta.MultiListener;
 
 import org.bukkit.entity.Player;
 
@@ -80,5 +81,7 @@ public abstract class AbstractLastGnomeGame extends Game{
 	public void dispose() {
 		startSocket.dispose();
 		endSocket.dispose();
+		MultiListener.unregisterListener(this);
+		MultiListener.unregisterListener(this.zombieManager);
 	}
 }

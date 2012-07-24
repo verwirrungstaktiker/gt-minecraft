@@ -28,7 +28,7 @@ public class ZombieSpawnResponse extends Response{
 	 * Empty constructor for Serializable
 	 */
 	public ZombieSpawnResponse() {
-		super();
+		super("zombie");
 		this.speed = 1.0;
 	}
 	
@@ -39,6 +39,7 @@ public class ZombieSpawnResponse extends Response{
 	 * @param number Number of Zombies to spawn
 	 */
 	public ZombieSpawnResponse(final ZombieManager zm, final Location spawnLocation, final int number) {
+		super("zombie");
 		this.zm = zm;
 		this.spawnLocation = spawnLocation;
 		this.number = number;
@@ -53,6 +54,7 @@ public class ZombieSpawnResponse extends Response{
 	 * @param speed Speed of the spawned Zombies
 	 */
 	public ZombieSpawnResponse(final ZombieManager zm, final Location spawnLocation, final int number, final double speed) {
+		super("zombie");
 		this.zm = zm;
 		this.spawnLocation = spawnLocation;
 		this.number = number;
@@ -70,7 +72,7 @@ public class ZombieSpawnResponse extends Response{
 	@Override
 	public void dispose() {
 		//Nothing to do, maybe clearing Zombies?
-		zm.clearZombies();
+		//zm.clearZombies();
 	}
 	@Override
 	public PersistanceMap dump() {
@@ -83,7 +85,9 @@ public class ZombieSpawnResponse extends Response{
 	}
 	@Override
 	public Set<Block> getBlocks() {
-		return new HashSet<Block>();
+		Set<Block> blocks = new HashSet<Block>();
+		blocks.add(spawnLocation.getBlock());
+		return blocks;
 	}
 	
 	/**
@@ -95,7 +99,7 @@ public class ZombieSpawnResponse extends Response{
 
 	@Override
 	public void setup(final PersistanceMap values, final World world) throws PersistanceException {
-		number = values.get(KEY_LOCATION);
+		number = values.get(KEY_NUMBER);
 		speed = values.get(KEY_SPEED);
 		
 		spawnLocation = values.getLocation(KEY_LOCATION, world);		
