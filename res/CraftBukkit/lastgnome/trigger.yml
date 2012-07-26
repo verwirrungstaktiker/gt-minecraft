@@ -3,72 +3,91 @@ global-contexts:
     triggers:
     - question_1688344166
     responses:
-    - math_riddle2_sign_3
-    - math_riddle2_sign_2
     - math_riddle2_sign_1
-    - door_648031220
-    - door_1101123367
     - math_riddle2_sign_6
-    - math_riddle2_sign_4
-    - hallway2_room3_lower_door
     - math_riddle2_sign_5
+    - door_1101123367
+    - math_riddle2_sign_4
+    - math_riddle2_sign_2
+    - door_648031220
+    - math_riddle2_sign_3
+    - hallway2_room3_lower_door
     input-function: AND
-  hallway1_room2:
+  hallway2_room2:
     triggers:
-    - lever_trigger__1515958984
-    - lever_trigger__281841656
-    - lever_trigger__1092378310
-    - lever_trigger__1441222539
-    - lever_trigger__1975801865
-    - lever_trigger__79128628
-    - lever_trigger__1386215844
-    - lever_trigger__2129905595
-    - lever_trigger__566374063
+    - dark_green_lever
+    - yellow_lever
+    - purple_lever
+    - red_lever
+    - blue_lever
+    - light_green_lever
+    - white_lever
+    - pink_lever
+    - orange_lever
+    - light_blue_lever
+    - black_lever
+    - light_grey_lever
     responses:
-    - door_650984921
-    - door_1821869429
-    - hallway1_room2_lower_door
+    - hallway2_room2_lower_door
     input-function: AND
   hallway2_room1:
     triggers:
-    - lever_trigger__1432619885
+    - lever_trigger__610836886
     - lever_trigger__1088842431
     - lever_trigger__2020826099
-    - lever_trigger__610836886
     - lever_trigger__86438171
+    - lever_trigger__566231620
+    - lever_trigger__1432619885
     - lever_trigger__1934237210
     - lever_trigger__1922810118
-    - lever_trigger__566231620
     responses:
     - door_1693154382
     - door_1981734815
     - hallway2_room1_lower_door
     input-function: AND
+  hallway1_room2:
+    triggers:
+    - lever_trigger__281841656
+    - lever_trigger__1092378310
+    - lever_trigger__1441222539
+    - lever_trigger__1386215844
+    - lever_trigger__1975801865
+    - lever_trigger__566374063
+    - lever_trigger__79128628
+    - lever_trigger__1515958984
+    - lever_trigger__2129905595
+    responses:
+    - hallway1_room2_lower_door
+    - door_1821869429
+    - door_650984921
+    input-function: AND
   hallway1_room1:
     triggers:
     - lever_trigger__1921056283
+    - lever_trigger__518397316
     - lever_trigger__1055747558
+    - lever_trigger__2107154878
     - lever_trigger__975464519
     - lever_trigger__150167171
     - lever_trigger__1991153945
-    - lever_trigger__2107154878
-    - lever_trigger__518397316
     responses:
-    - door_51177620
     - door_1235557305
+    - door_51177620
     - hallway1_room1_lower_door
+    - hallway1_zombie_door
+    - zombie_1327258760
     input-function: AND
   hallway1_room3_math_riddle:
     triggers:
     - question_1576281247
     responses:
-    - math_riddle1_sign_3
-    - math_riddle1_sign_4
     - door_146892593
-    - hallway1_room3_lower_door
-    - door_1670386535
-    - math_riddle1_sign_1
     - math_riddle1_sign_2
+    - math_riddle1_sign_1
+    - door_1670386535
+    - math_riddle1_sign_4
+    - hallway1_room3_lower_door
+    - math_riddle1_sign_3
     input-function: AND
 global-triggers:
   lever_trigger__1441222539:
@@ -78,10 +97,12 @@ global-triggers:
       z: 19
       y: 66
       x: 28
-    signals:
-      - {x: 31, y: 69, z: 32}
-    inverted: false
+    inverted: true
     material: !!org.bukkit.Material 'LEVER'
+    signals:
+    - z: 32
+      y: 69
+      x: 31
   lever_trigger__1055747558:
     orientation: !!org.bukkit.block.BlockFace 'EAST'
     class: gt.general.logic.trigger.LeverRedstoneTrigger
@@ -98,10 +119,12 @@ global-triggers:
       z: 11
       y: 66
       x: 25
-    signals:
-      - {x: 20, y: 69, z: -2}
-    inverted: false
+    inverted: true
     material: !!org.bukkit.Material 'LEVER'
+    signals:
+    - z: -2
+      y: 69
+      x: 20
   lever_trigger__566374063:
     orientation: !!org.bukkit.block.BlockFace 'WEST'
     class: gt.general.logic.trigger.RandomLeverTrigger
@@ -109,11 +132,15 @@ global-triggers:
       z: 11
       y: 66
       x: 23
-    signals:
-      - {x: 16, y: 69, z: -5}
-      - {x: 17, y: 69, z: -5}
-    inverted: false
+    inverted: true
     material: !!org.bukkit.Material 'LEVER'
+    signals:
+    - z: -5
+      y: 69
+      x: 16
+    - z: -5
+      y: 69
+      x: 17
   lever_trigger__1432619885:
     orientation: !!org.bukkit.block.BlockFace 'EAST'
     class: gt.general.logic.trigger.LeverRedstoneTrigger
@@ -139,10 +166,12 @@ global-triggers:
       z: 11
       y: 66
       x: 28
-    signals:
-      - {x: 25, y: 69, z: -2}
     inverted: false
     material: !!org.bukkit.Material 'LEVER'
+    signals:
+    - z: -2
+      y: 69
+      x: 25
   lever_trigger__518397316:
     orientation: !!org.bukkit.block.BlockFace 'EAST'
     class: gt.general.logic.trigger.LeverRedstoneTrigger
@@ -195,10 +224,12 @@ global-triggers:
       z: 11
       y: 66
       x: 21
-    signals:
-      - {x: 13, y: 69, z: -2}
     inverted: false
     material: !!org.bukkit.Material 'LEVER'
+    signals:
+    - z: -2
+      y: 69
+      x: 13
   lever_trigger__86438171:
     orientation: !!org.bukkit.block.BlockFace 'SOUTH'
     class: gt.general.logic.trigger.LeverRedstoneTrigger
@@ -251,11 +282,15 @@ global-triggers:
       z: 11
       y: 66
       x: 30
-    signals:
-      - {x: 28, y: 69, z: -5}
-      - {x: 29, y: 69, z: -5}
-    inverted: false
+    inverted: true
     material: !!org.bukkit.Material 'LEVER'
+    signals:
+    - z: -5
+      y: 69
+      x: 28
+    - z: -5
+      y: 69
+      x: 29
   lever_trigger__1991153945:
     orientation: !!org.bukkit.block.BlockFace 'NORTH'
     class: gt.general.logic.trigger.LeverRedstoneTrigger
@@ -272,10 +307,12 @@ global-triggers:
       z: 19
       y: 66
       x: 32
-    signals:
-      - {x: 38, y: 69, z: 32}
     inverted: false
     material: !!org.bukkit.Material 'LEVER'
+    signals:
+    - z: 32
+      y: 69
+      x: 38
   lever_trigger__1934237210:
     orientation: !!org.bukkit.block.BlockFace 'WEST'
     class: gt.general.logic.trigger.LeverRedstoneTrigger
@@ -292,10 +329,12 @@ global-triggers:
       z: 11
       y: 66
       x: 32
-    signals:
-      - {x: 32, y: 69, z: -2}
     inverted: false
     material: !!org.bukkit.Material 'LEVER'
+    signals:
+    - z: -2
+      y: 69
+      x: 32
   lever_trigger__1515958984:
     orientation: !!org.bukkit.block.BlockFace 'EAST'
     class: gt.general.logic.trigger.RandomLeverTrigger
@@ -303,9 +342,22 @@ global-triggers:
       z: 19
       y: 66
       x: 30
+    inverted: false
+    material: !!org.bukkit.Material 'LEVER'
     signals:
-      - {x: 34, y: 69, z: 35}
-      - {x: 35, y: 69, z: 35}
+    - z: 35
+      y: 69
+      x: 34
+    - z: 35
+      y: 69
+      x: 35
+  lever_trigger__2020826099:
+    orientation: !!org.bukkit.block.BlockFace 'WEST'
+    class: gt.general.logic.trigger.LeverRedstoneTrigger
+    block:
+      z: -37
+      y: 71
+      x: 82
     inverted: false
     material: !!org.bukkit.Material 'LEVER'
   lever_trigger__610836886:
@@ -317,15 +369,174 @@ global-triggers:
       x: 70
     inverted: false
     material: !!org.bukkit.Material 'LEVER'
-  lever_trigger__2020826099:
-    orientation: !!org.bukkit.block.BlockFace 'WEST'
-    class: gt.general.logic.trigger.LeverRedstoneTrigger
+  dark_green_lever:
+    orientation: !!org.bukkit.block.BlockFace 'SOUTH'
+    class: gt.general.logic.trigger.RandomLeverTrigger
     block:
-      z: -37
-      y: 71
-      x: 82
+      z: -64
+      y: 66
+      x: 34
     inverted: false
     material: !!org.bukkit.Material 'LEVER'
+    signals:
+    - z: -73
+      y: 69
+      x: 55
+  yellow_lever:
+    orientation: !!org.bukkit.block.BlockFace 'SOUTH'
+    class: gt.general.logic.trigger.RandomLeverTrigger
+    block:
+      z: -66
+      y: 66
+      x: 34
+    inverted: false
+    material: !!org.bukkit.Material 'LEVER'
+    signals:
+    - z: -67
+      y: 69
+      x: 21
+  purple_lever:
+    orientation: !!org.bukkit.block.BlockFace 'SOUTH'
+    class: gt.general.logic.trigger.RandomLeverTrigger
+    block:
+      z: -68
+      y: 66
+      x: 34
+    inverted: false
+    material: !!org.bukkit.Material 'LEVER'
+    signals:
+    - z: -43
+      y: 69
+      x: 21
+  red_lever:
+    orientation: !!org.bukkit.block.BlockFace 'SOUTH'
+    class: gt.general.logic.trigger.RandomLeverTrigger
+    block:
+      z: -70
+      y: 66
+      x: 34
+    inverted: false
+    material: !!org.bukkit.Material 'LEVER'
+    signals:
+    - z: -71
+      y: 69
+      x: 18
+    - z: -70
+      y: 69
+      x: 18
+  blue_lever:
+    orientation: !!org.bukkit.block.BlockFace 'SOUTH'
+    class: gt.general.logic.trigger.RandomLeverTrigger
+    block:
+      z: -72
+      y: 66
+      x: 34
+    inverted: false
+    material: !!org.bukkit.Material 'LEVER'
+    signals:
+    - z: -46
+      y: 69
+      x: 18
+    - z: -47
+      y: 69
+      x: 18
+  light_green_lever:
+    orientation: !!org.bukkit.block.BlockFace 'SOUTH'
+    class: gt.general.logic.trigger.RandomLeverTrigger
+    block:
+      z: -74
+      y: 66
+      x: 34
+    inverted: false
+    material: !!org.bukkit.Material 'LEVER'
+    signals:
+    - z: -62
+      y: 69
+      x: 21
+  white_lever:
+    orientation: !!org.bukkit.block.BlockFace 'NORTH'
+    class: gt.general.logic.trigger.RandomLeverTrigger
+    block:
+      z: -64
+      y: 66
+      x: 43
+    inverted: false
+    material: !!org.bukkit.Material 'LEVER'
+    signals:
+    - z: -58
+      y: 69
+      x: 18
+    - z: -59
+      y: 69
+      x: 18
+  pink_lever:
+    orientation: !!org.bukkit.block.BlockFace 'NORTH'
+    class: gt.general.logic.trigger.RandomLeverTrigger
+    block:
+      z: -66
+      y: 66
+      x: 43
+    inverted: false
+    material: !!org.bukkit.Material 'LEVER'
+    signals:
+    - z: -76
+      y: 69
+      x: 58
+    - z: -77
+      y: 69
+      x: 58
+  orange_lever:
+    orientation: !!org.bukkit.block.BlockFace 'NORTH'
+    class: gt.general.logic.trigger.RandomLeverTrigger
+    block:
+      z: -68
+      y: 66
+      x: 43
+    inverted: false
+    material: !!org.bukkit.Material 'LEVER'
+    signals:
+    - z: -50
+      y: 69
+      x: 21
+  light_blue_lever:
+    orientation: !!org.bukkit.block.BlockFace 'NORTH'
+    class: gt.general.logic.trigger.RandomLeverTrigger
+    block:
+      z: -70
+      y: 66
+      x: 43
+    inverted: false
+    material: !!org.bukkit.Material 'LEVER'
+    signals:
+    - z: -74
+      y: 69
+      x: 21
+  black_lever:
+    orientation: !!org.bukkit.block.BlockFace 'NORTH'
+    class: gt.general.logic.trigger.RandomLeverTrigger
+    block:
+      z: -72
+      y: 66
+      x: 43
+    inverted: false
+    material: !!org.bukkit.Material 'LEVER'
+    signals:
+    - z: -55
+      y: 69
+      x: 21
+  light_grey_lever:
+    orientation: !!org.bukkit.block.BlockFace 'NORTH'
+    class: gt.general.logic.trigger.RandomLeverTrigger
+    block:
+      z: -74
+      y: 66
+      x: 43
+    inverted: false
+    material: !!org.bukkit.Material 'LEVER'
+    signals:
+    - z: -80
+      y: 69
+      x: 55
 global-responses:
   hallway1_room3_lower_door:
     min:
@@ -336,43 +547,6 @@ global-responses:
       z: 17
       y: 68
       x: 64
-    class: gt.general.logic.response.MultiBlockDisappearResponse
-    inverted: false
-    material: !!org.bukkit.Material 'IRON_FENCE'
-
-  hallway1_room1_lower_door:
-    min:
-      z: 13
-      y: 65
-      x: 4
-    max:
-      z: 17
-      y: 68
-      x: 4
-    class: gt.general.logic.response.MultiBlockDisappearResponse
-    inverted: false
-    material: !!org.bukkit.Material 'IRON_FENCE'
-  hallway1_room2_lower_door:
-    min:
-      z: 13
-      y: 65
-      x: 34
-    max:
-      z: 17
-      y: 68
-      x: 34
-    class: gt.general.logic.response.MultiBlockDisappearResponse
-    inverted: false
-    material: !!org.bukkit.Material 'IRON_FENCE'
-  hallway2_room1_lower_door:
-    min:
-      z: -34
-      y: 65
-      x: 36
-    max:
-      z: -34
-      y: 68
-      x: 40
     class: gt.general.logic.response.MultiBlockDisappearResponse
     inverted: false
     material: !!org.bukkit.Material 'IRON_FENCE'
@@ -387,6 +561,18 @@ global-responses:
       x: 49
     class: gt.general.logic.response.SignResponse
     material: !!org.bukkit.Material 'WALL_SIGN'
+  hallway2_room1_lower_door:
+    min:
+      z: -34
+      y: 65
+      x: 36
+    max:
+      z: -34
+      y: 68
+      x: 40
+    class: gt.general.logic.response.MultiBlockDisappearResponse
+    inverted: false
+    material: !!org.bukkit.Material 'IRON_FENCE'
   math_riddle2_sign_5:
     orientation: !!org.bukkit.block.BlockFace 'NORTH'
     triggered_message: "\n triggered"
@@ -458,6 +644,42 @@ global-responses:
       x: 38
     class: gt.general.logic.response.DoorResponse
     material: !!org.bukkit.Material 'IRON_DOOR_BLOCK'
+  zombie_1327258760:
+    speed: 1.0
+    location:
+      z: 8.0
+      y: 65.0
+      x: -15.0
+    class: gt.general.logic.response.ZombieSpawnResponse
+    number: 10
+  appearable_block_628935471:
+    location:
+      z: 10
+      y: 65
+      x: -16
+    class: gt.general.logic.response.BlockDisappearResponse
+    inverted: false
+    material: !!org.bukkit.Material 'DIAMOND_BLOCK'
+  hallway1_room2_lower_door:
+    min:
+      z: 13
+      y: 65
+      x: 34
+    max:
+      z: 17
+      y: 68
+      x: 34
+    class: gt.general.logic.response.MultiBlockDisappearResponse
+    inverted: false
+    material: !!org.bukkit.Material 'IRON_FENCE'
+  appearable_block_603950563:
+    location:
+      z: 10
+      y: 67
+      x: -14
+    class: gt.general.logic.response.BlockDisappearResponse
+    inverted: false
+    material: !!org.bukkit.Material 'DIAMOND_BLOCK'
   door_51177620:
     orientation: !!org.bukkit.block.BlockFace 'NORTH'
     location:
@@ -478,20 +700,20 @@ global-responses:
     class: gt.general.logic.response.MultiBlockDisappearResponse
     inverted: false
     material: !!org.bukkit.Material 'IRON_FENCE'
-  door_1693154382:
-    orientation: !!org.bukkit.block.BlockFace 'WEST'
-    location:
-      z: -38
-      y: 70
-      x: 30
-    class: gt.general.logic.response.DoorResponse
-    material: !!org.bukkit.Material 'IRON_DOOR_BLOCK'
   door_1670386535:
     orientation: !!org.bukkit.block.BlockFace 'NORTH'
     location:
       z: 6
       y: 70
       x: 68
+    class: gt.general.logic.response.DoorResponse
+    material: !!org.bukkit.Material 'IRON_DOOR_BLOCK'
+  door_1693154382:
+    orientation: !!org.bukkit.block.BlockFace 'WEST'
+    location:
+      z: -38
+      y: 70
+      x: 30
     class: gt.general.logic.response.DoorResponse
     material: !!org.bukkit.Material 'IRON_DOOR_BLOCK'
   door_648031220:
@@ -502,6 +724,30 @@ global-responses:
       x: 26
     class: gt.general.logic.response.DoorResponse
     material: !!org.bukkit.Material 'IRON_DOOR_BLOCK'
+  hallway1_room1_lower_door:
+    min:
+      z: 13
+      y: 65
+      x: 4
+    max:
+      z: 17
+      y: 68
+      x: 4
+    class: gt.general.logic.response.MultiBlockDisappearResponse
+    inverted: false
+    material: !!org.bukkit.Material 'IRON_FENCE'
+  hallway1_zombie_door:
+    min:
+      z: 10
+      y: 65
+      x: -16
+    max:
+      z: 10
+      y: 67
+      x: -14
+    class: gt.general.logic.response.MultiBlockDisappearResponse
+    inverted: false
+    material: !!org.bukkit.Material 'NETHER_FENCE'
   math_riddle1_sign_1:
     orientation: !!org.bukkit.block.BlockFace 'EAST'
     triggered_message: "\n triggered"
@@ -578,3 +824,15 @@ global-responses:
       x: 8
     class: gt.general.logic.response.DoorResponse
     material: !!org.bukkit.Material 'IRON_DOOR_BLOCK'
+  hallway2_room2_lower_door:
+    min:
+      z: -83
+      y: 65
+      x: 36
+    max:
+      z: -83
+      y: 68
+      x: 40
+    class: gt.general.logic.response.MultiBlockDisappearResponse
+    inverted: false
+    material: !!org.bukkit.Material 'IRON_FENCE'

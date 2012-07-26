@@ -36,6 +36,7 @@ public class PersistanceMap {
 	/**
 	 * creates a new PersistanceMap
 	 * @param map usual Map that shall be integrated
+	 * @throws PersistanceNotFoundException 
 	 */
 	public PersistanceMap(final Map<String, Object> map) {
 		this.map = map;
@@ -47,9 +48,6 @@ public class PersistanceMap {
 	 */
 	public int getInt(final String key) {
 		Integer result = (Integer)map.get(key);
-		if (result == null) {
-			
-		}
 		return result.intValue();
 	}
 	
@@ -89,8 +87,7 @@ public class PersistanceMap {
 		lastKey = key;
 		
 		T result = (T) map.get(key);
-		
-		
+	
 		if (result == null) {
 			throw new PersistanceException(key);
 		}
@@ -174,9 +171,6 @@ public class PersistanceMap {
 	 * @param value the Object that is saved
 	 */
 	public void put(final String key, final Object value) {
-		if (value == null) {
-			//TODO throw Exception
-		}
 		map.put(key, value);
 	}
 
@@ -185,10 +179,7 @@ public class PersistanceMap {
 	 * @param key name of the corresponding field
 	 * @param block the Block that is saved
 	 */
-	public void put(final String key, final Block block) {
-		if (block == null) {
-			//TODO throw Exception
-		}		
+	public void put(final String key, final Block block) {	
 		map.put(key, coordsFromBlock(block));
 		
 	}
@@ -243,6 +234,7 @@ public class PersistanceMap {
 	 * @param key name of the field that shall be deleted
 	 * @param <T> type of the Object that is deleted
 	 * @return the removed Object
+	 * @throws PersistanceException 
 	 */
 	@SuppressWarnings("unchecked")
 	public <T> T remove(final String key) {

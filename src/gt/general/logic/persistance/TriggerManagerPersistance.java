@@ -106,14 +106,14 @@ public class TriggerManagerPersistance {
 		
 			for(String triggerLabel : (List<String>) contextMap.get(KEY_TRIGGERS)) {
 				
+				Map<String, Object> map =(Map<String, Object>) globalResponses.get(triggerLabel);
 				
-				PersistanceMap triggerMap = new PersistanceMap(
-						(Map<String, Object>) globalTriggers.get(triggerLabel));
-				
-				if (triggerMap == null) {
+				if (map == null) {
 					throw new RuntimeErrorException(null,"Error loading Trigger "
-							+triggerLabel+" in Context "+contextLabel+": trigger is missing");					
+							+triggerLabel+" in Context "+contextLabel+": Trigger cannot be found");					
 				}
+				
+				PersistanceMap triggerMap = new PersistanceMap(map);
 				
 				Trigger t = null;
 				try {
@@ -140,13 +140,14 @@ public class TriggerManagerPersistance {
 			}
 			
 			for(String responseLabel : (List<String>) contextMap.get(KEY_RESPONSES)) {
-				PersistanceMap responseMap = new PersistanceMap(
-						(Map<String, Object>) globalResponses.get(responseLabel));
-
-				if (responseMap == null) {
+				Map<String, Object> map =(Map<String, Object>) globalResponses.get(responseLabel);
+				
+				if (map == null) {
 					throw new RuntimeErrorException(null,"Error loading Response "
-							+responseLabel+" in Context "+contextLabel+": Response is missing");					
+							+responseLabel+" in Context "+contextLabel+": Response cannot be found");					
 				}
+				
+				PersistanceMap responseMap = new PersistanceMap(map);
 				
 				try {
 					tc.addResponse((Response) loadSerializable(responseLabel, responseMap));

@@ -57,6 +57,8 @@ public class LastGnomeGameBuilder extends AbstractLastGnomeGameBuilder {
 		int id = Hello.scheduleSyncTask(zombieManager, 0, 10);
 		zombieManager.setTaskID(id);
 		
+		MultiListener.registerListener(zombieManager);
+		
 		//TODO Its a bit Hacky
 		for (TriggerContext tc : triggerManager.getTriggerContexts()) {
 			for (Response response : tc.getResponses()) {
