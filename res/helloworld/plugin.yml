@@ -9,6 +9,8 @@ commands:
     description: Ends the Last Gnome Game.
   team:
     description: manages the team TODO
+  fly:
+    description: allows the player to fly
   prompt:
     description: shows the prompt
   
