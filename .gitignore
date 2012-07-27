@@ -17,3 +17,4 @@ res/texture/*
 !res/CraftBukkit/lastgnome/
 !res/CraftBukkit/lastgnome/*
 !res/CraftBukkit/lastgnome/**/*
+!res/CraftBukkit/craftbukkit*
