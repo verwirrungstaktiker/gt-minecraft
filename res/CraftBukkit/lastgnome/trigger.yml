@@ -414,7 +414,6 @@ global-triggers:
       z: -70
       y: 66
       x: 34
-<<<<<<< HEAD
     inverted: false
     material: !!org.bukkit.Material 'LEVER'
     signals:
@@ -534,127 +533,6 @@ global-triggers:
     inverted: false
     material: !!org.bukkit.Material 'LEVER'
     signals:
-=======
-    inverted: false
-    material: !!org.bukkit.Material 'LEVER'
-    signals:
-    - z: -71
-      y: 69
-      x: 18
-    - z: -70
-      y: 69
-      x: 18
-  blue_lever:
-    orientation: !!org.bukkit.block.BlockFace 'SOUTH'
-    class: gt.general.logic.trigger.RandomLeverTrigger
-    block:
-      z: -72
-      y: 66
-      x: 34
-    inverted: false
-    material: !!org.bukkit.Material 'LEVER'
-    signals:
-    - z: -46
-      y: 69
-      x: 18
-    - z: -47
-      y: 69
-      x: 18
-  light_green_lever:
-    orientation: !!org.bukkit.block.BlockFace 'SOUTH'
-    class: gt.general.logic.trigger.RandomLeverTrigger
-    block:
-      z: -74
-      y: 66
-      x: 34
-    inverted: false
-    material: !!org.bukkit.Material 'LEVER'
-    signals:
-    - z: -62
-      y: 69
-      x: 21
-  white_lever:
-    orientation: !!org.bukkit.block.BlockFace 'NORTH'
-    class: gt.general.logic.trigger.RandomLeverTrigger
-    block:
-      z: -64
-      y: 66
-      x: 43
-    inverted: false
-    material: !!org.bukkit.Material 'LEVER'
-    signals:
-    - z: -58
-      y: 69
-      x: 18
-    - z: -59
-      y: 69
-      x: 18
-  pink_lever:
-    orientation: !!org.bukkit.block.BlockFace 'NORTH'
-    class: gt.general.logic.trigger.RandomLeverTrigger
-    block:
-      z: -66
-      y: 66
-      x: 43
-    inverted: false
-    material: !!org.bukkit.Material 'LEVER'
-    signals:
-    - z: -76
-      y: 69
-      x: 58
-    - z: -77
-      y: 69
-      x: 58
-  orange_lever:
-    orientation: !!org.bukkit.block.BlockFace 'NORTH'
-    class: gt.general.logic.trigger.RandomLeverTrigger
-    block:
-      z: -68
-      y: 66
-      x: 43
-    inverted: false
-    material: !!org.bukkit.Material 'LEVER'
-    signals:
-    - z: -50
-      y: 69
-      x: 21
-  light_blue_lever:
-    orientation: !!org.bukkit.block.BlockFace 'NORTH'
-    class: gt.general.logic.trigger.RandomLeverTrigger
-    block:
-      z: -70
-      y: 66
-      x: 43
-    inverted: false
-    material: !!org.bukkit.Material 'LEVER'
-    signals:
-    - z: -74
-      y: 69
-      x: 21
-  black_lever:
-    orientation: !!org.bukkit.block.BlockFace 'NORTH'
-    class: gt.general.logic.trigger.RandomLeverTrigger
-    block:
-      z: -72
-      y: 66
-      x: 43
-    inverted: false
-    material: !!org.bukkit.Material 'LEVER'
-    signals:
-    - z: -55
-      y: 69
-      x: 21
-  light_grey_lever:
-    orientation: !!org.bukkit.block.BlockFace 'NORTH'
-    class: gt.general.logic.trigger.RandomLeverTrigger
-    block:
-      z: -74
-      y: 66
-      x: 43
-    inverted: false
-    material: !!org.bukkit.Material 'LEVER'
-    signals:
->>>>>>> origin/master
     - z: -80
       y: 69
       x: 55
@@ -765,17 +643,6 @@ global-responses:
       x: 38
     class: gt.general.logic.response.DoorResponse
     material: !!org.bukkit.Material 'IRON_DOOR_BLOCK'
-<<<<<<< HEAD
-  zombie_1327258760:
-    speed: 1.0
-    location:
-      z: 8.0
-      y: 65.0
-      x: -15.0
-    class: gt.general.logic.response.ZombieSpawnResponse
-    number: 10
-=======
->>>>>>> origin/master
   appearable_block_628935471:
     location:
       z: 10
