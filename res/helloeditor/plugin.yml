@@ -1,0 +1,15 @@
+name: HelloEditor
+main: gt.plugin.helloeditor.HelloEditor
+version: 0.1
+
+commands:
+  helpme:
+    description: Displays TriggerContext help
+  save:
+    description: saves the triggers
+  load:
+    description: reloads the metadata
+  teleport:
+    description: teleport the yourself to the editor level
+  blocks:
+    description: gives a basic set of custom blocks

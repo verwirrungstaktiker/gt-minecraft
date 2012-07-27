@@ -1,0 +1,9 @@
+1031:HelloEditor.question_block
+1028:HelloEditor.start_socket
+1030:HelloEditor.green_signal
+1024:HelloEditor.SpawnBlock
+1025:HelloEditor.Spawn
+1027:HelloEditor.end_socket
+1032:HelloEditor.invisibleBlock
+1029:HelloEditor.red_signal
+1026:HelloEditor.spawn
