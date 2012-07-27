@@ -15,9 +15,9 @@
 			<attribute name="javadoc_location" value="jar:platform:/resource/gt-minecraft/lib/snakeyaml-1.10-javadoc.jar!/"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="lib/bukkit-1.2.5-R4.0.jar"/>
-	<classpathentry kind="lib" path="lib/spoutplugin-dev-1212.jar"/>
 	<classpathentry kind="lib" path="lib/guava-12.0.jar"/>
-	<classpathentry kind="lib" path="res/CraftBukkit/craftbukkit-1.2.5-R4.0-#2222.jar"/>
+	<classpathentry kind="lib" path="lib/SpoutPlugin-1244.jar"/>
+	<classpathentry kind="lib" path="res/CraftBukkit/craftbukkit-1.2.5-R4.1-#2258.jar"/>
+	<classpathentry kind="lib" path="lib/bukkit-1.2.5-R4.1-1499.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

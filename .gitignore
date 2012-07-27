@@ -17,5 +17,3 @@ res/texture/*
 !res/CraftBukkit/lastgnome/
 !res/CraftBukkit/lastgnome/*
 !res/CraftBukkit/lastgnome/**/*
-lib/SpoutPlugin*
-lib/bukkit*
