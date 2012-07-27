@@ -2,8 +2,6 @@ package gt.editor;
 
 import static com.google.common.collect.Maps.*;
 import static org.bukkit.ChatColor.*;
-import gt.editor.event.LogicChangeEvent;
-import gt.editor.event.LogicChangeEvent.ObserveeType;
 import gt.general.logic.TriggerContext;
 import gt.general.logic.persistance.YamlSerializable;
 import gt.general.logic.response.Response;
@@ -12,7 +10,6 @@ import gt.general.logic.trigger.Trigger;
 import gt.plugin.meta.CustomBlockType;
 import java.util.Map;
 
-import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.Material;
 import org.bukkit.block.Block;

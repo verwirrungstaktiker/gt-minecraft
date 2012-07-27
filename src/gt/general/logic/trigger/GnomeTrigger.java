@@ -6,7 +6,6 @@ import gt.general.world.BlockObserver;
 import gt.general.world.ObservableCustomBlock;
 import gt.general.world.ObservableCustomBlock.BlockEvent;
 import gt.general.world.ObservableCustomBlock.BlockEventType;
-import gt.lastgnome.GnomeItem;
 import gt.plugin.meta.CustomBlockType;
 
 import java.util.HashSet;
@@ -17,9 +16,6 @@ import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.inventory.PlayerInventory;
-import org.getspout.spoutapi.inventory.SpoutPlayerInventory;
-
-import com.avaje.ebeaninternal.server.subclass.GetterSetterMethods;
 
 /**
  *  
