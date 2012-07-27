@@ -5,6 +5,7 @@ import static org.bukkit.ChatColor.*;
 import gt.editor.EditorPlayer.TriggerState;
 import gt.general.logic.TriggerContext;
 import gt.general.logic.persistance.YamlSerializable;
+import gt.plugin.meta.CustomBlockType;
 
 import java.util.Map;
 
@@ -35,7 +36,8 @@ public class PlayerManager implements Listener{
 			new ItemStack(Material.LEVER),
 			new ItemStack(Material.STONE_BUTTON),
 			new ItemStack(Material.WOOD_PLATE),
-			new ItemStack(Material.STONE_PLATE)
+			new ItemStack(Material.STONE_PLATE),
+			CustomBlockType.GNOME_TRIGGER_NEGATIVE.getItemStack()
 	};
 	
 	private static final ItemStack[] RESPONSE_BLOCKS = new ItemStack[]{

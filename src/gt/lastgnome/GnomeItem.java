@@ -28,8 +28,8 @@ public final class GnomeItem extends PortableItem {
 
 	private final ItemStack itemStack;
 
-	/** The ID that is replaced by this new item (flint). **/
-	public static final int RAWID = 318;
+	/** The ID that is replaced by this new item (diamond). **/
+	public static final int RAWID = 264;
 
 	/**
 	 * Creates a new Gnome.

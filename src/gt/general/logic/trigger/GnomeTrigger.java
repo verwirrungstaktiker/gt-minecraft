@@ -3,6 +3,7 @@ package gt.general.logic.trigger;
 import gt.general.logic.persistance.PersistanceMap;
 import gt.general.logic.persistance.exceptions.PersistanceException;
 import gt.general.world.BlockObserver;
+import gt.general.world.ObservableCustomBlock;
 import gt.general.world.ObservableCustomBlock.BlockEvent;
 import gt.general.world.ObservableCustomBlock.BlockEventType;
 import gt.plugin.meta.CustomBlockType;
@@ -10,9 +11,11 @@ import gt.plugin.meta.CustomBlockType;
 import java.util.HashSet;
 import java.util.Set;
 
+import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.block.Block;
+import org.bukkit.inventory.PlayerInventory;
 
 /**
  *  
@@ -36,7 +39,8 @@ public class GnomeTrigger extends Trigger implements BlockObserver{
 		this.triggered = false;
 		
 		CustomBlockType.GNOME_TRIGGER_NEGATIVE.place(block);
-		//register?
+
+		registerWithSubject();
 	}
 	
 	/** to be used in persistance*/
@@ -50,6 +54,8 @@ public class GnomeTrigger extends Trigger implements BlockObserver{
         triggered = false;
         
         CustomBlockType.GNOME_TRIGGER_NEGATIVE.place(block);
+        
+        registerWithSubject();
         
     }
 
@@ -65,7 +71,8 @@ public class GnomeTrigger extends Trigger implements BlockObserver{
     @Override
     public void dispose() {
         block.setType(Material.AIR);
-        //unregister?
+
+        unregisterFromSubject();
         
     }
 
@@ -76,18 +83,50 @@ public class GnomeTrigger extends Trigger implements BlockObserver{
         
         return blocks;
     }
+    
+	/**
+	 * registers this trigger
+	 */
+	private void registerWithSubject() {
+		ObservableCustomBlock triggerBlock = CustomBlockType.GNOME_TRIGGER_NEGATIVE.getCustomBlock();
+		triggerBlock.addObserver(this, block.getWorld());
+	}
+	
+	/**
+	 * unregisters this trigger
+	 */
+	private void unregisterFromSubject() {
+		ObservableCustomBlock triggerBlock = CustomBlockType.GNOME_TRIGGER_NEGATIVE.getCustomBlock();
+		triggerBlock.removeObserver(this, block.getWorld());
+	}
+
 
     @Override
     public void onBlockEvent(final BlockEvent blockEvent) {
-        if(blockEvent.blockEventType == BlockEventType.BLOCK_INTERACT)
-            triggered = !triggered;
-            
-            if(triggered) {
-                CustomBlockType.GNOME_TRIGGER_POSITIVE.place(block);
-            } else {
-                CustomBlockType.GNOME_TRIGGER_NEGATIVE.place(block);
-            }
-            
+    	// don't bother if the block is being destroyed
+    	if(blockEvent.blockEventType == BlockEventType.BLOCK_DESTROYED) {
+    		return;
+    	}
+
+        if(blockEvent.blockEventType == BlockEventType.BLOCK_INTERACT) { 
+	        PlayerInventory inv = blockEvent.player.getInventory();
+
+        	//TODO this is a temporary fix as the gnome is flint underneath, as all CustomItems!
+	        if(inv.getItemInHand().getType() == Material.FLINT) {
+	            triggered = !triggered;
+	            
+	            if(triggered) {
+	                CustomBlockType.GNOME_TRIGGER_POSITIVE.place(block);
+	                getContext().updateTriggerState(GnomeTrigger.this, true);
+	                
+	            } else {
+	                CustomBlockType.GNOME_TRIGGER_NEGATIVE.place(block);
+	                getContext().updateTriggerState(GnomeTrigger.this, true);
+	            }
+	        } else {
+	        	blockEvent.player.sendMessage(ChatColor.YELLOW + "You might need the gnome here");
+	        }
+        }
     }
 
 }
