@@ -1,7 +1,6 @@
 package gt.editor;
 
 import static org.bukkit.ChatColor.*;
-
 import gt.general.logic.TriggerContext;
 import gt.general.logic.response.BlockDisappearResponse;
 import gt.general.logic.response.DoorResponse;
@@ -18,7 +17,6 @@ import gt.general.logic.trigger.Trigger;
 import gt.general.world.ObservableCustomBlock;
 
 import org.bukkit.block.Block;
-import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockPlaceEvent;
@@ -42,9 +40,9 @@ public class BuildManager implements Listener {
 	 */
 	@EventHandler
 	public void onBlockPlaced(final BlockPlaceEvent event) {
-		String name = event.getPlayer().getName();
+		EditorPlayer p = playerManager.getEditorPlayer(event.getPlayer());
 		
-		switch(playerManager.getState(name)) {
+		switch(p.getTriggerState()) {
 			case TRIGGER: 
 				addTrigger(event);
 				break;
@@ -61,9 +59,9 @@ public class BuildManager implements Listener {
 	 * @param event the trigger(event) for the trigger to be placed
 	 */
 	private void addTrigger(final BlockPlaceEvent event) {
-		Player player = event.getPlayer();
+		EditorPlayer player = playerManager.getEditorPlayer(event.getPlayer());
 		Block block = event.getBlockPlaced();
-		TriggerContext activeContext = playerManager.getContext(player.getName());
+		TriggerContext activeContext = player.getActiveContext();
 		
 		Trigger newTrigger = null;
 		
@@ -113,7 +111,9 @@ public class BuildManager implements Listener {
 		}
 		
 		// success
-		playerManager.addTrigger(newTrigger, activeContext, player);
+		playerManager
+			.getTriggerManager()
+			.addTrigger(newTrigger, activeContext);
 		player.sendMessage(GREEN + "added Trigger: " + newTrigger.getLabel());
 	}
 
@@ -123,9 +123,10 @@ public class BuildManager implements Listener {
 	 * @param event the trigger(event) for the response to be placed
 	 */
 	private void addResponse(final BlockPlaceEvent event) {
-		Player player = event.getPlayer();
+		EditorPlayer player = playerManager.getEditorPlayer(event.getPlayer());
+		
 		Block block = event.getBlockPlaced();
-		TriggerContext activeContext = playerManager.getContext(player.getName());
+		TriggerContext activeContext = player.getActiveContext();
 		
 		Response newResponse = null;
 		
@@ -175,13 +176,12 @@ public class BuildManager implements Listener {
 					return;
 				}	
 			}	
-			
-			
-
 		}
 		
 		// success message
-		playerManager.addResponse(newResponse, activeContext, player);
+		playerManager
+			.getTriggerManager()
+			.addResponse(newResponse, activeContext);
 		player.sendMessage(GREEN + "added Response: " + newResponse.getLabel());
 	}
 }

@@ -2,16 +2,12 @@ package gt.editor;
 
 import static com.google.common.collect.Maps.*;
 import static org.bukkit.ChatColor.*;
-import gt.editor.event.LogicChangeEvent;
-import gt.editor.event.LogicChangeEvent.ObserveeType;
+import gt.editor.EditorPlayer.TriggerState;
 import gt.general.logic.TriggerContext;
 import gt.general.logic.persistance.YamlSerializable;
-import gt.general.logic.response.Response;
-import gt.general.logic.trigger.Trigger;
 
 import java.util.Map;
 
-import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -21,28 +17,17 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
-import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.getspout.spoutapi.event.input.KeyPressedEvent;
 import org.getspout.spoutapi.particle.Particle.ParticleType;
 
-public class PlayerManager implements Listener{
-	
-	public enum TriggerState {
-		IDLE,		// no triggercontext
-		TRIGGER,
-		RESPONSE,
-		STANDBY		// triggercontext but standby
-	}
-	
-	/** contains all player's current TriggerStates **/
-	private Map<String, TriggerState> playerTriggerStates = newHashMap();
-	/** contains all player's current TriggerContext's **/
-	private Map<String, TriggerContext> playerTriggerContexts = newHashMap();
+public class PlayerManager implements Listener{	
 
-	private EditorTriggerManager triggerManager;
+	private final Map<Player, EditorPlayer> players = newHashMap();
 	
+	private EditorTriggerManager triggerManager;
 	private ParticleManager particleManager;
+	
 	/** player inventories are saved here when they build TriggerContexts **/
 	private Map<String, ItemStack[]> playerInventories = newHashMap();
 		
@@ -77,7 +62,8 @@ public class PlayerManager implements Listener{
 	@EventHandler
 	public void onBlockDestroyed(final BlockBreakEvent event) {
 		
-		Player player = event.getPlayer();
+		EditorPlayer player = getEditorPlayer(event);
+
 		Block block = event.getBlock();
 		
 		if(triggerManager.isSerializable(block)) {
@@ -88,23 +74,22 @@ public class PlayerManager implements Listener{
 			String serLabel = serializable.getLabel();
 			String contextLabel = context.getLabel();
 		
-			switch(getState(player)) {
+			switch(player.getTriggerState()) {
 				case TRIGGER: 
 				case RESPONSE:
 				case STANDBY:
-					if(getContext(player) == context) {
+					if(player.isInContext(context)) {
 
-						particleManager.removeSerializable(serializable, player);
+						particleManager.removeSerializable(serializable, player.getPlayer());
 						triggerManager.deleteBlock(block);
 
 						player.sendMessage(YELLOW + "Deleted " + serLabel + " from " + contextLabel);
 					} else {
-						System.out.println("Other unfinished context.");
-						//other unfinished context
 						player.sendMessage(YELLOW + "Finish your open Context first.");
 						event.setCancelled(true);
 					}
 					break;
+					
 				case IDLE:
 					System.out.println("Switching to context.");
 					switchToContext(player, context);
@@ -116,42 +101,17 @@ public class PlayerManager implements Listener{
 	}
 
 
-	public void switchToContext(final Player player, final TriggerContext context) {
+	public void switchToContext(final EditorPlayer player, final TriggerContext context) {
 		
-		if(getContext(player) != null) {
-			exitContext(player);
+		if(player.getActiveContext() != null) {
+			player.exitContext();
 		}
-		
-		//goto corresponding context
-		playerTriggerContexts.put(player.getName(), context);
-		playerTriggerStates.put(player.getName(), TriggerState.TRIGGER);
-		//add highlight for whole context
-		highlightContext(player);
+
+		player.enterContext(context);
+		particleManager.addContext(context, ParticleType.DRIPLAVA, player.getPlayer());
 		
 		player.sendMessage(GREEN + "Switched to Context " + context.getLabel() + " State: TRIGGER.");
 		
-	}
-	
-	/**
-	 * add a Trigger to a TriggerContext
-	 * @param trigger the Trigger that is added
-	 * @param context the TriggerContext
-	 * @param player bukkit player
-	 */
-	public void addTrigger(final Trigger trigger, final TriggerContext context, final Player player) {
-		triggerManager.addTrigger(trigger, context);
-		particleManager.addSerializable(trigger, ParticleType.DRIPLAVA, player);
-	}
-	
-	/**
-	 * add a Response to a TriggerContext
-	 * @param response the Response that is added
-	 * @param context the TriggerContext
-	 * @param player bukkit player
-	 */
-	public void addResponse(final Response response, final TriggerContext context, final Player player) {
-		triggerManager.addResponse(response, context);
-		particleManager.addSerializable(response, ParticleType.DRIPLAVA, player);
 	}
 
 	/**
@@ -160,14 +120,14 @@ public class PlayerManager implements Listener{
 	 */
 	@EventHandler
 	public void handleKeyPresses(final KeyPressedEvent event) {
-		Player player = event.getPlayer();
+		EditorPlayer player = getEditorPlayer(event.getPlayer());
 
 		switch(event.getKey()) {
 		case KEY_F6:
 			toggleContext(player);
 			break;
 		case KEY_F7:
-			toggleTriggerState(player);		
+			player.toggleTriggerState();		
 			break;
 		case KEY_F9:
 			toggleContextInputFunction(player);		
@@ -176,21 +136,51 @@ public class PlayerManager implements Listener{
 			cancelContext(player);
 			break; 
 		case KEY_F4:
-			particleManager.toggleSupressedHighlight(player);
+			particleManager.toggleSupressedHighlight(player.getPlayer());
 			break;
 		default:
 			break;
 		}
 	}
-	
+
+
 	/**
-	 * highlight the active context of a player
-	 * @param player a bukkit player
+	 * Toggle context enter/leave
+	 * @param player bukkit player
 	 */
-	private void highlightContext(final Player player) {
-		TriggerContext context = playerTriggerContexts.get(player.getName());
-		if(context!=null) {
-			particleManager.addContext(context, ParticleType.DRIPLAVA, player);
+	private void toggleContext(final EditorPlayer player) {
+		
+		if(player.getTriggerState() == TriggerState.IDLE) {
+			createContext(player);
+			
+		} else {			
+			if(player.getActiveContext().isComplete()) {
+				player.exitContext();
+			} else {
+				player.sendMessage(YELLOW + "Context not complete. Use [F12] to cancel.");
+				return;
+			}
+		}
+	}
+
+
+	/**
+	 * toggle a players input function
+	 * @param player bukkit player
+	 */
+	private void toggleContextInputFunction(final EditorPlayer player) {
+
+		if(player.hasActiveContext()) {
+			TriggerContext context = player.getActiveContext();
+
+			context.toggleInputFunction();
+			
+			player.sendMessage(
+					YELLOW + 
+					"Trigger Input Fuction: " + 
+					context.getInputFunction().toString());
+		} else {
+			player.sendMessage(YELLOW + "No active TriggerContext");
 		}
 	}
 
@@ -202,9 +192,8 @@ public class PlayerManager implements Listener{
 	@EventHandler
 	public void onPlayerJoin(final PlayerJoinEvent event) {
 		Player player = event.getPlayer();
-		String name = player.getName();
 		
-		addPlayer(name);
+		players.put(event.getPlayer(), new EditorPlayer(event.getPlayer()));
 		
 		player.performCommand("helpme");
 		player.setGameMode(GameMode.CREATIVE);
@@ -216,226 +205,145 @@ public class PlayerManager implements Listener{
 	 */
 	@EventHandler
 	public void onPlayerLeave(final PlayerQuitEvent event) {
-		String name = event.getPlayer().getName();
-		
-		removePlayer(name);
+		players.remove(event.getPlayer());
 	}
 	
-	
-	/**
-	 * creates the triggerrelevant data for a new player
-	 * @param name player name
-	 */
-	private void addPlayer(final String name) {
-		playerTriggerStates.put(name, TriggerState.IDLE);
-		playerTriggerContexts.put(name, null);
-	}
-
-	/**
-	 * removes the triggerrelevant data of a player
-	 * @param name player name
-	 */
-	private void removePlayer(final String name) {
-		playerTriggerStates.remove(name);
-		playerTriggerContexts.remove(name);
-	}
-	
-	/**
-	 * toggle a players input function
-	 * @param player bukkit player
-	 */
-	private void toggleContextInputFunction(final Player player) {
-		String name = player.getName();
-		if(playerTriggerContexts.get(name) != null) {
-			playerTriggerContexts.get(name).toggleInputFunction();
-			player.sendMessage(
-					YELLOW + 
-					"Trigger Input Fuction: " + 
-					playerTriggerContexts.get(name).getInputFunction().toString());
-		} else {
-			player.sendMessage(YELLOW + "No active TriggerContext");
-		}
-	}
-
-	/**
-	 * Toggle context enter/leave
-	 * @param player bukkit player
-	 */
-	private void toggleContext(final Player player) {
-		TriggerContext context = getContext(player);
-		
-		if(canCreateContext(player)) {
-			createContext(player);
-			
-		} else {
-			if(context.isComplete()) {
-				exitContext(player);
-			} else {
-				player.sendMessage(YELLOW + "Context not complete. Use [F12] to cancel.");
-				return;
-			}
-		}
-	}
-
-
-	public void exitContext(final Player player) {
-		TriggerContext context = getContext(player);
-		
-		// TODO actually handle the Context before deleting it
-		playerTriggerStates.put(player.getName(), TriggerState.IDLE);
-		playerTriggerContexts.put(player.getName(), null);
-		
-		particleManager.removeContext(context, player);
-		
-		player.sendMessage(YELLOW + "Handed over " + context.getLabel() + ".");
-	}
-
-	/**
-	 * @param player the player to be checked
-	 * @return true if the player can create a new context
-	 */
-	public boolean canCreateContext(final Player player) {
-		return getContext(player) == null;
-	}
-	
-	/**
-	 * WARNING: DOES NOT PERFORM CHECKS
-	 * 
+	/** 
 	 * @param player the player for which the context should be created
 	 * @return the created context
 	 */
-	public TriggerContext createContext(final Player player) {
-		changeTriggerState(player, TriggerState.TRIGGER);
+	public TriggerContext createContext(final EditorPlayer player) {
 		
 		TriggerContext context = new TriggerContext();
 		triggerManager.addTriggerContext(context);
-		playerTriggerContexts.put(player.getName(), context);
-		
+
+		player.enterContext(context);
 		player.sendMessage(YELLOW + "New Context: " + context.getLabel() + "; BuildState: TRIGGER");
 				
 		return context;
-	}
-
-	/**
-	 * change the triggerState for a player
-	 * @param player bukkit player
-	 * @param state the new triggerState
-	 */
-	private void changeTriggerState(final Player player, final TriggerState state) {
-		Inventory inv = player.getInventory();
-		TriggerState oldState = playerTriggerStates.get(player.getName());
-		
-		if(oldState == TriggerState.STANDBY || oldState == TriggerState.IDLE) {
-			saveInventory(player);
-		}
-		
-		switch (state) {
-		case TRIGGER:
-			inv.setContents(TRIGGER_BLOCKS);
-			break;
-
-		case RESPONSE:
-			inv.setContents(RESPONSE_BLOCKS);
-			break;
-
-		case STANDBY:
-			loadInventory(player);
-			break;
-		default:
-			break;
-		}
-		
-		playerTriggerStates.put(player.getName(), state);
-		player.sendMessage(YELLOW + "" +  state + " :");
-	}
-	
-	/**
-	 * Toggles a players TriggerState unless it is idle
-	 * @param player the bukkit player
-	 */
-	private void toggleTriggerState(final Player player) {
-		String name = player.getName();
-	
-		switch (playerTriggerStates.get(name)) {
-		case TRIGGER:
-			changeTriggerState(player, TriggerState.RESPONSE);
-			return;
-			
-		case RESPONSE:
-			changeTriggerState(player, TriggerState.STANDBY);
-			
-			loadInventory(player);
-			return;
-			
-		case STANDBY:
-			changeTriggerState(player, TriggerState.TRIGGER);
-			return;
-			
-		default:
-			player.sendMessage(YELLOW + "No active TriggerContext.");
-			break;
-		}		
-	}
-	
-	/**
-	 * save the players inventory
-	 * @param player bukkit player
-	 */
-	private void saveInventory(final Player player) {
-		playerInventories.put(player.getName(), player.getInventory().getContents());
-	}
-	
-	/**
-	 * load the players old inventory and set it
-	 * @param player bukkit player
-	 */
-	private void loadInventory(final Player player) {
-		ItemStack[] items = playerInventories.remove(player.getName());
-		if(items!=null) {
-			player.getInventory().setContents(items);
-		}
 	}
 	
 	/**
 	 * deregisters the current context of a player
 	 * @param player bukkit player
 	 */
-	public void cancelContext(final Player player) {
-		String name = player.getName();
-		if(playerTriggerStates.get(name) == TriggerState.IDLE) {
+	public void cancelContext(final EditorPlayer player) {
+		TriggerContext context = player.getActiveContext();
+		
+		if(context == null) {
 			player.sendMessage(YELLOW + "No active TriggerContext");
-			return;
-		}
-		playerTriggerStates.put(name, TriggerState.IDLE);
-		TriggerContext context = playerTriggerContexts.get(name);
-		playerTriggerContexts.put(name, null);
-		triggerManager.deleteTriggerContext(context);
-		
-		
-		player.sendMessage(YELLOW + "Cancelled your TriggerContext");
+			
+		} else {
+			player.exitContext();
+			triggerManager.deleteTriggerContext(context);
+			player.sendMessage(YELLOW + "Cancelled your TriggerContext");
+		}		
 	}
 	
+	public EditorPlayer getEditorPlayer (final Player player) {
+		return players.get(player);
+	}
+	
+	public EditorPlayer getEditorPlayer (final BlockBreakEvent event) {
+		return players.get(event.getPlayer());
+	}
+
+
 	/**
-	 * @param name the player whose context should be returned
-	 * @return the context
+	 * @return the triggerManager
 	 */
-	public TriggerContext getContext(final String name) {
-		return playerTriggerContexts.get(name);
+	public EditorTriggerManager getTriggerManager() {
+		return triggerManager;
 	}
-	
-	public TriggerContext getContext(final Player player) {
-		return getContext(player.getName());
-	}
-	
+
+
 	/**
-	 * @param name the player whose state should be returned
-	 * @return the state
+	 * @return the particleManager
 	 */
-	public TriggerState getState(final String name) {
-		return playerTriggerStates.get(name);
+	public ParticleManager getParticleManager() {
+		return particleManager;
 	}
 	
-	public TriggerState getState(final Player player) {
-		return playerTriggerStates.get(player.getName());
-	}	
 }
+
+
+///**
+//* change the triggerState for a player
+//* @param player bukkit player
+//* @param state the new triggerState
+//*/
+//private void changeTriggerState(final Player player, final TriggerState state) {
+//	Inventory inv = player.getInventory();
+//	TriggerState oldState = playerTriggerStates.get(player.getName());
+//	
+//	if(oldState == TriggerState.STANDBY || oldState == TriggerState.IDLE) {
+//		saveInventory(player);
+//	}
+//	
+//	switch (state) {
+//	case TRIGGER:
+//		inv.setContents(TRIGGER_BLOCKS);
+//		break;
+//
+//	case RESPONSE:
+//		inv.setContents(RESPONSE_BLOCKS);
+//		break;
+//
+//	case STANDBY:
+//		loadInventory(player);
+//		break;
+//	default:
+//		break;
+//	}
+//	
+//	playerTriggerStates.put(player.getName(), state);
+//	player.sendMessage(YELLOW + "" +  state + " :");
+//}
+//
+///**
+//* Toggles a players TriggerState unless it is idle
+//* @param player the bukkit player
+//*/
+//private void toggleTriggerState(final Player player) {
+//	String name = player.getName();
+//
+//	switch (playerTriggerStates.get(name)) {
+//	case TRIGGER:
+//		changeTriggerState(player, TriggerState.RESPONSE);
+//		return;
+//		
+//	case RESPONSE:
+//		changeTriggerState(player, TriggerState.STANDBY);
+//		
+//		loadInventory(player);
+//		return;
+//		
+//	case STANDBY:
+//		changeTriggerState(player, TriggerState.TRIGGER);
+//		return;
+//		
+//	default:
+//		player.sendMessage(YELLOW + "No active TriggerContext.");
+//		break;
+//	}		
+//}
+//
+///**
+//* save the players inventory
+//* @param player bukkit player
+//*/
+//private void saveInventory(final Player player) {
+//	playerInventories.put(player.getName(), player.getInventory().getContents());
+//}
+//
+///**
+//* load the players old inventory and set it
+//* @param player bukkit player
+//*/
+//private void loadInventory(final Player player) {
+//	ItemStack[] items = playerInventories.remove(player.getName());
+//	if(items!=null) {
+//		player.getInventory().setContents(items);
+//	}
+//}
+
