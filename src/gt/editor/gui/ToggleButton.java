@@ -9,11 +9,6 @@ public abstract class ToggleButton extends GenericButton {
 	
 	private Side side;
 	
-	public ToggleButton() {
-		updateSide();
-	}
-	
-	
 	public void updateSide() {
 		side = determineSide();
 		
@@ -30,6 +25,8 @@ public abstract class ToggleButton extends GenericButton {
 	@Override
 	public void onButtonClick(final ButtonClickEvent event) {			
 
+		System.out.println("KLICK");
+		
 		switch (side) {
 		case A:
 			onASideClick(event);

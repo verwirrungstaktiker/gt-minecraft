@@ -114,12 +114,12 @@ public class TriggerOverlay extends GenericPopup implements Listener {
 
 		@Override
 		protected void onASideClick(final ButtonClickEvent event) {
-			facade.setSuppressedHighlight(player, false);
+			facade.setSuppressedHighlight(player, true);
 		}
 
 		@Override
 		protected void onBSideClick(final ButtonClickEvent event) {
-			facade.setSuppressedHighlight(player, true);
+			facade.setSuppressedHighlight(player, false);
 		}
 
 		@Override
@@ -161,7 +161,8 @@ public class TriggerOverlay extends GenericPopup implements Listener {
 	}
 
 	@EventHandler
-	public void onLogicChange(final LogicChangeEvent e) {		
+	public void onLogicChange(final LogicChangeEvent e) {
+		contextButton.updateSide();
 		buildContextList();
 	}
 	
@@ -283,6 +284,7 @@ public class TriggerOverlay extends GenericPopup implements Listener {
 			 .shiftYPos(contextList.getHeight() + left1.getHeight()+ 3 * MARGIN_Y);
 		
 		contextButton.setAnchor(WidgetAnchor.TOP_CENTER);
+		contextButton.updateSide();
 		attachWidget(Hello.getPlugin(), contextButton);
 		
 		// left 3
@@ -292,6 +294,7 @@ public class TriggerOverlay extends GenericPopup implements Listener {
 			 .shiftYPos(contextList.getHeight() + left1.getHeight() + contextButton.getHeight() + 4 * MARGIN_Y);
 		
 		highlightButton.setAnchor(WidgetAnchor.TOP_CENTER);
+		highlightButton.updateSide();
 		attachWidget(Hello.getPlugin(), highlightButton);
 		
 		// right 1
