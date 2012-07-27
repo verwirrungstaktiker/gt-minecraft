@@ -12,9 +12,8 @@ import org.bukkit.block.Block;
 /**
  * Modifies the speed of all zombies if triggered.
  */
-public class ZombieControlResponse extends Response {
+public class ZombieControlResponse extends ZombieResponse {
 	
-	private ZombieManager zm;
 	private double value;
 	
 	private static final String KEY_VALUE = "value";
@@ -23,21 +22,15 @@ public class ZombieControlResponse extends Response {
 	 * constructor
 	 */
 	public ZombieControlResponse() {
-		super();
+		super("zombie_control");
 		value = 0;
 	}
-	
-	/**
-	 * @param zm ZombieManager
-	 */
-	public void setZombieManager(final ZombieManager zm) {
-		this.zm = zm;
-	}
+
 
 	@Override
 	public void triggered(final boolean active) {
 		if (active) {
-			zm.addSpeedAll(value);
+			getZombieManager().addSpeedAll(value);
 		}		
 	}
 

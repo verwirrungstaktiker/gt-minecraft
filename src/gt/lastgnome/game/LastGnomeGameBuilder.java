@@ -9,7 +9,7 @@ import gt.general.logic.TriggerContext;
 import gt.general.logic.TriggerManager;
 import gt.general.logic.persistance.exceptions.PersistanceException;
 import gt.general.logic.response.Response;
-import gt.general.logic.response.ZombieSpawnResponse;
+import gt.general.logic.response.ZombieResponse;
 import gt.general.world.WorldManager;
 import gt.lastgnome.MathRiddleRandomizer;
 import gt.plugin.meta.Hello;
@@ -62,8 +62,8 @@ public class LastGnomeGameBuilder extends AbstractLastGnomeGameBuilder {
 		//TODO Its a bit Hacky
 		for (TriggerContext tc : triggerManager.getTriggerContexts()) {
 			for (Response response : tc.getResponses()) {
-				if (response instanceof ZombieSpawnResponse) {
-					((ZombieSpawnResponse) response).setZombieManager(zombieManager);
+				if (response instanceof ZombieResponse) {
+					((ZombieResponse) response).setZombieManager(zombieManager);
 				}
 			}
 		}

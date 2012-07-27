@@ -16,8 +16,8 @@ import org.bukkit.entity.Entity;
 /**
  * Spawns the set number of Zombies if triggered.
  */
-public class ZombieSpawnResponse extends Response{
-	private ZombieManager zm;
+public class ZombieSpawnResponse extends ZombieResponse{
+	//private ZombieManager zm;
 	private Location spawnLocation;
 	private int number;
 	private double speed;
@@ -43,8 +43,8 @@ public class ZombieSpawnResponse extends Response{
 	 * @param number Number of Zombies to spawn
 	 */
 	public ZombieSpawnResponse(final ZombieManager zm, final Location spawnLocation, final int number) {
-		super("zombie");
-		this.zm = zm;
+		super("zombie_spawn");
+		setZombieManager(zm);
 		this.spawnLocation = spawnLocation;
 		this.number = number;
 		this.speed = 1.0;
@@ -60,7 +60,7 @@ public class ZombieSpawnResponse extends Response{
 	 */
 	public ZombieSpawnResponse(final ZombieManager zm, final Location spawnLocation, final int number, final double speed) {
 		super("zombie");
-		this.zm = zm;
+		setZombieManager(zm);
 		this.spawnLocation = spawnLocation;
 		this.number = number;
 		this.speed = speed;
@@ -69,16 +69,16 @@ public class ZombieSpawnResponse extends Response{
 	@Override
 	public void triggered(final boolean active) {
 		if (active) {
-			if (zm == null) {
+			if (getZombieManager() == null) {
 				System.out.print("No ZombieManager: Cannot spawn zombies");
 			}
 			
 			for (int i=0;i<number;++i) {
-				if (zm == null) {
+				if (getZombieManager() == null) {
 					spawnedEntities.add(spawnLocation.getWorld()
 							.spawn(spawnLocation, Chicken.class));					
 				} else {
-				zm.spawnZombie(spawnLocation, speed);
+					getZombieManager().spawnZombie(spawnLocation, speed);
 				}
 			}
 		}
@@ -86,7 +86,7 @@ public class ZombieSpawnResponse extends Response{
 	@Override
 	public void dispose() {
 		//Clear Entities (Spawned Chicken)
-		if (zm == null) {
+		if (getZombieManager() == null) {
 			for (Entity e : spawnedEntities) {
 				e.remove();
 			}	
@@ -109,12 +109,6 @@ public class ZombieSpawnResponse extends Response{
 		return blocks;
 	}
 	
-	/**
-	 * @param zm a ZombieManager
-	 */
-	public void setZombieManager(final ZombieManager zm) {
-		this.zm = zm;
-	}
 
 	@Override
 	public void setup(final PersistanceMap values, final World world) throws PersistanceException {
