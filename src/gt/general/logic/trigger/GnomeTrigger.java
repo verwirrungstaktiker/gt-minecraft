@@ -3,8 +3,10 @@ package gt.general.logic.trigger;
 import gt.general.logic.persistance.PersistanceMap;
 import gt.general.logic.persistance.exceptions.PersistanceException;
 import gt.general.world.BlockObserver;
+import gt.general.world.ObservableCustomBlock;
 import gt.general.world.ObservableCustomBlock.BlockEvent;
 import gt.general.world.ObservableCustomBlock.BlockEventType;
+import gt.lastgnome.GnomeItem;
 import gt.plugin.meta.CustomBlockType;
 
 import java.util.HashSet;
@@ -36,7 +38,8 @@ public class GnomeTrigger extends Trigger implements BlockObserver{
 		this.triggered = false;
 		
 		CustomBlockType.GNOME_TRIGGER_NEGATIVE.place(block);
-		//register?
+
+		registerWithSubject();
 	}
 	
 	/** to be used in persistance*/
@@ -50,6 +53,8 @@ public class GnomeTrigger extends Trigger implements BlockObserver{
         triggered = false;
         
         CustomBlockType.GNOME_TRIGGER_NEGATIVE.place(block);
+        
+        registerWithSubject();
         
     }
 
@@ -65,7 +70,8 @@ public class GnomeTrigger extends Trigger implements BlockObserver{
     @Override
     public void dispose() {
         block.setType(Material.AIR);
-        //unregister?
+
+        unregisterFromSubject();
         
     }
 
@@ -76,18 +82,42 @@ public class GnomeTrigger extends Trigger implements BlockObserver{
         
         return blocks;
     }
+    
+	/**
+	 * registers this trigger
+	 */
+	private void registerWithSubject() {
+		ObservableCustomBlock triggerBlock = CustomBlockType.GNOME_TRIGGER_NEGATIVE.getCustomBlock();
+		triggerBlock.addObserver(this, block.getWorld());
+	}
+	
+	/**
+	 * unregisters this trigger
+	 */
+	private void unregisterFromSubject() {
+		ObservableCustomBlock triggerBlock = CustomBlockType.GNOME_TRIGGER_NEGATIVE.getCustomBlock();
+		triggerBlock.removeObserver(this, block.getWorld());
+	}
+
 
     @Override
     public void onBlockEvent(final BlockEvent blockEvent) {
-        if(blockEvent.blockEventType == BlockEventType.BLOCK_INTERACT)
+    	System.out.println(blockEvent.player.getItemInHand());
+        if(blockEvent.blockEventType == BlockEventType.BLOCK_INTERACT && 
+        		// this is a temporary fix as all custom blocks are Flint underneath
+        		blockEvent.player.getItemInHand().getType() == Material.FLINT) {
+        	System.out.println("gnometrigger triggered");
             triggered = !triggered;
             
             if(triggered) {
                 CustomBlockType.GNOME_TRIGGER_POSITIVE.place(block);
+                getContext().updateTriggerState(GnomeTrigger.this, true);
+                
             } else {
                 CustomBlockType.GNOME_TRIGGER_NEGATIVE.place(block);
+                getContext().updateTriggerState(GnomeTrigger.this, true);
             }
-            
+        }
     }
 
 }
