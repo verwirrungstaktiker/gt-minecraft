@@ -2,7 +2,7 @@ package gt.editor;
 
 import static com.google.common.collect.Maps.*;
 import gt.editor.event.LogicChangeEvent;
-import gt.editor.event.LogicChangeEvent.ObserveeType;
+import gt.editor.event.LogicChangeEvent.ObserveeParent;
 import gt.general.logic.TriggerContext;
 import gt.general.logic.TriggerManager;
 import gt.general.logic.persistance.YamlSerializable;
@@ -49,7 +49,7 @@ public class EditorTriggerManager extends TriggerManager {
 		super.addTriggerContext(context);
 		addBlockContextMapping(context);
 		
-		Hello.callEvent(new LogicChangeEvent(ObserveeType.TRIGGER_MANAGER, this));
+		Hello.callEvent(new LogicChangeEvent(ObserveeParent.TRIGGER_MANAGER, this));
 	}
 	
 	/**
@@ -82,7 +82,7 @@ public class EditorTriggerManager extends TriggerManager {
 			blockToSerializable.put(block, trigger);
 		}
 		
-		Hello.callEvent(new LogicChangeEvent(ObserveeType.TRIGGER_CONTEXT, context));
+		Hello.callEvent(new LogicChangeEvent(ObserveeParent.TRIGGER_CONTEXT, context));
 	}
 	
 	/**
@@ -98,7 +98,7 @@ public class EditorTriggerManager extends TriggerManager {
 			blockToSerializable.put(block, response);
 		}
 		
-		Hello.callEvent(new LogicChangeEvent(ObserveeType.TRIGGER_CONTEXT, context));
+		Hello.callEvent(new LogicChangeEvent(ObserveeParent.TRIGGER_CONTEXT, context));
 	}
 	
 	/**
@@ -109,7 +109,7 @@ public class EditorTriggerManager extends TriggerManager {
 		super.deleteTriggerContext(context);
 		deleteBlockContextMapping(context);
 		
-		Hello.callEvent(new LogicChangeEvent(ObserveeType.TRIGGER_MANAGER, this));
+		Hello.callEvent(new LogicChangeEvent(ObserveeParent.TRIGGER_MANAGER, this));
 	}
 	
 	/**
@@ -154,7 +154,7 @@ public class EditorTriggerManager extends TriggerManager {
 		blockToContext.remove(block);
 		blockToSerializable.remove(block);
 		
-		Hello.callEvent(new LogicChangeEvent(ObserveeType.TRIGGER_CONTEXT, context));
+		Hello.callEvent(new LogicChangeEvent(ObserveeParent.TRIGGER_CONTEXT, context));
 	}
 	
 	/**

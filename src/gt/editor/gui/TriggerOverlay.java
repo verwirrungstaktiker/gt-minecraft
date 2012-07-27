@@ -1,11 +1,11 @@
 package gt.editor.gui;
 
 import gt.editor.EditorFacade;
+import gt.editor.event.ContextSwitchEvent;
 import gt.editor.event.LogicChangeEvent;
 import gt.editor.event.ParticleSuppressEvent;
 import gt.general.gui.Prompt;
 import gt.general.gui.Prompt.PromptCallback;
-import gt.general.gui.Prompt.PromptCallback.Action;
 import gt.general.logic.TriggerContext;
 import gt.general.logic.persistance.YamlSerializable;
 import gt.general.logic.response.Response;
@@ -51,7 +51,7 @@ public class TriggerOverlay extends GenericPopup implements Listener {
 				oldSelectedIndex = selectedIndex;
 				
 				if(getSelectedObject() != null) {
-					facade.switchToContext(player, getSelectedObject());
+					facade.enterContext(player, getSelectedObject());
 				} else {
 					facade.exitContext(player);
 				}
@@ -124,17 +124,17 @@ public class TriggerOverlay extends GenericPopup implements Listener {
 
 		@Override
 		protected void onASideClick(final ButtonClickEvent event) {
-			facade.setSuppressedHighlight(player, true);
+			facade.setSuppressHighlight(player, true);
 		}
 
 		@Override
 		protected void onBSideClick(final ButtonClickEvent event) {
-			facade.setSuppressedHighlight(player, false);
+			facade.setSuppressHighlight(player, false);
 		}
 
 		@Override
 		protected Side determineSide() {
-			return facade.hasSuppressedHighlight(player) ? Side.B : Side.A;
+			return facade.isSuppressHighlight(player) ? Side.B : Side.A;
 		}
 	};
 	
@@ -176,7 +176,6 @@ public class TriggerOverlay extends GenericPopup implements Listener {
 		this.facade = facade;
 		
 		setupGui();
-		
 		buildContextList();
 		
 		MultiListener.registerListener(this);
@@ -193,6 +192,15 @@ public class TriggerOverlay extends GenericPopup implements Listener {
 	public void onParticleSuppress(final ParticleSuppressEvent e) {
 		if(e.getPlayer().equals(player)) {
 			highlightButton.updateSide();
+		}
+	}
+	
+	@EventHandler
+	public void onContextSwitch(final ContextSwitchEvent e) {
+		if(e.getPlayer().equals(player)) {
+			System.out.println("switched context");
+			contextButton.updateSide();
+			buildContextList();
 		}
 	}
 
@@ -217,9 +225,9 @@ public class TriggerOverlay extends GenericPopup implements Listener {
 			
 			
 			System.out.println(context.getLabel());
-			System.out.println(facade.getTriggerContext(player) == null ? "null" : facade.getTriggerContext(player).getLabel());
+			System.out.println(facade.getActiveContext(player) == null ? "null" : facade.getActiveContext(player).getLabel());
 			
-			if (context == facade.getTriggerContext(player)) {
+			if (context == facade.getActiveContext(player)) {
 				System.out.println("--highlight");
 				
 				int position = contextList.getItems().length - 1;

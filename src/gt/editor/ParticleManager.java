@@ -1,19 +1,15 @@
 package gt.editor;
 
-import static com.google.common.collect.Sets.*;
-import gt.editor.event.ParticleSuppressEvent;
 import gt.general.logic.TriggerContext;
 import gt.general.logic.persistance.YamlSerializable;
 import gt.general.logic.response.Response;
 import gt.general.logic.trigger.Trigger;
 
-import java.util.Set;
-
-import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
+import org.bukkit.event.Listener;
 import org.bukkit.util.Vector;
 import org.getspout.spoutapi.particle.Particle;
 import org.getspout.spoutapi.particle.Particle.ParticleType;
@@ -23,52 +19,17 @@ import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Multimap;
 
 
-public class ParticleManager implements Runnable {
+public class ParticleManager implements Runnable, Listener {
 
-	/** conains all highlighted blocks per player */
+	/** contains all highlighted blocks per player */
 	private Multimap<Player, Block> activeBlocks = HashMultimap.create();
 	
-	/** contains all players which suppress the highlight */
-	private Set<Player> suppressedHighlight = newHashSet();
+	private final PlayerManager playerManager;
 	
-	/**
-	 * @param player the player whose state should be changed
-	 * @param supressed iff true the highlight is hidden
-	 */
-	public void setSuppressedHighlight(final Player player, final boolean supressed) {
-		
-		boolean suppressedBefore = hasSuppressedHighlight(player);
-		
-		if(supressed) {
-			suppressedHighlight.add(player);
-		} else {
-			suppressedHighlight.remove(player);
-		}
-		
-		boolean suppressedAfter = hasSuppressedHighlight(player);
-		
-		if(suppressedBefore != suppressedAfter) {
-			Bukkit
-				.getServer()
-				.getPluginManager()
-				.callEvent(new ParticleSuppressEvent(player, suppressedAfter));
-		}
+	public ParticleManager(final PlayerManager playerManager) {
+		this.playerManager = playerManager;
 	}
 	
-	/**
-	 * @param player the player whose highlight state should be checked
-	 * @return true iff the highlight is suppressed
-	 */
-	public boolean hasSuppressedHighlight(final Player player) {
-		return suppressedHighlight.contains(player);
-	}
-	
-	/**
-	 * @param player the player whose highlight should be toggled
-	 */
-	public void toggleSupressedHighlight(final Player player) {
-		setSuppressedHighlight(player, ! hasSuppressedHighlight(player));
-	}
 	
 	/**
 	 * highlight all blocks of a context
@@ -172,15 +133,33 @@ public class ParticleManager implements Runnable {
 
 	@Override
 	public void run() {
-		for (Player player : activeBlocks.keySet()) {
+		
+		// current highlights from the player's selected context
+		
+		for(EditorPlayer ePlayer : playerManager.getEditorPlayers()) {
 			
-			if(! hasSuppressedHighlight(player)) {
-				for (Block block : activeBlocks.get(player)) {
-					highlight(block, player);
+			if(!ePlayer.isSuppressHighlight() && ePlayer.getActiveContext() != null) {
+				
+				for(Trigger t : ePlayer.getActiveContext().getTriggers()) {
+					for(Block b : t.getBlocks()) {
+						highlight(b, ePlayer.getPlayer());
+					}
+				}
+				
+				for(Response r : ePlayer.getActiveContext().getResponses()) {
+					for(Block b : r.getBlocks()) {
+						highlight(b, ePlayer.getPlayer());
+					}
 				}
 			}
 			
 		}
 		
+		// custom blocks
+		for (Player player : activeBlocks.keySet()) {
+			for (Block block : activeBlocks.get(player)) {
+				highlight(block, player);
+			}		
+		}	
 	}
 }

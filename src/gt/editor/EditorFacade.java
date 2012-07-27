@@ -22,8 +22,8 @@ public class EditorFacade {
 	/*
 	 * state of system
 	 */
-	public TriggerContext getTriggerContext(final Player player) {
-		return playerManager.getContext(player);
+	public TriggerContext getActiveContext(final Player player) {
+		return getEditorPlayer(player).getActiveContext();
 	}
 	
 	public Collection<TriggerContext> getAllTriggerContexts() {
@@ -34,41 +34,43 @@ public class EditorFacade {
 	 * manipulate contexts
 	 */
 	public void createContext(final Player player) {
-		playerManager.createContext(player);
+		playerManager.createContext(getEditorPlayer(player));
 	}
 	
 	public void deleteContext(final Player player) {
-		playerManager.cancelContext(player);
+		playerManager.cancelContext(getEditorPlayer(player));
 	}
+
 	
-	/*
-	 * state of user
-	 */
-	
-	public void switchToContext(final Player player, final TriggerContext context) {
-		playerManager.switchToContext(player, context);
+	public void enterContext(final Player player, final TriggerContext context) {
+		getEditorPlayer(player).enterContext(context);
 	}
 	
 	public void exitContext(SpoutPlayer player) {
-		playerManager.exitContext(player);
+		getEditorPlayer(player).exitContext();
 	}
 	
 	public boolean playerCanCreateContext(final Player player) {
-		return playerManager.canCreateContext(player);
+		
+		TriggerContext c = getEditorPlayer(player).getActiveContext();
+		return c == null || c.isComplete();
 	}
 	
+	
+	public EditorPlayer getEditorPlayer(final Player player) {
+		return playerManager.getEditorPlayer(player);
+	}
+
 	/*
-	 *  highlight
+	 * state of highlight
 	 */
 	
-	public void setSuppressedHighlight(final Player player, final boolean supressed) {
-		particleManager.setSuppressedHighlight(player, supressed);
+	public void setSuppressHighlight(final Player player, boolean supress) {
+		getEditorPlayer(player).setSuppressHighlight(supress);
 	}
 	
-	public boolean hasSuppressedHighlight(final Player player) {
-		return particleManager.hasSuppressedHighlight(player);
+	public boolean isSuppressHighlight(final Player player) {
+		return getEditorPlayer(player).isSuppressHighlight();
 	}
-
-
 	
 }

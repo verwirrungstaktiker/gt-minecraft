@@ -5,12 +5,11 @@ import static org.bukkit.ChatColor.*;
 import gt.editor.EditorPlayer.TriggerState;
 import gt.general.logic.TriggerContext;
 import gt.general.logic.persistance.YamlSerializable;
-import gt.plugin.meta.CustomBlockType;
 
+import java.util.Collection;
 import java.util.Map;
 
 import org.bukkit.GameMode;
-import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -18,7 +17,6 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
-import org.bukkit.inventory.ItemStack;
 import org.getspout.spoutapi.event.input.KeyPressedEvent;
 import org.getspout.spoutapi.particle.Particle.ParticleType;
 
@@ -28,25 +26,6 @@ public class PlayerManager implements Listener{
 	
 	private EditorTriggerManager triggerManager;
 	private ParticleManager particleManager;
-	
-	/** player inventories are saved here when they build TriggerContexts **/
-	private Map<String, ItemStack[]> playerInventories = newHashMap();
-		
-	private static final ItemStack[] TRIGGER_BLOCKS = new ItemStack[]{
-			new ItemStack(Material.LEVER),
-			new ItemStack(Material.STONE_BUTTON),
-			new ItemStack(Material.WOOD_PLATE),
-			new ItemStack(Material.STONE_PLATE),
-			CustomBlockType.GNOME_TRIGGER_NEGATIVE.getItemStack()
-	};
-	
-	private static final ItemStack[] RESPONSE_BLOCKS = new ItemStack[]{
-			new ItemStack(Material.WOOD_DOOR),
-			new ItemStack(Material.IRON_DOOR),
-			new ItemStack(Material.DIAMOND_BLOCK),
-			new ItemStack(Material.REDSTONE_TORCH_ON),
-			new ItemStack(Material.SIGN)
-	};
 	
 	/**
 	 * @param triggerManager holds the TriggerContexts of the current map
@@ -82,7 +61,7 @@ public class PlayerManager implements Listener{
 				case STANDBY:
 					if(player.isInContext(context)) {
 
-						particleManager.removeSerializable(serializable, player.getPlayer());
+						//particleManager.removeSerializable(serializable, player.getPlayer());
 						triggerManager.deleteBlock(block);
 
 						player.sendMessage(YELLOW + "Deleted " + serLabel + " from " + contextLabel);
@@ -110,7 +89,7 @@ public class PlayerManager implements Listener{
 		}
 
 		player.enterContext(context);
-		particleManager.addContext(context, ParticleType.DRIPLAVA, player.getPlayer());
+		//particleManager.addContext(context, ParticleType.DRIPLAVA, player.getPlayer());
 		
 		player.sendMessage(GREEN + "Switched to Context " + context.getLabel() + " State: TRIGGER.");
 		
@@ -138,7 +117,7 @@ public class PlayerManager implements Listener{
 			cancelContext(player);
 			break; 
 		case KEY_F4:
-			particleManager.toggleSupressedHighlight(player.getPlayer());
+			player.setSuppressHighlight(!player.isSuppressHighlight());
 			break;
 		default:
 			break;
@@ -242,6 +221,14 @@ public class PlayerManager implements Listener{
 		}		
 	}
 	
+	/**
+	 * @return the players
+	 */
+	public Collection<EditorPlayer> getEditorPlayers() {
+		return players.values();
+	}
+
+
 	public EditorPlayer getEditorPlayer (final Player player) {
 		return players.get(player);
 	}
@@ -265,9 +252,30 @@ public class PlayerManager implements Listener{
 	public ParticleManager getParticleManager() {
 		return particleManager;
 	}
+
+
 	
 }
 
+
+///** player inventories are saved here when they build TriggerContexts **/
+//private Map<String, ItemStack[]> playerInventories = newHashMap();
+//	
+//private static final ItemStack[] TRIGGER_BLOCKS = new ItemStack[]{
+//		new ItemStack(Material.LEVER),
+//		new ItemStack(Material.STONE_BUTTON),
+//		new ItemStack(Material.WOOD_PLATE),
+//		new ItemStack(Material.STONE_PLATE),
+//		CustomBlockType.GNOME_TRIGGER_NEGATIVE.getItemStack()
+//};
+//
+//private static final ItemStack[] RESPONSE_BLOCKS = new ItemStack[]{
+//		new ItemStack(Material.WOOD_DOOR),
+//		new ItemStack(Material.IRON_DOOR),
+//		new ItemStack(Material.DIAMOND_BLOCK),
+//		new ItemStack(Material.REDSTONE_TORCH_ON),
+//		new ItemStack(Material.SIGN)
+//};
 
 ///**
 //* change the triggerState for a player

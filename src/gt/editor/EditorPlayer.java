@@ -2,9 +2,11 @@ package gt.editor;
 
 import static org.bukkit.ChatColor.*;
 
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
 import gt.editor.event.ContextSwitchEvent;
+import gt.editor.event.ParticleSuppressEvent;
 import gt.general.logic.TriggerContext;
 import gt.plugin.meta.Hello;
 
@@ -24,6 +26,8 @@ public class EditorPlayer {
 	private TriggerState triggerState;
 	private TriggerContext activeContext;
 	
+	private boolean suppressHighlight;
+	
 	
 	public EditorPlayer (final Player player) {
 		this.player = player;
@@ -31,6 +35,7 @@ public class EditorPlayer {
 		triggerState = TriggerState.IDLE;
 		activeContext = NO_CONTEXT;
 		
+		setSuppressHighlight(false);
 	}
 
 
@@ -121,5 +126,27 @@ public class EditorPlayer {
 	 */
 	public Player getPlayer() {
 		return player;
+	}
+
+
+	/**
+	 * @return the suppressHighlight
+	 */
+	public boolean isSuppressHighlight() {
+		return suppressHighlight;
+	}
+
+
+	/**
+	 * @param suppressHighlight the suppressHighlight to set
+	 */
+	public void setSuppressHighlight(boolean suppressHighlight) {
+		
+		if(this.suppressHighlight != suppressHighlight) {
+		
+			this.suppressHighlight = suppressHighlight;
+			Hello.callEvent(new ParticleSuppressEvent(player, suppressHighlight));
+			
+		}
 	}
 }

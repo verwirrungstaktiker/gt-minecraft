@@ -5,7 +5,7 @@ import org.bukkit.event.HandlerList;
 
 public class LogicChangeEvent extends Event {
 
-	public enum ObserveeType{
+	public enum ObserveeParent{
 		/** a trigger context changed */
 		TRIGGER_MANAGER,
 		
@@ -13,10 +13,10 @@ public class LogicChangeEvent extends Event {
 		TRIGGER_CONTEXT
 	}
 	
-	private final ObserveeType type;
+	private final ObserveeParent type;
 	private final Object concrete;
 	
-	public LogicChangeEvent(final ObserveeType type, final Object concrete) {
+	public LogicChangeEvent(final ObserveeParent type, final Object concrete) {
 		this.type =  type;
 		this.concrete = concrete;
 	}
@@ -24,7 +24,7 @@ public class LogicChangeEvent extends Event {
 	/**
 	 * @return the type
 	 */
-	public ObserveeType getType() {
+	public ObserveeParent getType() {
 		return type;
 	}
 

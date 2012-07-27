@@ -21,6 +21,7 @@ public class EditorLastGnomeGameBuilder extends AbstractLastGnomeGameBuilder {
 	private EditorTriggerManager triggerManager;
 	private PlayerManager playerManager;
 	private ParticleManager particleManager;
+	private BuildManager buildManager;
 	
 	
 	@Override
@@ -33,20 +34,14 @@ public class EditorLastGnomeGameBuilder extends AbstractLastGnomeGameBuilder {
 		super.buildWorldInstance(worldManager, worldName);
 				
 		triggerManager = new EditorTriggerManager();
-		particleManager = new ParticleManager();
 		
-		playerManager = new PlayerManager(triggerManager, particleManager);
-		BuildManager buildManager = new BuildManager(playerManager);
 		
-		MultiListener.registerListeners(playerManager,
-										buildManager);
+		playerManager = new PlayerManager(triggerManager, null);
+		
+		particleManager = new ParticleManager(playerManager);
+		buildManager = new BuildManager(playerManager);
 		
 		game.getWorldInstance().init(triggerManager);
-		
-		
-		
-		
-
 	}
 
 	@Override
@@ -56,6 +51,10 @@ public class EditorLastGnomeGameBuilder extends AbstractLastGnomeGameBuilder {
 												playerManager,
 												particleManager);
 		
+		MultiListener.registerListeners(playerManager,
+				buildManager,
+				particleManager);
+		
 		SpoutManager
 			.getKeyBindingManager()
 			.registerBinding("triggerOverlay",
@@ -63,6 +62,8 @@ public class EditorLastGnomeGameBuilder extends AbstractLastGnomeGameBuilder {
 								"trigger overlay",
 								new EditorGuiManager(facade),
 								Hello.getPlugin());
+		
+		
 		
 		Hello.scheduleSyncTask(particleManager, 0, 20);
 	}
