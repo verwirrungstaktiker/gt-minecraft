@@ -1,8 +1,8 @@
 package gt.editor;
 
-import static com.google.common.collect.Maps.newHashMap;
-import static com.google.common.collect.Sets.newHashSet;
-import gt.editor.LogicObserver.Observee;
+import static com.google.common.collect.Maps.*;
+import gt.editor.event.LogicChangeEvent;
+import gt.editor.event.LogicChangeEvent.ObserveeType;
 import gt.general.logic.TriggerContext;
 import gt.general.logic.TriggerManager;
 import gt.general.logic.persistance.YamlSerializable;
@@ -13,6 +13,7 @@ import java.util.Collection;
 import java.util.Map;
 import java.util.Set;
 
+import org.bukkit.Bukkit;
 import org.bukkit.block.Block;
 
 /**
@@ -23,8 +24,7 @@ public class EditorTriggerManager extends TriggerManager {
 	
 	private Map<Block, TriggerContext> blockToContext = newHashMap();
 	private Map<Block, YamlSerializable> blockToSerializable = newHashMap();
-	private Set<LogicObserver> observers = newHashSet();
-
+	
 	/**
 	 * Do not delete this anonymous constructor
 	 */
@@ -176,28 +176,17 @@ public class EditorTriggerManager extends TriggerManager {
 	}
 	
 	/**
-	 * Adds an Observer
-	 * @param observer the Observer that is added
-	 */
-	public void addLogicObserver(final LogicObserver observer) {
-		observers.add(observer);
-	}
-	
-	/**
-	 * Deletes and Observer
-	 * @param observer the Observer that is deleted
-	 */
-	public void removeLogicObserver(final LogicObserver observer) {
-		observers.remove(observer);
-	}
-	
-	/**
 	 * Notify the Observers on context modification
 	 */
 	private void notifyTriggerContextChanged() {
-		for(LogicObserver observer : observers) {
-			observer.update(Observee.TRIGGER_MANAGER, this);
-		}
+		
+		
+		LogicChangeEvent event = new LogicChangeEvent(ObserveeType.TRIGGER_MANAGER, this);
+		
+		Bukkit
+			.getServer()
+			.getPluginManager()
+			.callEvent(event);
 	}
 	
 }

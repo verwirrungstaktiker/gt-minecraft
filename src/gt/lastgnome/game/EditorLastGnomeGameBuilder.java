@@ -1,7 +1,9 @@
 package gt.lastgnome.game;
 
 import gt.editor.BuildManager;
+import gt.editor.EditorFacade;
 import gt.editor.EditorTriggerManager;
+import gt.editor.ParticleManager;
 import gt.editor.PlayerManager;
 import gt.editor.gui.EditorGuiManager;
 import gt.general.logic.persistance.exceptions.PersistanceException;
@@ -18,6 +20,7 @@ public class EditorLastGnomeGameBuilder extends AbstractLastGnomeGameBuilder {
 	private EditorLastGnomeGame game;
 	private EditorTriggerManager triggerManager;
 	private PlayerManager playerManager;
+	private ParticleManager particleManager;
 	
 	
 	@Override
@@ -30,25 +33,38 @@ public class EditorLastGnomeGameBuilder extends AbstractLastGnomeGameBuilder {
 		super.buildWorldInstance(worldManager, worldName);
 				
 		triggerManager = new EditorTriggerManager();
-		playerManager = new PlayerManager(triggerManager);
+		particleManager = new ParticleManager();
+		
+		playerManager = new PlayerManager(triggerManager, particleManager);
 		BuildManager buildManager = new BuildManager(playerManager);
 		
 		MultiListener.registerListeners(playerManager,
 										buildManager);
 		
 		game.getWorldInstance().init(triggerManager);
+		
+		
+		
+		
+
 	}
 
 	@Override
 	public void startGame() {
+		
+		EditorFacade facade = new EditorFacade(triggerManager,
+												playerManager,
+												particleManager);
 		
 		SpoutManager
 			.getKeyBindingManager()
 			.registerBinding("triggerOverlay",
 								Keyboard.KEY_C, 
 								"trigger overlay",
-								new EditorGuiManager(triggerManager, playerManager),
+								new EditorGuiManager(facade),
 								Hello.getPlugin());
+		
+		Hello.scheduleSyncTask(particleManager, 0, 20);
 	}
 
 	@Override

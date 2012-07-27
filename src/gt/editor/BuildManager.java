@@ -1,7 +1,6 @@
 package gt.editor;
 
-import static org.bukkit.ChatColor.GREEN;
-import static org.bukkit.ChatColor.RED;
+import static org.bukkit.ChatColor.*;
 
 import gt.general.logic.TriggerContext;
 import gt.general.logic.response.BlockDisappearResponse;
