@@ -1,8 +1,8 @@
 package gt.editor.gui;
 
-import gt.editor.EditorTriggerManager;
-import gt.editor.LogicObserver;
-import gt.editor.PlayerManager;
+import gt.editor.EditorFacade;
+import gt.editor.event.LogicChangeEvent;
+import gt.editor.event.ParticleSuppressEvent;
 import gt.general.logic.TriggerContext;
 import gt.general.logic.persistance.YamlSerializable;
 import gt.general.logic.response.Response;
@@ -20,12 +20,11 @@ import org.getspout.spoutapi.gui.ListWidgetItem;
 import org.getspout.spoutapi.gui.WidgetAnchor;
 import org.getspout.spoutapi.player.SpoutPlayer;
 
-public class TriggerOverlay extends GenericPopup implements LogicObserver, Listener {
-
-	private final EditorTriggerManager triggerManager;
-	private final PlayerManager playerManager;
+public class TriggerOverlay extends GenericPopup implements Listener {
+	
 	private final SpoutPlayer player;
-		
+	private final EditorFacade facade;
+
 	private static final int MARGIN_X = 5;
 	private static final int MARGIN_Y = 10;
 	
@@ -72,37 +71,63 @@ public class TriggerOverlay extends GenericPopup implements LogicObserver, Liste
 			System.out.println("LEFT 1");
 		};
 	};
-	
-	private class ContextButton extends GenericButton {
-		
-		/** updates the textx of this button */
-		public void updateText() {
-			if(playerManager.canCreateContext(player)) {
-				setText("New Context");
-			} else {
-				setText("Delete selected Context!");
-			}
+
+	private ToggleButton contextButton = new ToggleButton() {
+
+		@Override
+		protected String getASideText() {
+			return "New Context";
 		}
 
 		@Override
-		public void onButtonClick(final ButtonClickEvent event) {			
-			if(playerManager.canCreateContext(player)) {
-				playerManager.createContext(player);
-			} else {
-				playerManager.cancelContext(player);
-			}
-			
-			buildContextList();
-			updateText();
-		};	
+		protected String getBSideText() {
+			return "Delete selected Context!";
+		}
+
+		@Override
+		protected void onASideClick(final ButtonClickEvent event) {
+			facade.createContext(player);
+		}
+
+		@Override
+		protected void onBSideClick(final ButtonClickEvent event) {
+			facade.deleteContext(player);
+		}
+
+		@Override
+		protected Side determineSide() {
+			return facade.playerCanCreateContext(player) ? Side.A : Side.B;
+		}
+		
 	};
-	private ContextButton left2 = new ContextButton();
 	
-	private GenericButton left3 = new GenericButton("Toggle Highlight [on]") {
-		public void onButtonClick(final ButtonClickEvent event) {
-			System.out.println("LEFT 3");
-		};
+	private ToggleButton highlightButton = new ToggleButton() {
+		@Override
+		protected String getASideText() {
+			return "Toggle Highlight [on]";
+		}
+
+		@Override
+		protected String getBSideText() {
+			return "Toggle Highlight [off]";
+		}
+
+		@Override
+		protected void onASideClick(final ButtonClickEvent event) {
+			facade.setSuppressedHighlight(player, true);
+		}
+
+		@Override
+		protected void onBSideClick(final ButtonClickEvent event) {
+			facade.setSuppressedHighlight(player, false);
+		}
+
+		@Override
+		protected Side determineSide() {
+			return facade.hasSuppressedHighlight(player) ? Side.B : Side.A;
+		}
 	};
+	
 
 	private GenericButton right1 = new GenericButton("Rename selected item") {
 		public void onButtonClick(final ButtonClickEvent event) {
@@ -119,29 +144,33 @@ public class TriggerOverlay extends GenericPopup implements LogicObserver, Liste
 			System.out.println("right 3");
 		};
 	};
-	
 	/**
 	 * 
 	 * @param player the player who opened this overlay
-	 * @param triggerManager the currently running trigger manager
-	 * @param playerManager the currently running player manager
+	 * @param facade facade of the editor
 	 */
-	public TriggerOverlay(final SpoutPlayer player, final EditorTriggerManager triggerManager, final PlayerManager playerManager) {
+	public TriggerOverlay(final SpoutPlayer player, final EditorFacade facade) {
 		this.player = player;
-		this.triggerManager = triggerManager;
-		this.playerManager = playerManager;
-				
+		this.facade = facade;
+		
 		setupGui();
 		
 		buildContextList();
-		triggerManager.addLogicObserver(this);
-		playerManager.addLogicObserver(this);
+		
 		MultiListener.registerListener(this);
 	}
 
-	@Override
-	public void update(final Observee type, final Object what) {		
+	@EventHandler
+	public void onLogicChange(final LogicChangeEvent e) {
+		contextButton.updateSide();
 		buildContextList();
+	}
+	
+	@EventHandler
+	public void onParticleSuppress(final ParticleSuppressEvent e) {
+		if(e.getPlayer().equals(player)) {
+			highlightButton.updateSide();
+		}
 	}
 
 	/**
@@ -153,7 +182,7 @@ public class TriggerOverlay extends GenericPopup implements LogicObserver, Liste
 		contextList.addItem(new ListWidgetItem(NO_CONTEXT, ""));
 		contextList.forceSelection(0);
 		
-		for(TriggerContext context : triggerManager.getTriggerContexts()) {
+		for(TriggerContext context : facade.getAllTriggerContexts()) {
 			
 			String subtext = "";
 			
@@ -163,7 +192,7 @@ public class TriggerOverlay extends GenericPopup implements LogicObserver, Liste
 			
 			contextList.add(new ListWidgetItem(context.getLabel(), subtext), context);
 			
-			if (context == playerManager.getcontext(player)) {
+			if (context == facade.getTriggerContext(player)) {
 				int position = contextList.getItems().length - 1;
 				contextList.forceSelection(position);
 			}
@@ -211,8 +240,6 @@ public class TriggerOverlay extends GenericPopup implements LogicObserver, Liste
 			super.onScreenClose(event);
 			
 			MultiListener.unregisterListener(this);
-			triggerManager.removeLogicObserver(this);
-			playerManager.removeLogicObserver(this);
 		}
 	}
 	
@@ -251,23 +278,24 @@ public class TriggerOverlay extends GenericPopup implements LogicObserver, Liste
 		attachWidget(Hello.getPlugin(), left1);
 		
 		// left 2
-		left2.setWidth(200)
+		contextButton.setWidth(200)
 			 .setHeight(20)
-			 .shiftXPos(- (left2.getWidth() + MARGIN_X))
+			 .shiftXPos(- (contextButton.getWidth() + MARGIN_X))
 			 .shiftYPos(contextList.getHeight() + left1.getHeight()+ 3 * MARGIN_Y);
 		
-		left2.setAnchor(WidgetAnchor.TOP_CENTER);
-		left2.updateText();
-		attachWidget(Hello.getPlugin(), left2);
+		contextButton.setAnchor(WidgetAnchor.TOP_CENTER);
+		contextButton.updateSide();
+		attachWidget(Hello.getPlugin(), contextButton);
 		
 		// left 3
-		left3.setWidth(200)
+		highlightButton.setWidth(200)
 			 .setHeight(20)
-			 .shiftXPos(- (left3.getWidth() + MARGIN_X))
-			 .shiftYPos(contextList.getHeight() + left1.getHeight() + left2.getHeight() + 4 * MARGIN_Y);
+			 .shiftXPos(- (highlightButton.getWidth() + MARGIN_X))
+			 .shiftYPos(contextList.getHeight() + left1.getHeight() + contextButton.getHeight() + 4 * MARGIN_Y);
 		
-		left3.setAnchor(WidgetAnchor.TOP_CENTER);
-		attachWidget(Hello.getPlugin(), left3);
+		highlightButton.setAnchor(WidgetAnchor.TOP_CENTER);
+		highlightButton.updateSide();
+		attachWidget(Hello.getPlugin(), highlightButton);
 		
 		// right 1
 		right1.setWidth(200)

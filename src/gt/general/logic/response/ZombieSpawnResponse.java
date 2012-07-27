@@ -10,6 +10,8 @@ import java.util.Set;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.block.Block;
+import org.bukkit.entity.Chicken;
+import org.bukkit.entity.Entity;
 
 /**
  * Spawns the set number of Zombies if triggered.
@@ -19,6 +21,7 @@ public class ZombieSpawnResponse extends Response{
 	private Location spawnLocation;
 	private int number;
 	private double speed;
+	private Set<Entity> spawnedEntities;
 	
 	private static final String KEY_LOCATION = "location";
 	private static final String KEY_NUMBER = "number";
@@ -30,6 +33,7 @@ public class ZombieSpawnResponse extends Response{
 	public ZombieSpawnResponse() {
 		super("zombie");
 		this.speed = 1.0;
+		spawnedEntities = new HashSet<Entity>();
 	}
 	
 	/**
@@ -44,6 +48,7 @@ public class ZombieSpawnResponse extends Response{
 		this.spawnLocation = spawnLocation;
 		this.number = number;
 		this.speed = 1.0;
+		spawnedEntities = new HashSet<Entity>();
 	}
 	
 	/**
@@ -64,16 +69,30 @@ public class ZombieSpawnResponse extends Response{
 	@Override
 	public void triggered(final boolean active) {
 		if (active) {
+			if (zm == null) {
+				System.out.print("No ZombieManager: Cannot spawn zombies");
+			}
+			
 			for (int i=0;i<number;++i) {
+				if (zm == null) {
+					spawnedEntities.add(spawnLocation.getWorld()
+							.spawn(spawnLocation, Chicken.class));					
+				} else {
 				zm.spawnZombie(spawnLocation, speed);
+				}
 			}
 		}
 	}
 	@Override
 	public void dispose() {
-		//Nothing to do, maybe clearing Zombies?
-		//zm.clearZombies();
+		//Clear Entities (Spawned Chicken)
+		if (zm == null) {
+			for (Entity e : spawnedEntities) {
+				e.remove();
+			}	
+		}	
 	}
+		
 	@Override
 	public PersistanceMap dump() {
 		PersistanceMap map = new PersistanceMap();

@@ -1,18 +1,17 @@
 package gt.editor;
 
 import static com.google.common.collect.Maps.*;
-import static com.google.common.collect.Sets.*;
 import static org.bukkit.ChatColor.*;
-import gt.editor.LogicObserver.Observee;
+import gt.editor.event.LogicChangeEvent;
+import gt.editor.event.LogicChangeEvent.ObserveeType;
 import gt.general.logic.TriggerContext;
 import gt.general.logic.persistance.YamlSerializable;
 import gt.general.logic.response.Response;
 import gt.general.logic.trigger.Trigger;
-import gt.plugin.meta.Hello;
 
 import java.util.Map;
-import java.util.Set;
 
+import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -46,9 +45,7 @@ public class PlayerManager implements Listener{
 	private ParticleManager particleManager;
 	/** player inventories are saved here when they build TriggerContexts **/
 	private Map<String, ItemStack[]> playerInventories = newHashMap();
-	
-	private Set<LogicObserver> observers = newHashSet();
-	
+		
 	private static final ItemStack[] TRIGGER_BLOCKS = new ItemStack[]{
 			new ItemStack(Material.LEVER),
 			new ItemStack(Material.STONE_BUTTON),
@@ -67,10 +64,9 @@ public class PlayerManager implements Listener{
 	/**
 	 * @param triggerManager holds the TriggerContexts of the current map
 	 */
-	public PlayerManager(final EditorTriggerManager triggerManager) {
+	public PlayerManager(final EditorTriggerManager triggerManager, final ParticleManager particleManager) {
 		this.triggerManager = triggerManager;
-		this.particleManager = new ParticleManager();
-		Hello.scheduleSyncTask(particleManager, 0, 20);
+		this.particleManager = particleManager;
 	}
 	
 	
@@ -177,7 +173,7 @@ public class PlayerManager implements Listener{
 			cancelContext(player);
 			break; 
 		case KEY_F4:
-			highlightContext(player);
+			particleManager.toggleSupressedHighlight(player);
 			break;
 		default:
 			break;
@@ -290,7 +286,7 @@ public class PlayerManager implements Listener{
 	 * @return true if the player can create a new context
 	 */
 	public boolean canCreateContext(final Player player) {
-		return getcontext(player) == null;
+		return getContext(player) == null;
 	}
 	
 	/**
@@ -418,7 +414,7 @@ public class PlayerManager implements Listener{
 		return playerTriggerContexts.get(name);
 	}
 	
-	public TriggerContext getcontext(final Player player) {
+	public TriggerContext getContext(final Player player) {
 		return getContext(player.getName());
 	}
 	
@@ -431,28 +427,16 @@ public class PlayerManager implements Listener{
 	}
 	
 	/**
-	 * Adds an Observer
-	 * @param observer the Observer that is added
-	 */
-	public void addLogicObserver(final LogicObserver observer) {
-		observers.add(observer);
-	}
-	
-	/**
-	 * Deletes and Observer
-	 * @param observer the Observer that is deleted
-	 */
-	public void removeLogicObserver(final LogicObserver observer) {
-		observers.remove(observer);
-	}
-	
-	/**
 	 * @param context which context changed
 	 */
 	private void notifyLogicChanged(final TriggerContext context) {
-		for(LogicObserver observer : observers) {
-			observer.update(Observee.TRIGGER_CONTEXT, context);
-		}
+		
+		LogicChangeEvent event = new LogicChangeEvent(ObserveeType.TRIGGER_CONTEXT, context);
+		
+		Bukkit
+			.getServer()
+			.getPluginManager()
+			.callEvent(event);
 	}
 	
 }

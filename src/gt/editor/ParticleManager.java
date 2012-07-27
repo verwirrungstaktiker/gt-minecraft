@@ -1,10 +1,15 @@
 package gt.editor;
 
+import static com.google.common.collect.Sets.*;
+import gt.editor.event.ParticleSuppressEvent;
 import gt.general.logic.TriggerContext;
 import gt.general.logic.persistance.YamlSerializable;
 import gt.general.logic.response.Response;
 import gt.general.logic.trigger.Trigger;
 
+import java.util.Set;
+
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.block.Block;
@@ -20,13 +25,49 @@ import com.google.common.collect.Multimap;
 
 public class ParticleManager implements Runnable {
 
-	private Multimap<Player, Block> activeBlocks;
+	/** conains all highlighted blocks per player */
+	private Multimap<Player, Block> activeBlocks = HashMultimap.create();
+	
+	/** contains all players which suppress the highlight */
+	private Set<Player> suppressedHighlight = newHashSet();
 	
 	/**
-	 * generates a new particle manager
+	 * @param player the player whose state should be changed
+	 * @param supressed iff true the highlight is hidden
 	 */
-	public ParticleManager() {
-		activeBlocks = HashMultimap.create();
+	public void setSuppressedHighlight(final Player player, final boolean supressed) {
+		
+		boolean suppressedBefore = hasSuppressedHighlight(player);
+		
+		if(supressed) {
+			suppressedHighlight.add(player);
+		} else {
+			suppressedHighlight.remove(player);
+		}
+		
+		boolean suppressedAfter = hasSuppressedHighlight(player);
+		
+		if(suppressedBefore != suppressedAfter) {
+			Bukkit
+				.getServer()
+				.getPluginManager()
+				.callEvent(new ParticleSuppressEvent(player, suppressedAfter));
+		}
+	}
+	
+	/**
+	 * @param player the player whose highlight state should be checked
+	 * @return true iff the highlight is suppressed
+	 */
+	public boolean hasSuppressedHighlight(final Player player) {
+		return suppressedHighlight.contains(player);
+	}
+	
+	/**
+	 * @param player the player whose highlight should be toggled
+	 */
+	public void toggleSupressedHighlight(final Player player) {
+		setSuppressedHighlight(player, ! hasSuppressedHighlight(player));
 	}
 	
 	/**
@@ -132,9 +173,13 @@ public class ParticleManager implements Runnable {
 	@Override
 	public void run() {
 		for (Player player : activeBlocks.keySet()) {
-			for (Block block : activeBlocks.get(player)) {
-				highlight(block, player);
+			
+			if(! hasSuppressedHighlight(player)) {
+				for (Block block : activeBlocks.get(player)) {
+					highlight(block, player);
+				}
 			}
+			
 		}
 		
 	}
