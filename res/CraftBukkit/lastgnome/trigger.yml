@@ -75,7 +75,6 @@ global-contexts:
     - door_51177620
     - hallway1_room1_lower_door
     - hallway1_zombie_door
-    - zombie_1327258760
     input-function: AND
   hallway1_room3_math_riddle:
     triggers:
@@ -644,14 +643,6 @@ global-responses:
       x: 38
     class: gt.general.logic.response.DoorResponse
     material: !!org.bukkit.Material 'IRON_DOOR_BLOCK'
-  zombie_1327258760:
-    speed: 1.0
-    location:
-      z: 8.0
-      y: 65.0
-      x: -15.0
-    class: gt.general.logic.response.ZombieSpawnResponse
-    number: 10
   appearable_block_628935471:
     location:
       z: 10
