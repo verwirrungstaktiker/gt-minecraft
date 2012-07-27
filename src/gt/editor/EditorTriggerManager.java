@@ -8,12 +8,12 @@ import gt.general.logic.TriggerManager;
 import gt.general.logic.persistance.YamlSerializable;
 import gt.general.logic.response.Response;
 import gt.general.logic.trigger.Trigger;
+import gt.plugin.meta.Hello;
 
 import java.util.Collection;
 import java.util.Map;
 import java.util.Set;
 
-import org.bukkit.Bukkit;
 import org.bukkit.block.Block;
 
 /**
@@ -49,7 +49,7 @@ public class EditorTriggerManager extends TriggerManager {
 		super.addTriggerContext(context);
 		addBlockContextMapping(context);
 		
-		notifyTriggerContextChanged();
+		Hello.callEvent(new LogicChangeEvent(ObserveeType.TRIGGER_MANAGER, this));
 	}
 	
 	/**
@@ -81,6 +81,8 @@ public class EditorTriggerManager extends TriggerManager {
 			blockToContext.put(block, context);
 			blockToSerializable.put(block, trigger);
 		}
+		
+		Hello.callEvent(new LogicChangeEvent(ObserveeType.TRIGGER_CONTEXT, context));
 	}
 	
 	/**
@@ -95,6 +97,8 @@ public class EditorTriggerManager extends TriggerManager {
 			blockToContext.put(block, context);
 			blockToSerializable.put(block, response);
 		}
+		
+		Hello.callEvent(new LogicChangeEvent(ObserveeType.TRIGGER_CONTEXT, context));
 	}
 	
 	/**
@@ -105,7 +109,7 @@ public class EditorTriggerManager extends TriggerManager {
 		super.deleteTriggerContext(context);
 		deleteBlockContextMapping(context);
 		
-		notifyTriggerContextChanged();
+		Hello.callEvent(new LogicChangeEvent(ObserveeType.TRIGGER_MANAGER, this));
 	}
 	
 	/**
@@ -149,6 +153,8 @@ public class EditorTriggerManager extends TriggerManager {
 		
 		blockToContext.remove(block);
 		blockToSerializable.remove(block);
+		
+		Hello.callEvent(new LogicChangeEvent(ObserveeType.TRIGGER_CONTEXT, context));
 	}
 	
 	/**
@@ -173,20 +179,5 @@ public class EditorTriggerManager extends TriggerManager {
 	 */
 	public YamlSerializable getSerializable(final Block block) {
 		return blockToSerializable.get(block);
-	}
-	
-	/**
-	 * Notify the Observers on context modification
-	 */
-	private void notifyTriggerContextChanged() {
-		
-		
-		LogicChangeEvent event = new LogicChangeEvent(ObserveeType.TRIGGER_MANAGER, this);
-		
-		Bukkit
-			.getServer()
-			.getPluginManager()
-			.callEvent(event);
-	}
-	
+	}	
 }

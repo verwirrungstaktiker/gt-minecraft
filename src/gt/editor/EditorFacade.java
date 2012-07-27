@@ -5,6 +5,7 @@ import gt.general.logic.TriggerContext;
 import java.util.Collection;
 
 import org.bukkit.entity.Player;
+import org.getspout.spoutapi.player.SpoutPlayer;
 
 public class EditorFacade {
 
@@ -17,23 +18,10 @@ public class EditorFacade {
 		this.playerManager = playerManager;
 		this.particleManager = particleManager;
 	}
-
-	/**
-	 * @see gt.editor.PlayerManager#canCreateContext(Player)
+	
+	/*
+	 * state of system
 	 */
-	public boolean playerCanCreateContext(final Player player) {
-		return playerManager.canCreateContext(player);
-	}
-	
-	
-	public void setSuppressedHighlight(final Player player, final boolean supressed) {
-		particleManager.setSuppressedHighlight(player, supressed);
-	}
-	
-	public boolean hasSuppressedHighlight(final Player player) {
-		return particleManager.hasSuppressedHighlight(player);
-	}
-	
 	public TriggerContext getTriggerContext(final Player player) {
 		return playerManager.getContext(player);
 	}
@@ -42,6 +30,9 @@ public class EditorFacade {
 		return triggerManager.getTriggerContexts();
 	}
 	
+	/*
+	 * manipulate contexts
+	 */
 	public void createContext(final Player player) {
 		playerManager.createContext(player);
 	}
@@ -49,4 +40,35 @@ public class EditorFacade {
 	public void deleteContext(final Player player) {
 		playerManager.cancelContext(player);
 	}
+	
+	/*
+	 * state of user
+	 */
+	
+	public void switchToContext(final Player player, final TriggerContext context) {
+		playerManager.switchToContext(player, context);
+	}
+	
+	public void exitContext(SpoutPlayer player) {
+		playerManager.exitContext(player);
+	}
+	
+	public boolean playerCanCreateContext(final Player player) {
+		return playerManager.canCreateContext(player);
+	}
+	
+	/*
+	 *  highlight
+	 */
+	
+	public void setSuppressedHighlight(final Player player, final boolean supressed) {
+		particleManager.setSuppressedHighlight(player, supressed);
+	}
+	
+	public boolean hasSuppressedHighlight(final Player player) {
+		return particleManager.hasSuppressedHighlight(player);
+	}
+
+
+	
 }

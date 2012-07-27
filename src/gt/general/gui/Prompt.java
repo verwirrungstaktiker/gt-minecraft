@@ -82,7 +82,7 @@ public class Prompt extends GenericPopup {
 		attachWidget(Hello.getPlugin(), main);
 		
 	}
-	
+
 	/*
 	 * handles close on esc
 	 */
