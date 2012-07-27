@@ -10,15 +10,18 @@ import java.util.Set;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.block.Block;
+import org.bukkit.entity.Chicken;
+import org.bukkit.entity.Entity;
 
 /**
  * Spawns the set number of Zombies if triggered.
  */
-public class ZombieSpawnResponse extends Response{
-	private ZombieManager zm;
+public class ZombieSpawnResponse extends ZombieResponse{
+	//private ZombieManager zm;
 	private Location spawnLocation;
 	private int number;
 	private double speed;
+	private Set<Entity> spawnedEntities;
 	
 	private static final String KEY_LOCATION = "location";
 	private static final String KEY_NUMBER = "number";
@@ -30,6 +33,7 @@ public class ZombieSpawnResponse extends Response{
 	public ZombieSpawnResponse() {
 		super("zombie");
 		this.speed = 1.0;
+		spawnedEntities = new HashSet<Entity>();
 	}
 	
 	/**
@@ -39,11 +43,12 @@ public class ZombieSpawnResponse extends Response{
 	 * @param number Number of Zombies to spawn
 	 */
 	public ZombieSpawnResponse(final ZombieManager zm, final Location spawnLocation, final int number) {
-		super("zombie");
-		this.zm = zm;
+		super("zombie_spawn");
+		setZombieManager(zm);
 		this.spawnLocation = spawnLocation;
 		this.number = number;
 		this.speed = 1.0;
+		spawnedEntities = new HashSet<Entity>();
 	}
 	
 	/**
@@ -55,7 +60,7 @@ public class ZombieSpawnResponse extends Response{
 	 */
 	public ZombieSpawnResponse(final ZombieManager zm, final Location spawnLocation, final int number, final double speed) {
 		super("zombie");
-		this.zm = zm;
+		setZombieManager(zm);
 		this.spawnLocation = spawnLocation;
 		this.number = number;
 		this.speed = speed;
@@ -64,16 +69,30 @@ public class ZombieSpawnResponse extends Response{
 	@Override
 	public void triggered(final boolean active) {
 		if (active) {
+			if (getZombieManager() == null) {
+				System.out.print("No ZombieManager: Cannot spawn zombies");
+			}
+			
 			for (int i=0;i<number;++i) {
-				zm.spawnZombie(spawnLocation, speed);
+				if (getZombieManager() == null) {
+					spawnedEntities.add(spawnLocation.getWorld()
+							.spawn(spawnLocation, Chicken.class));					
+				} else {
+					getZombieManager().spawnZombie(spawnLocation, speed);
+				}
 			}
 		}
 	}
 	@Override
 	public void dispose() {
-		//Nothing to do, maybe clearing Zombies?
-		//zm.clearZombies();
+		//Clear Entities (Spawned Chicken)
+		if (getZombieManager() == null) {
+			for (Entity e : spawnedEntities) {
+				e.remove();
+			}	
+		}	
 	}
+		
 	@Override
 	public PersistanceMap dump() {
 		PersistanceMap map = new PersistanceMap();
@@ -90,12 +109,6 @@ public class ZombieSpawnResponse extends Response{
 		return blocks;
 	}
 	
-	/**
-	 * @param zm a ZombieManager
-	 */
-	public void setZombieManager(final ZombieManager zm) {
-		this.zm = zm;
-	}
 
 	@Override
 	public void setup(final PersistanceMap values, final World world) throws PersistanceException {
