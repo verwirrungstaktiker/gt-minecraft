@@ -1,0 +1,14 @@
+name: HelloWorld
+main: gt.plugin.helloworld.HelloWorld
+version: 0.1
+
+commands:
+  gg:
+    description: Starts a new Last Gnome Game.
+  end:
+    description: Ends the Last Gnome Game.
+  team:
+    description: manages the team TODO
+  prompt:
+    description: shows the prompt
+  

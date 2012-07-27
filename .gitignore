@@ -5,5 +5,16 @@ res/CraftBukkit/plugins/HelloWorld.jar
 res/CraftBukkit/plugins/Spout/CRCCache.txt
 res/CraftBukkit/plugins/Spout/itemMap.txt
 .checkstyle
+.settings
+.classpath
 res/CraftBukkit/lastgnome_*
 res/CraftBukkit/plugins/HelloEditor.jar
+
+res/CraftBukkit/*
+res/SpoutCraft.exe
+res/texture/*
+
+!res/CraftBukkit/lastgnome/
+!res/CraftBukkit/lastgnome/*
+!res/CraftBukkit/lastgnome/**/*
+!res/CraftBukkit/craftbukkit*

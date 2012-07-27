@@ -106,7 +106,7 @@ public class TriggerManagerPersistance {
 		
 			for(String triggerLabel : (List<String>) contextMap.get(KEY_TRIGGERS)) {
 				
-				Map<String, Object> map =(Map<String, Object>) globalResponses.get(triggerLabel);
+				Map<String, Object> map =(Map<String, Object>) globalTriggers.get(triggerLabel);
 				
 				if (map == null) {
 					throw new RuntimeErrorException(null,"Error loading Trigger "
