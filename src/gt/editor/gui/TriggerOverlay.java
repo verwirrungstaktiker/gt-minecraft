@@ -3,6 +3,9 @@ package gt.editor.gui;
 import gt.editor.EditorFacade;
 import gt.editor.event.LogicChangeEvent;
 import gt.editor.event.ParticleSuppressEvent;
+import gt.general.gui.Prompt;
+import gt.general.gui.Prompt.PromptCallback;
+import gt.general.gui.Prompt.PromptCallback.Action;
 import gt.general.logic.TriggerContext;
 import gt.general.logic.persistance.YamlSerializable;
 import gt.general.logic.response.Response;
@@ -46,6 +49,13 @@ public class TriggerOverlay extends GenericPopup implements Listener {
 				super.onSelected(selectedIndex, doubleClick);
 
 				oldSelectedIndex = selectedIndex;
+				
+				if(getSelectedObject() != null) {
+					facade.switchToContext(player, getSelectedObject());
+				} else {
+					facade.exitContext(player);
+				}
+				
 				buildItemList();
 			} else {
 				setSelection(oldSelectedIndex);
@@ -132,6 +142,18 @@ public class TriggerOverlay extends GenericPopup implements Listener {
 	private GenericButton right1 = new GenericButton("Rename selected item") {
 		public void onButtonClick(final ButtonClickEvent event) {
 			System.out.println("right 1");
+
+			PromptCallback cb = new PromptCallback() {
+				
+				@Override
+				public void onClose(Action action, String text) {
+					System.out.println("CLOSE");
+				}
+			};
+			
+			
+			player.getMainScreen().attachPopupScreen(new Prompt("test", cb));
+			
 		};
 	};
 	private GenericButton right2 = new GenericButton() {
@@ -162,6 +184,7 @@ public class TriggerOverlay extends GenericPopup implements Listener {
 
 	@EventHandler
 	public void onLogicChange(final LogicChangeEvent e) {
+		System.out.println("logic changed");
 		contextButton.updateSide();
 		buildContextList();
 	}
@@ -192,7 +215,13 @@ public class TriggerOverlay extends GenericPopup implements Listener {
 			
 			contextList.add(new ListWidgetItem(context.getLabel(), subtext), context);
 			
+			
+			System.out.println(context.getLabel());
+			System.out.println(facade.getTriggerContext(player) == null ? "null" : facade.getTriggerContext(player).getLabel());
+			
 			if (context == facade.getTriggerContext(player)) {
+				System.out.println("--highlight");
+				
 				int position = contextList.getItems().length - 1;
 				contextList.forceSelection(position);
 			}

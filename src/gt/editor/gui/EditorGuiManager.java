@@ -1,8 +1,6 @@
 package gt.editor.gui;
 
 import gt.editor.EditorFacade;
-import gt.editor.EditorTriggerManager;
-import gt.editor.PlayerManager;
 
 import org.getspout.spoutapi.event.input.KeyBindingEvent;
 import org.getspout.spoutapi.gui.ScreenType;

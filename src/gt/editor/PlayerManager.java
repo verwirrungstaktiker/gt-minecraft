@@ -80,7 +80,6 @@ public class PlayerManager implements Listener{
 	public void onBlockDestroyed(final BlockBreakEvent event) {
 		
 		Player player = event.getPlayer();
-		String name = event.getPlayer().getName();
 		Block block = event.getBlock();
 		
 		if(triggerManager.isSerializable(block)) {
@@ -91,17 +90,14 @@ public class PlayerManager implements Listener{
 			String serLabel = serializable.getLabel();
 			String contextLabel = context.getLabel();
 		
-			switch(getState(name)) {
+			switch(getState(player)) {
 				case TRIGGER: 
 				case RESPONSE:
 				case STANDBY:
-					if(playerTriggerContexts.get(name) == context) {
-						System.out.println("Breaking serializable block.");
-						//kill block highlight
+					if(getContext(player) == context) {
+
 						particleManager.removeSerializable(serializable, player);
-						//handle block break					
 						triggerManager.deleteBlock(block);
-						notifyLogicChanged(context);
 
 						player.sendMessage(YELLOW + "Deleted " + serLabel + " from " + contextLabel);
 					} else {
@@ -113,18 +109,29 @@ public class PlayerManager implements Listener{
 					break;
 				case IDLE:
 					System.out.println("Switching to context.");
-					//goto corresponding context
-					playerTriggerContexts.put(name, context);
-					playerTriggerStates.put(name, TriggerState.TRIGGER);
-					//add highlight for whole context
-					highlightContext(player);
-					
-					player.sendMessage(GREEN + "Switched to Context " + contextLabel+ " State: TRIGGER.");
+					switchToContext(player, context);
 					event.setCancelled(true);
 					break;
 				default:
 			}
 		}
+	}
+
+
+	public void switchToContext(final Player player, final TriggerContext context) {
+		
+		if(getContext(player) != null) {
+			exitContext(player);
+		}
+		
+		//goto corresponding context
+		playerTriggerContexts.put(player.getName(), context);
+		playerTriggerStates.put(player.getName(), TriggerState.TRIGGER);
+		//add highlight for whole context
+		highlightContext(player);
+		
+		player.sendMessage(GREEN + "Switched to Context " + context.getLabel() + " State: TRIGGER.");
+		
 	}
 	
 	/**
@@ -136,8 +143,6 @@ public class PlayerManager implements Listener{
 	public void addTrigger(final Trigger trigger, final TriggerContext context, final Player player) {
 		triggerManager.addTrigger(trigger, context);
 		particleManager.addSerializable(trigger, ParticleType.DRIPLAVA, player);
-		
-		notifyLogicChanged(context);
 	}
 	
 	/**
@@ -149,8 +154,6 @@ public class PlayerManager implements Listener{
 	public void addResponse(final Response response, final TriggerContext context, final Player player) {
 		triggerManager.addResponse(response, context);
 		particleManager.addSerializable(response, ParticleType.DRIPLAVA, player);
-		
-		notifyLogicChanged(context);
 	}
 
 	/**
@@ -261,26 +264,32 @@ public class PlayerManager implements Listener{
 	 * @param player bukkit player
 	 */
 	private void toggleContext(final Player player) {
-		String name = player.getName();
-		TriggerContext context = playerTriggerContexts.get(name);
+		TriggerContext context = getContext(player);
 		
 		if(canCreateContext(player)) {
 			createContext(player);
 			
 		} else {
 			if(context.isComplete()) {
-				// TODO actually handle the Context before deleting it
-				playerTriggerStates.put(name, TriggerState.IDLE);
-				playerTriggerContexts.put(name, null);
-				
-				particleManager.removeContext(context, player);
-				
-				player.sendMessage(YELLOW + "Handed over " + context.getLabel() + ".");
+				exitContext(player);
 			} else {
 				player.sendMessage(YELLOW + "Context not complete. Use [F12] to cancel.");
 				return;
 			}
 		}
+	}
+
+
+	public void exitContext(final Player player) {
+		TriggerContext context = getContext(player);
+		
+		// TODO actually handle the Context before deleting it
+		playerTriggerStates.put(player.getName(), TriggerState.IDLE);
+		playerTriggerContexts.put(player.getName(), null);
+		
+		particleManager.removeContext(context, player);
+		
+		player.sendMessage(YELLOW + "Handed over " + context.getLabel() + ".");
 	}
 
 	/**
@@ -305,7 +314,7 @@ public class PlayerManager implements Listener{
 		playerTriggerContexts.put(player.getName(), context);
 		
 		player.sendMessage(YELLOW + "New Context: " + context.getLabel() + "; BuildState: TRIGGER");
-		
+				
 		return context;
 	}
 
@@ -428,17 +437,7 @@ public class PlayerManager implements Listener{
 		return playerTriggerStates.get(name);
 	}
 	
-	/**
-	 * @param context which context changed
-	 */
-	private void notifyLogicChanged(final TriggerContext context) {
-		
-		LogicChangeEvent event = new LogicChangeEvent(ObserveeType.TRIGGER_CONTEXT, context);
-		
-		Bukkit
-			.getServer()
-			.getPluginManager()
-			.callEvent(event);
-	}
-	
+	public TriggerState getState(final Player player) {
+		return playerTriggerStates.get(player.getName());
+	}	
 }

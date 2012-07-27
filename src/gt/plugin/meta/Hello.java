@@ -4,6 +4,7 @@ import java.io.File;
 
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
+import org.bukkit.event.Event;
 import org.bukkit.plugin.java.JavaPlugin;
 
 /**
@@ -107,6 +108,15 @@ public final class Hello {
 	public static JavaPlugin getPlugin() {
 		return Hello.getInstance().plugin;
 	}
+	
+	public static void callEvent(final Event event) {
+		Bukkit
+			.getServer()
+			.getPluginManager()
+			.callEvent(event);
+	}
+	
+
 	
 	/**
 	 * Deletes a directory including content

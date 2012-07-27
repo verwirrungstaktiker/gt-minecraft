@@ -5,6 +5,7 @@ import gt.plugin.meta.Hello;
 
 import java.util.Vector;
 
+import org.bukkit.Effect;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.entity.Entity;
@@ -133,7 +134,9 @@ public class ZombieManager implements Listener, Runnable{
 	 */
 	public void clearZombies() {
 		for (ZombieCharacter zombie : zombies) {
-			zombie.getZombie().damage(20);
+			zombie.getZombie().getWorld().playEffect(
+					zombie.getZombie().getLocation(), Effect.POTION_BREAK, 10);
+			//zombie.getZombie().damage(20);
 			zombie.getZombie().remove();
 		}
 		zombies.clear();

@@ -1,6 +1,5 @@
 package gt.plugin.helloeditor;
 
-import gt.editor.gui.TriggerOverlay;
 import gt.general.GameManager;
 import gt.general.character.TeamManager;
 import gt.general.logic.persistance.exceptions.PersistanceException;
@@ -19,12 +18,6 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.java.JavaPlugin;
-import org.getspout.spoutapi.SpoutManager;
-import org.getspout.spoutapi.event.input.KeyBindingEvent;
-import org.getspout.spoutapi.gui.ScreenType;
-import org.getspout.spoutapi.keyboard.BindingExecutionDelegate;
-import org.getspout.spoutapi.keyboard.KeyBinding;
-import org.getspout.spoutapi.keyboard.Keyboard;
 
 
 /**
