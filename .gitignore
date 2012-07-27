@@ -7,3 +7,8 @@ res/CraftBukkit/plugins/Spout/itemMap.txt
 .checkstyle
 res/CraftBukkit/lastgnome_*
 res/CraftBukkit/plugins/HelloEditor.jar
+
+res
+!res/CraftBukkit/lastgnome/trigger.yml
+lib/SpoutPlugin*
+lib/bukkit*
