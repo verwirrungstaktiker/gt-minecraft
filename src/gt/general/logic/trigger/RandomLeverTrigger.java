@@ -34,6 +34,7 @@ public class RandomLeverTrigger extends LeverRedstoneTrigger{
 	public PersistanceMap dump() {
 		PersistanceMap map = super.dump();
 		map.put(KEY_SIGNALS, signals);
+		map.put(KEY_INVERTED, false);
 		return map;
 	}
 	
