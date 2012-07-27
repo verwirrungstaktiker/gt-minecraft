@@ -9,6 +9,7 @@ import gt.general.logic.persistance.YamlSerializable;
 import gt.general.logic.response.Response;
 import gt.general.logic.trigger.Trigger;
 
+import gt.plugin.meta.CustomBlockType;
 import java.util.Map;
 
 import org.bukkit.Bukkit;
@@ -50,7 +51,8 @@ public class PlayerManager implements Listener{
 			new ItemStack(Material.LEVER),
 			new ItemStack(Material.STONE_BUTTON),
 			new ItemStack(Material.WOOD_PLATE),
-			new ItemStack(Material.STONE_PLATE)
+			new ItemStack(Material.STONE_PLATE),
+			CustomBlockType.GNOME_TRIGGER_NEGATIVE.getItemStack()
 	};
 	
 	private static final ItemStack[] RESPONSE_BLOCKS = new ItemStack[]{

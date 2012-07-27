@@ -12,9 +12,14 @@ import gt.plugin.meta.CustomBlockType;
 import java.util.HashSet;
 import java.util.Set;
 
+import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.block.Block;
+import org.bukkit.inventory.PlayerInventory;
+import org.getspout.spoutapi.inventory.SpoutPlayerInventory;
+
+import com.avaje.ebeaninternal.server.subclass.GetterSetterMethods;
 
 /**
  *  
@@ -102,21 +107,29 @@ public class GnomeTrigger extends Trigger implements BlockObserver{
 
     @Override
     public void onBlockEvent(final BlockEvent blockEvent) {
-    	System.out.println(blockEvent.player.getItemInHand());
-        if(blockEvent.blockEventType == BlockEventType.BLOCK_INTERACT && 
-        		// this is a temporary fix as all custom blocks are Flint underneath
-        		blockEvent.player.getItemInHand().getType() == Material.FLINT) {
-        	System.out.println("gnometrigger triggered");
-            triggered = !triggered;
-            
-            if(triggered) {
-                CustomBlockType.GNOME_TRIGGER_POSITIVE.place(block);
-                getContext().updateTriggerState(GnomeTrigger.this, true);
-                
-            } else {
-                CustomBlockType.GNOME_TRIGGER_NEGATIVE.place(block);
-                getContext().updateTriggerState(GnomeTrigger.this, true);
-            }
+    	// don't bother if the block is being destroyed
+    	if(blockEvent.blockEventType == BlockEventType.BLOCK_DESTROYED) {
+    		return;
+    	}
+
+        if(blockEvent.blockEventType == BlockEventType.BLOCK_INTERACT) { 
+	        PlayerInventory inv = blockEvent.player.getInventory();
+
+        	//TODO this is a temporary fix as the gnome is flint underneath, as all CustomItems!
+	        if(inv.getItemInHand().getType() == Material.FLINT) {
+	            triggered = !triggered;
+	            
+	            if(triggered) {
+	                CustomBlockType.GNOME_TRIGGER_POSITIVE.place(block);
+	                getContext().updateTriggerState(GnomeTrigger.this, true);
+	                
+	            } else {
+	                CustomBlockType.GNOME_TRIGGER_NEGATIVE.place(block);
+	                getContext().updateTriggerState(GnomeTrigger.this, true);
+	            }
+	        } else {
+	        	blockEvent.player.sendMessage(ChatColor.YELLOW + "You might need the gnome here");
+	        }
         }
     }
 
