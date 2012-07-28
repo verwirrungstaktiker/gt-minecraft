@@ -174,9 +174,9 @@ public class MainPage extends OverlayPage implements Listener {
 		}
 	};
 	
-	private GenericButton right3 = new GenericButton("Select blocks ...") {
+	private GenericButton blocksButton = new GenericButton("Select blocks ...") {
 		public void onButtonClick(final ButtonClickEvent event) {
-			System.out.println("right 3");
+			overlay.switchToPage(overlay.getBlocksPage());
 		};
 	};
 
@@ -359,15 +359,15 @@ public class MainPage extends OverlayPage implements Listener {
 		attachWidget(highlightButton);
 
 		// right 3
-		right3.setWidth(200)
+		blocksButton.setWidth(200)
 				.setHeight(20)
 				.shiftXPos(MARGIN_X)
 				.shiftYPos(
 						itemList.getHeight() + renameItemButton.getHeight()
 								+ highlightButton.getHeight() + 4 * MARGIN_Y);
 
-		right3.setAnchor(WidgetAnchor.TOP_CENTER);
-		attachWidget(right3);
+		blocksButton.setAnchor(WidgetAnchor.TOP_CENTER);
+		attachWidget(blocksButton);
 	}
 
 	@Override

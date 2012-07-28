@@ -1,11 +1,14 @@
 package gt.editor;
 
+import gt.editor.EditorPlayer.TriggerState;
 import gt.general.logic.TriggerContext;
 import gt.general.logic.persistance.YamlSerializable;
 
 import java.util.Collection;
+import java.util.Map;
 
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
 import org.getspout.spoutapi.player.SpoutPlayer;
 
 public class EditorFacade {
@@ -80,6 +83,18 @@ public class EditorFacade {
 	
 	public boolean isSuppressHighlight(final Player player) {
 		return getEditorPlayer(player).isSuppressHighlight();
+	}
+	
+	public TriggerState getTriggerState(final Player player) {
+		return getEditorPlayer(player).getTriggerState();
+	}
+	
+	public void setTriggerState(final Player player, final TriggerState triggerState) {
+		getEditorPlayer(player).setTriggerState(triggerState);
+	}
+	
+	public Map<TriggerState, ItemStack[]> getInventories(final Player player) {
+		return getEditorPlayer(player).getInventories();
 	}
 	
 }

@@ -5,14 +5,20 @@ import gt.editor.EditorFacade;
 import gt.editor.EditorTriggerManager;
 import gt.editor.ParticleManager;
 import gt.editor.PlayerManager;
+import gt.editor.gui.BlockSet;
 import gt.editor.gui.EditorGuiManager;
+import gt.editor.gui.EditorOverlay.LandingPage;
 import gt.general.logic.persistance.exceptions.PersistanceException;
 import gt.general.world.WorldManager;
 import gt.plugin.meta.Hello;
 import gt.plugin.meta.MultiListener;
 
+import org.bukkit.inventory.ItemStack;
 import org.getspout.spoutapi.SpoutManager;
+import org.getspout.spoutapi.event.input.KeyBindingEvent;
+import org.getspout.spoutapi.keyboard.BindingExecutionDelegate;
 import org.getspout.spoutapi.keyboard.Keyboard;
+import org.getspout.spoutapi.player.SpoutPlayer;
 
 
 public class EditorLastGnomeGameBuilder extends AbstractLastGnomeGameBuilder {
@@ -55,16 +61,25 @@ public class EditorLastGnomeGameBuilder extends AbstractLastGnomeGameBuilder {
 				buildManager,
 				particleManager);
 		
+		
+		EditorGuiManager guiManager = new EditorGuiManager(facade);
+		
 		SpoutManager
 			.getKeyBindingManager()
-			.registerBinding("triggerOverlay",
+			.registerBinding(LandingPage.TRIGGER_PAGE.toString(),
 								Keyboard.KEY_C, 
 								"trigger overlay",
-								new EditorGuiManager(facade),
+								guiManager,
 								Hello.getPlugin());
 		
-		
-		
+		SpoutManager
+			.getKeyBindingManager()
+			.registerBinding(LandingPage.BLOCKS_PAGE.toString(),
+								Keyboard.KEY_X, 
+								"block selector",
+								guiManager,
+								Hello.getPlugin());
+				
 		Hello.scheduleSyncTask(particleManager, 0, 20);
 	}
 
