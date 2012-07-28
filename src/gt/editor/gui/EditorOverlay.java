@@ -5,11 +5,14 @@ import gt.plugin.meta.MultiListener;
 
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.player.PlayerEvent;
 import org.getspout.spoutapi.event.screen.ScreenCloseEvent;
 import org.getspout.spoutapi.gui.GenericPopup;
+import org.getspout.spoutapi.gui.Widget;
+import org.getspout.spoutapi.gui.WidgetAnchor;
 import org.getspout.spoutapi.player.SpoutPlayer;
 
-public class TriggerOverlay extends GenericPopup implements Listener {
+public class EditorOverlay extends GenericPopup implements Listener {
 	
 	private final SpoutPlayer player;
 	private final EditorFacade facade;
@@ -22,10 +25,9 @@ public class TriggerOverlay extends GenericPopup implements Listener {
 	 * @param player the player who opened this overlay
 	 * @param facade facade of the editor
 	 */
-	public TriggerOverlay(final SpoutPlayer player, final EditorFacade facade) {
+	public EditorOverlay(final SpoutPlayer player, final EditorFacade facade) {
 		this.player = player;
 		this.facade = facade;
-
 		
 		switchToPage(getMainPage());
 	}
@@ -60,12 +62,13 @@ public class TriggerOverlay extends GenericPopup implements Listener {
 			MultiListener.unregisterListener(this);
 		}
 	}
-	
-	@Override
-	public void onTick() {
-		super.onTick();
-		setDirty(true);
-	}
-	
-	
+
+	public boolean closeWithHotkey() {
+		
+		if(activePage != null) {
+			return activePage.closeWithHotkey();
+		} else {
+			return false;
+		}
+	}	
 }

@@ -134,19 +134,27 @@ public class MainPage extends OverlayPage implements Listener {
 	private GenericButton right1 = new GenericButton("Rename selected item") {
 		public void onButtonClick(final ButtonClickEvent event) {
 			System.out.println("right 1");
-
-			final PromptCallback cb = new PromptCallback() {
+			final YamlSerializable selectedItem = itemList.getSelectedObject();
+			
+			if(selectedItem != null) {
+			
+				final PromptCallback cb = new PromptCallback() {
+					@Override
+					public void onClose(final Action action, final String text) {
+	
+						if(action == Action.SUBMIT) {
+							selectedItem.setLabel(text);
+						}
+						
+						overlay.switchToPage(overlay.getMainPage());
+					}
+				};
 				
-				@Override
-				public void onClose(Action action, String text) {
-					System.out.println("CLOSE");
-					overlay.switchToPage(overlay.getMainPage());
-				}
-			};
+				overlay
+					.switchToPage(overlay.getPromptPage("rename: "+ selectedItem.getLabel(),
+														cb));
 			
-			overlay.switchToPage(overlay.getPromptPage("hello?", cb));
-			
-			
+			}
 		};
 	};
 	private GenericButton right2 = new GenericButton() {
@@ -160,7 +168,7 @@ public class MainPage extends OverlayPage implements Listener {
 		};
 	};
 	
-	MainPage(final TriggerOverlay overlay, final SpoutPlayer player, final EditorFacade facade) {
+	MainPage(final EditorOverlay overlay, final SpoutPlayer player, final EditorFacade facade) {
 		super(overlay, player, facade);
 	}
 
@@ -341,5 +349,10 @@ public class MainPage extends OverlayPage implements Listener {
 		
 		right3.setAnchor(WidgetAnchor.TOP_CENTER);
 		attachWidget(right3);
+	}
+
+	@Override
+	public boolean closeWithHotkey() {
+		return true;
 	}
 }

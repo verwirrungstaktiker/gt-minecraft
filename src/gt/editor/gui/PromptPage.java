@@ -26,7 +26,7 @@ public class PromptPage extends OverlayPage{
 	 * @param message the question of the prompt
 	 * @param callback callback
 	 */
-	PromptPage(final TriggerOverlay overlay, 
+	PromptPage(final EditorOverlay overlay, 
 				final SpoutPlayer player,
 				final EditorFacade facade, 
 				final String message, 
@@ -39,12 +39,15 @@ public class PromptPage extends OverlayPage{
 
 	@Override
 	protected void setup() {
-
+		System.out.println("SETUP");
+		
+		
 		question = new GenericLabel(message);
 		question.setMaxWidth(200);
 		
 		textField = new GenericTextField();
 		textField.setMargin(2);
+		textField.setMaximumCharacters(50);
 		textField.setMinHeight(20);
 		
 		abortButton = new GenericButton("Abort") {
@@ -80,4 +83,9 @@ public class PromptPage extends OverlayPage{
 
 	@Override
 	protected void dispose() {}
+
+	@Override
+	public boolean closeWithHotkey() {
+		return ! textField.isFocus();
+	}
 }

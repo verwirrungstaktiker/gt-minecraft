@@ -11,31 +11,25 @@ import org.getspout.spoutapi.player.SpoutPlayer;
 
 public abstract class OverlayPage {
 
-	protected final TriggerOverlay overlay;
+	protected final EditorOverlay overlay;
 	protected final SpoutPlayer player;
 	protected final EditorFacade facade;
 	
 	private final Set<Widget> attachedWidgets = newHashSet();
 	
-	protected OverlayPage(final TriggerOverlay overlay, final SpoutPlayer player, final EditorFacade facade) {
+	protected OverlayPage(final EditorOverlay overlay, final SpoutPlayer player, final EditorFacade facade) {
 		this.overlay = overlay;
 		this.player = player;
 		this.facade = facade;
 	}
-	
-	
 	
 	protected void attachWidget(final Widget widget) {
 		overlay.attachWidget(Hello.getPlugin(), widget);
 		attachedWidgets.add(widget);
 	}
 	
-	
 	protected abstract void setup();
-	
-	protected abstract void dispose();
-	
-	
+	protected abstract void dispose();	
 	
 	public void show() {
 		setup();
@@ -49,6 +43,8 @@ public abstract class OverlayPage {
 			overlay.removeWidget(widget);
 		}
 	}
+
+	public abstract boolean closeWithHotkey();
 	
 	
 	
