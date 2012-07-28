@@ -1,9 +1,9 @@
 package gt.editor.gui;
 
 import gt.editor.EditorFacade;
+import gt.editor.event.HighlightSuppressEvent;
 import gt.editor.event.LogicChangeEvent;
 import gt.editor.event.LogicSelectionEvent;
-import gt.editor.event.ParticleSuppressEvent;
 import gt.general.logic.TriggerContext;
 import gt.general.logic.persistance.YamlSerializable;
 import gt.plugin.meta.MultiListener;
@@ -58,7 +58,7 @@ public class MainPage extends OverlayPage implements Listener {
 		
 	};
 
-	private GenericButton left1 = new GenericButton("Rename selected context") {
+	private GenericButton renameContextButton = new GenericButton("Rename selected context") {
 		public void onButtonClick(final ButtonClickEvent event) {
 			final TriggerContext selectedItem = contextList.getSelectedObject();
 
@@ -80,63 +80,52 @@ public class MainPage extends OverlayPage implements Listener {
 		};
 	};
 
-	private ToggleButton highlightButton = new ToggleButton() {
-		@Override
-		protected String getASideText() {
-			return "Highlight Selected Context [on]";
-		}
-
-		@Override
-		protected String getBSideText() {
-			return "Highlight Selected Context [off]";
-		}
-
-		@Override
-		protected void onASideClick(final ButtonClickEvent event) {
-			facade.setSuppressHighlight(player, true);
-		}
-
-		@Override
-		protected void onBSideClick(final ButtonClickEvent event) {
-			facade.setSuppressHighlight(player, false);
-		}
-
-		@Override
-		protected Side determineSide() {
-			return facade.isSuppressHighlight(player) ? Side.B : Side.A;
-		}
-	};
-
 	private ToggleButton contextButton = new ToggleButton() {
-
+	
 		@Override
 		protected String getASideText() {
 			return "New Context";
 		}
-
+	
 		@Override
 		protected String getBSideText() {
 			return "Delete selected Context!";
 		}
-
+	
 		@Override
 		protected void onASideClick(final ButtonClickEvent event) {
 			facade.createContext(player);
 		}
-
+	
 		@Override
 		protected void onBSideClick(final ButtonClickEvent event) {
 			facade.deleteContext(player);
 		}
-
+	
 		@Override
 		protected Side determineSide() {
 			return facade.playerCanCreateContext(player) ? Side.A : Side.B;
 		}
-
+	
 	};
+	
+	private GenericButton loadButton = new GenericButton("Load") {
+		@Override
+		public void onButtonClick(final ButtonClickEvent event) {
+			event.getPlayer().performCommand("load");
+		};
+	};
+	
+	private GenericButton saveButton = new GenericButton("Save") {
+		@Override
+		public void onButtonClick(final ButtonClickEvent event) {
+			event.getPlayer().performCommand("save");
+		};
+	};
+	
 	private GenericButton renameItemButton = new GenericButton(
 			"Rename selected item") {
+		@Override
 		public void onButtonClick(final ButtonClickEvent event) {
 			final YamlSerializable selectedItem = itemList.getSelectedObject();
 
@@ -157,12 +146,34 @@ public class MainPage extends OverlayPage implements Listener {
 			}
 		};
 	};
-
-	private GenericButton right2 = new GenericButton() {
-		public void onButtonClick(final ButtonClickEvent event) {
-			System.out.println("right 2");
-		};
+	
+	private ToggleButton highlightButton = new ToggleButton() {
+		@Override
+		protected String getASideText() {
+			return "Highlight Selected Context [on]";
+		}
+	
+		@Override
+		protected String getBSideText() {
+			return "Highlight Selected Context [off]";
+		}
+	
+		@Override
+		protected void onASideClick(final ButtonClickEvent event) {
+			facade.setSuppressHighlight(player, true);
+		}
+	
+		@Override
+		protected void onBSideClick(final ButtonClickEvent event) {
+			facade.setSuppressHighlight(player, false);
+		}
+	
+		@Override
+		protected Side determineSide() {
+			return facade.isSuppressHighlight(player) ? Side.B : Side.A;
+		}
 	};
+	
 	private GenericButton right3 = new GenericButton("Select blocks ...") {
 		public void onButtonClick(final ButtonClickEvent event) {
 			System.out.println("right 3");
@@ -195,8 +206,10 @@ public class MainPage extends OverlayPage implements Listener {
 	}
 
 	@EventHandler
-	public void onParticleSuppress(final ParticleSuppressEvent e) {
+	public void onHighlightSuppress(final HighlightSuppressEvent e) {		
 		if (e.getPlayer().equals(player)) {
+			System.out.println("highlight suppress state changed");
+			
 			highlightButton.updateSide();
 		}
 	}
@@ -281,12 +294,12 @@ public class MainPage extends OverlayPage implements Listener {
 		attachWidget(itemList);
 
 		// left 1
-		left1.setWidth(200).setHeight(20)
-				.shiftXPos(-(left1.getWidth() + MARGIN_X))
+		renameContextButton.setWidth(200).setHeight(20)
+				.shiftXPos(-(renameContextButton.getWidth() + MARGIN_X))
 				.shiftYPos(contextList.getHeight() + 2 * MARGIN_Y);
 
-		left1.setAnchor(WidgetAnchor.TOP_CENTER);
-		attachWidget(left1);
+		renameContextButton.setAnchor(WidgetAnchor.TOP_CENTER);
+		attachWidget(renameContextButton);
 
 		// left 2
 		contextButton
@@ -294,25 +307,37 @@ public class MainPage extends OverlayPage implements Listener {
 				.setHeight(20)
 				.shiftXPos(-(contextButton.getWidth() + MARGIN_X))
 				.shiftYPos(
-						contextList.getHeight() + left1.getHeight() + 3
+						contextList.getHeight() + renameContextButton.getHeight() + 3
 								* MARGIN_Y);
 
 		contextButton.setAnchor(WidgetAnchor.TOP_CENTER);
 		contextButton.updateSide();
 		attachWidget(contextButton);
 
-		// left 3
-		highlightButton
-				.setWidth(200)
+		// left 3a
+		loadButton
+				.setWidth(100 - MARGIN_X)
 				.setHeight(20)
-				.shiftXPos(-(highlightButton.getWidth() + MARGIN_X))
+				.shiftXPos(-(renameContextButton.getWidth() + MARGIN_X ))
 				.shiftYPos(
-						contextList.getHeight() + left1.getHeight()
+						contextList.getHeight() + renameContextButton.getHeight()
 								+ contextButton.getHeight() + 4 * MARGIN_Y);
 
-		highlightButton.setAnchor(WidgetAnchor.TOP_CENTER);
-		highlightButton.updateSide();
-		attachWidget(highlightButton);
+		loadButton.setAnchor(WidgetAnchor.TOP_CENTER);
+		attachWidget(loadButton);
+		
+		
+		// left 3b
+		saveButton
+				.setWidth(100 - MARGIN_X)
+				.setHeight(20)
+				.shiftXPos(-(saveButton.getWidth() + MARGIN_X))
+				.shiftYPos(
+						contextList.getHeight() + renameContextButton.getHeight()
+								+ contextButton.getHeight() + 4 * MARGIN_Y);
+
+		saveButton.setAnchor(WidgetAnchor.TOP_CENTER);
+		attachWidget(saveButton);
 
 		// right 1
 		renameItemButton.setWidth(200).setHeight(20).shiftXPos(MARGIN_X)
@@ -322,15 +347,16 @@ public class MainPage extends OverlayPage implements Listener {
 		attachWidget(renameItemButton);
 
 		// right 2
-		right2.setWidth(200)
+		highlightButton.setWidth(200)
 				.setHeight(20)
 				.shiftXPos(MARGIN_X)
 				.shiftYPos(
 						itemList.getHeight() + renameItemButton.getHeight() + 3
 								* MARGIN_Y);
 
-		right2.setAnchor(WidgetAnchor.TOP_CENTER);
-		attachWidget(right2);
+		highlightButton.setAnchor(WidgetAnchor.TOP_CENTER);
+		highlightButton.updateSide();
+		attachWidget(highlightButton);
 
 		// right 3
 		right3.setWidth(200)
@@ -338,7 +364,7 @@ public class MainPage extends OverlayPage implements Listener {
 				.shiftXPos(MARGIN_X)
 				.shiftYPos(
 						itemList.getHeight() + renameItemButton.getHeight()
-								+ right2.getHeight() + 4 * MARGIN_Y);
+								+ highlightButton.getHeight() + 4 * MARGIN_Y);
 
 		right3.setAnchor(WidgetAnchor.TOP_CENTER);
 		attachWidget(right3);

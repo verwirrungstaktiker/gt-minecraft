@@ -20,13 +20,12 @@ public abstract class ToggleButton extends GenericButton {
 			setText(getBSideText());
 			break;
 		}
+		
+		setDirty(true);
 	}
 
 	@Override
-	public void onButtonClick(final ButtonClickEvent event) {			
-
-		System.out.println("KLICK");
-		
+	public void onButtonClick(final ButtonClickEvent event) {		
 		switch (side) {
 		case A:
 			onASideClick(event);

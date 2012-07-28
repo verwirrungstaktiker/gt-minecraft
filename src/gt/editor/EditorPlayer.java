@@ -2,7 +2,7 @@ package gt.editor;
 
 import static org.bukkit.ChatColor.*;
 import gt.editor.event.LogicSelectionEvent;
-import gt.editor.event.ParticleSuppressEvent;
+import gt.editor.event.HighlightSuppressEvent;
 import gt.general.logic.TriggerContext;
 import gt.general.logic.persistance.YamlSerializable;
 import gt.plugin.meta.Hello;
@@ -137,14 +137,9 @@ public class EditorPlayer {
 	/**
 	 * @param suppressHighlight the suppressHighlight to set
 	 */
-	public void setSuppressHighlight(boolean suppressHighlight) {
-		
-		if(this.suppressHighlight != suppressHighlight) {
-		
-			this.suppressHighlight = suppressHighlight;
-			Hello.callEvent(new ParticleSuppressEvent(player, suppressHighlight));
-			
-		}
+	public void setSuppressHighlight(final boolean suppressHighlight) {
+		this.suppressHighlight = suppressHighlight;
+		Hello.callEvent(new HighlightSuppressEvent(player, suppressHighlight));
 	}
 
 

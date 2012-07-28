@@ -4,7 +4,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.HandlerList;
 import org.bukkit.event.player.PlayerEvent;
 
-public class ParticleSuppressEvent extends PlayerEvent {
+public class HighlightSuppressEvent extends PlayerEvent {
 
 	private final boolean suppressed;
 
@@ -13,7 +13,7 @@ public class ParticleSuppressEvent extends PlayerEvent {
 	/**
 	 * @param who the player this event ist about
 	 */
-	public ParticleSuppressEvent(final Player who, final boolean suppressed) {
+	public HighlightSuppressEvent(final Player who, final boolean suppressed) {
 		super(who);
 		this.suppressed = suppressed;
 	}

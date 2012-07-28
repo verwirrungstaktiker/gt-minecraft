@@ -94,9 +94,6 @@ public class ParticleManager implements Runnable, Listener {
 					
 					if(ePlayer.getSelectedItem() == item) {
 						type = HighlightType.SPECIAL;
-						
-						System.out.println("highlight: " + item.getLabel());
-						
 					} else {
 						type = HighlightType.STANDARD;
 					}
