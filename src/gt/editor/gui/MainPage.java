@@ -70,7 +70,24 @@ public class MainPage extends OverlayPage implements Listener {
 	
 	private GenericButton left1 = new GenericButton("Rename selected context") {
 		public void onButtonClick(final ButtonClickEvent event) {
-			System.out.println("LEFT 1");
+			final TriggerContext selectedItem = contextList.getSelectedObject();
+			
+			if(selectedItem != null) {
+			
+				final PromptCallback cb = new PromptCallback() {
+					@Override
+					public void onClose(final Action action, final String text) {
+	
+						if(action == Action.SUBMIT) {
+							selectedItem.setLabel(text);
+						}
+						overlay.switchToPage(overlay.getMainPage());
+					}
+				};
+				overlay
+					.switchToPage(overlay.getPromptPage("rename: "+ selectedItem.getLabel(),
+														cb));
+			}
 		};
 	};
 
@@ -131,9 +148,8 @@ public class MainPage extends OverlayPage implements Listener {
 	};
 	
 
-	private GenericButton right1 = new GenericButton("Rename selected item") {
+	private GenericButton renameItemButton = new GenericButton("Rename selected item") {
 		public void onButtonClick(final ButtonClickEvent event) {
-			System.out.println("right 1");
 			final YamlSerializable selectedItem = itemList.getSelectedObject();
 			
 			if(selectedItem != null) {
@@ -145,18 +161,16 @@ public class MainPage extends OverlayPage implements Listener {
 						if(action == Action.SUBMIT) {
 							selectedItem.setLabel(text);
 						}
-						
 						overlay.switchToPage(overlay.getMainPage());
 					}
 				};
-				
 				overlay
 					.switchToPage(overlay.getPromptPage("rename: "+ selectedItem.getLabel(),
 														cb));
-			
 			}
 		};
 	};
+	
 	private GenericButton right2 = new GenericButton() {
 		public void onButtonClick(final ButtonClickEvent event) {
 			System.out.println("right 2");
@@ -324,19 +338,19 @@ public class MainPage extends OverlayPage implements Listener {
 		attachWidget(highlightButton);
 		
 		// right 1
-		right1.setWidth(200)
+		renameItemButton.setWidth(200)
 			 .setHeight(20)
 			 .shiftXPos(MARGIN_X)
 			 .shiftYPos(itemList.getHeight() + 2 * MARGIN_Y);
 		
-		right1.setAnchor(WidgetAnchor.TOP_CENTER);
-		attachWidget(right1);
+		renameItemButton.setAnchor(WidgetAnchor.TOP_CENTER);
+		attachWidget(renameItemButton);
 		
 		// right 2
 		right2.setWidth(200)
 			 .setHeight(20)
 			 .shiftXPos(MARGIN_X)
-			 .shiftYPos(itemList.getHeight() + right1.getHeight()+ 3 * MARGIN_Y);
+			 .shiftYPos(itemList.getHeight() + renameItemButton.getHeight()+ 3 * MARGIN_Y);
 		
 		right2.setAnchor(WidgetAnchor.TOP_CENTER);
 		attachWidget(right2);
@@ -345,7 +359,7 @@ public class MainPage extends OverlayPage implements Listener {
 		right3.setWidth(200)
 			 .setHeight(20)
 			 .shiftXPos(MARGIN_X)
-			 .shiftYPos(itemList.getHeight() + right1.getHeight() + right2.getHeight() + 4 * MARGIN_Y);
+			 .shiftYPos(itemList.getHeight() + renameItemButton.getHeight() + right2.getHeight() + 4 * MARGIN_Y);
 		
 		right3.setAnchor(WidgetAnchor.TOP_CENTER);
 		attachWidget(right3);
