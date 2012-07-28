@@ -8,6 +8,8 @@ import gt.general.logic.trigger.Trigger;
 import java.util.Collection;
 import java.util.Set;
 
+import com.google.common.collect.Iterables;
+
 public class TriggerContext {
 
 	public enum InputFunction {
@@ -162,6 +164,10 @@ public class TriggerContext {
 		for(Response response : responses) {
 			response.dispose();
 		}
+	}
+	
+	public Iterable<YamlSerializable> getAllItems() {
+		return Iterables.concat(triggers, responses);
 	}
 	
 }

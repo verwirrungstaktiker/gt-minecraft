@@ -140,19 +140,13 @@ public class ParticleManager implements Runnable, Listener {
 			
 			if(!ePlayer.isSuppressHighlight() && ePlayer.getActiveContext() != null) {
 				
-				for(Trigger t : ePlayer.getActiveContext().getTriggers()) {
-					for(Block b : t.getBlocks()) {
-						highlight(b, ePlayer.getPlayer());
-					}
-				}
-				
-				for(Response r : ePlayer.getActiveContext().getResponses()) {
-					for(Block b : r.getBlocks()) {
+				for(YamlSerializable item : ePlayer.getActiveContext().getAllItems()) {
+					
+					for(Block b : item.getBlocks()) {
 						highlight(b, ePlayer.getPlayer());
 					}
 				}
 			}
-			
 		}
 		
 		// custom blocks

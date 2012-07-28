@@ -255,26 +255,14 @@ public class MainPage extends OverlayPage implements Listener {
 
 		if (selected != null) {
 
-			for (Trigger trigger : selected.getTriggers()) {
-				itemList.add(new ListWidgetItem(trigger.getLabel(), ""),
-						trigger);
+			for (YamlSerializable item : selected.getAllItems()) {
+				itemList.add(new ListWidgetItem(item.getLabel(), ""), item);
 
-				if (trigger == selectedItem) {
+				if (item == selectedItem) {
 					int position = itemList.getItems().length - 1;
 					itemList.setSelection(position);
 				}
 			}
-
-			for (Response response : selected.getResponses()) {
-				itemList.add(new ListWidgetItem(response.getLabel(), ""),
-						response);
-
-				if (response == selectedItem) {
-					int position = itemList.getItems().length - 1;
-					itemList.setSelection(position);
-				}
-			}
-
 		}
 	}
 
