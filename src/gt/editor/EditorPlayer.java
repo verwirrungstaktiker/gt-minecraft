@@ -1,14 +1,13 @@
 package gt.editor;
 
 import static org.bukkit.ChatColor.*;
-
-import org.bukkit.Bukkit;
-import org.bukkit.entity.Player;
-
-import gt.editor.event.ContextSwitchEvent;
+import gt.editor.event.LogicSelectionEvent;
 import gt.editor.event.ParticleSuppressEvent;
 import gt.general.logic.TriggerContext;
+import gt.general.logic.persistance.YamlSerializable;
 import gt.plugin.meta.Hello;
+
+import org.bukkit.entity.Player;
 
 public class EditorPlayer {
 
@@ -25,6 +24,8 @@ public class EditorPlayer {
 
 	private TriggerState triggerState;
 	private TriggerContext activeContext;
+	
+	private YamlSerializable selectedItem;
 	
 	private boolean suppressHighlight;
 	
@@ -91,20 +92,16 @@ public class EditorPlayer {
 	 */
 	public void enterContext(final TriggerContext context) {
 		triggerState = TriggerState.TRIGGER;
-		switchContext(context);
+		activeContext = context;
+		
+		Hello.callEvent(new LogicSelectionEvent(player));
 	}
 	
 	public void exitContext() {		
 		triggerState = TriggerState.IDLE;
-		switchContext(NO_CONTEXT);
-	}
-	
-	private void switchContext(final TriggerContext to) {
-		TriggerContext from = getActiveContext();
+		activeContext = NO_CONTEXT;
 		
-		activeContext = to;
-
-		Hello.callEvent(new ContextSwitchEvent(player, from, to));
+		Hello.callEvent(new LogicSelectionEvent(player));
 	}
 	
 	
@@ -148,5 +145,22 @@ public class EditorPlayer {
 			Hello.callEvent(new ParticleSuppressEvent(player, suppressHighlight));
 			
 		}
+	}
+
+
+	/**
+	 * @return the selectedItem
+	 */
+	public YamlSerializable getSelectedItem() {
+		return selectedItem;
+	}
+
+
+	/**
+	 * @param selectedItem the selectedItem to set
+	 */
+	public void setSelectedItem(YamlSerializable selectedItem) {
+		this.selectedItem = selectedItem;
+		Hello.callEvent(new LogicSelectionEvent(player));
 	}
 }

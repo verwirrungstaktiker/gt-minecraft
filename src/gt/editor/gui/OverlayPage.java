@@ -45,7 +45,4 @@ public abstract class OverlayPage {
 	}
 
 	public abstract boolean closeWithHotkey();
-	
-	
-	
 }

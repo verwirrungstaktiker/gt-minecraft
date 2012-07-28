@@ -2,6 +2,8 @@ package gt.editor.gui;
 
 import static com.google.common.collect.Maps.*;
 
+import gt.general.logic.TriggerContext;
+
 import java.util.Map;
 
 import org.getspout.spoutapi.gui.GenericListWidget;
@@ -10,8 +12,10 @@ import org.getspout.spoutapi.gui.ListWidgetItem;
 /**
  * inner class to keep track of selected contexts
  */
-class SelectionListWidget <T> extends GenericListWidget {
+abstract class SelectionListWidget <T> extends GenericListWidget {
 	private Map<ListWidgetItem, T> map = newHashMap();
+	private int oldSelectedIndex = 0;
+	
 	
 	/**
 	 * @param item the item to be displayed in the list
@@ -38,4 +42,43 @@ class SelectionListWidget <T> extends GenericListWidget {
 		super.clear();
 		map.clear();
 	}
+	
+	
+	/**
+	 * resets overrides the context constraint
+	 * @param n the new selection
+	 */
+	public void forceSelection(final int n) {
+		oldSelectedIndex = n;
+		super.setSelection(n);
+	}
+	
+	public int getOldSelectedIndex() {
+		return oldSelectedIndex;
+	}
+	
+	@Override
+	public void onSelected(final int selectedIndex, final boolean doubleClick) {			
+		// current is reselected catches forced selections
+		// - cant really distinguish between updates from the code and updates form the user
+		if (selectedIndex == oldSelectedIndex) {
+			return;
+		}
+		
+		T oldSelected = getObject(getItem(oldSelectedIndex));
+
+		// only allow to change if empty element, context is complete
+		if(canLeaveOldSelected(oldSelected)) {
+			super.onSelected(selectedIndex, doubleClick);
+
+			oldSelectedIndex = selectedIndex;
+			onAllowedSelectionChange();
+		} else {
+			setSelection(oldSelectedIndex);
+		}
+	}
+
+	protected abstract boolean canLeaveOldSelected(T oldSelected);
+	protected abstract void onAllowedSelectionChange();
+	
 }

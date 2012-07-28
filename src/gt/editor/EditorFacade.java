@@ -1,6 +1,7 @@
 package gt.editor;
 
 import gt.general.logic.TriggerContext;
+import gt.general.logic.persistance.YamlSerializable;
 
 import java.util.Collection;
 
@@ -24,6 +25,14 @@ public class EditorFacade {
 	 */
 	public TriggerContext getActiveContext(final Player player) {
 		return getEditorPlayer(player).getActiveContext();
+	}
+	
+	public YamlSerializable getSelectedItem(final Player player) {
+		return getEditorPlayer(player).getSelectedItem();
+	}
+	
+	public void setSelectedItem(final Player player, final YamlSerializable selectedItem) {
+		getEditorPlayer(player).setSelectedItem(selectedItem);
 	}
 	
 	public Collection<TriggerContext> getAllTriggerContexts() {

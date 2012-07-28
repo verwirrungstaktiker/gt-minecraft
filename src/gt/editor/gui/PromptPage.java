@@ -39,9 +39,6 @@ public class PromptPage extends OverlayPage{
 
 	@Override
 	protected void setup() {
-		System.out.println("SETUP");
-		
-		
 		question = new GenericLabel(message);
 		question.setMaxWidth(200);
 		
