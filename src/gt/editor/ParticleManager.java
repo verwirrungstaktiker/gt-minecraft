@@ -1,11 +1,7 @@
 package gt.editor;
 
-import gt.general.logic.TriggerContext;
 import gt.general.logic.persistance.YamlSerializable;
-import gt.general.logic.response.Response;
-import gt.general.logic.trigger.Trigger;
 
-import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
@@ -15,60 +11,25 @@ import org.getspout.spoutapi.particle.Particle;
 import org.getspout.spoutapi.particle.Particle.ParticleType;
 import org.getspout.spoutapi.player.SpoutPlayer;
 
-import com.google.common.collect.HashMultimap;
-import com.google.common.collect.Multimap;
 
-
-public class ParticleManager implements Runnable, Listener {
-
-	/** contains all highlighted blocks per player */
-	private Multimap<Player, Block> activeBlocks = HashMultimap.create();
-	
+public class ParticleManager implements Runnable, Listener {	
 	private final PlayerManager playerManager;
+	
+	private enum HighlightType {
+		STANDARD, SPECIAL
+	}
 	
 	public ParticleManager(final PlayerManager playerManager) {
 		this.playerManager = playerManager;
-	}
-	
-	
-	/**
-	 * highlight all blocks of a context
-	 * @param context	TriggerContext
-	 * @param type		Particle type
-	 * @param player	player that can see particles
-	 */
-	public void addContext(final TriggerContext context, final ParticleType type, final Player player) {
-		for(Trigger trigger : context.getTriggers()) {
-			addSerializable(trigger, type, player);
-		}
-		for(Response response : context.getResponses()) {
-			addSerializable(response, type, player);
-		}
-		player.sendMessage(ChatColor.YELLOW + "Highlighting " + context.getLabel());
-	}
-	
-	/**
-	 * despawns all particles of a context
-	 * @param context	a TriggerContext
-	 * @param player	the player which could see the particles
-	 */
-	public void removeContext(final TriggerContext context, final Player player) {
-		for(Trigger trigger : context.getTriggers()) {
-			removeSerializable(trigger, player);
-		}
-		for(Response response : context.getResponses()) {
-			removeSerializable(response, player);
-		}
 	}
 	
 	/**
 	 * highlights the edges of a block
 	 * @param block the block to highlight
 	 * @param player a bukkit player
+	 * @param type 
 	 */
-	private void highlight(final Block block, final Player player) {
-		//TODO variable effect?
-		ParticleType type = ParticleType.DRIPLAVA;
+	private void highlight(final Block block, final Player player, final HighlightType type) {
 		Location loc = block.getLocation();
 		
 		// yep, that's the 8 edges
@@ -82,28 +43,6 @@ public class ParticleManager implements Runnable, Listener {
 		paintParticle(type, loc, new Vector(1, 1, 1), player);
 		
 	}
-	
-	/**
-	 * despawns all particles of a trigger/response
-	 * @param serializable	a trigger or response
-	 * @param player a bukkit player
-	 */
-	public void removeSerializable(final YamlSerializable serializable, final Player player) {
-		for(Block block : serializable.getBlocks()) {
-			activeBlocks.remove(player, block);
-		}
-	}
-	
-	/**
-	 * highlight all blocks of a serializable object
-	 * @param serializable	trigger or response
-	 * @param type			particle type
-	 * @param player		player that can see particles
-	 */
-	public void addSerializable(final YamlSerializable serializable, final ParticleType type, final Player player) {
-		
-		activeBlocks.putAll(player, serializable.getBlocks());
-	}
 
 	/**
 	 * spawns a single particle
@@ -113,11 +52,24 @@ public class ParticleManager implements Runnable, Listener {
 	 * @param player	player that can see the particle
 	 * @return the particle
 	 */
-	private Particle paintParticle(final ParticleType type, final Location origin, final Vector offset, final Player player) {
-
+	private Particle paintParticle(final HighlightType type, final Location origin, final Vector offset, final Player player) {
+		
 		Location newLoc = origin.clone().add(offset);
 		newLoc.subtract(0.04, 0.1, 0.04);	// looks much better with this additional offset
-		Particle particle = new Particle(type, newLoc, new Vector(0,0,0));
+		
+		Particle particle;
+		
+		switch (type) {
+		case SPECIAL:
+			particle = new Particle(ParticleType.DRIPLAVA, newLoc, new Vector(0,0,0));
+			particle.setParticleRed(0.0f);
+			particle.setParticleGreen(0.0f);
+			particle.setParticleBlue(0.0f);
+			break;
+		default:
+			particle = new Particle(ParticleType.DRIPWATER, newLoc, new Vector(0,0,0));
+			break;
+		}
 		
 		particle.setScale(7);		// particle size
 		particle.setAmount(1);
@@ -134,26 +86,26 @@ public class ParticleManager implements Runnable, Listener {
 	@Override
 	public void run() {
 		
-		// current highlights from the player's selected context
-		
 		for(EditorPlayer ePlayer : playerManager.getEditorPlayers()) {
-			
 			if(!ePlayer.isSuppressHighlight() && ePlayer.getActiveContext() != null) {
-				
 				for(YamlSerializable item : ePlayer.getActiveContext().getAllItems()) {
 					
-					for(Block b : item.getBlocks()) {
-						highlight(b, ePlayer.getPlayer());
+					HighlightType type;
+					
+					if(ePlayer.getSelectedItem() == item) {
+						type = HighlightType.SPECIAL;
+						
+						System.out.println("highlight: " + item.getLabel());
+						
+					} else {
+						type = HighlightType.STANDARD;
+					}
+					
+					for(Block block : item.getBlocks()) {
+						highlight(block, ePlayer.getPlayer(), type);
 					}
 				}
 			}
 		}
-		
-		// custom blocks
-		for (Player player : activeBlocks.keySet()) {
-			for (Block block : activeBlocks.get(player)) {
-				highlight(block, player);
-			}		
-		}	
 	}
 }

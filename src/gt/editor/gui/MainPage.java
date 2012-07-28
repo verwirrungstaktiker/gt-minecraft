@@ -6,8 +6,6 @@ import gt.editor.event.LogicSelectionEvent;
 import gt.editor.event.ParticleSuppressEvent;
 import gt.general.logic.TriggerContext;
 import gt.general.logic.persistance.YamlSerializable;
-import gt.general.logic.response.Response;
-import gt.general.logic.trigger.Trigger;
 import gt.plugin.meta.MultiListener;
 
 import org.bukkit.event.EventHandler;
