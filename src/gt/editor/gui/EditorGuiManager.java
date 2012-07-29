@@ -28,7 +28,7 @@ public class EditorGuiManager implements BindingExecutionDelegate {
 		if(evt.getPlayer().getActiveScreen() == ScreenType.GAME_SCREEN) {
 			evt.getPlayer()
 				.getMainScreen()
-				.attachPopupScreen(new EditorOverlay(evt.getPlayer(), facade));
+				.attachPopupScreen(new EditorOverlay(evt, facade));
 			
 		} else if(popup instanceof EditorOverlay && ((EditorOverlay)popup).closeWithHotkey() ) {
 			evt.getPlayer().getMainScreen().closePopup();

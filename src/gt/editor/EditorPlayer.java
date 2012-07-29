@@ -1,24 +1,48 @@
 package gt.editor;
 
+import static com.google.common.collect.Maps.*;
 import static org.bukkit.ChatColor.*;
-import gt.editor.event.LogicSelectionEvent;
 import gt.editor.event.HighlightSuppressEvent;
+import gt.editor.event.LogicSelectionEvent;
 import gt.general.logic.TriggerContext;
 import gt.general.logic.persistance.YamlSerializable;
+import gt.plugin.meta.CustomBlockType;
 import gt.plugin.meta.Hello;
 
+import java.util.Map;
+
+import org.bukkit.ChatColor;
+import org.bukkit.Material;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
 
 public class EditorPlayer {
 
 	private final static TriggerContext NO_CONTEXT = null;
 
+	private static final ItemStack[] TRIGGER_BLOCKS = new ItemStack[]{
+		new ItemStack(Material.LEVER),
+		new ItemStack(Material.STONE_BUTTON),
+		new ItemStack(Material.WOOD_PLATE),
+		new ItemStack(Material.STONE_PLATE),
+		CustomBlockType.GNOME_TRIGGER_NEGATIVE.getItemStack()
+	};
+	
+	private static final ItemStack[] RESPONSE_BLOCKS = new ItemStack[]{
+		new ItemStack(Material.WOOD_DOOR),
+		new ItemStack(Material.IRON_DOOR),
+		new ItemStack(Material.DIAMOND_BLOCK),
+		new ItemStack(Material.REDSTONE_TORCH_ON),
+		new ItemStack(Material.SIGN)
+	};
+	
 	public enum TriggerState {
-		IDLE,		// no triggercontext
 		TRIGGER,
 		RESPONSE,
 		STANDBY		// triggercontext but standby
 	}
+	
+	private final Map<TriggerState, ItemStack[]> inventories = newEnumMap(TriggerState.class);
 	
 	private final Player player;
 
@@ -33,8 +57,12 @@ public class EditorPlayer {
 	public EditorPlayer (final Player player) {
 		this.player = player;
 		
-		triggerState = TriggerState.IDLE;
+		triggerState = TriggerState.STANDBY;
 		activeContext = NO_CONTEXT;
+		
+		inventories.put(TriggerState.TRIGGER, TRIGGER_BLOCKS);
+		inventories.put(TriggerState.RESPONSE, RESPONSE_BLOCKS);
+		inventories.put(TriggerState.STANDBY, player.getInventory().getContents());
 		
 		setSuppressHighlight(false);
 	}
@@ -52,9 +80,24 @@ public class EditorPlayer {
 	 * @param triggerState the state to set
 	 */
 	public void setTriggerState(final TriggerState triggerState) {
-		this.triggerState = triggerState;
-	}
 
+		if(!hasActiveContext() && (triggerState == TriggerState.TRIGGER ||
+									triggerState == TriggerState.RESPONSE)) {
+			
+			sendMessage(RED + "Cannot equip that Block Set - Not in a Context!");
+			return;
+		}
+		
+		if(this.triggerState == TriggerState.STANDBY ) {
+			inventories.put(TriggerState.STANDBY, player.getInventory().getContents());
+		}
+	
+		this.triggerState = triggerState;
+		player.getInventory().setContents(inventories.get(triggerState));
+		
+		sendMessage(GREEN + "Entered TriggerState: " + triggerState);
+	}	
+	
 	public void toggleTriggerState() {
 	
 		switch (triggerState) {
@@ -64,8 +107,6 @@ public class EditorPlayer {
 			
 		case RESPONSE:
 			setTriggerState(TriggerState.STANDBY);
-			
-			//loadInventory(player);
 			return;
 			
 		case STANDBY:
@@ -91,14 +132,19 @@ public class EditorPlayer {
 	 * @param activeContext the activeContext to set
 	 */
 	public void enterContext(final TriggerContext context) {
-		triggerState = TriggerState.TRIGGER;
 		activeContext = context;
 		
 		Hello.callEvent(new LogicSelectionEvent(player));
 	}
 	
 	public void exitContext() {		
-		triggerState = TriggerState.IDLE;
+		
+		// if we are in a triggerstate, that makes only sense in a context -> leave it
+		if(triggerState == TriggerState.TRIGGER || triggerState == TriggerState.RESPONSE) {
+			setTriggerState(TriggerState.STANDBY);
+		}
+		
+		
 		activeContext = NO_CONTEXT;
 		
 		Hello.callEvent(new LogicSelectionEvent(player));
@@ -157,5 +203,15 @@ public class EditorPlayer {
 	public void setSelectedItem(YamlSerializable selectedItem) {
 		this.selectedItem = selectedItem;
 		Hello.callEvent(new LogicSelectionEvent(player));
+	}
+
+
+	public Map<TriggerState, ItemStack[]> getInventories() {
+		
+		if(triggerState == TriggerState.STANDBY) {
+			inventories.put(TriggerState.STANDBY, player.getInventory().getContents());
+		}
+		
+		return inventories;
 	}
 }
