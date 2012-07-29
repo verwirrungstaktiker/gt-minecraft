@@ -30,6 +30,11 @@ public class LastGnomeGameBuilder extends AbstractLastGnomeGameBuilder {
 	@Override
 	public void instantiateGame() {
 		game = new LastGnomeGame(team);
+		
+		ScoreManager sm = new ScoreManager();
+		game.setScoreManager(sm);
+		sm.setGame(game);
+		MultiListener.registerListener(sm);
 	}
 
 	@Override

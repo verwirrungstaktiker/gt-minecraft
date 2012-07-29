@@ -12,6 +12,7 @@ import gt.general.gui.GuiElementType;
 import gt.general.world.WorldInstance;
 import gt.lastgnome.GnomeItem;
 import gt.lastgnome.gui.SpeedBar;
+import gt.plugin.meta.MultiListener;
 
 import java.util.Iterator;
 
@@ -33,6 +34,8 @@ public class LastGnomeGame extends AbstractLastGnomeGame implements Listener{
 
 	/** so that e.g. Zombies know who the Gnome-Bearer is */
 	private Hero gnomeBearer;
+	
+	private ScoreManager scoreManager;
 		
 	/**
 	 * initiates a new Last Gnome Game
@@ -47,6 +50,21 @@ public class LastGnomeGame extends AbstractLastGnomeGame implements Listener{
 	}
 
 	
+	public ScoreManager getScoreManager() {
+		return scoreManager;
+	}
+
+
+	public void setScoreManager(ScoreManager scoreManager) {
+		this.scoreManager = scoreManager;
+	}
+
+
+	public void setGameRunning(boolean gameRunning) {
+		this.gameRunning = gameRunning;
+	}
+
+
 	/**
 	 * TODO downgrade? is here the right place for this stuff?
 	 * 		better in game manager?
@@ -145,6 +163,7 @@ public class LastGnomeGame extends AbstractLastGnomeGame implements Listener{
 			hero.getGui().removeGuiElement(GuiElementType.SPEEDBAR);
 		}
 		
+		MultiListener.unregisterListener(scoreManager);
 	}
 	
 	@Override
@@ -200,7 +219,7 @@ public class LastGnomeGame extends AbstractLastGnomeGame implements Listener{
 	
 	private void win() {
 		for (Hero hero: getTeam().getPlayers()) {
-			hero.getPlayer().sendMessage(GREEN + "The Gnome has been saved!");			
+			hero.getPlayer().sendMessage(GREEN + "The last Gnome on earth has been saved!");			
 		}
 		dispose();	   	
 	}
@@ -218,10 +237,12 @@ public class LastGnomeGame extends AbstractLastGnomeGame implements Listener{
 			hero.setActiveItem(gnome);
 			setGnomeBearer(hero);
 			
-			player.sendMessage(GREEN + "You obtained a Gnome for Testing");
+			scoreManager.startMonitoring();
+			
+			player.sendMessage(GREEN + "You obtained the last Gnome on earth");
 			
 		} else {
-			player.sendMessage(YELLOW + "nothing happens.");
+			player.sendMessage(YELLOW + "nothing happens..");
 		}
 	}
 
@@ -238,8 +259,9 @@ public class LastGnomeGame extends AbstractLastGnomeGame implements Listener{
 			
 			hero.removeActiveItem();
 			setGnomeBearer(null);
-			
-			//player.sendMessage(GREEN + "The Gnome has been saved!");
+
+			scoreManager.stopMonitoring();
+		
 			win();
 		} else {
 			player.sendMessage(YELLOW + "The mighty Gnome Socket demands the Gnome!");

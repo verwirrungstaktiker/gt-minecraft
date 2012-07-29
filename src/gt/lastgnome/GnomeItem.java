@@ -43,7 +43,7 @@ public final class GnomeItem extends PortableItem {
 		gnomeAura = new Aura(new EffectFactory() {
 			@Override
 			public Effect getEffect() {
-				System.out.println("one more stack of gnome slow");
+//				System.out.println("one more stack of gnome slow");
 				return new GnomeSlowEffect();
 			}
 		},

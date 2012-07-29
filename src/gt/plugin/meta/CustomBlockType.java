@@ -111,7 +111,7 @@ public enum CustomBlockType {
 		}
 	}),
 	
-	/** spawns players */
+	/** spawns zombies */
 	ZOMBIESPAWN_BLOCK(new CustomBlockInstatiator() {
 		@Override
 		public ObservableCustomBlock instantiate() {
