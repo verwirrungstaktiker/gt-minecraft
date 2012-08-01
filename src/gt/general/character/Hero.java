@@ -231,7 +231,7 @@ public class Hero extends Character implements Listener{
 
 		SpoutPlayer sPlayer = getSpoutPlayer();
 
-		sPlayer.sendMessage("speed" + getCurrentSpeed());
+		//sPlayer.sendMessage("speed" + getCurrentSpeed());
 
 		sPlayer.setWalkingMultiplier(getCurrentSpeed());
 		sPlayer.setJumpingMultiplier(getAttribute(CharacterAttributes.JUMPMULTIPLIER));

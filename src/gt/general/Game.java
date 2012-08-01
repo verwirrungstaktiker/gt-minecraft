@@ -1,13 +1,17 @@
 package gt.general;
 
 import gt.general.character.Hero;
+import gt.general.character.HeroManager;
 import gt.general.character.Team;
+import gt.general.gui.HeroGui;
 import gt.general.world.WorldInstance;
 
 import java.util.HashMap;
 
 import org.bukkit.entity.Player;
+import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.player.PlayerLoginEvent;
 
 public abstract class Game implements Listener {
 	
@@ -18,7 +22,7 @@ public abstract class Game implements Listener {
 	private WorldInstance world;
 	
 	/** Heros, which are currently offline */
-	private final HashMap<Player,Hero> disconnectedHeros;
+	//private final HashMap<Player,Hero> disconnectedHeros;
 	
 	/**
 	 * @param team The team playing this game
@@ -28,7 +32,7 @@ public abstract class Game implements Listener {
 		this.team = team;
 		team.setGame(this);
 		
-		disconnectedHeros = new HashMap<Player, Hero>();
+		//disconnectedHeros = new HashMap<Player, Hero>();
 	}
 
 	/**
@@ -36,21 +40,21 @@ public abstract class Game implements Listener {
 	 * @param player a player
 	 * @return the Hero if it is associated with the player, otherwise null 
 	 */
-	public Hero getDisconnectedHero(final Player player) {
+	/*public Hero getDisconnectedHero(final Player player) {
 		for (Player p : disconnectedHeros.keySet()) {
 			if (p.getName().equals(player.getName())) {
 				return disconnectedHeros.get(p); 
 			}
 		}
 		return null;
-	}
+	}*/
 	
 	/**
 	 * saves hero for reconnect, removes him otherwise
 	 * @param hero the hero which disconnects
 	 */
 	public void disconnectHero(final Hero hero) {
-		disconnectedHeros.put(hero.getPlayer(), hero);
+		//disconnectedHeros.put(hero.getPlayer(), hero);
 		team.getPlayers().remove(hero);
 	}
 	
@@ -60,8 +64,9 @@ public abstract class Game implements Listener {
 	 */
 	public void restoreHero(final Hero hero) {
 		Player player = hero.getPlayer();
-		disconnectedHeros.remove(player);
+		//disconnectedHeros.remove(player);
 		team.getPlayers().add(hero);
+		hero.setTeam(team);
 		
 		player.teleport(world.getSpawnLocation());	
 	}
@@ -108,5 +113,6 @@ public abstract class Game implements Listener {
 	public void setWorldInstance(final WorldInstance world) {
 		this.world = world;
 	}
+
 }
 

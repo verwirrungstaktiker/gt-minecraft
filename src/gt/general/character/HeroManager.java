@@ -3,6 +3,7 @@ package gt.general.character;
 import static com.google.common.collect.Maps.newHashMap;
 import gt.general.Game;
 import gt.general.gui.HeroGui;
+import gt.plugin.meta.Hello;
 
 import java.util.HashSet;
 import java.util.Map;
@@ -21,6 +22,8 @@ import org.bukkit.plugin.java.JavaPlugin;
 public class HeroManager implements Listener, Runnable {
 	/**Heros sorted by player*/
 	private static final Map<String, Hero> HEROS = newHashMap();
+	/***/
+	private static final Map<String, Game> DISCONNECTED_PLAYERS = newHashMap();	
 	/**The plugin the manager runs in*/
 	private final JavaPlugin plugin;
 	
@@ -44,17 +47,9 @@ public class HeroManager implements Listener, Runnable {
 	public void playerLogin(final PlayerLoginEvent ple) {
 
 		Player player = ple.getPlayer();
+		String playerName = player.getName().toLowerCase();
 		
-		// TODO redo this
-//		for (Game game : runningGames) {
-//			Hero hero = game.getDisconnectedHero(player);
-//			if (hero != null) {
-//				registerListener(hero);
-//				HEROS.put(player.getName().toLowerCase(), hero);
-//				game.restoreHero(hero);
-//				return;
-//			}
-//		}
+		
 		
 		Hero hero = new Hero(player);
 		hero.getPlayer().getInventory().setMaxStackSize(1);
@@ -63,7 +58,12 @@ public class HeroManager implements Listener, Runnable {
 		hero.addObserver(inventoryConnector);
 		
 		registerListener(hero);
-		HEROS.put(player.getName().toLowerCase(), hero);
+		HEROS.put(playerName, hero);
+		
+		Game game = DISCONNECTED_PLAYERS.get(playerName);
+		if (game != null) {
+			game.disconnectHero(hero);
+		}
 		
 	}
 	
@@ -73,14 +73,16 @@ public class HeroManager implements Listener, Runnable {
 	 */
 	@EventHandler
 	public void playerLogout(final PlayerQuitEvent pqe) {
-		Hero hero = HEROS.get(pqe.getPlayer().getName().toLowerCase());
+		String playerName = pqe.getPlayer().getName().toLowerCase();
+		Hero hero = HEROS.get(playerName);
 		Team team = hero.getTeam();
 		
-		// TODO redo this
 		if (team != null) {
-			Game game = hero.getTeam().getGame();
+			Game game = team.getGame();
 			if (game != null) {
+				DISCONNECTED_PLAYERS.put(playerName, game);
 				game.disconnectHero(hero);
+				
 			}
 			
 		}

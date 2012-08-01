@@ -170,16 +170,18 @@ public class ZombieManager implements Listener, Runnable{
 			for (Entity entity : zombie.getNearbyEntities(1.5, 1.5, 1.5)) {
 				if (entity.getType() == EntityType.PLAYER) {
 					//target players who are to close
-					if (!zombie.getTarget().equals(entity)) {
+					if (zombie.getTarget() == null ||!zombie.getTarget().equals(entity)) {
 						zombie.damage(0, entity);
 					}
 					return;
 				}
 			}
+			
 			//If no player is to close, target the target
-			if (!zombie.getTarget().equals(target)) {
+			if (zombie.getTarget() == null || !zombie.getTarget().equals(target)) {
 				zombie.damage(0, target);
 			}
+			
 		}
 	}
 

@@ -177,12 +177,15 @@ public class LastGnomeGame extends AbstractLastGnomeGame implements Listener{
 	 * Additionally teleports the restored player to the current gnome bearer.
 	 */
 	public void restoreHero(final Hero hero) {
-		super.restoreHero(hero,getGnomeBearer());
+		if (getGnomeBearer() != null) {
+			super.restoreHero(hero,getGnomeBearer());			
+		}
+		
+		upgradeGui(hero);
 	}
 
 	@Override
 	public void onEnd() {
-		// TODO Auto-generated method stub
 		dispose();		
 	}
 	
@@ -206,7 +209,11 @@ public class LastGnomeGame extends AbstractLastGnomeGame implements Listener{
 			lose();
 		}
 		
-		//player.teleport(gnomeBearer.getLocation());
+		//temporary version for respawn
+		if (gnomeBearer != null) {
+			player.setHealth(player.getMaxHealth());
+			player.teleport(gnomeBearer.getLocation());
+		}	
 	}
 	
 
@@ -214,14 +221,14 @@ public class LastGnomeGame extends AbstractLastGnomeGame implements Listener{
 		for (Hero hero: getTeam().getPlayers()) {
 			hero.getPlayer().sendMessage(RED + "The Gnome has been eaten! You lost!");			
 		}		
-		dispose();
+		onEnd();
 	}
 	
 	private void win() {
 		for (Hero hero: getTeam().getPlayers()) {
 			hero.getPlayer().sendMessage(GREEN + "The last Gnome on earth has been saved!");			
 		}
-		dispose();	   	
+		onEnd();	   	
 	}
 	
 	/**

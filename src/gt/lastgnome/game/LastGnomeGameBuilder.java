@@ -1,6 +1,7 @@
 package gt.lastgnome.game;
 
 import org.bukkit.GameMode;
+import org.bukkit.entity.Player;
 
 import gt.general.character.Hero;
 import gt.general.character.Team;
@@ -11,6 +12,7 @@ import gt.general.logic.persistance.exceptions.PersistanceException;
 import gt.general.logic.response.Response;
 import gt.general.logic.response.ZombieResponse;
 import gt.general.world.WorldManager;
+import gt.lastgnome.GnomeSocketEnd;
 import gt.lastgnome.MathRiddleRandomizer;
 import gt.plugin.meta.Hello;
 import gt.plugin.meta.MultiListener;
@@ -72,17 +74,18 @@ public class LastGnomeGameBuilder extends AbstractLastGnomeGameBuilder {
 				}
 			}
 		}
-	    
-		// TODO actually do something
-		//new TeamLostTrigger(lastGnomeGame, HelloWorld.getTriggerManager());
 		
 		game.getWorldInstance()
 			.getSpawn()
 			.spawnTeam(game.getTeam());
 		
-		//Set on correct GameMode
+		//Set on correct GameMode and ensure empty inventory
 		for (Hero hero: game.getTeam().getPlayers()) {
-			hero.getPlayer().setGameMode(GameMode.SURVIVAL);
+			Player p = hero.getPlayer();
+			p.setGameMode(GameMode.SURVIVAL);
+			p.getInventory().clear();
+			//Make sure player is in good health
+			p.setHealth(p.getMaxHealth());
 		}
 		
 	}

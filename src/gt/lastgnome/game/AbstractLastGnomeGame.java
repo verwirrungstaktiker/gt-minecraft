@@ -1,12 +1,15 @@
 package gt.lastgnome.game;
 
 import gt.general.Game;
+import gt.general.character.Hero;
 import gt.general.character.Team;
 import gt.general.character.ZombieManager;
 import gt.lastgnome.GnomeSocketEnd;
 import gt.lastgnome.GnomeSocketStart;
+import gt.plugin.meta.Hello;
 import gt.plugin.meta.MultiListener;
 
+import org.bukkit.World;
 import org.bukkit.entity.Player;
 
 public abstract class AbstractLastGnomeGame extends Game{
@@ -83,5 +86,9 @@ public abstract class AbstractLastGnomeGame extends Game{
 		endSocket.dispose();
 		MultiListener.unregisterListener(this);
 		MultiListener.unregisterListener(this.zombieManager);
+		World startWorld = Hello.getPlugin().getServer().getWorld("world");
+		for (Hero hero : getTeam().getPlayers()) {
+			hero.getPlayer().teleport(startWorld.getSpawnLocation());
+		}
 	}
 }

@@ -113,9 +113,9 @@ public class Aura implements Runnable {
 
 		if (distance == OWNER_ONLY) {
 			
-			if(owner instanceof Hero) {
+			/*if(owner instanceof Hero) {
 				((Hero)owner).getPlayer().sendMessage("adding aura stack");
-			}
+			}*/
 			
 			owner.addEffect(effectFactory.getEffect());
 		} else {
