@@ -11,6 +11,7 @@ import gt.plugin.helloworld.KeyPressListener;
 import gt.plugin.meta.Hello;
 import gt.plugin.meta.MultiListener;
 import gt.plugin.meta.PlayerCommandExecutor;
+import gt.plugin.meta.TestListener;
 
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
@@ -55,6 +56,10 @@ public class HelloEditor extends JavaPlugin implements Listener {
 		printInformation();
 		
 		setupCommands();
+		
+		// XXX TESTING ONLY
+		MultiListener.registerListener(new TestListener());
+		
 	}
 	
 	/** */
