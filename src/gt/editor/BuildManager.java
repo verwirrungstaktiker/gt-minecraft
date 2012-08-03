@@ -8,6 +8,7 @@ import gt.general.logic.response.DoorResponse;
 import gt.general.logic.response.RedstoneTorchResponse;
 import gt.general.logic.response.Response;
 import gt.general.logic.response.SignResponse;
+import gt.general.logic.response.TeleportResponse;
 import gt.general.logic.response.ZombieSpawnResponse;
 import gt.general.logic.trigger.ButtonRedstoneTrigger;
 import gt.general.logic.trigger.GnomeTrigger;
@@ -105,7 +106,6 @@ public class BuildManager implements Listener {
                 case GNOME_TRIGGER_NEGATIVE:
                     newTrigger = new GnomeTrigger(block);
                     break;
-
 				default:
 					// fail feedback
 					player.sendMessage(RED + "This CustomBlock can't be used as Trigger.");
@@ -168,7 +168,10 @@ public class BuildManager implements Listener {
 					newResponse = new ZombieSpawnResponse(null,block.getLocation(),1);
 					event.setCancelled(true);
 					break;
-
+                case TELEPORT_EXIT:
+                	newResponse = new TeleportResponse(block);
+                	break;
+					
 				default:
 					// fail feedback
 					player.sendMessage(RED + "This CustomBlock can't be used as Response.");

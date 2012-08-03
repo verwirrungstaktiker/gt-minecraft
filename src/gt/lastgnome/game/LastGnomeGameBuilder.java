@@ -1,8 +1,5 @@
 package gt.lastgnome.game;
 
-import org.bukkit.GameMode;
-import org.bukkit.entity.Player;
-
 import gt.general.character.Hero;
 import gt.general.character.Team;
 import gt.general.character.ZombieManager;
@@ -12,10 +9,12 @@ import gt.general.logic.persistance.exceptions.PersistanceException;
 import gt.general.logic.response.Response;
 import gt.general.logic.response.ZombieResponse;
 import gt.general.world.WorldManager;
-import gt.lastgnome.GnomeSocketEnd;
 import gt.lastgnome.MathRiddleRandomizer;
 import gt.plugin.meta.Hello;
 import gt.plugin.meta.MultiListener;
+
+import org.bukkit.GameMode;
+import org.bukkit.entity.Player;
 
 public class LastGnomeGameBuilder extends AbstractLastGnomeGameBuilder {
 

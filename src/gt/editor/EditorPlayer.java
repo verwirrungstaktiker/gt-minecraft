@@ -34,7 +34,8 @@ public class EditorPlayer {
 		new ItemStack(Material.DIAMOND_BLOCK),
 		new ItemStack(Material.REDSTONE_TORCH_ON),
 		new ItemStack(Material.SIGN),
-		CustomBlockType.ZOMBIESPAWN_BLOCK.getItemStack()
+		CustomBlockType.ZOMBIESPAWN_BLOCK.getItemStack(),
+		CustomBlockType.TELEPORT_EXIT.getItemStack()
 	};
 	
 	public enum TriggerState {

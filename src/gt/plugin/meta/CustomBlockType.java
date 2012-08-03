@@ -119,6 +119,17 @@ public enum CustomBlockType {
 					"http://img27.imageshack.us/img27/4669/spawnpv.png", 16);
 
 		}
+	}),
+	
+	/** target for teleport responses */
+	TELEPORT_EXIT(new CustomBlockInstatiator() {
+
+		@Override
+		public ObservableCustomBlock instantiate() {
+			return new ObservableCustomBlock("teleport_exit",
+					"https://raw.github.com/verwirrungstaktiker/gt-minecraft/master/res/texture/teleporter-exit.png", 16);
+		}
+		
 	});
 
 	private final CustomBlockInstatiator instatiator;
