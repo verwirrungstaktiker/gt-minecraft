@@ -1,5 +1,6 @@
 package gt.general.logic.response;
 
+import gt.general.logic.TriggerEvent;
 import gt.general.logic.persistance.PersistanceMap;
 import gt.general.logic.persistance.exceptions.PersistanceException;
 
@@ -12,8 +13,8 @@ public class ZombieClearResponse extends ZombieResponse {
 	}
 
 	@Override
-	public void triggered(final boolean active) {
-		if (active) {
+	public void triggered(final TriggerEvent e) {
+		if (e.isActive()) {
 			getZombieManager().clearZombies();
 		}
 	}

@@ -10,17 +10,20 @@ import org.bukkit.block.Block;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockRedstoneEvent;
+import org.bukkit.event.player.PlayerInteractEvent;
 
 /**
  *  Implements the concept of using BlockRedstoneEvents as Triggers
  * 
  * @author Sebastian Fahnenschreiber
  */
-public abstract class RedstoneTrigger extends BlockTrigger implements Listener {	
+public class RedstoneTrigger extends BlockTrigger implements Listener {	
 	
 	public static final String KEY_INVERTED = "inverted";
 	
 	private boolean inverted;
+	
+	private boolean active = false;
 	
 	/**
 	 * @param prefix the prefix of the new trigger
@@ -38,18 +41,31 @@ public abstract class RedstoneTrigger extends BlockTrigger implements Listener {
 	/**
 	 * @param event the redstone event this is based on
 	 */
+//	@EventHandler
+//	public void onBlockRedstoneChange(final BlockRedstoneEvent event) {		
+//		if(isBlockRedstoneEventHere(event)) {
+//			boolean triggered = event.getNewCurrent() > 0;
+//			
+//			if (inverted) {
+//				triggered = !triggered;
+//			}
+//			getContext().updateTriggerState(this, triggered);
+//		}
+//	}
+	
 	@EventHandler
-	public void onBlockRedstoneChange(final BlockRedstoneEvent event) {		
-		if(isBlockRedstoneEventHere(event)) {
-			boolean triggered = event.getNewCurrent() > 0;
+	public void onPlayerInteract(final PlayerInteractEvent event) {
+		
+		if(getBlock().equals(event.getClickedBlock())) {
 			
-			if (inverted) {
-				triggered = !triggered;
-			}
-			getContext().updateTriggerState(this, triggered);
+			active = ! active;
+			
+			getContext().updateTriggerState(this, inverted ^ active, event.getPlayer());
 		}
 	}
-
+		
+	
+		
 	/**
 	 * @param event the redstone event to check
 	 * @return true if the event is located on the block
@@ -80,13 +96,13 @@ public abstract class RedstoneTrigger extends BlockTrigger implements Listener {
 		MultiListener.unregisterListener(this);
 	}
 	
-	//Needed to activate inverted levers on startup
 	@Override
-	public void setContext(final TriggerContext context) {
+	public void setContext(TriggerContext context) {
 		super.setContext(context);
-		//System.out.println("");
-		BlockRedstoneEvent event = new BlockRedstoneEvent(getBlock(), 0,getBlock().getBlockPower());
-		onBlockRedstoneChange(event);
+		
+		if(inverted) {
+			context.setupInverted(this);
+		}
 	}
 	
 	/**
@@ -94,6 +110,20 @@ public abstract class RedstoneTrigger extends BlockTrigger implements Listener {
 	 */
 	public void toggleInvert() {
 		inverted = !inverted;
+	}
+
+	/**
+	 * @return the active
+	 */
+	public boolean isActive() {
+		return active;
+	}
+
+	/**
+	 * @param active the active to set
+	 */
+	public void setActive(boolean active) {
+		this.active = active;
 	}
 
 }

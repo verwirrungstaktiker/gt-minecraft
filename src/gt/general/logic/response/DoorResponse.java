@@ -4,6 +4,7 @@ package gt.general.logic.response;
 import java.util.HashSet;
 import java.util.Set;
 
+import gt.general.logic.TriggerEvent;
 import gt.general.logic.persistance.PersistanceMap;
 import gt.general.logic.persistance.exceptions.PersistanceException;
 
@@ -65,11 +66,11 @@ public class DoorResponse extends Response {
 	}
 	
 	@Override
-	public void triggered(final boolean active) {
+	public void triggered(final TriggerEvent e) {
 		
 		Door door = (Door) lowerBlock.getState().getData();
 
-		door.setOpen(active);
+		door.setOpen(e.isActive());
 		// play the door toggle sound
 		lowerBlock.getWorld().playEffect(lowerBlock.getLocation(), Effect.DOOR_TOGGLE, 25); // we can set the radius here
 		

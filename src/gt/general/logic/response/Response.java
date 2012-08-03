@@ -1,5 +1,6 @@
 package gt.general.logic.response;
 
+import gt.general.logic.TriggerEvent;
 import gt.general.logic.persistance.YamlSerializable;
 
 public abstract class Response extends YamlSerializable {
@@ -23,6 +24,6 @@ public abstract class Response extends YamlSerializable {
 	 * 
 	 * @param active iff true, the function is now true
 	 */
-	public abstract void triggered(boolean active);
+	public abstract void triggered(TriggerEvent triggerEvent);
 
 }

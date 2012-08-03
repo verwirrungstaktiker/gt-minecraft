@@ -1,6 +1,7 @@
 package gt.general.logic.response;
 
 
+import gt.general.logic.TriggerEvent;
 import gt.general.logic.persistance.PersistanceMap;
 import gt.general.logic.persistance.exceptions.PersistanceException;
 
@@ -85,12 +86,12 @@ public class SignResponse extends BlockResponse {
 	}
 
 	@Override
-	public void triggered(final boolean active) {
-		isTriggered  = active;
+	public void triggered(final TriggerEvent e) {
+		isTriggered  = e.isActive();
 		
 		Sign sign = (Sign) getBlock().getState();
 		
-		if(active) {
+		if(isTriggered) {
 			setSignMessage(sign, triggeredMessage);
 		} else {
 			setSignMessage(sign, untriggeredMessage);

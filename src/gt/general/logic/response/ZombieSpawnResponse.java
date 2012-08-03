@@ -2,6 +2,7 @@ package gt.general.logic.response;
 
 import static com.google.common.collect.Sets.*;
 import gt.general.character.ZombieManager;
+import gt.general.logic.TriggerEvent;
 import gt.general.logic.persistance.PersistanceMap;
 import gt.general.logic.persistance.exceptions.PersistanceException;
 
@@ -68,8 +69,8 @@ public class ZombieSpawnResponse extends ZombieResponse{
 	}
 	
 	@Override
-	public void triggered(final boolean active) {
-		if (active) {
+	public void triggered(final TriggerEvent e) {
+		if (e.isActive()) {
 			if (getZombieManager() == null) {
 				System.out.print("No ZombieManager: Cannot spawn zombies");
 			}

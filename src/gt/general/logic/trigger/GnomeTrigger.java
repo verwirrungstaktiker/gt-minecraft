@@ -117,11 +117,11 @@ public class GnomeTrigger extends Trigger implements BlockObserver{
 	            
 	            if(triggered) {
 	                CustomBlockType.GNOME_TRIGGER_POSITIVE.place(block);
-	                getContext().updateTriggerState(GnomeTrigger.this, true);
+	                getContext().updateTriggerState(this, true, blockEvent.player);
 	                
 	            } else {
 	                CustomBlockType.GNOME_TRIGGER_NEGATIVE.place(block);
-	                getContext().updateTriggerState(GnomeTrigger.this, true);
+	                getContext().updateTriggerState(this, true, blockEvent.player);
 	            }
 	        } else {
 	        	blockEvent.player.sendMessage(ChatColor.YELLOW + "You might need the gnome here");

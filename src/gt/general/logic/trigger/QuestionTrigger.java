@@ -117,7 +117,7 @@ public class QuestionTrigger extends BlockTrigger implements BlockObserver{
 					openPrompts.remove(hero);
 					
 					if(action == Action.SUBMIT && text.equalsIgnoreCase(answer)) {
-						getContext().updateTriggerState(QuestionTrigger.this, true);
+						getContext().updateTriggerState(QuestionTrigger.this, true, hero.getPlayer());
 						closeAllPrompts();
 						solved = true;
 					}

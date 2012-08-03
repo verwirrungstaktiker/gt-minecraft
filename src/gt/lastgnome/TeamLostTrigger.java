@@ -31,7 +31,7 @@ public class TeamLostTrigger extends Trigger implements Listener{
 		Player gnomebearer = game.getGnomeBearer().getPlayer();
 		
 		if (gnomebearer.equals(event.getEntity())) {
-			getContext().updateTriggerState(this, true);
+			getContext().updateTriggerState(this, true, event.getEntity());
 		}
 	}
 	

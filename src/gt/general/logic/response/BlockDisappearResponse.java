@@ -1,6 +1,7 @@
 package gt.general.logic.response;
 
 
+import gt.general.logic.TriggerEvent;
 import gt.general.logic.persistance.PersistanceMap;
 import gt.general.logic.persistance.exceptions.PersistanceException;
 
@@ -41,11 +42,11 @@ public class BlockDisappearResponse extends BlockResponse {
 
 
 	@Override
-	public void triggered(final boolean active) {
+	public void triggered(final TriggerEvent e) {
 		System.out.println("block triggered");
 		Block block = getBlock();
 		
-		if(active ^ inverted) {
+		if(e.isActive() ^ inverted) {
 			// block disappear
 			block.setType(Material.AIR);
 		} else {

@@ -11,6 +11,7 @@ import org.bukkit.block.BlockFace;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockRedstoneEvent;
+import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.material.Lever;
 import org.getspout.spoutapi.SpoutManager;
 
@@ -34,7 +35,7 @@ public class LeverRedstoneTrigger extends RedstoneTrigger implements Listener {
 		
 		orientation = against.getFace(trigger);
 		
-		installSignal();
+		updateSignal();
 	}
 	
 	/** to be used for persistence */
@@ -51,7 +52,7 @@ public class LeverRedstoneTrigger extends RedstoneTrigger implements Listener {
 		
 		getBlock().setData(lever.getData());
 		
-		installSignal();
+		updateSignal();
 	}
 	
 	@Override
@@ -72,31 +73,46 @@ public class LeverRedstoneTrigger extends RedstoneTrigger implements Listener {
 									.getRelative(orientation.getOppositeFace()));
 	}
 	
-	/**
-	 * installs the signal behind the trigger
-	 */
-	private void installSignal() {		
-		Block signalBlock = getBlock().getRelative(orientation.getOppositeFace());
-		ObservableCustomBlock red = CustomBlockType.RED_SIGNAL.getCustomBlock();
-		
-		SpoutManager.getMaterialManager().overrideBlock(signalBlock, red);
-	}
+//	@EventHandler
+//	@Override
+//	public void onBlockRedstoneChange(final BlockRedstoneEvent event) {
+//		if(isBlockRedstoneEventHere(event)) {
+//			super.onBlockRedstoneChange(event);
+//			
+//			Block signalBlock = getBlock().getRelative(orientation.getOppositeFace());
+//			
+//			if(event.getNewCurrent() > 0) {
+//				ObservableCustomBlock green = CustomBlockType.GREEN_SIGNAL.getCustomBlock();
+//				SpoutManager.getMaterialManager().overrideBlock(signalBlock, green);
+//			} else {
+//				ObservableCustomBlock red = CustomBlockType.RED_SIGNAL.getCustomBlock();
+//				SpoutManager.getMaterialManager().overrideBlock(signalBlock, red);
+//			}
+//		}
+//	}
 	
 	@EventHandler
 	@Override
-	public void onBlockRedstoneChange(final BlockRedstoneEvent event) {
-		if(isBlockRedstoneEventHere(event)) {
-			super.onBlockRedstoneChange(event);
-			
-			Block signalBlock = getBlock().getRelative(orientation.getOppositeFace());
-			
-			if(event.getNewCurrent() > 0) {
-				ObservableCustomBlock green = CustomBlockType.GREEN_SIGNAL.getCustomBlock();
-				SpoutManager.getMaterialManager().overrideBlock(signalBlock, green);
-			} else {
-				ObservableCustomBlock red = CustomBlockType.RED_SIGNAL.getCustomBlock();
-				SpoutManager.getMaterialManager().overrideBlock(signalBlock, red);
-			}
+	public void onPlayerInteract(final PlayerInteractEvent event) {
+		if(getBlock().equals(event.getClickedBlock())) {
+			super.onPlayerInteract(event);
+			updateSignal();
 		}
 	}
+
+	/**
+	 * installs the signal behind the trigger
+	 */
+	private void updateSignal() {
+		Block signalBlock = getBlock().getRelative(orientation.getOppositeFace());
+		
+		if(isActive()) {
+			ObservableCustomBlock green = CustomBlockType.GREEN_SIGNAL.getCustomBlock();
+			SpoutManager.getMaterialManager().overrideBlock(signalBlock, green);
+		} else {
+			ObservableCustomBlock red = CustomBlockType.RED_SIGNAL.getCustomBlock();
+			SpoutManager.getMaterialManager().overrideBlock(signalBlock, red);
+		}
+	}
+	
 }

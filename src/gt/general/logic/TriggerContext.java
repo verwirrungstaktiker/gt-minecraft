@@ -8,6 +8,8 @@ import gt.general.logic.trigger.Trigger;
 import java.util.Collection;
 import java.util.Set;
 
+import org.bukkit.entity.Player;
+
 import com.google.common.collect.Iterables;
 
 public class TriggerContext {
@@ -61,7 +63,7 @@ public class TriggerContext {
 	 * @param trigger trigger which changes its state
 	 * @param state new state of the trigger
 	 */
-	public void updateTriggerState(final Trigger trigger, final boolean state) {		
+	public void updateTriggerState(final Trigger trigger, final boolean state, final Player player) {		
 		boolean oldState = evalInputFuntion();
 		
 		if(state) {
@@ -72,8 +74,11 @@ public class TriggerContext {
 		boolean newState = evalInputFuntion();
 		
 		if(oldState != newState) {
+			
+			TriggerEvent e = new TriggerEvent(newState, player);
+			
 			for(Response response : responses) {
-				response.triggered(newState);
+				response.triggered(e);
 			}
 		}
 	}
@@ -168,6 +173,10 @@ public class TriggerContext {
 	
 	public Iterable<YamlSerializable> getAllItems() {
 		return Iterables.concat(triggers, responses);
+	}
+
+	public void setupInverted(Trigger trigger) {
+		activeTriggers.add(trigger);		
 	}
 	
 }
