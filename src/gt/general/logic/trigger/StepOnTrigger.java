@@ -6,6 +6,7 @@ import gt.general.world.BlockObserver;
 import gt.general.world.ObservableCustomBlock;
 import gt.general.world.ObservableCustomBlock.BlockEvent;
 import gt.plugin.meta.CustomBlockType;
+import gt.plugin.meta.Hello;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -19,6 +20,7 @@ public class StepOnTrigger extends Trigger implements BlockObserver {
 	
 	private Block block;
 	private boolean triggered;
+	private boolean inUse;
 
     private static final String KEY_BLOCK = "block";
     
@@ -27,6 +29,7 @@ public class StepOnTrigger extends Trigger implements BlockObserver {
     	
     	this.block = block;
     	this.triggered = false;
+    	this.inUse = false;
     	
     	CustomBlockType.STEP_ON_TRIGGER.place(block);
     	
@@ -37,11 +40,12 @@ public class StepOnTrigger extends Trigger implements BlockObserver {
     public StepOnTrigger() {}
 
 	@Override
-	public void setup(PersistanceMap values, World world)
+	public void setup(final PersistanceMap values, final World world)
 			throws PersistanceException {
 		
 		block = values.getBlock(KEY_BLOCK, world);
 		triggered = false;
+		inUse = false;
 		
 		CustomBlockType.STEP_ON_TRIGGER.place(block);
 		
@@ -93,16 +97,19 @@ public class StepOnTrigger extends Trigger implements BlockObserver {
 	@Override
 	public void onBlockEvent(final BlockEvent blockEvent) {
 		
-		if(blockEvent.block.equals(block)) {
-			System.out.println("equals");
-			triggered = true;
+		if(!inUse && blockEvent.block.equals(block)) {
 			
-			if(triggered) {
-				block.getWorld().playEffect(block.getLocation(), Effect.MOBSPAWNER_FLAMES, 25);
-                getContext().updateTriggerState(this, true, blockEvent.player);
-                
-            }
-		}
+			block.getWorld().playEffect(block.getLocation(), Effect.MOBSPAWNER_FLAMES, 25);
+            getContext().updateTriggerState(this, true, blockEvent.player);
+            
+            Hello.scheduleOneTimeTask(new Runnable() {
+				
+				@Override
+				public void run() {
+					getContext().updateTriggerState(StepOnTrigger.this, false, blockEvent.player);
+				}
+			}, 20 * 2);
+        }
 	}
 
 }

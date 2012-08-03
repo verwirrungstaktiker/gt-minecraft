@@ -57,7 +57,7 @@ public final class Hello {
 	}
 	
 	/**
-	 * Schedules a synchron Task
+	 * Schedules an synchronous Task
 	 * 
 	 * shortcut for BukkitScheduler#scheduleSyncRepeatingTask(JavaPlugin, Runnable, int, int)
 	 * 
@@ -71,7 +71,7 @@ public final class Hello {
 	}
 
 	/**
-	 * Schedules a asynchron Task
+	 * Schedules an asynchronous Task
 	 * 
 	 * shortcut for BukkitScheduler#scheduleAsyncRepeatingTask(JavaPlugin, Runnable, int, int)
 	 * 
@@ -84,6 +84,16 @@ public final class Hello {
 		return Bukkit.getScheduler().scheduleAsyncRepeatingTask(getPlugin(), task, initial, ticks);
 	}
 
+	/**
+	 * Schedules an asynchronous
+	 * @param task the task to be executed
+	 * @param delay duration in ticks till task is executed
+	 * @return taskId
+	 */
+	public static int scheduleOneTimeTask(final Runnable task, final int delay) {
+		return Bukkit.getScheduler().scheduleAsyncDelayedTask(getPlugin(), task, delay);
+	}
+	
 	/**
 	 * @param id the id of the task to be cancelled
 	 */
