@@ -123,15 +123,36 @@ public enum CustomBlockType {
 	
 	/** target for teleport responses */
 	TELEPORT_EXIT(new CustomBlockInstatiator() {
-
 		@Override
 		public ObservableCustomBlock instantiate() {
 			return new ObservableCustomBlock("teleport_exit",
 					"https://raw.github.com/verwirrungstaktiker/gt-minecraft/master/res/texture/teleporter-exit.png", 16);
 		}
 		
-	});
+	}),
+	
+	/** decorative arrow up  for teleporters*/
+	TELEPORTER_UP(new CustomBlockInstatiator() {
 
+		@Override
+		public ObservableCustomBlock instantiate() {
+			return new ObservableCustomBlock("teleport_up",
+					"https://raw.github.com/verwirrungstaktiker/gt-minecraft/master/res/texture/teleporter-up.png", 16);
+		}
+		
+	}),
+	
+	/** decorative arrow down for teleporters*/
+	TELEPORTER_DOWN(new CustomBlockInstatiator() {
+
+		@Override
+		public ObservableCustomBlock instantiate() {
+			return new ObservableCustomBlock("teleport_down",
+					"https://raw.github.com/verwirrungstaktiker/gt-minecraft/master/res/texture/teleporter-down.png", 16);
+		}
+		
+	});
+	
 	private final CustomBlockInstatiator instatiator;
 	private ObservableCustomBlock blockInstance = null;
 
