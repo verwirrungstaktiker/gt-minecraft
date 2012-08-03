@@ -2,6 +2,7 @@ package gt.general.logic.response;
 
 import gt.general.character.ZombieManager;
 
+import java.util.HashSet;
 import java.util.Set;
 
 import org.bukkit.block.Block;
@@ -16,7 +17,7 @@ public abstract class ZombieResponse extends Response {
 
 	@Override
 	public Set<Block> getBlocks() {
-		return null;
+		return new HashSet<Block>();
 	}
 	
 	public void setZombieManager(ZombieManager zm) {
