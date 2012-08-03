@@ -12,7 +12,7 @@ public class ZombieClearResponse extends ZombieResponse {
 	}
 
 	@Override
-	public void triggered(boolean active) {
+	public void triggered(final boolean active) {
 		if (active) {
 			getZombieManager().clearZombies();
 		}
@@ -30,7 +30,7 @@ public class ZombieClearResponse extends ZombieResponse {
 	}
 
 	@Override
-	public void setup(PersistanceMap values, World world)
+	public void setup(final PersistanceMap values, final World world)
 			throws PersistanceException {
 		
 	}

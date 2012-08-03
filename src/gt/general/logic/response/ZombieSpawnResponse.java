@@ -1,5 +1,6 @@
 package gt.general.logic.response;
 
+import static com.google.common.collect.Sets.*;
 import gt.general.character.ZombieManager;
 import gt.general.logic.persistance.PersistanceMap;
 import gt.general.logic.persistance.exceptions.PersistanceException;
@@ -83,6 +84,7 @@ public class ZombieSpawnResponse extends ZombieResponse{
 			}
 		}
 	}
+	
 	@Override
 	public void dispose() {
 		//Clear Entities (Spawned Chicken)
@@ -102,11 +104,10 @@ public class ZombieSpawnResponse extends ZombieResponse{
 		map.put(KEY_SPEED, speed);
 		return map;
 	}
+	
 	@Override
 	public Set<Block> getBlocks() {
-		Set<Block> blocks = new HashSet<Block>();
-		blocks.add(spawnLocation.getBlock());
-		return blocks;
+		return newHashSet(spawnLocation.getBlock());
 	}
 	
 
