@@ -116,7 +116,7 @@ public enum CustomBlockType {
 		@Override
 		public ObservableCustomBlock instantiate() {
 			return new ObservableCustomBlock("tele_floor",
-					"https://github.com/verwirrungstaktiker/gt-minecraft/blob/master/res/texture/teleporter-floor.png?raw=true", 16);
+					"https://raw.github.com/verwirrungstaktiker/gt-minecraft/master/res/texture/teleporter-floor.png", 16);
 
 		}
 	}),
