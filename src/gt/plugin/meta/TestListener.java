@@ -6,7 +6,7 @@ import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 
 public class TestListener implements Listener{
-
+/*
 	@EventHandler
 	public void onPlayerInteractEntity(final PlayerInteractEntityEvent e ) {
 		System.out.println("-- registered PlayerInteractEntityEvent");
@@ -24,6 +24,6 @@ public class TestListener implements Listener{
 		System.out.println("item: " + e.getItem());
 		System.out.println("material: " + e.getMaterial());
 	}
-	
+*/	
 	
 }
