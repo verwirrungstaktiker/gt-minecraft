@@ -1,6 +1,7 @@
 package gt.editor;
 
 import static org.bukkit.ChatColor.*;
+import gt.editor.EditorPlayer.TriggerState;
 import gt.general.logic.TriggerContext;
 import gt.general.logic.response.BlockDisappearResponse;
 import gt.general.logic.response.DoorResponse;
@@ -16,10 +17,14 @@ import gt.general.logic.trigger.QuestionTrigger;
 import gt.general.logic.trigger.Trigger;
 import gt.general.world.ObservableCustomBlock;
 
+import org.bukkit.ChatColor;
 import org.bukkit.block.Block;
+import org.bukkit.entity.HumanEntity;
+import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockPlaceEvent;
+import org.bukkit.event.inventory.InventoryClickEvent;
 import org.getspout.spout.block.SpoutCraftBlock;
 
 
@@ -51,6 +56,28 @@ public class BuildManager implements Listener {
 				break;
 			default:
 		}
+	}
+	
+	/**
+	 * Prevents to modification of the inventory if the player is in Trigger or Response TriggerState
+	 * @param event player clicks something in his inventory
+	 */
+	@EventHandler
+	public void preventInventoryModification(final InventoryClickEvent event) {
+		
+		HumanEntity human = event.getWhoClicked();
+		if (human instanceof Player) {
+			Player player = (Player) human;
+			EditorPlayer ePlayer = playerManager.getEditorPlayer(player);
+			
+			TriggerState state = ePlayer.getTriggerState();
+			if(state == TriggerState.RESPONSE || state == TriggerState.TRIGGER) {
+				player.sendMessage(ChatColor.RED + "You can only modify your STANDYBY inventory.");
+				
+				event.setCancelled(true);
+			}
+		}
+
 	}
 	
 	/**
