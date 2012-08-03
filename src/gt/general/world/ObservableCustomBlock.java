@@ -6,6 +6,7 @@ import gt.plugin.meta.Hello;
 
 import org.bukkit.World;
 import org.bukkit.block.Block;
+import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.getspout.spoutapi.block.design.GenericCubeBlockDesign;
@@ -23,7 +24,8 @@ public class ObservableCustomBlock extends GenericCustomBlock {
 	public enum BlockEventType {
 		PLAYER_BLOCK_PLACED,
 		BLOCK_DESTROYED,
-		BLOCK_INTERACT
+		BLOCK_INTERACT,
+		PLAYER_STEP_ON
 	}
 	
 	// TODO this must be done better
@@ -106,6 +108,24 @@ public class ObservableCustomBlock extends GenericCustomBlock {
 		fireBlockEvent(world, e);
 	
 		return true;
+		
+	}
+	
+	@Override
+	public void onEntityMoveAt(World world, int x, int y, int z, Entity entity) {
+		
+		if(entity instanceof Player) {
+			Player player = (Player) entity;
+			
+			BlockEvent e = new BlockEvent();
+			e.block = world.getBlockAt(x, y, z);
+			e.player = player;
+			e.blockEventType = BlockEventType.PLAYER_STEP_ON;
+			
+			fireBlockEvent(world, e);
+			
+			System.out.println("player walked over custom block.");
+		}
 		
 	}
 	

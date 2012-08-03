@@ -110,6 +110,16 @@ public enum CustomBlockType {
 
 		}
 	}),
+
+	/** detects entities walking on it */
+	STEP_ON_TRIGGER(new CustomBlockInstatiator() {
+		@Override
+		public ObservableCustomBlock instantiate() {
+			return new ObservableCustomBlock("tele_floor",
+					"https://github.com/verwirrungstaktiker/gt-minecraft/blob/master/res/texture/teleporter-floor.png?raw=true", 16);
+
+		}
+	}),
 	
 	/** spawns zombies */
 	ZOMBIESPAWN_BLOCK(new CustomBlockInstatiator() {

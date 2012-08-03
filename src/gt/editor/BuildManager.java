@@ -15,6 +15,7 @@ import gt.general.logic.trigger.GnomeTrigger;
 import gt.general.logic.trigger.LeverRedstoneTrigger;
 import gt.general.logic.trigger.PressurePlateRedstoneTrigger;
 import gt.general.logic.trigger.QuestionTrigger;
+import gt.general.logic.trigger.StepOnTrigger;
 import gt.general.logic.trigger.Trigger;
 import gt.general.world.ObservableCustomBlock;
 
@@ -106,6 +107,9 @@ public class BuildManager implements Listener {
                 case GNOME_TRIGGER_NEGATIVE:
                     newTrigger = new GnomeTrigger(block);
                     break;
+                case STEP_ON_TRIGGER:
+                	newTrigger = new StepOnTrigger(block);
+                	break;
 				default:
 					// fail feedback
 					player.sendMessage(RED + "This CustomBlock can't be used as Trigger.");
