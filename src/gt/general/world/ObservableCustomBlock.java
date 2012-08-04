@@ -123,8 +123,6 @@ public class ObservableCustomBlock extends GenericCustomBlock {
 			e.blockEventType = BlockEventType.PLAYER_STEP_ON;
 			
 			fireBlockEvent(world, e);
-			
-			System.out.println("player walked over custom block.");
 		}
 		
 	}
