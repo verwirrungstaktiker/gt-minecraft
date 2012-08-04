@@ -161,6 +161,18 @@ public enum CustomBlockType {
 					"https://raw.github.com/verwirrungstaktiker/gt-minecraft/master/res/texture/teleporter-down.png", 16);
 		}
 		
+	}),
+	
+	
+	/** marks respawn locations */
+	RESPAWN_BLOCK(new CustomBlockInstatiator() {
+
+		@Override
+		public ObservableCustomBlock instantiate() {
+			return new ObservableCustomBlock("respawn_block",
+					"https://raw.github.com/verwirrungstaktiker/gt-minecraft/master/res/texture/respawn.png", 16);
+		}
+		
 	});
 	
 	private final CustomBlockInstatiator instatiator;

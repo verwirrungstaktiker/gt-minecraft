@@ -1,6 +1,7 @@
 package gt.general;
 
 import static com.google.common.collect.Sets.newHashSet;
+import gt.general.RespawnManager.RespawnPoint;
 import gt.general.character.Hero;
 import gt.general.character.Team;
 import gt.general.logic.persistance.PersistanceMap;
@@ -18,9 +19,10 @@ import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.block.Block;
+import org.bukkit.entity.Player;
 import org.getspout.spoutapi.SpoutManager;
 
-public class Spawn extends YamlSerializable implements BlockObserver {
+public class Spawn extends YamlSerializable implements BlockObserver, RespawnPoint {
 	
 	public static final String KEY_SPAWN = "spawn";
 	
@@ -93,6 +95,7 @@ public class Spawn extends YamlSerializable implements BlockObserver {
 			heros.next().getPlayer().teleport(location);
 		}
 	}
+	
 
 	@Override
 	public void onBlockEvent(final BlockEvent blockEvent) {
@@ -107,5 +110,17 @@ public class Spawn extends YamlSerializable implements BlockObserver {
 		default:
 			break;
 		}
+	}
+
+	/** spawn is not registered the default way! */
+	@Override
+	public void registerRespawnManager(final RespawnManager respawnManager) {}
+	
+	@Override
+	public Location getRespawnLocation() {
+		
+		// why cant i get just and random element?
+		Block block = (getBlocks().toArray(new Block[0]))[0];		
+		return block.getLocation().add(0.5, 1.0, 0.5);
 	}
 }

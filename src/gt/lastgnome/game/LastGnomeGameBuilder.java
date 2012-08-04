@@ -1,5 +1,6 @@
 package gt.lastgnome.game;
 
+import gt.general.RespawnManager;
 import gt.general.character.Hero;
 import gt.general.character.Team;
 import gt.general.character.ZombieManager;
@@ -20,6 +21,7 @@ public class LastGnomeGameBuilder extends AbstractLastGnomeGameBuilder {
 
 	private LastGnomeGame game;
 	private final Team team;
+	private RespawnManager respawnManager;
 	
 	/**
 	 * @param team team that starts a new game
@@ -41,8 +43,16 @@ public class LastGnomeGameBuilder extends AbstractLastGnomeGameBuilder {
 	@Override
 	public void buildWorldInstance(final WorldManager worldManager, final String worldName) throws PersistanceException {
 		super.buildWorldInstance(worldManager, worldName);
-				
-		game.getWorldInstance().init(new TriggerManager());
+		
+		TriggerManager triggerManager = new TriggerManager();
+		
+		
+		game.getWorldInstance().init(triggerManager);
+		
+		// TODO connect this to the game, so it can be stopped when the game is finished
+		respawnManager = new RespawnManager(team, 
+											triggerManager,
+											game.getWorldInstance().getSpawn());
 	}
 
 	@Override
@@ -77,6 +87,8 @@ public class LastGnomeGameBuilder extends AbstractLastGnomeGameBuilder {
 		game.getWorldInstance()
 			.getSpawn()
 			.spawnTeam(game.getTeam());
+		
+		MultiListener.registerListener(respawnManager);
 		
 		//Set on correct GameMode and ensure empty inventory
 		for (Hero hero: game.getTeam().getPlayers()) {

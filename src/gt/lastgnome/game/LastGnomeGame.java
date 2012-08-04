@@ -205,15 +205,9 @@ public class LastGnomeGame extends AbstractLastGnomeGame implements Listener{
 	@EventHandler
 	public void onPlayerDeath(final PlayerDeathEvent event) {
 		Player player = event.getEntity();
-		if (player.equals(gnomeBearer.getPlayer())) {
+		if(gnomeBearer != null && player.equals(gnomeBearer.getPlayer())) {
 			lose();
 		}
-		
-		//temporary version for respawn
-		if (gnomeBearer != null) {
-			player.setHealth(player.getMaxHealth());
-			player.teleport(gnomeBearer.getLocation());
-		}	
 	}
 	
 

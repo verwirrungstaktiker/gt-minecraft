@@ -1,10 +1,11 @@
 package gt.general.logic.response;
 
+import gt.general.RespawnManager;
 import gt.general.logic.TriggerEvent;
 import gt.general.logic.persistance.YamlSerializable;
 
 public abstract class Response extends YamlSerializable {
-
+	
 	/**
 	 * don't delete this anonymous constructor
 	 */
@@ -25,5 +26,4 @@ public abstract class Response extends YamlSerializable {
 	 * @param active iff true, the function is now true
 	 */
 	public abstract void triggered(TriggerEvent triggerEvent);
-
 }
