@@ -62,7 +62,7 @@ public class ZombieManager implements Listener, Runnable{
 		//Zombies cannot be harmed by Players
 		if (event.getEntity() instanceof Zombie) {
 			if (event.getDamager() instanceof Player) {
-			event.setDamage(0);
+			event.setCancelled(true);
 			}
 		}
 		
