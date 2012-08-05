@@ -171,7 +171,7 @@ public class ZombieManager implements Listener, Runnable{
 				if (entity.getType() == EntityType.PLAYER) {
 					//target players who are to close
 					if (zombie.getTarget() == null ||!zombie.getTarget().equals(entity)) {
-						zombie.damage(0, entity);
+						zombie.setTarget((LivingEntity) entity);
 					}
 					return;
 				}
@@ -179,7 +179,7 @@ public class ZombieManager implements Listener, Runnable{
 			
 			//If no player is to close, target the target
 			if (zombie.getTarget() == null || !zombie.getTarget().equals(target)) {
-				zombie.damage(0, target);
+				zombie.setTarget(target);
 			}
 			
 		}
