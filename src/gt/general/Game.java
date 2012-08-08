@@ -145,6 +145,12 @@ public abstract class Game implements Listener {
 	public void registerSyncTask(Runnable task, int initial, int ticks) {
 		tasks.add(Hello.scheduleSyncTask(task, initial, ticks));
 	}
+	
+	public void registerListeners(final Listener... listeners) {
+		for (Listener listener : listeners) {
+			registerListener(listener);
+		}
+	}
 
 }
 

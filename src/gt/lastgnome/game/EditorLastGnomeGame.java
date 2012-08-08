@@ -41,9 +41,13 @@ public class EditorLastGnomeGame extends AbstractLastGnomeGame {
 	 */
 	public void save() {
 		WorldInstance worldInstance = getWorldInstance();
+		if (worldInstance.getTriggerManager().canSave()) {
+			worldInstance.save();
+			worldInstance.saveMeta(GnomeSocketStart.FILENAME, getStartSocket());
+			worldInstance.saveMeta(GnomeSocketEnd.FILENAME, getEndSocket());
+		} else {
+			System.out.println("Cannot Save. There are still unfinished contexts");
+		}
 		
-		worldInstance.save();
-		worldInstance.saveMeta(GnomeSocketStart.FILENAME, getStartSocket());
-		worldInstance.saveMeta(GnomeSocketEnd.FILENAME, getEndSocket());
 	}
 }

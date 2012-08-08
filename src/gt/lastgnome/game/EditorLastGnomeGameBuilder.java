@@ -96,7 +96,6 @@ public class EditorLastGnomeGameBuilder extends AbstractLastGnomeGameBuilder {
 	}
 	
 	public void reload() throws PersistanceException {
-		game.getWorldInstance().dispose();
 		game.dispose();
 				
 		loadGameSpecific();

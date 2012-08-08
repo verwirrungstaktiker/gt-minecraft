@@ -94,5 +94,19 @@ public class TriggerManager extends YamlSerializable{
 		
 		return blocks;
 	}
+	
+	/**
+	 * Checks if all contexts are ready for saving
+	 * @return true if all contexts can be saved
+	 */
+	public boolean canSave() {
+		for (TriggerContext context : triggerContexts) {
+			if (!context.isComplete()) {
+				return false;
+			}
+		}
+		
+		return true;
+	}
 
 }
