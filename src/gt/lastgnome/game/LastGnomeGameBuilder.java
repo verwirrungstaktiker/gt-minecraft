@@ -37,7 +37,7 @@ public class LastGnomeGameBuilder extends AbstractLastGnomeGameBuilder {
 		ScoreManager sm = new ScoreManager();
 		game.setScoreManager(sm);
 		sm.setGame(game);
-		MultiListener.registerListener(sm);
+		game.registerListener(sm);
 	}
 
 	@Override
@@ -67,15 +67,15 @@ public class LastGnomeGameBuilder extends AbstractLastGnomeGameBuilder {
 			game.upgradeGui(hero);
 		}	
 		
-		MultiListener.registerListener(game);
+		game.registerListener(game);
 
 		ZombieManager zombieManager = game.getZombieManager();
-		int id = Hello.scheduleSyncTask(zombieManager, 0, 10);
-		zombieManager.setTaskID(id);
+		game.registerSyncTask(zombieManager, 0, 10);
+		//zombieManager.setTaskID(id);
 		
-		MultiListener.registerListener(zombieManager);
+		game.registerListener(zombieManager);
 		
-		//TODO Its a bit Hacky
+		//Give all ZombieResponses the ZombieManager
 		for (TriggerContext tc : triggerManager.getTriggerContexts()) {
 			for (Response response : tc.getResponses()) {
 				if (response instanceof ZombieResponse) {
@@ -88,7 +88,9 @@ public class LastGnomeGameBuilder extends AbstractLastGnomeGameBuilder {
 			.getSpawn()
 			.spawnTeam(game.getTeam());
 		
-		MultiListener.registerListener(respawnManager);
+		game.registerListener(respawnManager);
+		
+		game.setRespawnManager(respawnManager);
 		
 		//Set on correct GameMode and ensure empty inventory
 		for (Hero hero: game.getTeam().getPlayers()) {

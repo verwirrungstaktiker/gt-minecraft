@@ -5,8 +5,11 @@ import gt.general.character.HeroManager;
 import gt.general.character.Team;
 import gt.general.gui.HeroGui;
 import gt.general.world.WorldInstance;
+import gt.plugin.meta.Hello;
+import gt.plugin.meta.MultiListener;
 
 import java.util.HashMap;
+import java.util.Vector;
 
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -21,6 +24,9 @@ public abstract class Game implements Listener {
 	/** The instance where the game is played */
 	private WorldInstance world;
 	
+	private Vector<Listener> listeners;
+	private Vector<Integer> tasks;
+	
 	/** Heros, which are currently offline */
 	//private final HashMap<Player,Hero> disconnectedHeros;
 	
@@ -30,6 +36,8 @@ public abstract class Game implements Listener {
 	public Game(final Team team) {
 		super();
 		this.team = team;
+		listeners = new Vector<Listener>();
+		tasks = new Vector<Integer>();
 		team.setGame(this);
 		
 		//disconnectedHeros = new HashMap<Player, Hero>();
@@ -91,7 +99,18 @@ public abstract class Game implements Listener {
 	 * ensures there are no internal dependencies to prevent the game from garbage collection
 	 * e.g. removes related tasks from the scheduler
 	 */
-	public abstract void dispose();
+	public void dispose() {
+		for (Listener listener : listeners) {
+			MultiListener.unregisterListener(listener);			
+		}
+		
+		for (Integer taskId : tasks) {
+			Hello.cancelScheduledTask(taskId);
+		}
+		
+		getWorldInstance().dispose();
+		
+	}
 
 	/**
 	 * @return the team
@@ -112,6 +131,19 @@ public abstract class Game implements Listener {
 	 */
 	public void setWorldInstance(final WorldInstance world) {
 		this.world = world;
+	}
+	
+	public void registerListener(Listener listener) {
+		MultiListener.registerListener(listener);
+		listeners.add(listener);
+	}
+	
+	public void registerAsyncTask(Runnable task, int initial, int ticks) {
+		tasks.add(Hello.scheduleAsyncTask(task, initial, ticks));
+	}
+	
+	public void registerSyncTask(Runnable task, int initial, int ticks) {
+		tasks.add(Hello.scheduleSyncTask(task, initial, ticks));
 	}
 
 }

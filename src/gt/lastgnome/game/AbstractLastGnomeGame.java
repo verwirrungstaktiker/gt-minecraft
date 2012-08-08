@@ -82,10 +82,11 @@ public abstract class AbstractLastGnomeGame extends Game{
 	
 	@Override
 	public void dispose() {
+		super.dispose();
 		startSocket.dispose();
 		endSocket.dispose();
-		MultiListener.unregisterListener(this);
-		MultiListener.unregisterListener(this.zombieManager);
+		//MultiListener.unregisterListener(this);
+		//MultiListener.unregisterListener(this.zombieManager);
 		World startWorld = Hello.getPlugin().getServer().getWorld("world");
 		for (Hero hero : getTeam().getPlayers()) {
 			hero.getPlayer().teleport(startWorld.getSpawnLocation());

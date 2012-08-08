@@ -34,9 +34,10 @@ public class ZombieCharacter extends Character{
 	private int speedToAmplifier(final double speed) {
 		int result = 0;
 		
+		
 		//~25% Faster
-		if (speed>1.1) {
-			return 1;
+		if (speed>1.2) {
+			return (int)(speed-1)*4;
 		}
 		
 		if (speed < 0.9) {
@@ -54,7 +55,10 @@ public class ZombieCharacter extends Character{
 		Double speed = getCurrentSpeed();
 		if (speedEffect == null || 
 				speedEffect.getAmplifier()!= speedToAmplifier(speed)) {
-			zombie.removePotionEffect(speedEffect.getType());
+			if (speedEffect != null) {
+				zombie.removePotionEffect(speedEffect.getType());
+			}
+			
 			if (speed < 0.9) {
 				speedEffect = new PotionEffect(PotionEffectType.SLOW, 
 						20*60*30, speedToAmplifier(speed));
@@ -62,6 +66,11 @@ public class ZombieCharacter extends Character{
 				speedEffect = new PotionEffect(PotionEffectType.SPEED, 
 						20*60*30, speedToAmplifier(speed));
 			}
+			
+			if (speedEffect != null) {
+				zombie.addPotionEffect(speedEffect);
+			}
+			
 		}
 				
 		

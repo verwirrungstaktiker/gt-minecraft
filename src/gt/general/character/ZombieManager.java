@@ -16,6 +16,9 @@ import org.bukkit.entity.Zombie;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.Listener;
+import org.bukkit.potion.PotionEffect;
+import org.bukkit.potion.PotionEffectType;
+import org.fusesource.jansi.Ansi.Attribute;
 
 /**
  * a Manager for Zombies of an instance 
@@ -27,7 +30,8 @@ public class ZombieManager implements Listener, Runnable{
 	private LivingEntity target;
 	private Vector<ZombieCharacter> zombies;
 	private final World world;
-	private int taskID;
+	//private int taskID;
+	private boolean allowDamage;
 	
 	/**
 	 * Creates a new ZombieManager
@@ -36,15 +40,16 @@ public class ZombieManager implements Listener, Runnable{
 	public ZombieManager(final World world) {
 		zombies = new Vector<ZombieCharacter>();
 		this.world = world;
+		allowDamage = false;
 	}
 	
 	/**
 	 * set the id of this task
 	 * @param id task id
 	 */
-	public void setTaskID(final int id) {
+	/*public void setTaskID(final int id) {
 		taskID = id;
-	}
+	}*/
 
 	
 	/**
@@ -62,7 +67,7 @@ public class ZombieManager implements Listener, Runnable{
 		//Zombies cannot be harmed by Players
 		if (event.getEntity() instanceof Zombie) {
 			if (event.getDamager() instanceof Player) {
-			event.setCancelled(true);
+					event.setCancelled(!allowDamage);
 			}
 		}
 		
@@ -125,7 +130,7 @@ public class ZombieManager implements Listener, Runnable{
 	 * remove all zombies & cancel the schedule
 	 */
 	public void cleanup() {
-		Hello.cancelScheduledTask(taskID);
+		//Hello.cancelScheduledTask(taskID);
 		clearZombies();
 	}
 
@@ -171,7 +176,9 @@ public class ZombieManager implements Listener, Runnable{
 				if (entity.getType() == EntityType.PLAYER) {
 					//target players who are to close
 					if (zombie.getTarget() == null ||!zombie.getTarget().equals(entity)) {
-						zombie.setTarget((LivingEntity) entity);
+						allowDamage = true;
+						zombie.damage(0, entity);
+						allowDamage = false;
 					}
 					return;
 				}
@@ -179,7 +186,9 @@ public class ZombieManager implements Listener, Runnable{
 			
 			//If no player is to close, target the target
 			if (zombie.getTarget() == null || !zombie.getTarget().equals(target)) {
-				zombie.setTarget(target);
+				allowDamage = true;
+				zombie.damage(0, target);
+				allowDamage = false;
 			}
 			
 		}
