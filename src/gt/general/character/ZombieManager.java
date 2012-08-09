@@ -31,6 +31,8 @@ public class ZombieManager implements Listener, Runnable{
 	private Vector<ZombieCharacter> zombies;
 	private final World world;
 	//private int taskID;
+	
+	//TODO this really needs to be done better
 	private boolean allowDamage;
 	
 	/**
@@ -58,16 +60,19 @@ public class ZombieManager implements Listener, Runnable{
 	 */
 	@EventHandler
 	public void damageEntityEvent(final EntityDamageByEntityEvent event) {
-		//On hit, Zombie drains 1/3 MaxHealth
+		//On hit, Zombie drains 8 half hearts
 		if (event.getDamager() instanceof Zombie) {
-			LivingEntity p = (LivingEntity) event.getEntity();
-			event.setDamage(p.getMaxHealth()/3);
+			event.setDamage(8);
 		}
 		
 		//Zombies cannot be harmed by Players
-		if (event.getEntity() instanceof Zombie) {
-			if (event.getDamager() instanceof Player) {
-					event.setCancelled(!allowDamage);
+
+		if (event.getDamager() instanceof Player) {
+			if (event.getEntity() instanceof Zombie) {
+				event.setDamage(0);
+				event.setCancelled(!allowDamage);
+			} else {
+				event.setCancelled(true);
 			}
 		}
 		

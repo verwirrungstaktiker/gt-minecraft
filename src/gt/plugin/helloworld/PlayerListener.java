@@ -4,9 +4,13 @@ import gt.general.PortableItem;
 import gt.lastgnome.GnomeItem;
 
 import org.bukkit.ChatColor;
+import org.bukkit.GameMode;
+import org.bukkit.entity.HumanEntity;
+import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 
+import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.player.PlayerDropItemEvent;
 import org.bukkit.event.player.PlayerPickupItemEvent;
 import org.bukkit.event.player.PlayerToggleSprintEvent;
@@ -30,6 +34,20 @@ public class PlayerListener implements Listener {
 			player.setWalkingMultiplier(player.getWalkingMultiplier()*0.66);
 		} else {
 			player.setWalkingMultiplier(player.getWalkingMultiplier()*1.5);
+		}
+
+		event.setCancelled(true);
+	}
+	
+	@EventHandler
+	public final void preventInventoryModification(final InventoryClickEvent event) {
+		HumanEntity human = event.getWhoClicked();
+		if (human instanceof Player) {
+			Player player = (Player) human;
+			
+			if(player.getGameMode() == GameMode.SURVIVAL) {
+				event.setCancelled(true);
+			}
 		}
 	}
 
@@ -89,4 +107,6 @@ public class PlayerListener implements Listener {
 		}
 		return false;
 	}
+	
+	
 }
