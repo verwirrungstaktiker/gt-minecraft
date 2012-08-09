@@ -43,7 +43,7 @@ public class HelloWorld extends JavaPlugin {
 		
 		
 		MultiListener.registerListeners(new KeyPressListener(),
-										new BlockListener(),
+										new LevelSecurity(),
 										new PlayerListener(),
 										heroManager);
 		
