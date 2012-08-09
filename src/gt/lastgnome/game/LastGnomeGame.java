@@ -96,7 +96,7 @@ public class LastGnomeGame extends AbstractLastGnomeGame implements Listener{
 	@EventHandler
 	public void handleGnomPassing(final PlayerInteractEntityEvent event) {
 		
-		if (gameRunning && gnomeBearer.getPlayer().equals(event.getPlayer())) {	
+		if (gameRunning && gnomeBearer!=null && gnomeBearer.getPlayer().equals(event.getPlayer())) {	
 			Entity target = event.getRightClicked();
 			
 			if (target instanceof Player) {
