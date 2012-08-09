@@ -17,13 +17,16 @@ import org.bukkit.material.Door;
 
 public class DoorResponse extends Response {
 
-	private static final String KEY_ORIENTATION = "orientation";
+	//private static final String KEY_ORIENTATION = "orientation";
 	private static final String KEY_MATERIAL = "material";
 	private static final String KEY_LOCATION = "location";
+	private static final String KEY_DATA_UPPER = "data_upper";
+	private static final String KEY_DATA_LOWER = "data_lower";
+	
 	
 	private Block lowerBlock, upperBlock;
 	private Material material;
-	private BlockFace orientation;
+	//private BlockFace orientation;
 	
 	/**
 	 * @param lowerBlock the lower block of a door
@@ -50,19 +53,24 @@ public class DoorResponse extends Response {
 		upperBlock = lowerBlock.getRelative(BlockFace.UP);
 		
 		material = values.get(KEY_MATERIAL);
-		orientation = values.get(KEY_ORIENTATION);
+		
+		int data_lower = values.get(KEY_DATA_LOWER);
+		int data_upper = values.get(KEY_DATA_UPPER);
+		//orientation = values.get(KEY_ORIENTATION);
 
 		lowerBlock.setType(material);
 		upperBlock.setType(material);
 
-		Door door = new Door(material);
+		/*Door door = new Door(material);
 
 		
 		door.setTopHalf(true);
 		upperBlock.setData(door.getData(),true);
 		door.setTopHalf(false);
 		door.setFacingDirection(orientation);		
-		lowerBlock.setData(door.getData(),true);
+		lowerBlock.setData(door.getData(),true);*/
+		upperBlock.setData((byte) (data_upper),true);
+		lowerBlock.setData((byte) (data_lower),true);
 	}
 	
 	@Override
@@ -84,8 +92,9 @@ public class DoorResponse extends Response {
 		map.put(KEY_MATERIAL, material);
 		
 		// the orientation has to be read right before saving
-		Door door = (Door) lowerBlock.getState().getData();
-		map.put(KEY_ORIENTATION, door.getFacing());
+		//Door door = (Door) lowerBlock.getState().getData();
+		map.put(KEY_DATA_LOWER, lowerBlock.getData());
+		map.put(KEY_DATA_UPPER, upperBlock.getData());
 		
 		return map;
 	}
