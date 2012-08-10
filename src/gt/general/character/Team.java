@@ -103,6 +103,10 @@ public class Team {
 		this.game = game;
 	}
 	
+	public boolean inGame() {
+		return game != null;
+	}
+	
 	/**
 	 * @param location Where to teleport the whole Team
 	 */

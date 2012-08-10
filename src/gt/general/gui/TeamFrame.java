@@ -29,6 +29,8 @@ public class TeamFrame implements GuiElement, TeamObserver {
 
 	@Override
 	public void attach(final Hero hero) {
+		System.out.println("attach");
+		
 		for(HeroFrame heroframe : frameMapping.values()) {
 			heroframe.attach(hero);
 		}

@@ -1,10 +1,6 @@
 package gt.lastgnome.game;
 
-import static org.bukkit.ChatColor.GREEN;
-import static org.bukkit.ChatColor.YELLOW;
-import static org.bukkit.ChatColor.RED;
-
-
+import static org.bukkit.ChatColor.*;
 import gt.general.RespawnManager;
 import gt.general.character.Hero;
 import gt.general.character.HeroManager;
@@ -14,9 +10,6 @@ import gt.general.world.WorldInstance;
 import gt.lastgnome.GnomeItem;
 import gt.lastgnome.gui.SpeedBar;
 import gt.plugin.meta.Hello;
-import gt.plugin.meta.MultiListener;
-
-import java.util.Iterator;
 
 import org.bukkit.World;
 import org.bukkit.entity.Entity;
@@ -152,15 +145,21 @@ public class LastGnomeGame extends AbstractLastGnomeGame implements Listener{
 	
 	@Override
 	public void disconnectHero(final Hero hero) {
-		super.disconnectHero(hero);
-		if (hero == getGnomeBearer()) {
-			
-			Iterator<Hero> heros = getTeam().getPlayers().iterator();
-			giveGnomeTo(heros.next());
-		}
-		
+		// TODO stop the game
+		System.out.println(hero.getPlayer().getName() + "disconnected");
 	}
 	
+	/**
+	 * {@inheritDoc}
+	 * <br/>
+	 * Additionally teleports the restored player to the current gnome bearer.
+	 */
+	public void restoreHero(final Hero hero) {
+		// TODO resume the game
+		System.out.println(hero.getPlayer().getName() + "reconnected");
+	}
+
+
 	@Override
 	public void dispose() {
 		getZombieManager().cleanup();
@@ -190,19 +189,6 @@ public class LastGnomeGame extends AbstractLastGnomeGame implements Listener{
 		System.out.println("finalizing a gnome game");
 	}
 	
-	/**
-	 * {@inheritDoc}
-	 * <br/>
-	 * Additionally teleports the restored player to the current gnome bearer.
-	 */
-	public void restoreHero(final Hero hero) {
-		if (getGnomeBearer() != null) {
-			super.restoreHero(hero,getGnomeBearer());			
-		}
-		
-		upgradeGui(hero);
-	}
-
 	@Override
 	public void onEnd() {
 		dispose();		

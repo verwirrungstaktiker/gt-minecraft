@@ -1,114 +1,135 @@
 package gt.general.character;
 
-import static com.google.common.collect.Maps.newHashMap;
+import static com.google.common.collect.Maps.*;
 import gt.general.Game;
 import gt.general.gui.HeroGui;
-import gt.plugin.meta.Hello;
+import gt.plugin.meta.MultiListener;
 
-import java.util.HashSet;
+import java.util.Collection;
 import java.util.Map;
-import java.util.Set;
 
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerLoginEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
-import org.bukkit.plugin.java.JavaPlugin;
 
 /**
  * Creates and manages all heros
  */
 public class HeroManager implements Listener, Runnable {
 	/**Heros sorted by player*/
-	private static final Map<String, Hero> HEROS = newHashMap();
-	/***/
-	private static final Map<String, Game> DISCONNECTED_PLAYERS = newHashMap();	
-	/**The plugin the manager runs in*/
-	private final JavaPlugin plugin;
+	private final Map<String, Hero> heros = newHashMap();
+	private final Map<String, Hero> offlineHeros = newHashMap();	
 	
-	private final InventoryConnector inventoryConnector;
+	private final InventoryConnector inventoryConnector = new InventoryConnector();
 	
-	/**
-	 * Creates a new HeroManager
-	 * @param plugin the plugin we run
-	 */
-	public HeroManager(final JavaPlugin plugin) {
-		this.plugin = plugin;
-
-		inventoryConnector = new InventoryConnector();
+	private static final HeroManager instance = new HeroManager();	
+	public static HeroManager getInstance() {
+		return instance;
 	}
 
 	/**
 	 * creates a hero for every player on login
-	 * @param ple a PlayerLoginEvent
+	 * @param e a PlayerLoginEvent
 	 */
 	@EventHandler
-	public void playerLogin(final PlayerLoginEvent ple) {
+	public void playerLogin(final PlayerJoinEvent e) {
+		
+		Player player = e.getPlayer();
+		String playerName = getPlayerName(player);
+		
+		Hero hero;
+		
+		if(heros.containsKey(playerName)) {
+			hero = heros.get(playerName);
+			
+		} else if(offlineHeros.containsKey(playerName)) {
+			hero = offlineHeros.remove(playerName);
+			heros.put(playerName, hero);
 
-		Player player = ple.getPlayer();
-		String playerName = player.getName().toLowerCase();
-		
-		
-		
-		Hero hero = new Hero(player);
-		hero.getPlayer().getInventory().setMaxStackSize(1);
-		hero.setGui(new HeroGui(hero));
-		
+			hero.setPlayer(player);
+			
+			
+			hero.getGui().reattach();
+			
+			
+			notifyGameReconnect(hero);
+			
+		} else {
+			hero = new Hero(player);
+			hero.setGui(new HeroGui(hero));
+			
+			heros.put(playerName, hero);
+		}
+				
+		hero.getPlayer().getInventory().setMaxStackSize(1);		
+		MultiListener.registerListener(hero);
 		hero.addObserver(inventoryConnector);
 		
-		registerListener(hero);
-		HEROS.put(playerName, hero);
-		
-		Game game = DISCONNECTED_PLAYERS.get(playerName);
-		if (game != null) {
-			game.disconnectHero(hero);
-		}
-		
+		System.out.println(hero.getPlayer().getName() + " -- " + (hero.getPlayer() == player));
 	}
 	
 	/**
 	 * removes hero on player logout
-	 * @param pqe event from Minecraft
+	 * @param e event from Minecraft
 	 */
 	@EventHandler
-	public void playerLogout(final PlayerQuitEvent pqe) {
-		String playerName = pqe.getPlayer().getName().toLowerCase();
-		Hero hero = HEROS.get(playerName);
-		Team team = hero.getTeam();
+	public void playerLogout(final PlayerQuitEvent e) {
+
+		Player player = e.getPlayer();
+		String playerName = getPlayerName(player);
 		
-		if (team != null) {
-			Game game = team.getGame();
-			if (game != null) {
-				DISCONNECTED_PLAYERS.put(playerName, game);
-				game.disconnectHero(hero);
-				
-			}
+		Hero hero = heros.remove(playerName);
+		offlineHeros.put(playerName, hero);
+		
+		MultiListener.unregisterListener(hero);
+		
+		notifyGameDisconnect(hero);
+	}
+
+	private void notifyGameReconnect(final Hero hero) {
+		if(hero.inTeam()) {
+			Team team = hero.getTeam();
 			
+			if(team.inGame()) {
+				Game game = team.getGame();
+				
+				game.restoreHero(hero);
+			}
 		}
-		
-		
-		HEROS.remove(pqe.getPlayer());
 	}
-
-	/**
-	 * @param listener to be registered for all events
-	 */
-	private void registerListener(final Listener listener) {
-		plugin.getServer()
-				  .getPluginManager()
-			  .registerEvents(listener, plugin);
+	
+	private void notifyGameDisconnect(final Hero hero) {
+		
+		if(hero.inTeam()) {
+			Team team = hero.getTeam();
+			
+			if(team.inGame()) {
+				Game game = team.getGame();
+				
+				game.disconnectHero(hero);
+			}
+		}
 	}
-
+	
 	@Override
 	public void run() {
-
-		for (Hero hero : HEROS.values()) {
+		for (Hero hero : heros.values()) {
 			hero.simulateEffects();
 		}
-
 	}
 
+	
+	public Map<String, Hero> getHeros() {
+		return heros;
+	}
+
+	private String getPlayerName(final Player player) {
+		return player.getName().toLowerCase();
+	}
+	
 
 	/**
 	 * gets the hero associated with the player
@@ -124,15 +145,15 @@ public class HeroManager implements Listener, Runnable {
 	 * @return the Hero
 	 */
 	public static Hero getHero(final String name) {
-		return HEROS.get(name.toLowerCase());
+		return getInstance().getHeros().get(name.toLowerCase());
 		
 	}
 
 	/**
 	 * @return all currently online heros
 	 */
-	public static Set<Hero> getAllHeros() {
-		return new HashSet<Hero>(HEROS.values());
+	public static Collection<Hero> getAllHeros() {
+		return getInstance().getHeros().values();
 	}
 
 }

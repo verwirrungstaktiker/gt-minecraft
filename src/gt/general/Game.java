@@ -61,10 +61,7 @@ public abstract class Game implements Listener {
 	 * saves hero for reconnect, removes him otherwise
 	 * @param hero the hero which disconnects
 	 */
-	public void disconnectHero(final Hero hero) {
-		//disconnectedHeros.put(hero.getPlayer(), hero);
-		team.getPlayers().remove(hero);
-	}
+	public abstract void disconnectHero(final Hero hero);
 	
 	/**
 	 * restores a previous disconnected Hero

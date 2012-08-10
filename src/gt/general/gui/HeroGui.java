@@ -106,4 +106,11 @@ public class HeroGui {
 	public InGameHUD getMainScreen() {
 		return	holder.getSpoutPlayer().getMainScreen();
 	}
+
+	
+	public void reattach() {
+		for(GuiElement ge : guiElements.values()) {
+			ge.attach(holder);
+		}
+	}
 }

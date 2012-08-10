@@ -29,7 +29,7 @@ public class Hero extends Character implements Listener{
 	private Team team;
 
 	/**associated Minecraft-Player*/
-	private final Player player;
+	private Player player;
 	/**Item in hand*/
 	private PortableItem activeItem;
 	/**Passiv-Slot for tools*/
@@ -92,6 +92,10 @@ public class Hero extends Character implements Listener{
 		this.team = team;
 	}
 
+	public boolean inTeam() {
+		return team != Team.NOTEAM;
+	}
+	
 	/**
 	 * @return the current Item in the active slot
 	 */
@@ -314,5 +318,9 @@ public class Hero extends Character implements Listener{
 		for(HeroObserver observer : observers) {
 			observer.update(this, notification);
 		}
+	}
+
+	public void setPlayer(final Player player) {
+		this.player = player;
 	}
 }

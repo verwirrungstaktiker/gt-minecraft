@@ -14,5 +14,4 @@ public interface GuiElement{
 	 * @param hero to be called detached from a Hero
 	 */
 	void detach(final Hero hero);
-
 }

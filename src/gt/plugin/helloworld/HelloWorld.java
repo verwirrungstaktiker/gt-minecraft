@@ -24,8 +24,6 @@ import org.bukkit.plugin.java.JavaPlugin;
  *
  */
 public class HelloWorld extends JavaPlugin {
-	
-	private HeroManager heroManager;
 	private GameManager gameManager;
 	
 	private TeamManager teamManager;
@@ -37,10 +35,10 @@ public class HelloWorld extends JavaPlugin {
 	public void onEnable() {
 		Hello.initialize(this);
 
-		heroManager = new HeroManager(this);
 		teamManager = new TeamManager();
 		worldManager = new InstantiatingWorldManager();
 		
+		HeroManager heroManager = HeroManager.getInstance();
 		
 		MultiListener.registerListeners(new KeyPressListener(),
 										new LevelSecurity(),

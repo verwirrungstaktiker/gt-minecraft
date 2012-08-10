@@ -1,5 +1,8 @@
 package gt.plugin.helloworld;
 
+import gt.general.character.Hero;
+import gt.general.character.HeroManager;
+
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.event.EventHandler;
@@ -21,6 +24,12 @@ public class KeyPressListener implements Listener {
 			String message = ChatColor.YELLOW + "x:" + loc.getBlockX() + " y:" + loc.getBlockY() + " z:" + loc.getBlockZ();
 			event.getPlayer().sendMessage(message);
 		}
+		
+		
+		if(event.getKey() == Keyboard.KEY_B) {
+			Hero h = HeroManager.getHero(event.getPlayer());
+			
+			h.getGui().reattach();
+		}
 	}
-
 }

@@ -1,5 +1,6 @@
 package gt.lastgnome.game;
 
+import gt.general.character.Hero;
 import gt.general.character.Team;
 import gt.general.world.WorldInstance;
 import gt.lastgnome.GnomeSocketEnd;
@@ -20,21 +21,15 @@ public class EditorLastGnomeGame extends AbstractLastGnomeGame {
 	}
 
 	@Override
-	public void onStartSocketInteract(final Player player) {
-		// TODO Auto-generated method stub
-
-	}
+	public void onStartSocketInteract(final Player player) {}
 
 	@Override
-	public void onEndSocketInteract(final Player player) {
-		// TODO Auto-generated method stub
-
-	}
+	public void onEndSocketInteract(final Player player) {}
 
 	@Override
-	public void onEnd() {
-		// TODO Auto-generated method stub
-	}
+	public void onEnd() {}
+	
+	
 	
 	/**
 	 * save all TriggerContexts to Yaml
@@ -50,4 +45,7 @@ public class EditorLastGnomeGame extends AbstractLastGnomeGame {
 		}
 		
 	}
+
+	@Override
+	public void disconnectHero(Hero hero) {}
 }

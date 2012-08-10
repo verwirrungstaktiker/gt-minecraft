@@ -136,5 +136,4 @@ public class HeroFrame implements HeroObserver{
 			hero.getGui().removeWidgets(active);
 		}
 	}
-
 }
