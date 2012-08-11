@@ -56,9 +56,7 @@ public abstract class Character {
 	/**
 	 * @return the current Location of this Character
 	 */
-	public Location getLocation() {
-		return null;
-	}
+	public abstract Location getLocation();
 
 	/**
 	 * @return the auras

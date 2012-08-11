@@ -1,7 +1,9 @@
 package gt.general.character;
 
+import static com.google.common.collect.Maps.*;
 import gt.general.aura.Aura;
 
+import java.util.Map;
 import java.util.Vector;
 
 import org.bukkit.Effect;
@@ -30,6 +32,9 @@ public class ZombieManager implements Listener, Runnable{
 	
 	//TODO this really needs to be done better
 	private boolean allowDamage;
+	
+	private boolean frozen = false;
+	private final Map<ZombieCharacter, Location> frozenPositions = newHashMap();
 	
 	/**
 	 * Creates a new ZombieManager
@@ -167,6 +172,11 @@ public class ZombieManager implements Listener, Runnable{
 	 */
 	@Override
 	public void run() {
+		
+		if(frozen) {
+			relocateZombies();
+		}
+		
 		if (target == null) {
 			return;
 		}
@@ -196,16 +206,25 @@ public class ZombieManager implements Listener, Runnable{
 		}
 	}
 
+	
+	private void relocateZombies() {
+		for(ZombieCharacter zombie : frozenPositions.keySet()) {
+			
+			zombie.getZombie().teleport(frozenPositions.get(zombie));
+		}
+	}
+	
 	public void freezeAllZombies() {
-		System.out.println("freeze zombies");
-		// TODO THIS DOES NOT WORK
-		addSpeedAll(-2.0);
+		frozen = true;
+		
+		for(ZombieCharacter zombie : zombies) {
+			frozenPositions.put(zombie, zombie.getLocation());
+		}
 	}
 
 	public void unFreezeAllZombies() {
-		System.out.println("unfreeze zombies");
-		// TODO THIS DOES NOT WORK
-		addSpeedAll(+2.0);
+		frozen = false;
+		frozenPositions.clear();
 	}
 
 }
