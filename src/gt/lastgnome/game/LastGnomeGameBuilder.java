@@ -11,8 +11,6 @@ import gt.general.logic.response.Response;
 import gt.general.logic.response.ZombieResponse;
 import gt.general.world.WorldManager;
 import gt.lastgnome.MathRiddleRandomizer;
-import gt.plugin.meta.Hello;
-import gt.plugin.meta.MultiListener;
 
 import org.bukkit.GameMode;
 import org.bukkit.entity.Player;
@@ -64,13 +62,28 @@ public class LastGnomeGameBuilder extends AbstractLastGnomeGameBuilder {
 		game.registerListener(game);
 
 		setupZombieManager(triggerManager);
-		setupAllHeroes();
+		setupAllHeroes(triggerManager);
 
 		game.registerListener(respawnManager);
 		game.setRespawnManager(respawnManager);
 	}
 
-	private void setupAllHeroes() {
+	private void setupAllHeroes(TriggerManager triggerManager) {
+		ZombieManager zombieManager = game.getZombieManager();
+		game.registerSyncTask(zombieManager, 0, 1);
+		//zombieManager.setTaskID(id);
+		
+		game.registerListener(zombieManager);
+		game.setZombieManager(zombieManager);
+		
+		//Give all ZombieResponses the ZombieManager
+		for (TriggerContext tc : triggerManager.getTriggerContexts()) {
+			for (Response response : tc.getResponses()) {
+				if (response instanceof ZombieResponse) {
+					((ZombieResponse) response).setZombieManager(zombieManager);
+				}
+			}
+		}
 		
 		game.getWorldInstance()
 			.getSpawn()

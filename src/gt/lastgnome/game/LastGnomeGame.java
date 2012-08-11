@@ -5,6 +5,7 @@ import gt.general.RespawnManager;
 import gt.general.character.Hero;
 import gt.general.character.HeroManager;
 import gt.general.character.Team;
+import gt.general.character.ZombieManager;
 import gt.general.gui.GuiElementType;
 import gt.general.world.WorldInstance;
 import gt.lastgnome.GnomeItem;
@@ -24,17 +25,18 @@ import org.bukkit.event.player.PlayerInteractEntityEvent;
  */
 public class LastGnomeGame extends AbstractLastGnomeGame implements Listener{
 	
-	private boolean gameRunning;
-	
 	private final GnomeItem gnome;
 
+	
 	/** so that e.g. Zombies know who the Gnome-Bearer is */
 	private Hero gnomeBearer;
 	
 	private ScoreManager scoreManager;
 	
 	private RespawnManager respawnManager;
-		
+
+	private ZombieManager zombieManager;
+	
 	/**
 	 * initiates a new Last Gnome Game
 	 *
@@ -44,7 +46,6 @@ public class LastGnomeGame extends AbstractLastGnomeGame implements Listener{
 		super(team);
 		
 		gnome = new GnomeItem();
-		gameRunning = true;
 	}
 
 	
@@ -52,9 +53,6 @@ public class LastGnomeGame extends AbstractLastGnomeGame implements Listener{
 		return scoreManager;
 	}
 
-
-	
-	
 	public void setRespawnManager(RespawnManager respawnManager) {
 		this.respawnManager = respawnManager;
 	}
@@ -63,12 +61,6 @@ public class LastGnomeGame extends AbstractLastGnomeGame implements Listener{
 	public void setScoreManager(ScoreManager scoreManager) {
 		this.scoreManager = scoreManager;
 	}
-
-
-	public void setGameRunning(boolean gameRunning) {
-		this.gameRunning = gameRunning;
-	}
-
 
 	/**
 	 * TODO downgrade? is here the right place for this stuff?
@@ -89,7 +81,7 @@ public class LastGnomeGame extends AbstractLastGnomeGame implements Listener{
 	@EventHandler
 	public void handleGnomPassing(final PlayerInteractEntityEvent event) {
 		
-		if (gameRunning && gnomeBearer!=null && gnomeBearer.getPlayer().equals(event.getPlayer())) {	
+		if (gnomeBearer!=null && gnomeBearer.getPlayer().equals(event.getPlayer())) {	
 			Entity target = event.getRightClicked();
 			
 			if (target instanceof Player) {
@@ -142,28 +134,10 @@ public class LastGnomeGame extends AbstractLastGnomeGame implements Listener{
 	public Hero getGnomeBearer() {
 		return gnomeBearer;
 	}
-	
-	@Override
-	public void disconnectHero(final Hero hero) {
-		// TODO stop the game
-		System.out.println(hero.getPlayer().getName() + "disconnected");
-	}
-	
-	/**
-	 * {@inheritDoc}
-	 * <br/>
-	 * Additionally teleports the restored player to the current gnome bearer.
-	 */
-	public void restoreHero(final Hero hero) {
-		// TODO resume the game
-		System.out.println(hero.getPlayer().getName() + "reconnected");
-	}
-
 
 	@Override
 	public void dispose() {
 		getZombieManager().cleanup();
-		gameRunning = false;
 		super.dispose();
 		
 		if (gnomeBearer != null) {
@@ -274,5 +248,35 @@ public class LastGnomeGame extends AbstractLastGnomeGame implements Listener{
 		} else {
 			player.sendMessage(YELLOW + "The mighty Gnome Socket demands the Gnome!");
 		}
+	}
+
+
+	/**
+	 * @return the zombieManager
+	 */
+	public ZombieManager getZombieManager() {
+		return zombieManager;
+	}
+
+
+	/**
+	 * @param zombieManager the zombieManager to set
+	 */
+	public void setZombieManager(final ZombieManager zombieManager) {
+		this.zombieManager = zombieManager;
+	}
+
+
+	@Override
+	public void onPause() {
+		getZombieManager().freezeAllZombies();
+		getTeam().freezeAllHeros();
+	}
+
+
+	@Override
+	public void onResume() {
+		getZombieManager().unFreezeAllZombies();
+		getTeam().unfreezeAllHeros();
 	}
 }

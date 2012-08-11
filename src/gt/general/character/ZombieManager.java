@@ -1,8 +1,9 @@
 package gt.general.character;
 
+import static com.google.common.collect.Maps.*;
 import gt.general.aura.Aura;
-import gt.plugin.meta.Hello;
 
+import java.util.Map;
 import java.util.Vector;
 
 import org.bukkit.Effect;
@@ -14,11 +15,8 @@ import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Zombie;
 import org.bukkit.event.EventHandler;
-import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.Listener;
-import org.bukkit.potion.PotionEffect;
-import org.bukkit.potion.PotionEffectType;
-import org.fusesource.jansi.Ansi.Attribute;
+import org.bukkit.event.entity.EntityDamageByEntityEvent;
 
 /**
  * a Manager for Zombies of an instance 
@@ -34,6 +32,9 @@ public class ZombieManager implements Listener, Runnable{
 	
 	//TODO this really needs to be done better
 	private boolean allowDamage;
+	
+	private boolean frozen = false;
+	private final Map<ZombieCharacter, Location> frozenPositions = newHashMap();
 	
 	/**
 	 * Creates a new ZombieManager
@@ -159,6 +160,7 @@ public class ZombieManager implements Listener, Runnable{
 	public void addSpeedAll(final Double value) {
 		for (ZombieCharacter zombie : zombies) {
 			zombie.addToAttribute(CharacterAttributes.SPEED, value);
+			zombie.applyAttributes();
 		}
 	}
 	
@@ -170,6 +172,11 @@ public class ZombieManager implements Listener, Runnable{
 	 */
 	@Override
 	public void run() {
+		
+		if(frozen) {
+			relocateZombies();
+		}
+		
 		if (target == null) {
 			return;
 		}
@@ -197,6 +204,27 @@ public class ZombieManager implements Listener, Runnable{
 			}
 			
 		}
+	}
+
+	
+	private void relocateZombies() {
+		for(ZombieCharacter zombie : frozenPositions.keySet()) {
+			
+			zombie.getZombie().teleport(frozenPositions.get(zombie));
+		}
+	}
+	
+	public void freezeAllZombies() {
+		frozen = true;
+		
+		for(ZombieCharacter zombie : zombies) {
+			frozenPositions.put(zombie, zombie.getLocation());
+		}
+	}
+
+	public void unFreezeAllZombies() {
+		frozen = false;
+		frozenPositions.clear();
 	}
 
 }

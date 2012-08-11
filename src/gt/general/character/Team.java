@@ -1,8 +1,11 @@
 package gt.general.character;
 
 import gt.general.Game;
+import gt.general.aura.Effect;
+import gt.general.aura.FreezeEffect;
 
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.Set;
 
 import org.bukkit.Location;
@@ -183,6 +186,30 @@ public class Team {
 	 */
 	public void fix() {
 		fixed = true;
+	}
+	
+	public void freezeAllHeros() {
+		for(Hero h : members) {
+			FreezeEffect freeze = new FreezeEffect();
+			h.addEffect(freeze);
+		}
+	}
+	
+	public void unfreezeAllHeros() {
+		for(Hero h : members) {
+			
+			// search all freeze effects and remove them
+			// TODO this smells of Code Duplication
+			Iterator<Effect> it = h.getEffects().iterator();
+			while(it.hasNext()) {
+			    if (it.next() instanceof FreezeEffect) {
+			    	System.out.println("found a freeze effect");
+			        it.remove();
+			    }
+			}
+			
+			h.setComputedAttributesTainted(true);
+		}
 	}
 
 }

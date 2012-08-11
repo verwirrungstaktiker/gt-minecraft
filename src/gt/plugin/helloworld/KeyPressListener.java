@@ -2,6 +2,7 @@ package gt.plugin.helloworld;
 
 import gt.general.character.Hero;
 import gt.general.character.HeroManager;
+import gt.lastgnome.game.LastGnomeGame;
 
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
@@ -27,9 +28,6 @@ public class KeyPressListener implements Listener {
 		
 		
 		if(event.getKey() == Keyboard.KEY_B) {
-			Hero h = HeroManager.getHero(event.getPlayer());
-			
-			h.getGui().reattach();
 		}
 	}
 }

@@ -1,20 +1,17 @@
 package gt.general;
 
+import static com.google.common.collect.Sets.*;
 import gt.general.character.Hero;
-import gt.general.character.HeroManager;
 import gt.general.character.Team;
-import gt.general.gui.HeroGui;
 import gt.general.world.WorldInstance;
 import gt.plugin.meta.Hello;
 import gt.plugin.meta.MultiListener;
 
-import java.util.HashMap;
+import java.util.Set;
 import java.util.Vector;
 
 import org.bukkit.entity.Player;
-import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.event.player.PlayerLoginEvent;
 
 public abstract class Game implements Listener {
 	
@@ -27,8 +24,8 @@ public abstract class Game implements Listener {
 	private Vector<Listener> listeners;
 	private Vector<Integer> tasks;
 	
-	/** Heros, which are currently offline */
-	//private final HashMap<Player,Hero> disconnectedHeros;
+	private final Set<Hero> disconnectedHeros = newHashSet();
+	private boolean running;
 	
 	/**
 	 * @param team The team playing this game
@@ -40,52 +37,53 @@ public abstract class Game implements Listener {
 		tasks = new Vector<Integer>();
 		team.setGame(this);
 		
-		//disconnectedHeros = new HashMap<Player, Hero>();
+		running = true;
 	}
-
-	/**
-	 * Looks if the player belonged to this game, before a disconnect
-	 * @param player a player
-	 * @return the Hero if it is associated with the player, otherwise null 
-	 */
-	/*public Hero getDisconnectedHero(final Player player) {
-		for (Player p : disconnectedHeros.keySet()) {
-			if (p.getName().equals(player.getName())) {
-				return disconnectedHeros.get(p); 
-			}
-		}
-		return null;
-	}*/
 	
 	/**
 	 * saves hero for reconnect, removes him otherwise
 	 * @param hero the hero which disconnects
 	 */
-	public abstract void disconnectHero(final Hero hero);
-	
+	public void disconnectHero(final Hero hero) {
+		disconnectedHeros.add(hero);
+
+		// first disconnect
+		if(disconnectedHeros.size() == 1) {
+			setRunning(false);
+		}
+	}	
 	/**
 	 * restores a previous disconnected Hero
 	 * @param hero Hero to be restored
 	 */
-	public void restoreHero(final Hero hero) {
-		Player player = hero.getPlayer();
-		//disconnectedHeros.remove(player);
-		team.getPlayers().add(hero);
-		hero.setTeam(team);
+	public void reconnectHero(final Hero hero) {		
+		disconnectedHeros.remove(hero);
 		
-		player.teleport(world.getSpawnLocation());	
+		// last reconnect
+		if(disconnectedHeros.size() == 0) {
+			setRunning(true);
+		}	
 	}
+
 	
 	/**
-	 * restores a previous hero and teleports him to another hero
-	 * @param hero Hero to be restored
-	 * @param dest Hero to teleport to
+	 * sets the running state and calls the appropriate handlers
+	 * 
+	 * @param running the running to set
 	 */
-	protected void restoreHero(final Hero hero, final Hero dest) {
-		Player player = hero.getPlayer();
-		Player destplayer = dest.getPlayer();
-		player.teleport(destplayer);	
+	public void setRunning(final boolean running) {
+		this.running = running;
+		
+		if(running) {
+			onResume();
+		} else {
+			onPause();
+		}
 	}
+
+	public abstract void onPause();
+	
+	public abstract void onResume();
 	
 	/**
 	 * handles the victory or defeat of a game
@@ -147,6 +145,13 @@ public abstract class Game implements Listener {
 		for (Listener listener : listeners) {
 			registerListener(listener);
 		}
+	}
+
+	/**
+	 * @return the running
+	 */
+	public boolean isRunning() {
+		return running;
 	}
 
 }

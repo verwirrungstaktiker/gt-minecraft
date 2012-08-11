@@ -1,5 +1,6 @@
 package gt.general.character;
 
+import org.bukkit.Location;
 import org.bukkit.entity.Zombie;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
@@ -74,6 +75,11 @@ public class ZombieCharacter extends Character{
 		}
 				
 		
+	}
+
+	@Override
+	public Location getLocation() {
+		return zombie.getLocation();
 	}
 
 }
