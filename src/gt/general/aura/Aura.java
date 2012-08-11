@@ -1,7 +1,6 @@
 package gt.general.aura;
 
 import gt.general.character.Character;
-import gt.general.character.Hero;
 import gt.plugin.meta.Hello;
 
 import org.bukkit.Bukkit;
@@ -9,7 +8,7 @@ import org.bukkit.Bukkit;
 /**
  * Class for auras, which distribute effects
  */
-public class Aura implements Runnable {
+public abstract class Aura implements Runnable {
 	/**Owner from which the Aura originates*/
 	private Character owner = null;
 	/**Factory which produces the Effect*/
@@ -69,6 +68,10 @@ public class Aura implements Runnable {
 		taskId = Bukkit.getScheduler().scheduleAsyncRepeatingTask(
 				Hello.getPlugin(), this, initial, rate);
 	}
+	
+	protected Character getOwner() {
+		return owner;
+	}
 
 	/**
 	 * ensures that this is not simulated currently and there is no owner
@@ -117,10 +120,14 @@ public class Aura implements Runnable {
 				((Hero)owner).getPlayer().sendMessage("adding aura stack");
 			}*/
 			
-			owner.addEffect(effectFactory.getEffect());
+			if (spreadEffectNow()) {
+				owner.addEffect(effectFactory.getEffect());
+			}
 		} else {
 			// TODO spread auras
 			throw new RuntimeException("not implemented yet");
 		}
 	}
+	
+	protected abstract boolean spreadEffectNow();
 }

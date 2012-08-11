@@ -4,6 +4,7 @@ import gt.general.PortableItem;
 import gt.general.aura.Aura;
 import gt.general.aura.Effect;
 import gt.general.aura.EffectFactory;
+import gt.general.aura.GameAura;
 import gt.general.aura.GnomeCarrierEffect;
 import gt.general.aura.GnomeSlowEffect;
 import gt.general.character.Hero;
@@ -40,7 +41,7 @@ public final class GnomeItem extends PortableItem {
 	public GnomeItem(final Plugin plugin, final String name, final String texture) {
 		super(plugin, name, texture);
 
-		gnomeAura = new Aura(new EffectFactory() {
+		gnomeAura = new GameAura(new EffectFactory() {
 			@Override
 			public Effect getEffect() {
 				return new GnomeSlowEffect();

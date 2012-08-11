@@ -50,11 +50,7 @@ public class HeroManager implements Listener, Runnable {
 			heros.put(playerName, hero);
 
 			hero.setPlayer(player);
-			
-			
 			hero.getGui().reattach();
-			
-			
 			notifyGameReconnect(hero);
 			
 		} else {
@@ -90,27 +86,14 @@ public class HeroManager implements Listener, Runnable {
 	}
 
 	private void notifyGameReconnect(final Hero hero) {
-		if(hero.inTeam()) {
-			Team team = hero.getTeam();
-			
-			if(team.inGame()) {
-				Game game = team.getGame();
-				
-				game.restoreHero(hero);
-			}
+		if(hero.inGame()) {
+			hero.getGame().reconnectHero(hero);
 		}
 	}
 	
 	private void notifyGameDisconnect(final Hero hero) {
-		
-		if(hero.inTeam()) {
-			Team team = hero.getTeam();
-			
-			if(team.inGame()) {
-				Game game = team.getGame();
-				
-				game.disconnectHero(hero);
-			}
+		if(hero.inGame()) {
+			hero.getGame().disconnectHero(hero);
 		}
 	}
 	

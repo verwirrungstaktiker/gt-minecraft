@@ -1,5 +1,6 @@
 package gt.general.character;
 
+import gt.general.Game;
 import gt.general.PortableItem;
 import gt.general.gui.HeroGui;
 
@@ -323,4 +324,20 @@ public class Hero extends Character implements Listener{
 	public void setPlayer(final Player player) {
 		this.player = player;
 	}
+	
+	public Game getGame() {
+		
+		if(! inGame()) {
+			return null;
+		} else {
+			return getTeam().getGame();
+		}
+	}
+	
+	public boolean inGame() {
+		
+		return inTeam() && getTeam().inGame();
+
+	}
+	
 }

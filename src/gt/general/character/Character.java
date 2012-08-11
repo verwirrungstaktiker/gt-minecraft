@@ -3,6 +3,7 @@ package gt.general.character;
 import gt.general.aura.Aura;
 import gt.general.aura.Effect;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Vector;
@@ -155,6 +156,7 @@ public abstract class Character {
 	 */
 	public void simulateEffects() {
 
+		// TODO this wont work -> ConcurrentModificationException + code duplication
 		for (Effect effect : effects) {
 			if (effect.remainingTicks() == 0) {
 				effects.remove(effect);
@@ -180,6 +182,8 @@ public abstract class Character {
 					baseAttributes.get(attribute));
 		}
 
+		Collections.sort(effects);
+		
 		for (Effect effect : effects) {
 			effect.takeEffect(this);
 		}
@@ -199,6 +203,13 @@ public abstract class Character {
 	 */
 	public double getAttribute(final CharacterAttributes attr) {
 		return computedAttributes.get(attr);
+	}
+
+	/**
+	 * @param computedAttributesTainted the computedAttributesTainted to set
+	 */
+	public void setComputedAttributesTainted(boolean computedAttributesTainted) {
+		this.computedAttributesTainted = computedAttributesTainted;
 	}
 
 

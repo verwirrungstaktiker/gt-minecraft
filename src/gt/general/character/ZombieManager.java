@@ -1,7 +1,6 @@
 package gt.general.character;
 
 import gt.general.aura.Aura;
-import gt.plugin.meta.Hello;
 
 import java.util.Vector;
 
@@ -14,11 +13,8 @@ import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Zombie;
 import org.bukkit.event.EventHandler;
-import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.Listener;
-import org.bukkit.potion.PotionEffect;
-import org.bukkit.potion.PotionEffectType;
-import org.fusesource.jansi.Ansi.Attribute;
+import org.bukkit.event.entity.EntityDamageByEntityEvent;
 
 /**
  * a Manager for Zombies of an instance 
@@ -159,6 +155,7 @@ public class ZombieManager implements Listener, Runnable{
 	public void addSpeedAll(final Double value) {
 		for (ZombieCharacter zombie : zombies) {
 			zombie.addToAttribute(CharacterAttributes.SPEED, value);
+			zombie.applyAttributes();
 		}
 	}
 	
@@ -197,6 +194,18 @@ public class ZombieManager implements Listener, Runnable{
 			}
 			
 		}
+	}
+
+	public void freezeAllZombies() {
+		System.out.println("freeze zombies");
+		// TODO THIS DOES NOT WORK
+		addSpeedAll(-2.0);
+	}
+
+	public void unFreezeAllZombies() {
+		System.out.println("unfreeze zombies");
+		// TODO THIS DOES NOT WORK
+		addSpeedAll(+2.0);
 	}
 
 }
