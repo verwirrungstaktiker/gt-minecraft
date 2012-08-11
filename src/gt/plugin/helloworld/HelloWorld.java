@@ -4,12 +4,18 @@ import gt.general.GameManager;
 import gt.general.character.HeroManager;
 import gt.general.character.TeamManager;
 import gt.general.world.InstantiatingWorldManager;
+import gt.general.world.WorldInstance;
 import gt.general.world.WorldManager;
 import gt.plugin.helloworld.command.StartGameCommandExecutor;
 import gt.plugin.helloworld.command.TeamCommandExecutor;
 import gt.plugin.meta.Hello;
 import gt.plugin.meta.MultiListener;
+import gt.plugin.meta.PlayerCommandExecutor;
 
+import net.minecraft.server.World;
+
+import org.bukkit.GameMode;
+import org.bukkit.Location;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -80,6 +86,48 @@ public class HelloWorld extends JavaPlugin {
 				System.out.println("ending games");
 				gameManager.endAllGames();
 				return true;
+			}
+		});
+		
+		getCommand("instances").setExecutor(new CommandExecutor() {
+			
+			@Override
+			public boolean onCommand(CommandSender arg0, Command arg1, String arg2, String[] arg3) {
+				System.out.println("open instances:");
+				
+				for(WorldInstance world : worldManager.getOpenWorlds()) {
+					System.out.println(world.getName());
+				}
+				return true;
+			}
+		});
+		
+		
+		getCommand("spectate").setExecutor(new PlayerCommandExecutor() {
+			
+			@Override
+			public boolean onPlayerCommand(final Player player, final Command cmd, final String label, final String[] args) {
+				
+				for(WorldInstance world : worldManager.getOpenWorlds()) {
+					
+					if(world.getName().equalsIgnoreCase(args[0])) {
+						
+						player.sendMessage("specating: " + args[0]);
+						
+						Location spawn = world.getSpawn().getRespawnLocation().add(0.0, 3.0, 0.0);
+						
+						player.setGameMode(GameMode.CREATIVE);
+						player.teleport(spawn);
+						player.setFlying(true);
+						
+						return true;
+					}
+					
+				}
+				
+				player.sendMessage("this instance doesnt exist");
+				
+				return false;
 			}
 		});
 		

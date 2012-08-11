@@ -13,4 +13,8 @@ commands:
     description: allows the player to fly
   prompt:
     description: shows the prompt
+  instances:
+    description: shows open instances
+  spectate:
+    description: spectates the given instance
   
