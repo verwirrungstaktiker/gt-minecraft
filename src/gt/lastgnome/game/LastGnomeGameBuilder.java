@@ -34,10 +34,7 @@ public class LastGnomeGameBuilder extends AbstractLastGnomeGameBuilder {
 	public void instantiateGame() {
 		game = new LastGnomeGame(team);
 		
-		ScoreManager sm = new ScoreManager();
-		game.setScoreManager(sm);
-		sm.setGame(game);
-		game.registerListener(sm);
+		setupScoreManager();
 		
 		team.fix();
 	}
@@ -61,16 +58,58 @@ public class LastGnomeGameBuilder extends AbstractLastGnomeGameBuilder {
 	public void startGame() {
 		TriggerManager triggerManager = game.getWorldInstance().getTriggerManager();
 		
-		
 		MathRiddleRandomizer randomizer = new MathRiddleRandomizer(triggerManager);
 		randomizer.randomizeMathRiddles();
+		
+		game.registerListener(game);
+
+		setupZombieManager(triggerManager);
+		setupAllHeroes();
+
+		game.registerListener(respawnManager);
+		game.setRespawnManager(respawnManager);
+	}
+
+	private void setupAllHeroes() {
+		
+		game.getWorldInstance()
+			.getSpawn()
+			.spawnTeam(game.getTeam());
 		
 		for(Hero hero : team.getPlayers()) {
 			game.upgradeGui(hero);
 		}	
 		
-		game.registerListener(game);
+		//Set on correct GameMode and ensure empty inventory
+		for (Hero hero: game.getTeam().getPlayers()) {
+			Player p = hero.getPlayer();
+			p.setGameMode(GameMode.SURVIVAL);
+			p.getInventory().clear();
+			//Make sure player is in good health
+			p.setHealth(p.getMaxHealth());
+		}
+	}
+	
+	@Override
+	protected AbstractLastGnomeGame getAbstractGame() {
+		return game;
+	}	
+	
+	/**
+	 * Score Manager setup
+	 */
+	private void setupScoreManager() {
+		ScoreManager sm = new ScoreManager();
+		game.setScoreManager(sm);
+		sm.setGame(game);
+		game.registerListener(sm);
+	}
 
+	/**
+	 * ZombieManager setup
+	 * @param triggerManager the game's triggerManager
+	 */
+	private void setupZombieManager(final TriggerManager triggerManager) {
 		ZombieManager zombieManager = game.getZombieManager();
 		game.registerSyncTask(zombieManager, 0, 10);
 		//zombieManager.setTaskID(id);
@@ -85,29 +124,6 @@ public class LastGnomeGameBuilder extends AbstractLastGnomeGameBuilder {
 				}
 			}
 		}
-		
-		game.getWorldInstance()
-			.getSpawn()
-			.spawnTeam(game.getTeam());
-		
-		game.registerListener(respawnManager);
-		
-		game.setRespawnManager(respawnManager);
-		
-		//Set on correct GameMode and ensure empty inventory
-		for (Hero hero: game.getTeam().getPlayers()) {
-			Player p = hero.getPlayer();
-			p.setGameMode(GameMode.SURVIVAL);
-			p.getInventory().clear();
-			//Make sure player is in good health
-			p.setHealth(p.getMaxHealth());
-		}
-		
 	}
-
-	@Override
-	protected AbstractLastGnomeGame getAbstractGame() {
-		return game;
-	}	
 
 }

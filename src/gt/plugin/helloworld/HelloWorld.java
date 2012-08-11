@@ -67,7 +67,12 @@ public class HelloWorld extends JavaPlugin {
 			@Override
 			public boolean onCommand(final CommandSender arg0, final Command arg1, final String arg2, final String[] arg3) {
 				if (arg0 instanceof Player) {
-					((Player) arg0).setAllowFlight(true);
+					Player player = (Player) arg0;
+					player.setAllowFlight(true);
+					// Lift-off ;)
+					player.teleport(player.getLocation().add(0.0, 0.1, 0.0));
+					player.setFlying(true);
+					
 					return true;
 				}
 				return false;
