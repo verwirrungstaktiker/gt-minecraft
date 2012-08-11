@@ -32,10 +32,7 @@ public class LastGnomeGameBuilder extends AbstractLastGnomeGameBuilder {
 	public void instantiateGame() {
 		game = new LastGnomeGame(team);
 		
-		ScoreManager sm = new ScoreManager();
-		game.setScoreManager(sm);
-		sm.setGame(game);
-		game.registerListener(sm);
+		setupScoreManager();
 		
 		team.fix();
 	}
@@ -59,16 +56,19 @@ public class LastGnomeGameBuilder extends AbstractLastGnomeGameBuilder {
 	public void startGame() {
 		TriggerManager triggerManager = game.getWorldInstance().getTriggerManager();
 		
-		
 		MathRiddleRandomizer randomizer = new MathRiddleRandomizer(triggerManager);
 		randomizer.randomizeMathRiddles();
 		
-		for(Hero hero : team.getPlayers()) {
-			game.upgradeGui(hero);
-		}	
-		
 		game.registerListener(game);
 
+		setupZombieManager(triggerManager);
+		setupAllHeroes(triggerManager);
+
+		game.registerListener(respawnManager);
+		game.setRespawnManager(respawnManager);
+	}
+
+	private void setupAllHeroes(TriggerManager triggerManager) {
 		ZombieManager zombieManager = game.getZombieManager();
 		game.registerSyncTask(zombieManager, 0, 1);
 		//zombieManager.setTaskID(id);
@@ -89,9 +89,9 @@ public class LastGnomeGameBuilder extends AbstractLastGnomeGameBuilder {
 			.getSpawn()
 			.spawnTeam(game.getTeam());
 		
-		game.registerListener(respawnManager);
-		
-		game.setRespawnManager(respawnManager);
+		for(Hero hero : team.getPlayers()) {
+			game.upgradeGui(hero);
+		}	
 		
 		//Set on correct GameMode and ensure empty inventory
 		for (Hero hero: game.getTeam().getPlayers()) {
@@ -101,12 +101,42 @@ public class LastGnomeGameBuilder extends AbstractLastGnomeGameBuilder {
 			//Make sure player is in good health
 			p.setHealth(p.getMaxHealth());
 		}
-		
 	}
-
+	
 	@Override
 	protected AbstractLastGnomeGame getAbstractGame() {
 		return game;
 	}	
+	
+	/**
+	 * Score Manager setup
+	 */
+	private void setupScoreManager() {
+		ScoreManager sm = new ScoreManager();
+		game.setScoreManager(sm);
+		sm.setGame(game);
+		game.registerListener(sm);
+	}
+
+	/**
+	 * ZombieManager setup
+	 * @param triggerManager the game's triggerManager
+	 */
+	private void setupZombieManager(final TriggerManager triggerManager) {
+		ZombieManager zombieManager = game.getZombieManager();
+		game.registerSyncTask(zombieManager, 0, 10);
+		//zombieManager.setTaskID(id);
+		
+		game.registerListener(zombieManager);
+		
+		//Give all ZombieResponses the ZombieManager
+		for (TriggerContext tc : triggerManager.getTriggerContexts()) {
+			for (Response response : tc.getResponses()) {
+				if (response instanceof ZombieResponse) {
+					((ZombieResponse) response).setZombieManager(zombieManager);
+				}
+			}
+		}
+	}
 
 }
