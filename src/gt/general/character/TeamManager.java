@@ -49,6 +49,7 @@ public class TeamManager {
 	
 	/**
 	 * @param team The team to be disbanded.
+	 * note: this method does NOT check if team is fixed
 	 */
 	public void disband(final Team team) {
 		

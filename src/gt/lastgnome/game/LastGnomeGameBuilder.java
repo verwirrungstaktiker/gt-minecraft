@@ -38,6 +38,8 @@ public class LastGnomeGameBuilder extends AbstractLastGnomeGameBuilder {
 		game.setScoreManager(sm);
 		sm.setGame(game);
 		game.registerListener(sm);
+		
+		team.fix();
 	}
 
 	@Override
