@@ -9,6 +9,7 @@ import gt.lastgnome.game.LastGnomeGameBuilder;
 import gt.plugin.meta.PlayerCommandExecutor;
 
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.entity.Player;
 
@@ -34,6 +35,11 @@ public class StartGameCommandExecutor extends PlayerCommandExecutor {
 	public boolean onPlayerCommand(final Player player, final Command cmd, final String label, final String[] args) {
 
 		Hero starter = HeroManager.getHero(player);
+		
+		if(starter.inGame()) {
+			starter.getPlayer().sendMessage(ChatColor.RED + "you are already in a game!");
+			return true;
+		}
 		
 		// build the team
 		Team team = starter.getTeam();
