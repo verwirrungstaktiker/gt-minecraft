@@ -5,6 +5,7 @@ import gt.general.logic.persistance.exceptions.PersistanceException;
 import gt.general.world.BlockObserver;
 import gt.general.world.ObservableCustomBlock;
 import gt.general.world.ObservableCustomBlock.BlockEvent;
+import gt.general.world.ObservableCustomBlock.BlockEventType;
 import gt.plugin.meta.CustomBlockType;
 import gt.plugin.meta.Hello;
 
@@ -97,16 +98,16 @@ public class StepOnTrigger extends Trigger implements BlockObserver {
 	@Override
 	public void onBlockEvent(final BlockEvent blockEvent) {
 		
-		if(!inUse && blockEvent.block.equals(block)) {
+		if(!inUse && blockEvent.getBlock().equals(block) && blockEvent.getBlockEventType() == BlockEventType.PLAYER_STEP_ON) {
 			
 			block.getWorld().playEffect(block.getLocation(), Effect.MOBSPAWNER_FLAMES, 25);
-            getContext().updateTriggerState(this, true, blockEvent.player);
+            getContext().updateTriggerState(this, true, blockEvent.getPlayer());
             
             Hello.scheduleOneTimeTask(new Runnable() {
 				
 				@Override
 				public void run() {
-					getContext().updateTriggerState(StepOnTrigger.this, false, blockEvent.player);
+					getContext().updateTriggerState(StepOnTrigger.this, false, blockEvent.getPlayer());
 				}
 			}, 20 * 2);
         }

@@ -107,9 +107,9 @@ public class QuestionTrigger extends BlockTrigger implements BlockObserver{
 	@Override
 	public void onBlockEvent(final BlockEvent blockEvent) {
 
-		if(blockEvent.blockEventType == BlockEventType.BLOCK_INTERACT && blockEvent.block.equals(getBlock()) && !solved) {
+		if(blockEvent.getBlockEventType() == BlockEventType.BLOCK_INTERACT && blockEvent.getBlock().equals(getBlock()) && !solved) {
 			
-			final Hero hero = HeroManager.getHero(blockEvent.player);			
+			final Hero hero = HeroManager.getHero(blockEvent.getPlayer());			
 			Prompt prompt = new Prompt(question, new PromptCallback() {
 				
 				@Override

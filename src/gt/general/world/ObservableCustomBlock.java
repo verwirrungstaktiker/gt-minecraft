@@ -1,9 +1,12 @@
 package gt.general.world;
 
 
+import java.util.logging.Logger;
+
 import gt.plugin.meta.CustomBlockType;
 import gt.plugin.meta.Hello;
 
+import org.bukkit.Bukkit;
 import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Entity;
@@ -30,10 +33,68 @@ public class ObservableCustomBlock extends GenericCustomBlock {
 	
 	// TODO this must be done better
 	public class BlockEvent {		
-		public Block block;
-		public LivingEntity entity;
-		public BlockEventType blockEventType;
-		public Player player;
+		private Block block;
+		private LivingEntity entity;
+		private BlockEventType blockEventType;
+		private Player player;
+		/**
+		 * @return the block
+		 */
+		public Block getBlock() {
+			printWarning("block");
+			return block;
+		}
+		/**
+		 * @param block the block to set
+		 */
+		public void setBlock(Block block) {
+			this.block = block;
+		}
+		/**
+		 * @return the entity
+		 */
+		public LivingEntity getEntity() {
+			printWarning("entity");
+			return entity;
+		}
+		/**
+		 * @param entity the entity to set
+		 */
+		public void setEntity(LivingEntity entity) {
+			this.entity = entity;
+		}
+		/**
+		 * @return the blockEventType
+		 */
+		public BlockEventType getBlockEventType() {
+			return blockEventType;
+		}
+		/**
+		 * @param blockEventType the blockEventType to set
+		 */
+		public void setBlockEventType(BlockEventType blockEventType) {
+			this.blockEventType = blockEventType;
+		}
+		/**
+		 * @return the player
+		 */
+		public Player getPlayer() {
+			printWarning("player");
+			return player;
+		}
+		/**
+		 * @param player the player to set
+		 */
+		public void setPlayer(Player player) {
+			this.player = player;
+		}
+		
+		private void printWarning(final String field) {			
+			String message = "BlockEvent: field is null :" + field + "\n" +
+								"--type: " + blockEventType.toString() + "\n";
+
+			Bukkit.getLogger().warning(message);			
+		}
 	}
 	
 	private Multimap<World, BlockObserver> observers = HashMultimap.create();
@@ -66,9 +127,9 @@ public class ObservableCustomBlock extends GenericCustomBlock {
 	 */
 	public void onBlockPlace(final World world, final int x, final int y, final int z, final LivingEntity living) {
 		BlockEvent e = new BlockEvent();
-		e.block = world.getBlockAt(x, y, z);
-		e.entity = living;
-		e.blockEventType = BlockEventType.PLAYER_BLOCK_PLACED;
+		e.setBlock(world.getBlockAt(x, y, z));
+		e.setEntity(living);
+		e.setBlockEventType(BlockEventType.PLAYER_BLOCK_PLACED);
 		
 		fireBlockEvent(world, e);
 	}
@@ -83,8 +144,8 @@ public class ObservableCustomBlock extends GenericCustomBlock {
 	public void onBlockDestroyed(final World world, final int x, final int y, final int z) {
 		
 		BlockEvent e = new BlockEvent();
-		e.block = world.getBlockAt(x, y, z);
-		e.blockEventType = BlockEventType.BLOCK_DESTROYED;
+		e.setBlock(world.getBlockAt(x, y, z));
+		e.setBlockEventType(BlockEventType.BLOCK_DESTROYED);
 		
 		fireBlockEvent(world, e);
 	}
@@ -101,9 +162,9 @@ public class ObservableCustomBlock extends GenericCustomBlock {
 	public boolean onBlockInteract(final World world, final int x, final int y, final int z, final SpoutPlayer player) {
 		
 		BlockEvent e = new BlockEvent();
-		e.block = world.getBlockAt(x, y, z);
-		e.player = player;
-		e.blockEventType = BlockEventType.BLOCK_INTERACT;
+		e.setBlock(world.getBlockAt(x, y, z));
+		e.setPlayer(player);
+		e.setBlockEventType(BlockEventType.BLOCK_INTERACT);
 		
 		fireBlockEvent(world, e);
 	
@@ -118,9 +179,9 @@ public class ObservableCustomBlock extends GenericCustomBlock {
 			Player player = (Player) entity;
 			
 			BlockEvent e = new BlockEvent();
-			e.block = world.getBlockAt(x, y, z);
-			e.player = player;
-			e.blockEventType = BlockEventType.PLAYER_STEP_ON;
+			e.setBlock(world.getBlockAt(x, y, z));
+			e.setPlayer(player);
+			e.setBlockEventType(BlockEventType.PLAYER_STEP_ON);
 			
 			fireBlockEvent(world, e);
 		}

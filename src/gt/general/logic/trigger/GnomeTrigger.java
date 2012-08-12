@@ -94,12 +94,12 @@ public class GnomeTrigger extends BlockTrigger implements BlockObserver{
     @Override
     public void onBlockEvent(final BlockEvent blockEvent) {
     	// don't bother if the block is being destroyed
-    	if(blockEvent.blockEventType == BlockEventType.BLOCK_DESTROYED) {
+    	if(blockEvent.getBlockEventType() == BlockEventType.BLOCK_DESTROYED) {
     		return;
     	}
 
-        if(blockEvent.blockEventType == BlockEventType.BLOCK_INTERACT && blockEvent.block==getBlock()) { 
-	        PlayerInventory inv = blockEvent.player.getInventory();
+        if(blockEvent.getBlockEventType() == BlockEventType.BLOCK_INTERACT && blockEvent.getBlock()==getBlock()) { 
+	        PlayerInventory inv = blockEvent.getPlayer().getInventory();
 
         	//TODO this is a temporary fix as the gnome is flint underneath, as all CustomItems!
 	        if(inv.getItemInHand().getType() == Material.FLINT) {
@@ -107,14 +107,14 @@ public class GnomeTrigger extends BlockTrigger implements BlockObserver{
 	            
 	            if(triggered) {
 	                CustomBlockType.GNOME_TRIGGER_POSITIVE.place(getBlock());
-	                getContext().updateTriggerState(this, true, blockEvent.player);
+	                getContext().updateTriggerState(this, true, blockEvent.getPlayer());
 	                
 	            } else {
 	                CustomBlockType.GNOME_TRIGGER_NEGATIVE.place(getBlock());
-	                getContext().updateTriggerState(this, true, blockEvent.player);
+	                getContext().updateTriggerState(this, true, blockEvent.getPlayer());
 	            }
 	        } else {
-	        	blockEvent.player.sendMessage(ChatColor.YELLOW + "You might need the gnome here");
+	        	blockEvent.getPlayer().sendMessage(ChatColor.YELLOW + "You might need the gnome here");
 	        }
         }
     }

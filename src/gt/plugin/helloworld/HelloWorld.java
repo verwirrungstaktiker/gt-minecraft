@@ -14,6 +14,7 @@ import gt.plugin.meta.PlayerCommandExecutor;
 
 import net.minecraft.server.World;
 
+import org.bukkit.ChatColor;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
 import org.bukkit.command.Command;
@@ -97,7 +98,7 @@ public class HelloWorld extends JavaPlugin {
 		getCommand("instances").setExecutor(new CommandExecutor() {
 			
 			@Override
-			public boolean onCommand(CommandSender arg0, Command arg1, String arg2, String[] arg3) {
+			public boolean onCommand(final CommandSender arg0, final Command arg1, final String arg2, final String[] arg3) {
 				System.out.println("open instances:");
 				
 				for(WorldInstance world : worldManager.getOpenWorlds()) {
@@ -112,6 +113,11 @@ public class HelloWorld extends JavaPlugin {
 			
 			@Override
 			public boolean onPlayerCommand(final Player player, final Command cmd, final String label, final String[] args) {
+				
+				if(args[0] == null) {
+					player.sendMessage(ChatColor.RED + "usage: /specatate [instance]");
+					return true;
+				}
 				
 				for(WorldInstance world : worldManager.getOpenWorlds()) {
 					

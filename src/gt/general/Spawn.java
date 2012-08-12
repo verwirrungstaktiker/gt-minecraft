@@ -100,12 +100,12 @@ public class Spawn extends YamlSerializable implements BlockObserver, RespawnPoi
 	@Override
 	public void onBlockEvent(final BlockEvent blockEvent) {
 		
-		switch (blockEvent.blockEventType) {
+		switch (blockEvent.getBlockEventType()) {
 		case PLAYER_BLOCK_PLACED:
-			spawnBlocks.add(blockEvent.block);
+			spawnBlocks.add(blockEvent.getBlock());
 			break;
 		case BLOCK_DESTROYED:
-			spawnBlocks.remove(blockEvent.block);
+			spawnBlocks.remove(blockEvent.getBlock());
 
 		default:
 			break;

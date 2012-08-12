@@ -29,8 +29,8 @@ public class GnomeSocketEnd extends WorldUniqueBlock {
 	public void onBlockEvent(final BlockEvent blockEvent) {
 		super.onBlockEvent(blockEvent);
 
-		if (blockEvent.blockEventType == BlockEventType.BLOCK_INTERACT) {
-			game.onEndSocketInteract(blockEvent.player);
+		if (blockEvent.getBlockEventType() == BlockEventType.BLOCK_INTERACT) {
+			game.onEndSocketInteract(blockEvent.getPlayer());
 		}
 
 	}

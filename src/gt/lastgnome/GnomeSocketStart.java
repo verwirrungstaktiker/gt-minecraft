@@ -28,8 +28,8 @@ public class GnomeSocketStart extends WorldUniqueBlock {
 	public void onBlockEvent(final BlockEvent blockEvent) {
 		super.onBlockEvent(blockEvent);
 		
-		if(blockEvent.blockEventType == BlockEventType.BLOCK_INTERACT) {
-			game.onStartSocketInteract(blockEvent.player);
+		if(blockEvent.getBlockEventType() == BlockEventType.BLOCK_INTERACT) {
+			game.onStartSocketInteract(blockEvent.getPlayer());
 		}
 		
 	}

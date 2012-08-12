@@ -1,7 +1,6 @@
 package gt.general.character;
 
 import static com.google.common.collect.Maps.*;
-import gt.general.Game;
 import gt.general.gui.HeroGui;
 import gt.plugin.meta.MultiListener;
 
@@ -12,7 +11,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
-import org.bukkit.event.player.PlayerLoginEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 
 /**
