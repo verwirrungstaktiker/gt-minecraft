@@ -1,8 +1,6 @@
 package gt.general.world;
 
 
-import java.util.logging.Logger;
-
 import gt.plugin.meta.CustomBlockType;
 import gt.plugin.meta.Hello;
 
@@ -41,7 +39,10 @@ public class ObservableCustomBlock extends GenericCustomBlock {
 		 * @return the block
 		 */
 		public Block getBlock() {
-			printWarning("block");
+			if(block == null) {
+				printWarning("block");
+			}
+			
 			return block;
 		}
 		/**
@@ -54,7 +55,10 @@ public class ObservableCustomBlock extends GenericCustomBlock {
 		 * @return the entity
 		 */
 		public LivingEntity getEntity() {
-			printWarning("entity");
+			if(entity == null) {
+				printWarning("entity");
+			}
+			
 			return entity;
 		}
 		/**
@@ -79,7 +83,9 @@ public class ObservableCustomBlock extends GenericCustomBlock {
 		 * @return the player
 		 */
 		public Player getPlayer() {
-			printWarning("player");
+			if(player == null) {
+				printWarning("player");
+			}
 			return player;
 		}
 		/**
