@@ -1,6 +1,7 @@
 package gt.general.character;
 
 import org.bukkit.Location;
+import org.bukkit.entity.PigZombie;
 import org.bukkit.entity.Zombie;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
@@ -10,14 +11,14 @@ import org.bukkit.potion.PotionEffectType;
  * wraps a bukkit zombie and modifies its speed
  */
 public class ZombieCharacter extends Character{
-	private final Zombie zombie;
+	private final PigZombie zombie;
 	private PotionEffect  speedEffect;
 	
 	/**
 	 * create a new zombie
 	 * @param zombie bukkit zombie
 	 */
-	public ZombieCharacter(final Zombie zombie) {
+	public ZombieCharacter(final PigZombie zombie) {
 		this.zombie = zombie;
 	}
 	

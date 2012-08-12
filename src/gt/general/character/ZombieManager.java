@@ -12,6 +12,7 @@ import org.bukkit.World;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.LivingEntity;
+import org.bukkit.entity.PigZombie;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Zombie;
 import org.bukkit.event.EventHandler;
@@ -35,6 +36,7 @@ public class ZombieManager implements Listener, Runnable{
 	
 	private boolean frozen = false;
 	private final Map<ZombieCharacter, Location> frozenPositions = newHashMap();
+	private Vector<ZombieCharacter> mob;
 	
 	/**
 	 * Creates a new ZombieManager
@@ -44,6 +46,7 @@ public class ZombieManager implements Listener, Runnable{
 		zombies = new Vector<ZombieCharacter>();
 		this.world = world;
 		allowDamage = false;
+		mob = new Vector<ZombieCharacter>();
 	}
 	
 	/**
@@ -105,6 +108,16 @@ public class ZombieManager implements Listener, Runnable{
 	public void spawnZombie(final Location spawnpoint) {
 		spawnZombie(spawnpoint,1.0);
 	}
+
+	/**
+	 * Spawns a Zombie
+	 * @param spawnpoint location, where zombie should be spawned
+	 */
+	public void spawnZombieMob(final Location spawnpoint, int number) {
+		for (int i=0;i<number;++i) {
+			spawnZombie(spawnpoint,1.0);			
+		}
+	}	
 	
 	/**
 	 * Spawns a Zombie with different speed
@@ -123,7 +136,7 @@ public class ZombieManager implements Listener, Runnable{
 	 * 
 	 */
 	public void spawnZombie(final Location spawnpoint, final Aura aura, final double speed) {
-		ZombieCharacter zombie = new ZombieCharacter(world.spawn(spawnpoint, Zombie.class));
+		ZombieCharacter zombie = new ZombieCharacter(world.spawn(spawnpoint, PigZombie.class));
 		zombie.setAttribute(CharacterAttributes.SPEED, speed);
 		//make sure not to add null-auras
 		if (aura != null) {
@@ -151,6 +164,16 @@ public class ZombieManager implements Listener, Runnable{
 			zombie.getZombie().remove();
 		}
 		zombies.clear();
+	}
+	
+	public void clearMob() {
+		for (ZombieCharacter zombie : mob) {
+			zombie.getZombie().getWorld().playEffect(
+					zombie.getZombie().getLocation(), Effect.POTION_BREAK, 10);
+			//zombie.getZombie().damage(20);
+			zombie.getZombie().remove();
+		}
+		mob.clear();
 	}
 	
 	/**
@@ -188,9 +211,9 @@ public class ZombieManager implements Listener, Runnable{
 				if (entity.getType() == EntityType.PLAYER) {
 					//target players who are to close
 					if (zombie.getTarget() == null ||!zombie.getTarget().equals(entity)) {
-						allowDamage = true;
-						zombie.damage(0, entity);
-						allowDamage = false;
+						//allowDamage = true;
+						zombie.setTarget((LivingEntity) entity);
+						//allowDamage = false;
 					}
 					return;
 				}
@@ -198,9 +221,7 @@ public class ZombieManager implements Listener, Runnable{
 			
 			//If no player is to close, target the target
 			if (zombie.getTarget() == null || !zombie.getTarget().equals(target)) {
-				allowDamage = true;
-				zombie.damage(0, target);
-				allowDamage = false;
+				zombie.setTarget(target);
 			}
 			
 		}
