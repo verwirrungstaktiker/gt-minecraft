@@ -108,7 +108,7 @@ public class GnomeTrigger extends Trigger implements BlockObserver{
     		return;
     	}
 
-        if(blockEvent.blockEventType == BlockEventType.BLOCK_INTERACT) { 
+        if(blockEvent.blockEventType == BlockEventType.BLOCK_INTERACT && blockEvent.block==block) { 
 	        PlayerInventory inv = blockEvent.player.getInventory();
 
         	//TODO this is a temporary fix as the gnome is flint underneath, as all CustomItems!
