@@ -163,6 +163,7 @@ global-triggers:
       x: 21
   gnome_trigger_159541957:
     class: gt.general.logic.trigger.GnomeTrigger
+    material: !!org.bukkit.Material 'STONE'
     block:
       z: 10
       y: 66
@@ -180,6 +181,7 @@ global-triggers:
       y: 69
       x: -22
   gnome_trigger_1:
+    material: !!org.bukkit.Material 'STONE'
     class: gt.general.logic.trigger.GnomeTrigger
     block:
       z: -19
