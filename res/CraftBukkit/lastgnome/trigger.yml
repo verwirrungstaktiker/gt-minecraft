@@ -719,13 +719,13 @@ global-responses:
     class: gt.general.logic.response.ZombieClearResponse
   hallway1_zombie_door:
     min:
-      z: 10
+      z: 16
       y: 65
-      x: -16
+      x: -5
     max:
-      z: 10
-      y: 67
-      x: -14
+      z: 19
+      y: 66
+      x: -5
     class: gt.general.logic.response.MultiBlockDisappearResponse
     inverted: false
     material: !!org.bukkit.Material 'NETHER_FENCE'
@@ -800,11 +800,11 @@ global-responses:
   zombie_310285359:
     speed: 1.0
     location:
-      z: 8.0
+      z: 18.0
       y: 65.0
-      x: -15.0
+      x: -7.0
     class: gt.general.logic.response.ZombieSpawnResponse
-    number: 10
+    number: 6
   door_response_525433239:
     data_lower: 0
     location:
