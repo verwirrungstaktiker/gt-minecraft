@@ -167,9 +167,6 @@ public class ZombieManager implements Listener, Runnable{
 		}
 	}
 	
-
-	
-	
 	/**
 	 * Scheduled Method to make sure zombies attack right target
 	 */
@@ -212,47 +209,23 @@ public class ZombieManager implements Listener, Runnable{
 	 * Teleports all zombies to a location
 	 * @param teleport location where zombies shpuld be teleported to
 	 */
-	public void teleportZombies(Location teleport) {
+	public void teleportZombies(final Location teleport) {
 		for (ZombieCharacter zombie : zombies) {
 			zombie.getZombie().teleport(teleport);
 			zombie.getZombie().getWorld().playEffect(
 					zombie.getZombie().getLocation(), Effect.POTION_BREAK, 10);
 		}
 	}
-
-	/**
-	 * calculates the distance between zombie and its target
-	 * @param zombie the zombie
-	 * @return the distance
-	 */
-	private double distanceToTarget(PigZombie zombie) {
-		Location z_loc = zombie.getLocation();
-		Location t_loc = zombie.getTarget().getLocation();
-		return z_loc.distance(t_loc);
-	}
-	
-	/**
-	 * toggles if zombies should be frozen
-	 */
-	public void toggleFreeze() {
-		frozen = !frozen;
-		if (frozen) {
-			addSpeedAll(-3.0);
-		} else {
-			addSpeedAll(3.0);
-		}
-	}
 	
 	public void freezeAllZombies() {
-		if (!frozen) {
-			toggleFreeze();
+		for(ZombieCharacter z : zombies) {
+			z.freeze();
 		}
 	}
 
 	public void unFreezeAllZombies() {
-		if (frozen) {
-			toggleFreeze();
+		for(ZombieCharacter z : zombies) {
+			z.unfreeze();
 		}
 	}
-
 }

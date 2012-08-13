@@ -33,28 +33,6 @@ public class ZombieCharacter extends Character {
 		return zombie;
 	}
 
-	/**
-	 * @param speed
-	 *            speed of the zombie
-	 * @return the amplifier that is necessary to get a specific speed
-	 */
-//	private int speedToAmplifier(final double speed) {
-//		int result = 0;
-//
-//		// ~25% Faster
-//		if (speed > 1.6) {
-//			return (int) (speed - 1.4) * 4;
-//		}
-//
-//		if (speed < 1.4) {
-//			result = (int) Math.round(((1.8 - speed) / 0.15));
-//			result = result - 1;
-//			return result;
-//		}
-//
-//		return result;
-//	}
-
 	@Override
 	public void applyAttributes() {
 		if (potionEffect != null) {
@@ -92,13 +70,10 @@ public class ZombieCharacter extends Character {
 		Double defaultSpeed = getDefaultSpeed();
 		
 		return (int) ((speed - defaultSpeed) / (defaultSpeed / MAX_POTION_AMPLIFIER));
-		
-		
 	}
 
 	@Override
 	public Location getLocation() {
 		return zombie.getLocation();
 	}
-
 }

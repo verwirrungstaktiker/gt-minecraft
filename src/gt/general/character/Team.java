@@ -190,25 +190,13 @@ public class Team {
 	
 	public void freezeAllHeros() {
 		for(Hero h : members) {
-			FreezeEffect freeze = new FreezeEffect();
-			h.addEffect(freeze);
+			h.freeze();
 		}
 	}
 	
 	public void unfreezeAllHeros() {
 		for(Hero h : members) {
-			
-			// search all freeze effects and remove them
-			// TODO this smells of Code Duplication
-			Iterator<Effect> it = h.getEffects().iterator();
-			while(it.hasNext()) {
-			    if (it.next() instanceof FreezeEffect) {
-			    	System.out.println("found a freeze effect");
-			        it.remove();
-			    }
-			}
-			
-			h.setComputedAttributesTainted(true);
+			h.unfreeze();
 		}
 	}
 

@@ -214,6 +214,24 @@ public abstract class Character {
 	public void setComputedAttributesTainted(boolean computedAttributesTainted) {
 		this.computedAttributesTainted = computedAttributesTainted;
 	}
+	
+	public void freeze() {
+		addEffect(new FreezeEffect());
+	}
 
+	public void unfreeze() {
+		// search all freeze effects and remove them
+		// TODO this smells of Code Duplication
+		Iterator<Effect> it = getEffects().iterator();
+		while(it.hasNext()) {
+		    if (it.next() instanceof FreezeEffect) {
+		    	System.out.println("found a freeze effect");
+		        it.remove();
+		    }
+		}
+		
+		setComputedAttributesTainted(true);
+	}
+	
 
 }
