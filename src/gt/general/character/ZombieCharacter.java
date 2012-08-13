@@ -60,9 +60,15 @@ public class ZombieCharacter extends Character {
 	}
 
 	private PotionEffect getSlowPotion() {
-		return new PotionEffect(PotionEffectType.SLOW,
-								POTION_DURATION,
-								-speedToPotionAmplifier());
+		
+		// ensure they dont move at 0.0
+		if(getCurrentSpeed() == 0.0) {
+			return new PotionEffect(PotionEffectType.SLOW, POTION_DURATION, 127);
+		} else {
+			return new PotionEffect(PotionEffectType.SLOW,
+									POTION_DURATION,
+									-speedToPotionAmplifier());
+		}
 	}
 	
 	private int speedToPotionAmplifier() {
