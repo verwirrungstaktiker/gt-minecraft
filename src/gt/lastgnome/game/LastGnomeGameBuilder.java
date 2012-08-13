@@ -70,7 +70,7 @@ public class LastGnomeGameBuilder extends AbstractLastGnomeGameBuilder {
 
 	private void setupAllHeroes(TriggerManager triggerManager) {
 		ZombieManager zombieManager = game.getZombieManager();
-		game.registerSyncTask(zombieManager, 0, 1);
+		game.registerSyncTask(zombieManager, 0, 5);
 		//zombieManager.setTaskID(id);
 		
 		game.registerListener(zombieManager);
