@@ -84,7 +84,7 @@ public class ZombieCharacter extends Character {
 	private PotionEffect getSlowPotion() {
 		return new PotionEffect(PotionEffectType.SLOW,
 								POTION_DURATION,
-								speedToPotionAmplifier());
+								-speedToPotionAmplifier());
 	}
 	
 	private int speedToPotionAmplifier() {

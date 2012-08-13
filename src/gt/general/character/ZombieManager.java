@@ -36,8 +36,8 @@ public class ZombieManager implements Listener, Runnable{
 	private boolean frozen = false;
 	private final Game game;
 	
-	private final static double ACTIVATE_CATCHUP_DISTANCE = 10.0;
-	private final static double DEACTIVATE_CATCHUP_DISTANCE = 6.0;
+	private final static double ACTIVATE_CATCHUP_DISTANCE = 13.0;
+	private final static double DEACTIVATE_CATCHUP_DISTANCE = 10.0;
 	
 	public static final int SCHEDULE_RATE = 10;
 	
