@@ -25,7 +25,7 @@ public class ZombieCharacter extends Character{
 	/**
 	 * @return the wrapped zombie
 	 */
-	public Zombie getZombie() {
+	public PigZombie getZombie() {
 		return zombie;
 	}
 	
@@ -38,12 +38,12 @@ public class ZombieCharacter extends Character{
 		
 		
 		//~25% Faster
-		if (speed>1.2) {
-			return (int)(speed-1)*4;
+		if (speed>1.6) {
+			return (int)(speed-1.4)*4;
 		}
 		
-		if (speed < 0.9) {
-			result = (int)Math.round(((1-speed)/0.15));
+		if (speed < 1.4) {
+			result = (int)Math.round(((1.4-speed)/0.15));
 			result = result - 1;
 			return result;
 		}
@@ -61,10 +61,10 @@ public class ZombieCharacter extends Character{
 				zombie.removePotionEffect(speedEffect.getType());
 			}
 			
-			if (speed < 0.9) {
+			if (speed < 1.4) {
 				speedEffect = new PotionEffect(PotionEffectType.SLOW, 
 						20*60*30, speedToAmplifier(speed));
-			} else if (speed > 1.1) {
+			} else if (speed > 1.6) {
 				speedEffect = new PotionEffect(PotionEffectType.SPEED, 
 						20*60*30, speedToAmplifier(speed));
 			}

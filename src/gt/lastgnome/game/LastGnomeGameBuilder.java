@@ -68,8 +68,7 @@ public class LastGnomeGameBuilder extends AbstractLastGnomeGameBuilder {
 		game.setRespawnManager(respawnManager);
 	}
 
-	private void setupAllHeroes(final TriggerManager triggerManager) {
-		
+	private void setupAllHeroes(final TriggerManager triggerManager) {		
 		game.getWorldInstance()
 			.getSpawn()
 			.spawnTeam(game.getTeam());

@@ -1,9 +1,7 @@
 package gt.general.character;
 
-import static com.google.common.collect.Maps.*;
 import gt.general.aura.Aura;
 
-import java.util.Map;
 import java.util.Vector;
 
 import org.bukkit.Effect;
@@ -29,14 +27,8 @@ public class ZombieManager implements Listener, Runnable{
 	private LivingEntity target;
 	private Vector<ZombieCharacter> zombies;
 	private final World world;
-	//private int taskID;
-	
-	//TODO this really needs to be done better
-	private boolean allowDamage;
 	
 	private boolean frozen = false;
-	private final Map<ZombieCharacter, Location> frozenPositions = newHashMap();
-	private Vector<ZombieCharacter> mob;
 	
 	/**
 	 * Creates a new ZombieManager
@@ -45,17 +37,7 @@ public class ZombieManager implements Listener, Runnable{
 	public ZombieManager(final World world) {
 		zombies = new Vector<ZombieCharacter>();
 		this.world = world;
-		allowDamage = false;
-		mob = new Vector<ZombieCharacter>();
 	}
-	
-	/**
-	 * set the id of this task
-	 * @param id task id
-	 */
-	/*public void setTaskID(final int id) {
-		taskID = id;
-	}*/
 
 	
 	/**
@@ -73,9 +55,6 @@ public class ZombieManager implements Listener, Runnable{
 
 		if (event.getDamager() instanceof Player) {
 			if (event.getEntity() instanceof Zombie) {
-				event.setDamage(0);
-				event.setCancelled(!allowDamage);
-			} else {
 				event.setCancelled(true);
 			}
 		}
@@ -108,16 +87,6 @@ public class ZombieManager implements Listener, Runnable{
 	public void spawnZombie(final Location spawnpoint) {
 		spawnZombie(spawnpoint,1.0);
 	}
-
-	/**
-	 * Spawns a Zombie
-	 * @param spawnpoint location, where zombie should be spawned
-	 */
-	public void spawnZombieMob(final Location spawnpoint, int number) {
-		for (int i=0;i<number;++i) {
-			spawnZombie(spawnpoint,1.0);			
-		}
-	}	
 	
 	/**
 	 * Spawns a Zombie with different speed
@@ -149,7 +118,6 @@ public class ZombieManager implements Listener, Runnable{
 	 * remove all zombies & cancel the schedule
 	 */
 	public void cleanup() {
-		//Hello.cancelScheduledTask(taskID);
 		clearZombies();
 	}
 
@@ -160,20 +128,9 @@ public class ZombieManager implements Listener, Runnable{
 		for (ZombieCharacter zombie : zombies) {
 			zombie.getZombie().getWorld().playEffect(
 					zombie.getZombie().getLocation(), Effect.POTION_BREAK, 10);
-			//zombie.getZombie().damage(20);
 			zombie.getZombie().remove();
 		}
 		zombies.clear();
-	}
-	
-	public void clearMob() {
-		for (ZombieCharacter zombie : mob) {
-			zombie.getZombie().getWorld().playEffect(
-					zombie.getZombie().getLocation(), Effect.POTION_BREAK, 10);
-			//zombie.getZombie().damage(20);
-			zombie.getZombie().remove();
-		}
-		mob.clear();
 	}
 	
 	/**
@@ -183,7 +140,6 @@ public class ZombieManager implements Listener, Runnable{
 	public void addSpeedAll(final Double value) {
 		for (ZombieCharacter zombie : zombies) {
 			zombie.addToAttribute(CharacterAttributes.SPEED, value);
-			zombie.applyAttributes();
 		}
 	}
 	
@@ -196,8 +152,12 @@ public class ZombieManager implements Listener, Runnable{
 	@Override
 	public void run() {
 		
+		for (ZombieCharacter zombie : zombies) {
+			zombie.applyAttributes();
+		}
+		
 		if(frozen) {
-			relocateZombies();
+			return;
 		}
 		
 		if (target == null) {
@@ -205,17 +165,15 @@ public class ZombieManager implements Listener, Runnable{
 		}
 		
 		for (ZombieCharacter zombieChar : zombies) {
-			Zombie zombie = zombieChar.getZombie();
+			PigZombie zombie = zombieChar.getZombie();
 			//See if any Players are nearby
 			for (Entity entity : zombie.getNearbyEntities(1.5, 1.5, 1.5)) {
 				if (entity.getType() == EntityType.PLAYER) {
 					//target players who are to close
 					if (zombie.getTarget() == null ||!zombie.getTarget().equals(entity)) {
-						//allowDamage = true;
 						zombie.setTarget((LivingEntity) entity);
-						//allowDamage = false;
 					}
-					return;
+					break;
 				}
 			}
 			
@@ -224,28 +182,66 @@ public class ZombieManager implements Listener, Runnable{
 				zombie.setTarget(target);
 			}
 			
+			if (distanceToTarget(zombie)>10) {
+				double value = 1.5-zombieChar.getCurrentSpeed();
+				zombieChar.addToAttribute(CharacterAttributes.SPEED, value);
+				break;
+			}
+			
+			if (zombieChar.getCurrentSpeed()>1.4 
+					&& distanceToTarget(zombie)<6.2) {
+				double value = 1-zombieChar.getCurrentSpeed();
+				zombieChar.addToAttribute(CharacterAttributes.SPEED, value);
+			}
+			
+		}
+	}
+	
+	/**
+	 * Teleports all zombies to a location
+	 * @param teleport location where zombies shpuld be teleported to
+	 */
+	public void teleportZombies(Location teleport) {
+		for (ZombieCharacter zombie : zombies) {
+			zombie.getZombie().teleport(teleport);
+			zombie.getZombie().getWorld().playEffect(
+					zombie.getZombie().getLocation(), Effect.POTION_BREAK, 10);
 		}
 	}
 
+	/**
+	 * calculates the distance between zombie and its target
+	 * @param zombie the zombie
+	 * @return the distance
+	 */
+	private double distanceToTarget(PigZombie zombie) {
+		Location z_loc = zombie.getLocation();
+		Location t_loc = zombie.getTarget().getLocation();
+		return z_loc.distance(t_loc);
+	}
 	
-	private void relocateZombies() {
-		for(ZombieCharacter zombie : frozenPositions.keySet()) {
-			
-			zombie.getZombie().teleport(frozenPositions.get(zombie));
+	/**
+	 * toggles if zombies should be frozen
+	 */
+	public void toggleFreeze() {
+		frozen = !frozen;
+		if (frozen) {
+			addSpeedAll(-3.0);
+		} else {
+			addSpeedAll(3.0);
 		}
 	}
 	
 	public void freezeAllZombies() {
-		frozen = true;
-		
-		for(ZombieCharacter zombie : zombies) {
-			frozenPositions.put(zombie, zombie.getLocation());
+		if (!frozen) {
+			toggleFreeze();
 		}
 	}
 
 	public void unFreezeAllZombies() {
-		frozen = false;
-		frozenPositions.clear();
+		if (frozen) {
+			toggleFreeze();
+		}
 	}
 
 }
