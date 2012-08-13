@@ -68,7 +68,6 @@ global-contexts:
     - gnome_trigger_1732461900
     responses:
     - door_response_1511941288
-    - zombie_spawn_1012315724
     - door_response_525433239
     - door_response_503691409
     - appearable_block_1677364539
@@ -86,7 +85,6 @@ global-contexts:
     - lever_trigger__1991153945
     responses:
     - door_response_2083864723
-    - zombie_310285359
     - hallway1_room1_lower_door
     - door_response_356249028
     - hallway1_zombie_door
@@ -96,7 +94,7 @@ global-contexts:
     - question_1576281247
     responses:
     - hallway1_room3_lower_door
-    - zombie_clear_1
+    - zombie_teleport_1
     - math_riddle1_sign_4
     - door_response_12216222
     - math_riddle1_sign_2
@@ -114,6 +112,7 @@ global-contexts:
     - door_response_71485684
     - door_response_1245612740
     - door_response_562232086
+    - zombie_310285359    
     input-function: AND
   initial_tp_down:
     triggers:
@@ -712,7 +711,11 @@ global-responses:
       x: 31
     class: gt.general.logic.response.SignResponse
     material: !!org.bukkit.Material 'WALL_SIGN'
-  zombie_clear_1:
+  zombie_teleport_1:
+    location:
+      z: -25.0
+      y: 70.0
+      x: 91.0
     class: gt.general.logic.response.ZombieClearResponse
   hallway1_zombie_door:
     min:
@@ -726,14 +729,6 @@ global-responses:
     class: gt.general.logic.response.MultiBlockDisappearResponse
     inverted: false
     material: !!org.bukkit.Material 'NETHER_FENCE'
-  zombie_spawn_1012315724:
-    speed: 1.0
-    location:
-      z: -25.0
-      y: 70.0
-      x: 91.0
-    class: gt.general.logic.response.ZombieSpawnResponse
-    number: 10
   door_response_1524145666:
     data_lower: 0
     location:

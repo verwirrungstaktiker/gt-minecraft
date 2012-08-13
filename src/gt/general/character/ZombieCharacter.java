@@ -61,12 +61,14 @@ public class ZombieCharacter extends Character{
 				zombie.removePotionEffect(speedEffect.getType());
 			}
 			
+			speedEffect = null;
+			
 			if (speed < 1.4) {
 				speedEffect = new PotionEffect(PotionEffectType.SLOW, 
-						20*60*30, speedToAmplifier(speed));
+						20*60*20, speedToAmplifier(speed));
 			} else if (speed > 1.6) {
 				speedEffect = new PotionEffect(PotionEffectType.SPEED, 
-						20*60*30, speedToAmplifier(speed));
+						20*60*20, speedToAmplifier(speed));
 			}
 			
 			if (speedEffect != null) {
