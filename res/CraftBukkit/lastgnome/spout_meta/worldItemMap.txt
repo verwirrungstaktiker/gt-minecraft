@@ -7,8 +7,9 @@
 1025:HelloEditor.Spawn
 1027:HelloEditor.end_socket
 1029:HelloEditor.red_signal
+1038:HelloEditor.gnome_trigger_positive
 1037:HelloEditor.gnome_trigger_negative
 1033:HelloEditor.tele_floor
 1034:HelloEditor.teleport_exit
-1032:HelloEditor.invisibleBlock
 1026:HelloEditor.spawn
+1032:HelloEditor.invisibleBlock

@@ -68,22 +68,7 @@ public class LastGnomeGameBuilder extends AbstractLastGnomeGameBuilder {
 		game.setRespawnManager(respawnManager);
 	}
 
-	private void setupAllHeroes(TriggerManager triggerManager) {
-		ZombieManager zombieManager = game.getZombieManager();
-		game.registerSyncTask(zombieManager, 0, 1);
-		//zombieManager.setTaskID(id);
-		
-		game.registerListener(zombieManager);
-		game.setZombieManager(zombieManager);
-		
-		//Give all ZombieResponses the ZombieManager
-		for (TriggerContext tc : triggerManager.getTriggerContexts()) {
-			for (Response response : tc.getResponses()) {
-				if (response instanceof ZombieResponse) {
-					((ZombieResponse) response).setZombieManager(zombieManager);
-				}
-			}
-		}
+	private void setupAllHeroes(final TriggerManager triggerManager) {
 		
 		game.getWorldInstance()
 			.getSpawn()
@@ -124,7 +109,7 @@ public class LastGnomeGameBuilder extends AbstractLastGnomeGameBuilder {
 	 */
 	private void setupZombieManager(final TriggerManager triggerManager) {
 		ZombieManager zombieManager = game.getZombieManager();
-		game.registerSyncTask(zombieManager, 0, 10);
+		game.registerSyncTask(zombieManager, 0, 1);
 		//zombieManager.setTaskID(id);
 		
 		game.registerListener(zombieManager);

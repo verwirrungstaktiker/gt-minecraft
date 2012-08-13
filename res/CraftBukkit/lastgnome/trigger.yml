@@ -3,130 +3,130 @@ global-contexts:
     triggers:
     - question_1688344166
     responses:
-    - hallway2_room3_lower_door
-    - math_riddle2_sign_1
-    - math_riddle2_sign_6
-    - door_response_128225666
-    - math_riddle2_sign_3
-    - math_riddle2_sign_2
-    - door_response_1162670521
-    - math_riddle2_sign_5
     - math_riddle2_sign_4
+    - math_riddle2_sign_5
+    - math_riddle2_sign_6
+    - math_riddle2_sign_3
+    - door_response_1162670521
+    - math_riddle2_sign_1
+    - math_riddle2_sign_2
+    - hallway2_room3_lower_door
+    - door_response_128225666
     input-function: AND
   hallway2_room1:
     triggers:
-    - lever_trigger__86438171
-    - lever_trigger__1934237210
-    - lever_trigger__566231620
-    - lever_trigger__1088842431
     - lever_trigger__610836886
-    - lever_trigger__2020826099
-    - lever_trigger__1432619885
     - lever_trigger__1922810118
+    - lever_trigger__1088842431
+    - lever_trigger__1934237210
+    - lever_trigger__2020826099
+    - lever_trigger__566231620
+    - lever_trigger__1432619885
+    - lever_trigger__86438171
     responses:
     - door_response_906842278
-    - hallway2_room1_lower_door
     - door_response_1558247749
+    - hallway2_room1_lower_door
     input-function: AND
   hallway2_room2:
     triggers:
-    - black_lever
-    - red_lever
-    - blue_lever
     - yellow_lever
+    - dark_green_lever
     - light_blue_lever
+    - red_lever
+    - light_grey_lever
+    - purple_lever
+    - white_lever
+    - light_green_lever
+    - blue_lever
+    - black_lever
     - pink_lever
     - orange_lever
-    - light_green_lever
-    - white_lever
-    - dark_green_lever
-    - purple_lever
-    - light_grey_lever
     responses:
-    - hallway2_room2_lower_door
-    - door_response_1546585782
     - door_response_164496148
+    - door_response_1546585782
+    - hallway2_room2_lower_door
     input-function: AND
   hallway1_room2:
     triggers:
-    - lever_trigger__566374063
+    - lever_trigger__1092378310
+    - lever_trigger__281841656
+    - lever_trigger__1441222539
     - lever_trigger__1515958984
     - lever_trigger__2129905595
-    - lever_trigger__1386215844
-    - lever_trigger__1441222539
-    - lever_trigger__79128628
-    - lever_trigger__281841656
-    - lever_trigger__1092378310
     - lever_trigger__1975801865
+    - lever_trigger__566374063
+    - lever_trigger__79128628
+    - lever_trigger__1386215844
     responses:
-    - door_response_1874421134
     - door_response_1524145666
+    - door_response_1874421134
     - hallway1_room2_lower_door
     input-function: AND
   gnome_passing:
     triggers:
-    - gnome_trigger_1
+    - gnome_trigger_1732461900
     responses:
-    - passing_zombiegate
-    - appearable_block_461791926
-    - door_response_525433239
-    - door_response_1253061906
-    - door_response_503691409
+    - door_response_1511941288
     - zombie_spawn_1012315724
+    - door_response_525433239
+    - door_response_503691409
     - appearable_block_1677364539
-    - door_response_1986811660
+    - appearable_block_461791926
+    - door_response_433168567
+    - passing_zombiegate
     input-function: OR
   hallway1_room1:
     triggers:
-    - lever_trigger__1991153945
-    - lever_trigger__975464519
-    - gnome_trigger_159541957
     - lever_trigger__2107154878
     - lever_trigger__150167171
+    - gnome_trigger_159541957
     - lever_trigger__518397316
+    - lever_trigger__975464519
+    - lever_trigger__1991153945
     responses:
+    - door_response_2083864723
     - zombie_310285359
-    - hallway1_zombie_door
     - hallway1_room1_lower_door
     - door_response_356249028
-    - door_response_2083864723
+    - hallway1_zombie_door
     input-function: AND
   hallway1_room3_math_riddle:
     triggers:
     - question_1576281247
     responses:
     - hallway1_room3_lower_door
-    - door_response_12216222
-    - math_riddle1_sign_1
-    - math_riddle1_sign_3
     - zombie_clear_1
-    - door_response_1763826860
-    - math_riddle1_sign_2
     - math_riddle1_sign_4
+    - door_response_12216222
+    - math_riddle1_sign_2
+    - math_riddle1_sign_1
+    - door_response_1763826860
+    - math_riddle1_sign_3
     input-function: AND
   initial_door_control:
     triggers:
-    - lever_trigger_388103787
     - lever_trigger_1693024602
+    - lever_trigger_388103787
     responses:
-    - door_response_1245612740
     - door_response_439286396
-    - door_response_562232086
-    - door_response_71485684
     - initial_large_door
+    - door_response_71485684
+    - door_response_1245612740
+    - door_response_562232086
     input-function: AND
-  initial_left_tp:
-    triggers:
-    - step_on_trigger_373655241
-    responses:
-    - teleport_491539413
-    input-function: OR
   initial_tp_down:
     triggers:
     - step_on_trigger_1062994173
     - step_on_trigger_1810807473
     responses:
     - teleport_804867909
+    input-function: OR
+  initial_left_tp:
+    triggers:
+    - step_on_trigger_373655241
+    responses:
+    - teleport_491539413
     input-function: OR
   initial_right_tp:
     triggers:
@@ -163,30 +163,23 @@ global-triggers:
       x: 21
   gnome_trigger_159541957:
     class: gt.general.logic.trigger.GnomeTrigger
-    material: !!org.bukkit.Material 'STONE'
     block:
       z: 10
       y: 66
       x: 1
-  step_on_trigger_373655241:
-    class: gt.general.logic.trigger.StepOnTrigger
-    block:
-      z: 16
-      y: 69
-      x: -34
+    material: !!org.bukkit.Material 'STONE'
   step_on_trigger_1062994173:
     class: gt.general.logic.trigger.StepOnTrigger
     block:
       z: 14
       y: 69
       x: -22
-  gnome_trigger_1:
-    material: !!org.bukkit.Material 'STONE'
-    class: gt.general.logic.trigger.GnomeTrigger
+  step_on_trigger_373655241:
+    class: gt.general.logic.trigger.StepOnTrigger
     block:
-      z: -19
-      y: 70
-      x: 86
+      z: 16
+      y: 69
+      x: -34
   red_lever:
     orientation: !!org.bukkit.block.BlockFace 'SOUTH'
     class: gt.general.logic.trigger.RandomLeverTrigger
@@ -472,6 +465,13 @@ global-triggers:
       x: -17
     inverted: false
     material: !!org.bukkit.Material 'LEVER'
+  gnome_trigger_1732461900:
+    class: gt.general.logic.trigger.GnomeTrigger
+    block:
+      z: -19
+      y: 70
+      x: 81
+    material: !!org.bukkit.Material 'STONE'
   lever_trigger__1922810118:
     orientation: !!org.bukkit.block.BlockFace 'WEST'
     class: gt.general.logic.trigger.LeverRedstoneTrigger
@@ -497,19 +497,6 @@ global-triggers:
     - z: -5
       y: 69
       x: 29
-  purple_lever:
-    orientation: !!org.bukkit.block.BlockFace 'SOUTH'
-    class: gt.general.logic.trigger.RandomLeverTrigger
-    block:
-      z: -68
-      y: 66
-      x: 34
-    inverted: false
-    material: !!org.bukkit.Material 'LEVER'
-    signals:
-    - z: -43
-      y: 69
-      x: 21
   black_lever:
     orientation: !!org.bukkit.block.BlockFace 'NORTH'
     class: gt.general.logic.trigger.RandomLeverTrigger
@@ -521,6 +508,19 @@ global-triggers:
     material: !!org.bukkit.Material 'LEVER'
     signals:
     - z: -55
+      y: 69
+      x: 21
+  purple_lever:
+    orientation: !!org.bukkit.block.BlockFace 'SOUTH'
+    class: gt.general.logic.trigger.RandomLeverTrigger
+    block:
+      z: -68
+      y: 66
+      x: 34
+    inverted: false
+    material: !!org.bukkit.Material 'LEVER'
+    signals:
+    - z: -43
       y: 69
       x: 21
   lever_trigger__1991153945:
@@ -734,6 +734,15 @@ global-responses:
       x: 91.0
     class: gt.general.logic.response.ZombieSpawnResponse
     number: 10
+  door_response_1524145666:
+    data_lower: 0
+    location:
+      z: 23
+      y: 70
+      x: 38
+    class: gt.general.logic.response.DoorResponse
+    data_upper: 8
+    material: !!org.bukkit.Material 'IRON_DOOR_BLOCK'
   math_riddle2_sign_6:
     orientation: !!org.bukkit.block.BlockFace 'NORTH'
     triggered_message: "\n triggered"
@@ -745,15 +754,6 @@ global-responses:
       x: 49
     class: gt.general.logic.response.SignResponse
     material: !!org.bukkit.Material 'WALL_SIGN'
-  door_response_1524145666:
-    data_lower: 0
-    location:
-      z: 23
-      y: 70
-      x: 38
-    class: gt.general.logic.response.DoorResponse
-    data_upper: 8
-    material: !!org.bukkit.Material 'IRON_DOOR_BLOCK'
   door_response_1874421134:
     data_lower: 0
     location:
@@ -819,15 +819,6 @@ global-responses:
     class: gt.general.logic.response.DoorResponse
     data_upper: 8
     material: !!org.bukkit.Material 'IRON_DOOR_BLOCK'
-  door_response_1986811660:
-    data_lower: 2
-    location:
-      z: -18
-      y: 70
-      x: 85
-    class: gt.general.logic.response.DoorResponse
-    data_upper: 9
-    material: !!org.bukkit.Material 'IRON_DOOR_BLOCK'
   door_response_1763826860:
     data_lower: 0
     location:
@@ -845,12 +836,30 @@ global-responses:
     class: gt.general.logic.response.BlockDisappearResponse
     inverted: true
     material: !!org.bukkit.Material 'IRON_FENCE'
+  door_response_433168567:
+    data_lower: 2
+    location:
+      z: -18
+      y: 70
+      x: 80
+    class: gt.general.logic.response.DoorResponse
+    data_upper: 9
+    material: !!org.bukkit.Material 'IRON_DOOR_BLOCK'
   door_response_1162670521:
     data_lower: 2
     location:
       z: -119
       y: 70
       x: 26
+    class: gt.general.logic.response.DoorResponse
+    data_upper: 9
+    material: !!org.bukkit.Material 'IRON_DOOR_BLOCK'
+  door_response_1245612740:
+    data_lower: 0
+    location:
+      z: 25
+      y: 70
+      x: -11
     class: gt.general.logic.response.DoorResponse
     data_upper: 9
     material: !!org.bukkit.Material 'IRON_DOOR_BLOCK'
@@ -866,15 +875,6 @@ global-responses:
     class: gt.general.logic.response.MultiBlockDisappearResponse
     inverted: false
     material: !!org.bukkit.Material 'IRON_FENCE'
-  door_response_1245612740:
-    data_lower: 0
-    location:
-      z: 25
-      y: 70
-      x: -11
-    class: gt.general.logic.response.DoorResponse
-    data_upper: 9
-    material: !!org.bukkit.Material 'IRON_DOOR_BLOCK'
   teleport_804867909:
     location:
       z: 15
@@ -883,6 +883,15 @@ global-responses:
     class: gt.general.logic.response.TeleportResponse
     contingent: 2
     material: !!org.bukkit.Material 'STONE'
+  door_response_1511941288:
+    data_lower: 2
+    location:
+      z: -17
+      y: 70
+      x: 80
+    class: gt.general.logic.response.DoorResponse
+    data_upper: 8
+    material: !!org.bukkit.Material 'IRON_DOOR_BLOCK'
   appearable_block_1677364539:
     location:
       z: -6
@@ -918,15 +927,6 @@ global-responses:
       z: 6
       y: 70
       x: 68
-    class: gt.general.logic.response.DoorResponse
-    data_upper: 8
-    material: !!org.bukkit.Material 'IRON_DOOR_BLOCK'
-  door_response_1253061906:
-    data_lower: 2
-    location:
-      z: -17
-      y: 70
-      x: 85
     class: gt.general.logic.response.DoorResponse
     data_upper: 8
     material: !!org.bukkit.Material 'IRON_DOOR_BLOCK'
