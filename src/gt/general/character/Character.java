@@ -2,9 +2,11 @@ package gt.general.character;
 
 import gt.general.aura.Aura;
 import gt.general.aura.Effect;
+import gt.general.aura.FreezeEffect;
 
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
 import java.util.Vector;
 
@@ -154,13 +156,16 @@ public abstract class Character {
 	 */
 	public void simulateEffects() {
 
-		// TODO this wont work -> ConcurrentModificationException + code duplication
-		for (Effect effect : effects) {
-			if (effect.remainingTicks() == 0) {
-				effects.remove(effect);
+		// TODO CODE DUPLICATION
+		Iterator<Effect> it = effects.iterator();
+		while(it.hasNext()) {
+			Effect e = it.next();
+			
+			if(e.remainingTicks() == 0) {
+				it.remove();
 				computedAttributesTainted = true;
 			} else {
-				effect.performTick();
+				e.performTick();
 			}
 		}
 

@@ -108,7 +108,7 @@ public class LastGnomeGameBuilder extends AbstractLastGnomeGameBuilder {
 	 */
 	private void setupZombieManager(final TriggerManager triggerManager) {
 		ZombieManager zombieManager = game.getZombieManager();
-		game.registerSyncTask(zombieManager, 0, 1);
+		game.registerSyncTask(zombieManager, 0, ZombieManager.SCHEDULE_RATE);
 		//zombieManager.setTaskID(id);
 		
 		game.registerListener(zombieManager);

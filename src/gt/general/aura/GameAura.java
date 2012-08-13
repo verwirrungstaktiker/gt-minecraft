@@ -1,30 +1,21 @@
 package gt.general.aura;
 
-import gt.general.character.Character;
-import gt.general.character.Hero;
+import gt.general.Game;
 
 public class GameAura extends Aura {
 
+	private final Game game;
+	
 	public GameAura(EffectFactory effectFactory, int distance, int duration,
-			int rate) {
+			int rate, final Game game) {
 		super(effectFactory, distance, duration, rate);
-		// TODO Auto-generated constructor stub
+		this.game = game;
 	}
 
 	@Override
 	protected boolean spreadEffectNow() {
 		
-		Character character = getOwner();		
-		if(character != null && character instanceof Hero) {
-			
-			Hero h = (Hero) character;
-			
-			if(h.inGame()) {
-				return h.getGame().isRunning();
-			}
-		}
-
-		return false;
+		return game.isRunning();
 	}
 
 }

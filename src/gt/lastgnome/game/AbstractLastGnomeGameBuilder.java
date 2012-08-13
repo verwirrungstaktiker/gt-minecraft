@@ -49,7 +49,7 @@ public abstract class AbstractLastGnomeGameBuilder implements GameBuilder {
 		game.setEndSocket(end);
 		
 		
-		ZombieManager zombieManager = new ZombieManager(worldInstance.getWorld());
+		ZombieManager zombieManager = new ZombieManager(worldInstance.getWorld(), getGame());
 		game.setZombieManager(zombieManager);
 		
 	}

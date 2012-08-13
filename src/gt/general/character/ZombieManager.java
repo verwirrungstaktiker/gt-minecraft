@@ -1,6 +1,11 @@
 package gt.general.character;
 
+import gt.general.Game;
 import gt.general.aura.Aura;
+import gt.general.aura.EffectFactory;
+import gt.general.aura.GameAura;
+import gt.general.aura.ZombieSlowEffect;
+import gt.general.aura.ZombieSpeedEffect;
 
 import java.util.Vector;
 
@@ -29,12 +34,19 @@ public class ZombieManager implements Listener, Runnable{
 	private final World world;
 	
 	private boolean frozen = false;
+	private final Game game;
+	
+	private final static double ACTIVATE_CATCHUP_DISTANCE = 10.0;
+	private final static double DEACTIVATE_CATCHUP_DISTANCE = 6.0;
+	
+	public static final int SCHEDULE_RATE = 10;
 	
 	/**
 	 * Creates a new ZombieManager
 	 * @param world the world, where the Zombies will be spawned
 	 */
-	public ZombieManager(final World world) {
+	public ZombieManager(final World world, final Game game) {
+		this.game = game;
 		zombies = new Vector<ZombieCharacter>();
 		this.world = world;
 	}
@@ -89,28 +101,40 @@ public class ZombieManager implements Listener, Runnable{
 	}
 	
 	/**
-	 * Spawns a Zombie with different speed
-	 * @param spawnpoint location, where zombie should be spawned
-	 * @param speed the Zombies basic speed-multiplicator
-	 */
-	public void spawnZombie(final Location spawnpoint, final double speed) {
-		spawnZombie(spawnpoint, null, speed);
-	}
-	
-	/**
 	 * Spawns a Zombie with different speed and an aura
 	 * @param spawnpoint location, where zombie should be spawned
 	 * @param aura an Aura which originates from the zombie 
 	 * @param speed the Zombies basic speed-multiplicator
 	 * 
 	 */
-	public void spawnZombie(final Location spawnpoint, final Aura aura, final double speed) {
-		ZombieCharacter zombie = new ZombieCharacter(world.spawn(spawnpoint, PigZombie.class));
-		zombie.setAttribute(CharacterAttributes.SPEED, speed);
-		//make sure not to add null-auras
-		if (aura != null) {
-			zombie.addAura(aura);
-		}
+	public void spawnZombie(final Location spawnpoint, final double speed) {
+		final ZombieCharacter zombie = new ZombieCharacter(world.spawn(spawnpoint, PigZombie.class));
+		
+		GameAura zombieControlAura = new GameAura(new EffectFactory() {
+			
+			@Override
+			public gt.general.aura.Effect getEffect() {
+				
+				if(target != null && target.getWorld().equals(zombie.getZombie().getWorld())) {
+					double distance = zombie.getLocation().distance(target.getLocation());
+					
+					
+					if(distance > ACTIVATE_CATCHUP_DISTANCE) {
+						return new ZombieSpeedEffect();
+					}
+					
+					if(distance < DEACTIVATE_CATCHUP_DISTANCE) {
+						return new ZombieSlowEffect();
+					}
+				
+				}
+				return null;
+				
+			}
+		}, Aura.OWNER_ONLY, Aura.INFINITE_DURATION, ZombieManager.SCHEDULE_RATE, game);
+		
+		zombie.addAura(zombieControlAura);
+		
 		zombies.add(zombie);
 	}
 	
@@ -153,7 +177,7 @@ public class ZombieManager implements Listener, Runnable{
 	public void run() {
 		
 		for (ZombieCharacter zombie : zombies) {
-			zombie.applyAttributes();
+			zombie.simulateEffects();
 		}
 		
 		if(frozen) {
@@ -180,20 +204,7 @@ public class ZombieManager implements Listener, Runnable{
 			//If no player is to close, target the target
 			if (zombie.getTarget() == null || !zombie.getTarget().equals(target)) {
 				zombie.setTarget(target);
-			}
-			
-			if (distanceToTarget(zombie)>10) {
-				double value = 1.5-zombieChar.getCurrentSpeed();
-				zombieChar.addToAttribute(CharacterAttributes.SPEED, value);
-				break;
-			}
-			
-			if (zombieChar.getCurrentSpeed()>1.4 
-					&& distanceToTarget(zombie)<6.2) {
-				double value = 1-zombieChar.getCurrentSpeed();
-				zombieChar.addToAttribute(CharacterAttributes.SPEED, value);
-			}
-			
+			}			
 		}
 	}
 	

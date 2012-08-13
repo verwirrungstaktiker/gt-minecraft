@@ -1,5 +1,6 @@
 package gt.lastgnome;
 
+import gt.general.Game;
 import gt.general.PortableItem;
 import gt.general.aura.Aura;
 import gt.general.aura.Effect;
@@ -38,7 +39,7 @@ public final class GnomeItem extends PortableItem {
 	 * @param name the name of the gnome
 	 * @param texture texture for the gnome
 	 */
-	public GnomeItem(final Plugin plugin, final String name, final String texture) {
+	public GnomeItem(final Plugin plugin, final String name, final String texture, final Game game) {
 		super(plugin, name, texture);
 
 		gnomeAura = new GameAura(new EffectFactory() {
@@ -49,7 +50,8 @@ public final class GnomeItem extends PortableItem {
 		},
 		Aura.OWNER_ONLY,
 		Aura.INFINITE_DURATION,
-		20);
+		20,
+		game);
 		
 		gnomeEffect = new GnomeCarrierEffect();
 		itemStack = new SpoutItemStack(this);
@@ -63,15 +65,15 @@ public final class GnomeItem extends PortableItem {
 	 * Creates a new Gnome
 	 * @param plugin the plugin we run
 	 */
-	public GnomeItem(final Plugin plugin) {
-		this(plugin, "GnomeItem", "http://dl.dropbox.com/u/29386658/gt/textures/gnome2_16x16.png");
+	public GnomeItem(final Plugin plugin, final Game game) {
+		this(plugin, "GnomeItem", "http://dl.dropbox.com/u/29386658/gt/textures/gnome2_16x16.png", game);
 	}
 
 	/**
 	 * Creates a new Gnome
 	 */
-	public GnomeItem() {
-		this(Hello.getPlugin());
+	public GnomeItem(final Game game) {
+		this(Hello.getPlugin(), game);
 	}
 
 	/**

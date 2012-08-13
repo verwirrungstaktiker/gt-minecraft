@@ -114,6 +114,7 @@ public abstract class Aura implements Runnable {
 	 */
 	private void spreadEffect() {
 
+		// TODO CLEANUP !!!
 		if (distance == OWNER_ONLY) {
 			
 			/*if(owner instanceof Hero) {
@@ -121,7 +122,12 @@ public abstract class Aura implements Runnable {
 			}*/
 			
 			if (spreadEffectNow()) {
-				owner.addEffect(effectFactory.getEffect());
+				
+				Effect e = effectFactory.getEffect();
+				
+				if(e != null) {
+					owner.addEffect(e);
+				}
 			}
 		} else {
 			// TODO spread auras

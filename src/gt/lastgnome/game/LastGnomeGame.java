@@ -45,7 +45,7 @@ public class LastGnomeGame extends AbstractLastGnomeGame implements Listener{
 	public LastGnomeGame(final Team team) {
 		super(team);
 		
-		gnome = new GnomeItem();
+		gnome = new GnomeItem(this);
 	}
 
 	
