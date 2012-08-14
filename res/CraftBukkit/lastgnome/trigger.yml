@@ -716,7 +716,7 @@ global-responses:
       z: -25.0
       y: 70.0
       x: 91.0
-    class: gt.general.logic.response.ZombieClearResponse
+    class: gt.general.logic.response.ZombieTeleportResponse
   hallway1_zombie_door:
     min:
       z: 16
