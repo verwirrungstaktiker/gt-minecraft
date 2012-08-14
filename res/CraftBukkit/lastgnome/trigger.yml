@@ -28,36 +28,36 @@ global-contexts:
     - door_response_1558247749
     - hallway2_room1_lower_door
     input-function: AND
-  hallway2_room2:
+  hallway2_room2_random_lever:
     triggers:
-    - yellow_lever
-    - dark_green_lever
-    - light_blue_lever
-    - red_lever
-    - light_grey_lever
-    - purple_lever
-    - white_lever
-    - light_green_lever
-    - blue_lever
-    - black_lever
-    - pink_lever
-    - orange_lever
+    - yellow_lever_group2
+    - dark_green_lever_group3
+    - light_blue_lever_group2
+    - red_lever_group2
+    - light_grey_lever_group3
+    - purple_lever_group0
+    - white_lever_group1
+    - light_green_lever_group1
+    - blue_lever_group0
+    - black_lever_group1
+    - pink_lever_group3
+    - orange_lever_group0
     responses:
     - door_response_164496148
     - door_response_1546585782
     - hallway2_room2_lower_door
     input-function: AND
-  hallway1_room2:
+  hallway1_room2_random_lever:
     triggers:
-    - lever_trigger__1092378310
-    - lever_trigger__281841656
-    - lever_trigger__1441222539
-    - lever_trigger__1515958984
-    - lever_trigger__2129905595
-    - lever_trigger__1975801865
-    - lever_trigger__566374063
-    - lever_trigger__79128628
-    - lever_trigger__1386215844
+    - lever_trigger__1092378310_group0 
+    - lever_trigger__281841656_group1
+    - lever_trigger__1441222539_group2
+    - lever_trigger__1515958984_group2
+    - lever_trigger__2129905595_group1
+    - lever_trigger__1975801865_group1
+    - lever_trigger__566374063_group0
+    - lever_trigger__79128628_group2
+    - lever_trigger__1386215844_group0
     responses:
     - door_response_1524145666
     - door_response_1874421134
@@ -134,7 +134,7 @@ global-contexts:
     - teleport_1648508463
     input-function: OR
 global-triggers:
-  lever_trigger__1441222539:
+  lever_trigger__1441222539_group2:
     orientation: !!org.bukkit.block.BlockFace 'EAST'
     class: gt.general.logic.trigger.RandomLeverTrigger
     block:
@@ -147,7 +147,7 @@ global-triggers:
     - z: 32
       y: 69
       x: 31
-  light_green_lever:
+  light_green_lever_group1:
     orientation: !!org.bukkit.block.BlockFace 'SOUTH'
     class: gt.general.logic.trigger.RandomLeverTrigger
     block:
@@ -179,7 +179,7 @@ global-triggers:
       z: 16
       y: 69
       x: -34
-  red_lever:
+  red_lever_group2:
     orientation: !!org.bukkit.block.BlockFace 'SOUTH'
     class: gt.general.logic.trigger.RandomLeverTrigger
     block:
@@ -195,7 +195,7 @@ global-triggers:
     - z: -70
       y: 69
       x: 18
-  lever_trigger__1092378310:
+  lever_trigger__1092378310_group0 :
     orientation: !!org.bukkit.block.BlockFace 'WEST'
     class: gt.general.logic.trigger.RandomLeverTrigger
     block:
@@ -208,7 +208,7 @@ global-triggers:
     - z: -2
       y: 69
       x: 20
-  white_lever:
+  white_lever_group1:
     orientation: !!org.bukkit.block.BlockFace 'NORTH'
     class: gt.general.logic.trigger.RandomLeverTrigger
     block:
@@ -224,7 +224,7 @@ global-triggers:
     - z: -59
       y: 69
       x: 18
-  light_blue_lever:
+  light_blue_lever_group2:
     orientation: !!org.bukkit.block.BlockFace 'NORTH'
     class: gt.general.logic.trigger.RandomLeverTrigger
     block:
@@ -237,7 +237,7 @@ global-triggers:
     - z: -74
       y: 69
       x: 21
-  lever_trigger__566374063:
+  lever_trigger__566374063_group0:
     orientation: !!org.bukkit.block.BlockFace 'WEST'
     class: gt.general.logic.trigger.RandomLeverTrigger
     block:
@@ -253,7 +253,7 @@ global-triggers:
     - z: -5
       y: 69
       x: 17
-  blue_lever:
+  blue_lever_group0:
     orientation: !!org.bukkit.block.BlockFace 'SOUTH'
     class: gt.general.logic.trigger.RandomLeverTrigger
     block:
@@ -278,7 +278,7 @@ global-triggers:
       x: 30
     inverted: false
     material: !!org.bukkit.Material 'LEVER'
-  orange_lever:
+  orange_lever_group0:
     orientation: !!org.bukkit.block.BlockFace 'NORTH'
     class: gt.general.logic.trigger.RandomLeverTrigger
     block:
@@ -297,7 +297,7 @@ global-triggers:
       z: 16
       y: 69
       x: -22
-  lever_trigger__2129905595:
+  lever_trigger__2129905595_group1:
     orientation: !!org.bukkit.block.BlockFace 'WEST'
     class: gt.general.logic.trigger.RandomLeverTrigger
     block:
@@ -310,7 +310,7 @@ global-triggers:
     - z: -2
       y: 69
       x: 25
-  pink_lever:
+  pink_lever_group3:
     orientation: !!org.bukkit.block.BlockFace 'NORTH'
     class: gt.general.logic.trigger.RandomLeverTrigger
     block:
@@ -353,7 +353,7 @@ global-triggers:
       x: 30
     question: no question
     material: !!org.bukkit.Material 'STONE'
-  yellow_lever:
+  yellow_lever_group2:
     orientation: !!org.bukkit.block.BlockFace 'SOUTH'
     class: gt.general.logic.trigger.RandomLeverTrigger
     block:
@@ -393,7 +393,7 @@ global-triggers:
       x: 2
     inverted: false
     material: !!org.bukkit.Material 'LEVER'
-  lever_trigger__1386215844:
+  lever_trigger__1386215844_group0:
     orientation: !!org.bukkit.block.BlockFace 'WEST'
     class: gt.general.logic.trigger.RandomLeverTrigger
     block:
@@ -406,7 +406,7 @@ global-triggers:
     - z: -2
       y: 69
       x: 13
-  dark_green_lever:
+  dark_green_lever_group3:
     orientation: !!org.bukkit.block.BlockFace 'SOUTH'
     class: gt.general.logic.trigger.RandomLeverTrigger
     block:
@@ -480,7 +480,7 @@ global-triggers:
       x: 94
     inverted: false
     material: !!org.bukkit.Material 'LEVER'
-  lever_trigger__1975801865:
+  lever_trigger__1975801865_group1:
     orientation: !!org.bukkit.block.BlockFace 'WEST'
     class: gt.general.logic.trigger.RandomLeverTrigger
     block:
@@ -496,7 +496,7 @@ global-triggers:
     - z: -5
       y: 69
       x: 29
-  black_lever:
+  black_lever_group1:
     orientation: !!org.bukkit.block.BlockFace 'NORTH'
     class: gt.general.logic.trigger.RandomLeverTrigger
     block:
@@ -509,7 +509,7 @@ global-triggers:
     - z: -55
       y: 69
       x: 21
-  purple_lever:
+  purple_lever_group0:
     orientation: !!org.bukkit.block.BlockFace 'SOUTH'
     class: gt.general.logic.trigger.RandomLeverTrigger
     block:
@@ -531,7 +531,7 @@ global-triggers:
       x: 7
     inverted: false
     material: !!org.bukkit.Material 'LEVER'
-  lever_trigger__79128628:
+  lever_trigger__79128628_group2:
     orientation: !!org.bukkit.block.BlockFace 'EAST'
     class: gt.general.logic.trigger.RandomLeverTrigger
     block:
@@ -553,7 +553,7 @@ global-triggers:
       x: 58
     inverted: false
     material: !!org.bukkit.Material 'LEVER'
-  lever_trigger__281841656:
+  lever_trigger__281841656_group1:
     orientation: !!org.bukkit.block.BlockFace 'WEST'
     class: gt.general.logic.trigger.RandomLeverTrigger
     block:
@@ -566,7 +566,7 @@ global-triggers:
     - z: -2
       y: 69
       x: 32
-  lever_trigger__1515958984:
+  lever_trigger__1515958984_group2:
     orientation: !!org.bukkit.block.BlockFace 'EAST'
     class: gt.general.logic.trigger.RandomLeverTrigger
     block:
@@ -588,7 +588,7 @@ global-triggers:
       z: 14
       y: 69
       x: -34
-  light_grey_lever:
+  light_grey_lever_group3:
     orientation: !!org.bukkit.block.BlockFace 'NORTH'
     class: gt.general.logic.trigger.RandomLeverTrigger
     block:

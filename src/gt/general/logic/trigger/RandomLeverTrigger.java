@@ -10,13 +10,17 @@ import java.util.Vector;
 
 import org.bukkit.World;
 import org.bukkit.block.Block;
+import org.bukkit.event.player.PlayerInteractEvent;
 import org.getspout.spoutapi.SpoutManager;
+
+import com.avaje.ebeaninternal.server.subclass.GetterSetterMethods;
 
 public class RandomLeverTrigger extends LeverRedstoneTrigger{
 	
 	public static final String KEY_SIGNALS = "signals";
 	
 	private Collection<Block> signals;
+	private boolean green;
 	
 	/**
 	 * @param trigger the lever to be used as trigger
@@ -25,6 +29,7 @@ public class RandomLeverTrigger extends LeverRedstoneTrigger{
 	public RandomLeverTrigger(final Block trigger, final Block against) {
 		super(trigger, against);
 		signals = new Vector<Block>();
+		green = true;
 	}
 	
 	/** to be used for persistence */
@@ -43,21 +48,34 @@ public class RandomLeverTrigger extends LeverRedstoneTrigger{
 		super.setup(values, world);
 		
 		signals = values.getBlocks(KEY_SIGNALS, world);
-				
+		
+		green = true;
+		
+		//toggleInvert();
+		changeSignals();
+	}
+
+	private void changeSignals() {
 		ObservableCustomBlock signalBlock;
-		
-		long rnd = Math.round(Math.random());
-		if (rnd == 1) {
-			toggleInvert();
-			signalBlock = CustomBlockType.RED_SIGNAL.getCustomBlock();
+		if (green) {
+			signalBlock = CustomBlockType.GREEN_SIGNAL.getCustomBlock();
 		} else {
-			signalBlock = CustomBlockType.GREEN_SIGNAL.getCustomBlock();			
+			signalBlock = CustomBlockType.RED_SIGNAL.getCustomBlock();
 		}
-		
-		
+
 		for(Block signal : signals) {
 			SpoutManager.getMaterialManager().overrideBlock(signal, signalBlock);
 		}
+	}
+	
+	public void setGreen(boolean green) {
+		if (this.green != green) {
+			this.green = green;
+			toggleInvert();
+			changeSignals();
+		}
+		
+		
 	}
 
 }

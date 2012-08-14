@@ -10,6 +10,7 @@ import gt.general.logic.persistance.exceptions.PersistanceException;
 import gt.general.logic.response.Response;
 import gt.general.logic.response.ZombieResponse;
 import gt.general.world.WorldManager;
+import gt.lastgnome.LeverRandomizer;
 import gt.lastgnome.MathRiddleRandomizer;
 
 import org.bukkit.GameMode;
@@ -56,8 +57,11 @@ public class LastGnomeGameBuilder extends AbstractLastGnomeGameBuilder {
 	public void startGame() {
 		TriggerManager triggerManager = game.getWorldInstance().getTriggerManager();
 		
-		MathRiddleRandomizer randomizer = new MathRiddleRandomizer(triggerManager);
-		randomizer.randomizeMathRiddles();
+		MathRiddleRandomizer mathRandomizer = new MathRiddleRandomizer(triggerManager);
+		mathRandomizer.randomizeMathRiddles();
+		
+		LeverRandomizer leverRandomizer = new LeverRandomizer(triggerManager);
+		leverRandomizer.randomizeLevers();
 		
 		game.registerListener(game);
 
