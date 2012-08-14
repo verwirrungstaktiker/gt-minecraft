@@ -12,8 +12,6 @@ import gt.plugin.meta.Hello;
 import gt.plugin.meta.MultiListener;
 import gt.plugin.meta.PlayerCommandExecutor;
 
-import net.minecraft.server.World;
-
 import org.bukkit.ChatColor;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
@@ -133,7 +131,6 @@ public class HelloWorld extends JavaPlugin {
 						
 						return true;
 					}
-					
 				}
 				
 				player.sendMessage("this instance doesnt exist");
