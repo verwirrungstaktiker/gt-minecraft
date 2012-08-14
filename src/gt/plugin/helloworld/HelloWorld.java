@@ -98,11 +98,11 @@ public class HelloWorld extends JavaPlugin {
 		getCommand("instances").setExecutor(new CommandExecutor() {
 			
 			@Override
-			public boolean onCommand(final CommandSender arg0, final Command arg1, final String arg2, final String[] arg3) {
-				System.out.println("open instances:");
-				
+			public boolean onCommand(final CommandSender sender, final Command arg1, final String arg2, final String[] arg3) {
+				sender.sendMessage("open instances:");
+					
 				for(WorldInstance world : worldManager.getOpenWorlds()) {
-					System.out.println(world.getName());
+					sender.sendMessage("* " + world.getName());
 				}
 				return true;
 			}
