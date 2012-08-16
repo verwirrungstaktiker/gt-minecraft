@@ -7,7 +7,7 @@ import org.bukkit.block.Block;
  * 
  * @author Sebastian Fahnenschreiber
  */
-public class PressurePlateRedstoneTrigger extends RedstoneTrigger {
+public class PressurePlateRedstoneTrigger extends ResettingRedstoneTrigger {
 	
 	/**
 	 * @param pressurePlate the plate to be used as trigger

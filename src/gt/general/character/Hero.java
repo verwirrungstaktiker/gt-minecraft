@@ -10,11 +10,6 @@ import java.util.Set;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
-import org.bukkit.event.EventHandler;
-import org.bukkit.event.Listener;
-import org.bukkit.event.block.BlockPlaceEvent;
-import org.bukkit.event.player.PlayerDropItemEvent;
-import org.bukkit.event.player.PlayerPickupItemEvent;
 import org.bukkit.inventory.ItemStack;
 import org.getspout.spoutapi.SpoutManager;
 import org.getspout.spoutapi.player.SpoutPlayer;
@@ -22,7 +17,7 @@ import org.getspout.spoutapi.player.SpoutPlayer;
 /**
  * Our backend and wrapper for a Minecraft-Player
  */
-public class Hero extends Character implements Listener{
+public class Hero extends Character{
 
 	/** unbuffed default value **/
 	public static final double DEFAULT_HERO_SPEED = 1.0;
@@ -242,47 +237,6 @@ public class Hero extends Character implements Listener{
 		sPlayer.setJumpingMultiplier(getAttribute(CharacterAttributes.JUMPMULTIPLIER));
 	}
 
-	/**
-	 * Implements the Inventory function of not-dropping undropable Items
-	 * @param event a PlayerDropItemEvent
-	 */
-	@EventHandler
-	public void handleItemDrop(final PlayerDropItemEvent event) {
-		/*
-		if (event.getPlayer().equals(this.player)) {
-			if(inventory.activeItemDropable()) {
-				inventory.dropActiveItem();
-				event.setCancelled(true);
-			}
-		}*/
-	}
-
-	/**
-	 * Handles the Inventory mechanics on picking up an item
-	 * @param event PlayerPickupItemEvent
-	 */
-	@EventHandler
-	public void handleItemPickup(final PlayerPickupItemEvent event) {
-		/*
-		if (event.getPlayer().equals(this.player)) {
-			PortableItem newItem = new PortableItem(event.getItem().getItemStack());
-			event.setCancelled(!inventory.setActiveItem(newItem));
-			//ToDo: implement passivItem mechanics
-		}*/
-	}
-
-	/**
-	 * Handles Placing of Blocks/Items
-	 * @param event BlockPlaceEvent
-	 */
-	@EventHandler
-	public void handleBlockPlacing(final BlockPlaceEvent event) {
-		/*if (event.getPlayer().equals(this.player)) {
-			if (!inventory.getActiveItem().isPlacable()){
-				event.setCancelled(true);
-			} else inventory.setActiveItem(null);
-		}*/
-	}
 
 	/**
 	 * @param gui the gui associated with this Hero

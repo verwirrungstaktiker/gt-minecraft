@@ -100,7 +100,7 @@ public class StepOnTrigger extends Trigger implements BlockObserver {
 		
 		if(!inUse && blockEvent.getBlock().equals(block) && blockEvent.getBlockEventType() == BlockEventType.PLAYER_STEP_ON) {
 			
-			block.getWorld().playEffect(block.getLocation(), Effect.MOBSPAWNER_FLAMES, 25);
+			//block.getWorld().playEffect(block.getLocation(), Effect.MOBSPAWNER_FLAMES, 25);
             getContext().updateTriggerState(this, true, blockEvent.getPlayer());
             
             Hello.scheduleOneTimeTask(new Runnable() {

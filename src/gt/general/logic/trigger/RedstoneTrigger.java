@@ -125,5 +125,9 @@ public class RedstoneTrigger extends BlockTrigger implements Listener {
 	public void setActive(boolean active) {
 		this.active = active;
 	}
+	
+	public boolean getInverted() {
+		return inverted;
+	}
 
 }

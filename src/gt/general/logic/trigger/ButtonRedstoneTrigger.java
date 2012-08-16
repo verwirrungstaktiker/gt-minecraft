@@ -13,7 +13,7 @@ import org.bukkit.material.Button;
  * 
  * @author roman
  */
-public class ButtonRedstoneTrigger extends RedstoneTrigger {
+public class ButtonRedstoneTrigger extends ResettingRedstoneTrigger {
 	
 	public static final String KEY_ORIENTATION = "orientation";
 	

@@ -7,6 +7,7 @@ import gt.general.logic.persistance.PersistanceMap;
 import gt.general.logic.persistance.exceptions.PersistanceException;
 import gt.plugin.meta.CustomBlockType;
 
+import org.bukkit.Effect;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.block.Block;
@@ -54,8 +55,8 @@ public class TeleportResponse extends CustomBlockResponse implements RespawnPoin
 	public void triggered(final TriggerEvent triggerEvent) {
 		
 		if(triggerEvent.isActive()) {
-			if(currrentContingent-- != 0) {
-				
+			if(currrentContingent != 0) {
+				--currrentContingent;
 				Player player = triggerEvent.getPlayer();
 				
 				// there is no respawn manager in the editor - TODO ?
@@ -74,6 +75,7 @@ public class TeleportResponse extends CustomBlockResponse implements RespawnPoin
 	}
 
 	private void teleportPlayer(final Player player) {
+		player.getWorld().playEffect(player.getLocation(), Effect.MOBSPAWNER_FLAMES, 25);
 		player.teleport(getBlock().getLocation().add(0.5, 1.0, 0.5));
 	}
 

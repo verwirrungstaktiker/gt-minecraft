@@ -24,6 +24,7 @@ public class ZombieSpawnResponse extends ZombieResponse{
 	private int number;
 	private double speed;
 	private Set<Entity> spawnedEntities;
+	private boolean triggered = false;
 	
 	private static final String KEY_LOCATION = "location";
 	private static final String KEY_NUMBER = "number";
@@ -71,6 +72,12 @@ public class ZombieSpawnResponse extends ZombieResponse{
 	@Override
 	public void triggered(final TriggerEvent e) {
 		if (e.isActive()) {
+			//When zombies already spawned, then go away
+			if (triggered) {
+				return;
+			}
+			
+			triggered = true;
 			if (getZombieManager() == null) {
 				System.out.print("No ZombieManager: Cannot spawn zombies");
 			}

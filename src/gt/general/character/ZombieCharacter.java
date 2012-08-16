@@ -42,14 +42,11 @@ public class ZombieCharacter extends Character {
 		if(getCurrentSpeed() > getDefaultSpeed()) {
 			potionEffect = getSpeedPotion();
 			
-			zombie.addPotionEffect(potionEffect);
-			System.out.println(getCurrentSpeed() + " @ " + getEffects().size() + " => " + potionEffect.getType() + "_" + potionEffect.getAmplifier());
-			
+			zombie.addPotionEffect(potionEffect);			
 		} else if (getCurrentSpeed() < getDefaultSpeed()) {
 			potionEffect = getSlowPotion();
 			
 			zombie.addPotionEffect(potionEffect);
-			System.out.println(getCurrentSpeed() + " @ " + getEffects().size() + " => " + potionEffect.getType() + "_" + potionEffect.getAmplifier());
 		}
 	}
 

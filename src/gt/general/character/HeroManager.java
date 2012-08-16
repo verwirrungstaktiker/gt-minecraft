@@ -2,7 +2,6 @@ package gt.general.character;
 
 import static com.google.common.collect.Maps.*;
 import gt.general.gui.HeroGui;
-import gt.plugin.meta.MultiListener;
 
 import java.util.Collection;
 import java.util.Map;
@@ -59,7 +58,6 @@ public class HeroManager implements Listener, Runnable {
 		}
 				
 		hero.getPlayer().getInventory().setMaxStackSize(1);		
-		MultiListener.registerListener(hero);
 		hero.addObserver(inventoryConnector);
 		
 		System.out.println(hero.getPlayer().getName() + " -- " + (hero.getPlayer() == player));
@@ -77,9 +75,7 @@ public class HeroManager implements Listener, Runnable {
 		
 		Hero hero = heros.remove(playerName);
 		offlineHeros.put(playerName, hero);
-		
-		MultiListener.unregisterListener(hero);
-		
+				
 		notifyGameDisconnect(hero);
 	}
 
