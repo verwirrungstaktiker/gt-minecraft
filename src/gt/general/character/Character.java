@@ -2,7 +2,7 @@ package gt.general.character;
 
 import gt.general.aura.Aura;
 import gt.general.aura.Effect;
-import gt.general.aura.FreezeEffect;
+import gt.general.aura.PauseEffect;
 
 import java.util.Collections;
 import java.util.HashMap;
@@ -211,21 +211,21 @@ public abstract class Character {
 	/**
 	 * @param computedAttributesTainted the computedAttributesTainted to set
 	 */
-	public void setComputedAttributesTainted(boolean computedAttributesTainted) {
+	public void setComputedAttributesTainted(final boolean computedAttributesTainted) {
 		this.computedAttributesTainted = computedAttributesTainted;
 	}
 	
-	public void freeze() {
-		addEffect(new FreezeEffect());
+	public void pause() {
+		addEffect(new PauseEffect());
 	}
 
-	public void unfreeze() {
+	public void resume() {
 		// search all freeze effects and remove them
 		// TODO this smells of Code Duplication
 		Iterator<Effect> it = getEffects().iterator();
 		while(it.hasNext()) {
-		    if (it.next() instanceof FreezeEffect) {
-		    	System.out.println("found a freeze effect");
+		    if (it.next() instanceof PauseEffect) {
+		    	System.out.println("found a pause effect");
 		        it.remove();
 		    }
 		}
