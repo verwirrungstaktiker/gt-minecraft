@@ -1,6 +1,4 @@
-package gt.lastgnome.game;
-
-import java.util.Set;
+package gt.lastgnome.scoring;
 
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
@@ -10,6 +8,8 @@ import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.PlayerDeathEvent;
 import gt.general.Game;
 import gt.general.character.Hero;
+import gt.general.character.HeroManager;
+import gt.general.character.Team;
 import gt.plugin.meta.Hello;
 
 
@@ -19,18 +19,12 @@ public class ScoreManager implements Runnable, Listener{
 	private boolean active;
 	
 	private Game game;
-	
-	private int time;	// *100ms
-	private int deaths;
-	private int damage;
 
+	private Score score;
 	/**
 	 * construct new ScoreManager
 	 */
 	public ScoreManager() {
-		time = 0;
-		deaths = 0;
-		damage = 0;
 		active = true;
 	}
 	
@@ -40,6 +34,7 @@ public class ScoreManager implements Runnable, Listener{
 
 	public void setGame(Game game) {
 		this.game = game;
+		score = new Score(game.getTeam());
 	}
 
 	/**
@@ -56,15 +51,15 @@ public class ScoreManager implements Runnable, Listener{
 	public void stopMonitoring() {
 		Hello.cancelScheduledTask(taskID);
 		active = false;
-		System.out.println("### Time: " + time + " Deaths: " + deaths + " Damage taken: " + damage);
+		System.out.println("### Time: " + getTime() + " Deaths: " + getDeaths() + " Damage taken: " + getDeaths());
 	}
 
 	public int getTime() {
-		return time;
+		return score.getTime();
 	}
 
 	public void setTime(final int time) {
-		this.time = time;
+		score.setTime(time);
 	}
 
 	public boolean isActive() {
@@ -83,8 +78,9 @@ public class ScoreManager implements Runnable, Listener{
 	public void countPlayerDeaths(final PlayerDeathEvent event) {
 		if(active) {
 			Player player = event.getEntity();
-			if(isPartOfGame(player)) {
-				deaths++;
+			Hero hero = HeroManager.getHero(player);
+			if(isPartOfGame(hero)) {
+				score.addDeath(hero);
 			}
 		}
 	}
@@ -97,10 +93,9 @@ public class ScoreManager implements Runnable, Listener{
 	public void countPlayerDamage(final EntityDamageByEntityEvent event) {
 		if(active && event.getEntityType() == EntityType.PLAYER) {
 			Player player = (Player) event.getEntity();
-			
-			if(isPartOfGame(player)) {
-				damage += event.getDamage();
-//				System.out.println("damage : " + damage);
+			Hero hero = HeroManager.getHero(player);
+			if(isPartOfGame(hero)) {
+				score.addDamage(hero, event.getDamage());
 			}
 		}
 	}
@@ -108,31 +103,42 @@ public class ScoreManager implements Runnable, Listener{
 	@Override
 	public void run() {
 		if(active) {
-			time++;
+			score.setTime(score.getTime()+1);
 		}
 	}
 
 	public int getDeaths() {
-		return deaths;
+		return score.getTotalDeaths();
 	}
 	
 	public int getDamage() {
-		return damage;
+		return score.getTotalDamage();
+	}
+	
+	public int getDeaths(Hero hero) {
+		return score.getDeaths(hero);
+	}
+	
+	public int getDamage(Hero hero) {
+		return score.getDamage(hero);
+	}
+	
+	public Score getScore() {
+		return score;
 	}
 	
 	/**
-	 * @param player bukkit player
-	 * @return true if player participates in the current game
+	 * @param Hero one of our heros
+	 * @return true if Hero participates in the current game
 	 */
-	private boolean isPartOfGame(final Player player) {
-		Set<Hero> members = game.getTeam().getPlayers();
+	private boolean isPartOfGame(final Hero hero) {
+		Team team = hero.getTeam();
 		
-		for(Hero hero : members) {
-			//check if part of the the monitored team			
-			if(hero.getPlayer().equals(player)) {
-				return true;
-			}
+		//check if part of the the monitored team			
+		if(game.getTeam().equals(team)) {
+			return true;
+		} else {
+			return false;
 		}
-		return false;
 	}
 }
