@@ -57,6 +57,10 @@ public class LeverRandomizer {
 				String label = trigger.getLabel();
 				//Index where the group-number should be
 				int index = label.indexOf("group")+5;
+				//if the trigger label does not contain group, ignore it
+				if (index == 4) {
+					continue;
+				}
 				int groupNumber = Integer.parseInt(label.substring(index));
 				//Fill up as much as necessary
 				if (groups.size() <= groupNumber) {

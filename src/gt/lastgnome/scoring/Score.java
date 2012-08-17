@@ -71,8 +71,8 @@ public class Score {
 		return (400-totalDamage-totalDeaths*2)*ten_minutes/time;
 	}
 	
-	public HighscoreEntry toHighscoreEntry(String name) {
-		return new HighscoreEntry(name, time, totalDamage, totalDeaths, getPoints());
+	public HighscoreEntry toHighscoreEntry() {
+		return new HighscoreEntry(time, totalDamage, totalDeaths, getPoints());
 	}
 	
 

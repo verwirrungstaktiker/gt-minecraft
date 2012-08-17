@@ -10,10 +10,7 @@ import java.util.Vector;
 
 import org.bukkit.World;
 import org.bukkit.block.Block;
-import org.bukkit.event.player.PlayerInteractEvent;
 import org.getspout.spoutapi.SpoutManager;
-
-import com.avaje.ebeaninternal.server.subclass.GetterSetterMethods;
 
 public class RandomLeverTrigger extends LeverRedstoneTrigger{
 	

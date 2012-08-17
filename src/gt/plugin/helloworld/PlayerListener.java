@@ -2,6 +2,7 @@ package gt.plugin.helloworld;
 
 import gt.general.PortableItem;
 import gt.lastgnome.GnomeItem;
+import gt.plugin.meta.Hello;
 
 import org.bukkit.ChatColor;
 import org.bukkit.GameMode;
@@ -16,6 +17,7 @@ import org.bukkit.event.player.PlayerPickupItemEvent;
 import org.bukkit.event.player.PlayerToggleSprintEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
+import org.bukkit.util.Vector;
 import org.getspout.spoutapi.inventory.SpoutItemStack;
 import org.getspout.spoutapi.material.Material;
 import org.getspout.spoutapi.player.SpoutPlayer;

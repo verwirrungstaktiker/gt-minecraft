@@ -20,7 +20,7 @@ public class TeleportResponse extends CustomBlockResponse implements RespawnPoin
 	
 	private static final String KEY_CONTINGENT = "contingent";
 	private int maximumContingent;
-	private int currrentContingent;
+	private int currentContingent;
 
 	private RespawnManager respawnManager;
 	
@@ -28,7 +28,7 @@ public class TeleportResponse extends CustomBlockResponse implements RespawnPoin
 		super("teleport", block, BLOCK);
 
 		maximumContingent = -1;
-		currrentContingent = -1;
+		currentContingent = -1;
 	}
 	
 	/** */
@@ -41,7 +41,7 @@ public class TeleportResponse extends CustomBlockResponse implements RespawnPoin
 		super.setup(values, world);
 		
 		maximumContingent = values.getInt(KEY_CONTINGENT);
-		currrentContingent = maximumContingent;
+		currentContingent = maximumContingent;
 	}
 	
 	@Override
@@ -55,8 +55,8 @@ public class TeleportResponse extends CustomBlockResponse implements RespawnPoin
 	public void triggered(final TriggerEvent triggerEvent) {
 		
 		if(triggerEvent.isActive()) {
-			if(currrentContingent != 0) {
-				--currrentContingent;
+			if(currentContingent != 0) {
+				--currentContingent;
 				Player player = triggerEvent.getPlayer();
 				
 				// there is no respawn manager in the editor - TODO ?

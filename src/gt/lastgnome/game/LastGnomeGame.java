@@ -271,14 +271,5 @@ public class LastGnomeGame extends AbstractLastGnomeGame implements Listener{
 		getZombieManager().unFreezeAllZombies();
 		getTeam().unfreezeAllHeros();
 	}
-	
-	@EventHandler
-	public void screamingGnome(EntityDamageByEntityEvent event) {
-		System.out.println("Event!!!");
-		if (event.getEntity().equals(gnomeBearer.getPlayer())) {
-			System.out.println("HAS GNOME!!!");
-			SpoutManager.getSoundManager().playGlobalCustomSoundEffect(Hello.getPlugin(), "file:///home/philipp/.scripts/fogblast.wav"
-					, false, event.getEntity().getLocation());
-		}
-	}
+
 }
