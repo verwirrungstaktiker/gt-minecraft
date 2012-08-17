@@ -53,5 +53,4 @@ public class Highscore {
 	public void addEntry(HighscoreEntry entry) {
 		
 	}
-	
 }

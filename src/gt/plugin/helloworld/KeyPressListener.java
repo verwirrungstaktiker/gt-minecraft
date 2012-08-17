@@ -5,7 +5,6 @@ import gt.plugin.meta.Hello;
 
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
-import org.bukkit.block.BlockFace;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.getspout.spoutapi.event.input.KeyPressedEvent;
@@ -29,7 +28,7 @@ public class KeyPressListener implements Listener {
 		
 		if(event.getKey() == Keyboard.KEY_B) {
 			
-			Hello.getIngameDisplayManager().add(new DisplayString("SDAFasdgsagsag SDAFsadfsa sagh sadFsdafasdf", 1f, event.getPlayer().getEyeLocation(), BlockFace.NORTH));
+			Hello.getIngameDisplayManager().add(new DisplayString("SDAFasdgsagsag SDAFsadfsa sagh sadFsdafasdf", 1f, event.getPlayer().getEyeLocation()));
 			
 		}
 	}
