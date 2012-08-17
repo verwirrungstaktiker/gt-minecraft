@@ -1,5 +1,7 @@
 package gt.plugin.meta;
 
+import gt.general.ingameDisplay.IngameDisplayManager;
+
 import java.io.File;
 
 import org.bukkit.Bukkit;
@@ -15,11 +17,15 @@ public final class Hello {
 	private static Hello instance;
 	private final JavaPlugin plugin;
 
+	private final IngameDisplayManager ingameDisplayManager;
+	
 	/**
 	 * @param plugin the currently running plugin
 	 */
 	private Hello(final JavaPlugin plugin) {
 		this.plugin = plugin;
+		this.ingameDisplayManager = new IngameDisplayManager();
+		
 	}
 
 	/**
@@ -31,6 +37,9 @@ public final class Hello {
 			instance = new Hello(plugin);
 			MultiListener.initialize(plugin);
 			CustomBlockType.instantiate();
+			
+			scheduleAsyncTask(instance.ingameDisplayManager, 1, IngameDisplayManager.REFRESH_RATE);
+
 			
 			//Well, let's clean up on start
 			File worldsFolder = Bukkit.getServer().getWorldContainer();
@@ -143,6 +152,10 @@ public final class Hello {
 		}
 		
 		dir.delete();
+	}
+	
+	public static IngameDisplayManager getIngameDisplayManager() {
+		return getInstance().ingameDisplayManager;
 	}
 
 }

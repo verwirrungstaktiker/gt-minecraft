@@ -54,7 +54,6 @@ public class HelloWorld extends JavaPlugin {
 		
 		gameManager = new GameManager(worldManager, teamManager);
 		
-		
 		setupCommands();
 	}
 	

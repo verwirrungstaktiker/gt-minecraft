@@ -25,7 +25,7 @@ public class ZombieSlowEffect extends AbstractEffect {
 
 	@Override
 	public void takeEffect(final Character character) {
-		character.addToAttribute(CharacterAttributes.SPEED, -60.0);
+		character.addToAttribute(CharacterAttributes.SPEED, -80.0);
 	}
 
 }

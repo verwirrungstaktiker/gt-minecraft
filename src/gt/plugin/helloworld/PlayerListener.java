@@ -26,18 +26,18 @@ public class PlayerListener implements Listener {
 	 * prevent sprinting 
 	 * @param event player toggles sprint
 	 **/
-	@EventHandler
-	public final void preventSprinting(final PlayerToggleSprintEvent event) {
-		SpoutPlayer player = (SpoutPlayer) event.getPlayer();
-		// cancelling the event doesn't do anything, so have this dirty hack instead
-		if (event.isSprinting()) {
-			player.setWalkingMultiplier(player.getWalkingMultiplier()*0.66);
-		} else {
-			player.setWalkingMultiplier(player.getWalkingMultiplier()*1.5);
-		}
-
-		event.setCancelled(true);
-	}
+//	@EventHandler
+//	public final void preventSprinting(final PlayerToggleSprintEvent event) {
+//		SpoutPlayer player = (SpoutPlayer) event.getPlayer();
+//		// cancelling the event doesn't do anything, so have this dirty hack instead
+//		if (event.isSprinting()) {
+//			player.setWalkingMultiplier(player.getWalkingMultiplier()*0.66);
+//		} else {
+//			player.setWalkingMultiplier(player.getWalkingMultiplier()*1.5);
+//		}
+//
+//		event.setCancelled(true);
+//	}
 	
 	@EventHandler
 	public final void preventInventoryModification(final InventoryClickEvent event) {

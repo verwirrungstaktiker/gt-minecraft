@@ -11,7 +11,6 @@ import gt.plugin.meta.Hello;
 
 import java.util.Map;
 
-import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
