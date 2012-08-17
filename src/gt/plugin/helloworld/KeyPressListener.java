@@ -25,6 +25,11 @@ public class KeyPressListener implements Listener {
 			event.getPlayer().sendMessage(message);
 		}
 		
+		if(event.getKey() == Keyboard.KEY_J) {
+			Location loc = event.getPlayer().getLocation();
+			event.getPlayer().sendMessage("pitch: " + loc.getPitch() + " yaw: " + loc.getYaw());
+		}
+		
 		
 		if(event.getKey() == Keyboard.KEY_B) {
 			

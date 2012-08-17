@@ -1,9 +1,7 @@
 package gt.plugin.helloworld;
 
-import java.io.File;
-import java.util.HashMap;
-import java.util.Map;
-
+import static com.google.common.collect.Lists.*;
+import static com.google.common.collect.Maps.*;
 import gt.general.GameManager;
 import gt.general.character.HeroManager;
 import gt.general.character.TeamManager;
@@ -16,6 +14,10 @@ import gt.plugin.helloworld.command.TeamCommandExecutor;
 import gt.plugin.meta.Hello;
 import gt.plugin.meta.MultiListener;
 import gt.plugin.meta.PlayerCommandExecutor;
+
+import java.io.File;
+import java.util.List;
+import java.util.Map;
 
 import org.bukkit.ChatColor;
 import org.bukkit.GameMode;
@@ -65,7 +67,7 @@ public class HelloWorld extends JavaPlugin {
 	}
 	
 	private void setupHighscores() {
-		highscores = new HashMap<String, Highscore>();
+		highscores = newHashMap();
 		File worldsFolder = Hello.getPlugin().getServer().getWorldContainer();
 		//search for worlds
 		for (File world : worldsFolder.listFiles()) {
@@ -163,5 +165,15 @@ public class HelloWorld extends JavaPlugin {
 		
 
 
+	}
+
+	private void setupScoreBoards() {
+		
+		List<Location> anchors = newArrayList();
+		anchors.add(new Location(worldManager.getInitialWorld(), 48, 87, 7, 0, 0));
+		
+		
+		//ScoreBoard sb = new ScoreBoard(highscore, anchors);
+		
 	}
 }
