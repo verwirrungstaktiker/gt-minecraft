@@ -3,7 +3,21 @@ package gt.general.aura;
 import gt.general.character.Character;
 import gt.general.character.CharacterAttributes;
 
-public class PauseEffect extends AbstractEffect {
+public class FreezeEffect extends AbstractEffect {
+	
+	private FreezeCause cause;
+	
+	public static enum FreezeCause {
+		PAUSE,
+		FREEZE
+	}
+	
+	/**
+	 * @param cause cause of the freeze effect
+	 */
+	public FreezeEffect(final FreezeCause cause) {
+		this.cause = cause;
+	}
 
 	@Override
 	public void performTick() {}
@@ -30,4 +44,10 @@ public class PauseEffect extends AbstractEffect {
 		return 100;
 	}
 
+	/**
+	 * @return what caused the freeze
+	 */
+	public FreezeCause getCause() {
+		return cause;
+	}
 }

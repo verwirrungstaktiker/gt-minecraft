@@ -10,6 +10,7 @@ import org.getspout.spoutapi.inventory.SpoutItemStack;
 import org.getspout.spoutapi.player.SpoutPlayer;
 
 import gt.general.PortableItem;
+import gt.general.aura.FreezeEffect.FreezeCause;
 import gt.general.character.Hero;
 import gt.general.character.HeroManager;
 import gt.plugin.meta.Hello;
@@ -45,7 +46,7 @@ public class FreezingBlock extends PortableItem{
 
 	@Override
 	public void onDetachHero(final Hero hero) {
-		hero.resume();
+		hero.resume(FreezeCause.FREEZE);
 	}
 	
 	@Override

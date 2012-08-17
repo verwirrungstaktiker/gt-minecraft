@@ -3,6 +3,7 @@ package gt.general.character;
 import gt.general.Game;
 import gt.general.aura.Aura;
 import gt.general.aura.EffectFactory;
+import gt.general.aura.FreezeEffect.FreezeCause;
 import gt.general.aura.GameAura;
 import gt.general.aura.ZombieSlowEffect;
 import gt.general.aura.ZombieSpeedEffect;
@@ -225,7 +226,7 @@ public class ZombieManager implements Listener, Runnable{
 
 	public void unFreezeAllZombies() {
 		for(ZombieCharacter z : zombies) {
-			z.resume();
+			z.resume(FreezeCause.PAUSE);
 		}
 	}
 }

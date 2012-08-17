@@ -2,7 +2,8 @@ package gt.general.character;
 
 import gt.general.aura.Aura;
 import gt.general.aura.Effect;
-import gt.general.aura.PauseEffect;
+import gt.general.aura.FreezeEffect;
+import gt.general.aura.FreezeEffect.FreezeCause;
 
 import java.util.Collections;
 import java.util.HashMap;
@@ -216,17 +217,25 @@ public abstract class Character {
 	}
 	
 	public void pause() {
-		addEffect(new PauseEffect());
+		addEffect(new FreezeEffect(FreezeCause.PAUSE));
 	}
 
-	public void resume() {
+	public void freeze() {
+		addEffect(new FreezeEffect(FreezeCause.FREEZE));
+	}
+	
+	public void resume(FreezeCause cause) {
 		// search all freeze effects and remove them
 		// TODO this smells of Code Duplication
 		Iterator<Effect> it = getEffects().iterator();
 		while(it.hasNext()) {
-		    if (it.next() instanceof PauseEffect) {
-		    	System.out.println("found a pause effect");
-		        it.remove();
+			Effect effect = it.next();
+		    if (effect instanceof FreezeEffect) {
+		    	FreezeEffect fEffect = (FreezeEffect) effect;
+		    	if(fEffect.getCause()==cause) {
+			    	System.out.println("found freeze caused by " + cause);
+			        it.remove();
+		    	}
 		    }
 		}
 		

@@ -2,7 +2,8 @@ package gt.general.character;
 
 import gt.general.Game;
 import gt.general.aura.Effect;
-import gt.general.aura.PauseEffect;
+import gt.general.aura.FreezeEffect;
+import gt.general.aura.FreezeEffect.FreezeCause;
 
 import java.util.HashSet;
 import java.util.Iterator;
@@ -196,7 +197,7 @@ public class Team {
 	
 	public void unfreezeAllHeros() {
 		for(Hero h : members) {
-			h.resume();
+			h.resume(FreezeCause.PAUSE);
 		}
 	}
 
