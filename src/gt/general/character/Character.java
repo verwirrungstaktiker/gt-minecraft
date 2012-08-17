@@ -211,7 +211,7 @@ public abstract class Character {
 	/**
 	 * @param computedAttributesTainted the computedAttributesTainted to set
 	 */
-	public void setComputedAttributesTainted(boolean computedAttributesTainted) {
+	public void setComputedAttributesTainted(final boolean computedAttributesTainted) {
 		this.computedAttributesTainted = computedAttributesTainted;
 	}
 	
@@ -227,6 +227,7 @@ public abstract class Character {
 		    if (it.next() instanceof FreezeEffect) {
 		    	System.out.println("found a freeze effect");
 		        it.remove();
+		        break;
 		    }
 		}
 		

@@ -17,4 +17,6 @@ commands:
     description: shows open instances
   spectate:
     description: spectates the given instance
+  blocktool:
+    description: gives a block tool
   

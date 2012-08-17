@@ -3,6 +3,7 @@ package gt.general.character;
 import gt.general.Game;
 import gt.general.PortableItem;
 import gt.general.gui.HeroGui;
+import gt.plugin.meta.Hello;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -29,7 +30,7 @@ public class Hero extends Character{
 	/**Item in hand*/
 	private PortableItem activeItem;
 	/**Passiv-Slot for tools*/
-	private PortableItem passivItem;
+	private PortableItem passiveItem;
 
 	private HeroGui gui;
 	
@@ -103,7 +104,7 @@ public class Hero extends Character{
 	 * @return the current Item in the passive slot
 	 */
 	public PortableItem getPassivItem() {
-		return passivItem;
+		return passiveItem;
 	}
 
 	/**
@@ -114,7 +115,7 @@ public class Hero extends Character{
 			return true;
 		}
 
-		if (activeItem.isTool() && passivItem == null) {
+		if (activeItem.isTool() && passiveItem == null) {
 			return true;
 		}
 
@@ -123,6 +124,10 @@ public class Hero extends Character{
 		}
 
 		return false;
+	}
+	
+	public boolean canTransferItem() {
+		return activeItem.isTransferable();
 	}
 
 	/**
@@ -136,8 +141,8 @@ public class Hero extends Character{
 			return;
 		}
 
-		if (activeItem.isTool() && passivItem == null) {
-			passivItem = activeItem;
+		if (activeItem.isTool() && passiveItem == null) {
+			passiveItem = activeItem;
 			innerSetActiveItem(item);
 			return;
 		}
@@ -147,7 +152,8 @@ public class Hero extends Character{
 			innerSetActiveItem(item);
 			return;
 		}
-
+		
+		System.out.println("active: " +activeItem+" passive: "+passiveItem);
 		throw new RuntimeException();
 	}
 
@@ -173,9 +179,22 @@ public class Hero extends Character{
 		toRemove.onDetachHero(this);
 		notifyChanged(Notification.INVENTORY);
 		
+		equipPassiveItem();
+		
 		return toRemove;
 	}
 
+
+	private void equipPassiveItem() {
+		if(activeItem==null
+				&& passiveItem!=null) {
+			activeItem = passiveItem;
+			passiveItem = null;
+			
+			notifyChanged(Notification.INVENTORY);
+		}
+			
+	}
 
 	/**
 	 * transfers the current active item into another inventory
@@ -183,8 +202,7 @@ public class Hero extends Character{
 	 * @param target where to put the inventory
 	 */
 	public void transferActiveItem(final Hero target) {
-		if (activeItem.isTransferable() && target.canRecieveItem()) {
-			
+		if (activeItem.isTransferable() && target.canRecieveItem()) {			
 			target.setActiveItem(removeActiveItem());
 		}
 	}
@@ -293,5 +311,5 @@ public class Hero extends Character{
 		return inTeam() && getTeam().inGame();
 
 	}
-	
+
 }

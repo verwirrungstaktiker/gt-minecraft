@@ -77,45 +77,45 @@ public class LastGnomeGame extends AbstractLastGnomeGame implements Listener{
 	}
 	
 	/**
-	 * handles passing of the gnome to another player, as triggered by minecraft
+	 * handles passing of items to another player
 	 *
-	 * @param event fired by minecraft
+	 * @param event player interact (right click on entity)
 	 */
 	@EventHandler
-	public void handleGnomPassing(final PlayerInteractEntityEvent event) {
-		
-		if (gnomeBearer!=null && gnomeBearer.getPlayer().equals(event.getPlayer())) {	
-			Entity target = event.getRightClicked();
+	public void handleItemTransfering(final PlayerInteractEntityEvent event) {
+		Entity target = event.getRightClicked();
+		if (target instanceof Player) {	
+			Hero sender = HeroManager.getHero(event.getPlayer());
+			Hero receiver = HeroManager.getHero((Player) target);
 			
-			if (target instanceof Player) {
-				Hero hero = HeroManager.getHero((Player) target);
-				giveGnomeTo(hero);
+			transferItem(sender, receiver);
+		}
+	}
+	
+	/**
+	 * initiates an item transfer from sender to receiver if possible
+	 * 
+	 * @param sender
+	 *            gives the item
+	 * @param receiver
+	 *            gets the item
+	 */
+	void transferItem(final Hero sender, final Hero receiver) {
+		// If Player does not belong to the Team, stop here.
+		if (getTeam().isMember(receiver) && receiver.canRecieveItem()
+				&& sender.canTransferItem()) {
+
+			System.out.println(sender.getPlayer().getName() + " gave an item to " + receiver.getPlayer().getName());
+			
+			sender.transferActiveItem(receiver);
+			
+			if (sender.equals(gnomeBearer)) {
+				setGnomeBearer(receiver);
 			}
 		}
 	}
 
 	/**
-	 * <b>WARNING</b> does not perform any checks
-	 *
-	 * @param newBearer the new gnomeBearer
-	 */
-	void giveGnomeTo(final Hero newBearer) {
-		
-		// If Player does not belong to the Team, stop here.
-		if (getTeam().isMember(newBearer)
-				&& newBearer.canRecieveItem()) {
-
-			System.out.println("gnome to: " + newBearer.getPlayer().getName());
-			
-			// pass the gnome
-			gnomeBearer.transferActiveItem(newBearer);
-			setGnomeBearer(newBearer);
-		}
-	}
-
-	/**
-	 * <b>WARNING</b> does not perform any checks
-	 *
 	 * @param newBearer
 	 *            the new gnome bearer
 	 */

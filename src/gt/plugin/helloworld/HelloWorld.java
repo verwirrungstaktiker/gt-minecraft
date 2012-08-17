@@ -3,12 +3,15 @@ package gt.plugin.helloworld;
 import static com.google.common.collect.Lists.*;
 import static com.google.common.collect.Maps.*;
 import gt.general.GameManager;
+import gt.general.character.Hero;
 import gt.general.character.HeroManager;
 import gt.general.character.TeamManager;
 import gt.general.world.InstantiatingWorldManager;
 import gt.general.world.WorldInstance;
 import gt.general.world.WorldManager;
 import gt.lastgnome.scoring.Highscore;
+import gt.lastgnome.FreezingBlock;
+
 import gt.plugin.helloworld.command.StartGameCommandExecutor;
 import gt.plugin.helloworld.command.TeamCommandExecutor;
 import gt.plugin.meta.Hello;
@@ -113,6 +116,20 @@ public class HelloWorld extends JavaPlugin {
 			public boolean onCommand(final CommandSender arg0, final Command arg1, final String arg2, final String[] arg3) {
 				System.out.println("ending games");
 				gameManager.endAllGames();
+				return true;
+			}
+		});
+		
+		getCommand("blocktool").setExecutor(new PlayerCommandExecutor() {
+			
+			@Override
+			public boolean onPlayerCommand(final Player player, final Command cmd, final String label,
+					final String[] args) {
+				System.out.println("giving block tool");
+				Hero hero = HeroManager.getHero(player);
+				
+				hero.setActiveItem(new FreezingBlock());
+
 				return true;
 			}
 		});
