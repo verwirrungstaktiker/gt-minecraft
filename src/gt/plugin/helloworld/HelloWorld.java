@@ -186,7 +186,9 @@ public class HelloWorld extends JavaPlugin {
 	private void setupScoreBoards(final String levelName) {
 		
 		List<Location> anchors = newArrayList();
-		anchors.add(new Location(worldManager.getInitialWorld(), 48, 87, 7, 0, 0));
+		anchors.add(new Location(worldManager.getInitialWorld(), 3, 87, 59, 90, 0));
+		anchors.add(new Location(worldManager.getInitialWorld(), 3, 80, 59, 90, 0));
+		anchors.add(new Location(worldManager.getInitialWorld(), 3, 73, 59, 90, 0));
 		
 		ScoreBoard sb = new ScoreBoard(highscores.get(levelName), anchors);
 		

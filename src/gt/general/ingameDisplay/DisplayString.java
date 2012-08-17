@@ -30,12 +30,9 @@ public class DisplayString implements DisplayStringContainer {
 
 		Location l = location.clone();
 		
-		for(String ch : text.split("")) {
-			System.out.println(ch);
-			
-			spoutPlayer.spawnTextEntity(ch, l.clone(), scale, IngameDisplayManager.REFRESH_RATE -1, new Vector());
-			
-			l.add(l.getDirection());
+		for(String ch : text.split("")) {	
+			spoutPlayer.spawnTextEntity(ch, l.clone(), scale, IngameDisplayManager.REFRESH_RATE+1, new Vector());
+			l.add(l.getDirection().multiply(scale * 0.8f));
 		}
 	}
 

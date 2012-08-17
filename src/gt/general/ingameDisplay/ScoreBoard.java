@@ -59,10 +59,17 @@ public class ScoreBoard implements DisplayStringContainer {
 		
 		for(int i = 0; i < Math.min(anchors.size(), displayedEntries.size()); i++) {
 			
-			displayStrings.add(new DisplayString(String.valueOf(i) + "ASDFASDAFAASDFASDFASDFASF",
-													1f,
-													anchors.get(i)));
 			
+			HighscoreEntry entry = displayedEntries.get(i);
+			
+			int offset = 0;
+			for(String name : entry.getPlayers()) {
+			
+				Location pos = anchors.get(i).clone();
+				pos.subtract(0.0, (offset++ + 0.05), 0.0);
+				
+				displayStrings.add(new DisplayString(name, 0.66f, pos));
+			}
 		}
 	}
 }

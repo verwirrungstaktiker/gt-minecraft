@@ -62,21 +62,22 @@ public class Highscore {
 			Reader reader = Files.newReader(path, Charset.defaultCharset());
 		
 		
-		Yaml yaml = new Yaml(YamlSerializable.YAML_OPTIONS);	
-		
-		Map<String, Object> values = (Map<String, Object>) yaml.load(reader);
-		
-		List<Map<String, Object>> entries = (List<Map<String, Object>>) values.get(KEY_SCORES);
-		for (Map<String, Object> scoreMap : entries) {
-			HighscoreEntry entry = new HighscoreEntry();
-			try {
-				entry.setup(new PersistanceMap(scoreMap));
-			} catch (PersistanceException e) {
-				
+			Yaml yaml = new Yaml(YamlSerializable.YAML_OPTIONS);	
+			
+			Map<String, Object> values = (Map<String, Object>) yaml.load(reader);
+			
+			List<Map<String, Object>> entries = (List<Map<String, Object>>) values.get(KEY_SCORES);
+			for (Map<String, Object> scoreMap : entries) {
+				HighscoreEntry entry = new HighscoreEntry();
+				try {
+					entry.setup(new PersistanceMap(scoreMap));
+				} catch (PersistanceException e) {
+					System.out.println("persistance exception in highscore");
+				}
+				scores.add(entry);
 			}
-			scores.add(entry);
-		}
-		Collections.sort(scores);
+			Collections.sort(scores);
+			System.out.println("sort");
 		
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block

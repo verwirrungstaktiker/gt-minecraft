@@ -78,7 +78,7 @@ public class HighscoreEntry implements Comparable<HighscoreEntry>{
 
 	@Override
 	public int compareTo(HighscoreEntry o) {
-		return getPoints()-o.getPoints();
+		return -Integer.valueOf(getPoints()).compareTo(o.getPoints());
 	}
 	
 	

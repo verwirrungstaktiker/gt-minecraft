@@ -15,6 +15,8 @@ public class IngameDisplayManager implements Runnable{
 	
 	@Override
 	public void run() {
+		System.out.println("refresh text");
+		
 		for(DisplayStringContainer container : containers) {
 			for(DisplayString string : container.getDisplayStrings()) {
 				for(Hero hero : HeroManager.getAllHeros()) {
