@@ -50,6 +50,10 @@ public class HighscoreEntry implements Comparable<HighscoreEntry>{
 		this.players = players;		
 	}
 	
+	public List<String> getPlayers() {
+		return players;
+	}
+	
 	public void setup(final PersistanceMap map) throws PersistanceException {
 		this.time = map.get(KEY_TIME);
 		this.damage = map.get(KEY_DAMAGE);
