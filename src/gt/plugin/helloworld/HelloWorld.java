@@ -1,11 +1,16 @@
 package gt.plugin.helloworld;
 
+import java.io.File;
+import java.util.HashMap;
+import java.util.Map;
+
 import gt.general.GameManager;
 import gt.general.character.HeroManager;
 import gt.general.character.TeamManager;
 import gt.general.world.InstantiatingWorldManager;
 import gt.general.world.WorldInstance;
 import gt.general.world.WorldManager;
+import gt.lastgnome.scoring.Highscore;
 import gt.plugin.helloworld.command.StartGameCommandExecutor;
 import gt.plugin.helloworld.command.TeamCommandExecutor;
 import gt.plugin.meta.Hello;
@@ -33,6 +38,7 @@ public class HelloWorld extends JavaPlugin {
 	
 	private TeamManager teamManager;
 	private WorldManager worldManager;
+	private Map<String,Highscore> highscores;
 		
 	/**
 	 * Initialization of our plugin
@@ -55,6 +61,23 @@ public class HelloWorld extends JavaPlugin {
 		gameManager = new GameManager(worldManager, teamManager);
 		
 		setupCommands();
+		setupHighscores();
+	}
+	
+	private void setupHighscores() {
+		highscores = new HashMap<String, Highscore>();
+		File worldsFolder = Hello.getPlugin().getServer().getWorldContainer();
+		//search for worlds
+		for (File world : worldsFolder.listFiles()) {
+			if (world.isDirectory()) {
+				//check if the world has a highscore, if not ignore it
+				File scoreFile = new File(world, Highscore.PERSISTANCE_FILE);
+				if (scoreFile.exists()) {
+					String worldName = world.getName();
+					highscores.put(worldName, new Highscore(worldName));
+				}
+			}
+		}
 	}
 	
 	/** */

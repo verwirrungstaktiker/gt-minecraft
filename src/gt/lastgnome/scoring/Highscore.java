@@ -24,15 +24,17 @@ public class Highscore {
 
 	private final List<HighscoreEntry> scores;
 	
-	private final static String PERSISTANCE_FILE="highscore.yml";
+	public final static String PERSISTANCE_FILE="highscore.yml";
 	private final static String KEY_SCORES="scores";
+	
+	private final String worldName;
 	
 	/**
 	 * Creates a new Highscore
 	 */
-	public Highscore() {
+	/*public Highscore() {
 		scores = new ArrayList<HighscoreEntry>();
-	}
+	}*/
 	
 	/**
 	 * Creates a new Highscore and loads entrys for the specified world
@@ -40,6 +42,7 @@ public class Highscore {
 	 */
 	public Highscore(String worldName) {
 		scores = new ArrayList<HighscoreEntry>();
+		this.worldName = worldName;
 		loadScores(worldName);
 	}
 	
@@ -52,7 +55,7 @@ public class Highscore {
 	 * @param worldName specified world
 	 */
 	@SuppressWarnings("unchecked")
-	public void loadScores(String worldName) {
+	private void loadScores(String worldName) {
 		File file = Hello.getPlugin().getServer().getWorldContainer();
 		File worldFolder = new File(file, worldName);
 		File path = new File(worldFolder, PERSISTANCE_FILE);
@@ -63,7 +66,6 @@ public class Highscore {
 		Yaml yaml = new Yaml(YamlSerializable.YAML_OPTIONS);	
 		
 		Map<String, Object> values = (Map<String, Object>) yaml.load(reader);
-		//PersistanceMap map = new PersistanceMap(values);
 		
 		List<Map<String, Object>> entries = (List<Map<String, Object>>) values.get(KEY_SCORES);
 		for (Map<String, Object> scoreMap : entries) {
@@ -76,7 +78,6 @@ public class Highscore {
 			scores.add(entry);
 		}
 		Collections.sort(scores);
-		//PersistanceMap map = new PersistanceMap(values);
 		
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
@@ -93,11 +94,15 @@ public class Highscore {
 		Collections.sort(scores);		
 	}
 	
+	public void saveScores() {
+		saveScores(worldName);
+	}
+	
 	/**
 	 * Saves the Highscore to the specified world
 	 * @param worldName
 	 */
-	public void saveScores(String worldName) {
+	private void saveScores(String worldName) {
 		PersistanceMap values = new PersistanceMap();
 		List<Map<String,Object>> entries = new ArrayList<Map<String,Object>>();
 		for (HighscoreEntry entry : scores) {
