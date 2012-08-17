@@ -30,13 +30,6 @@ public class Highscore {
 	private final String worldName;
 	
 	/**
-	 * Creates a new Highscore
-	 */
-	/*public Highscore() {
-		scores = new ArrayList<HighscoreEntry>();
-	}*/
-	
-	/**
 	 * Creates a new Highscore and loads entrys for the specified world
 	 * @param worldName the specified world
 	 */
@@ -59,6 +52,12 @@ public class Highscore {
 		File file = Hello.getPlugin().getServer().getWorldContainer();
 		File worldFolder = new File(file, worldName);
 		File path = new File(worldFolder, PERSISTANCE_FILE);
+		
+		//if Highscore doesn't exist, don't try loading it 
+		if (!path.exists()) {
+			return;
+		}
+		
 		try {
 			Reader reader = Files.newReader(path, Charset.defaultCharset());
 		
