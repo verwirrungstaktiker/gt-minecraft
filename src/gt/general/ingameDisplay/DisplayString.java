@@ -1,10 +1,14 @@
 package gt.general.ingameDisplay;
 
+import static com.google.common.collect.Lists.*;
+
+import java.util.Collection;
+
 import org.bukkit.Location;
 import org.bukkit.util.Vector;
 import org.getspout.spoutapi.player.SpoutPlayer;
 
-public class DisplayString {
+public class DisplayString implements DisplayStringContainer {
 	
 	private final String text;
 	private final float scale;
@@ -33,5 +37,11 @@ public class DisplayString {
 			
 			l.add(l.getDirection());
 		}
+	}
+
+
+	@Override
+	public Collection<DisplayString> getDisplayStrings() {
+		return newArrayList(this);
 	}
 }

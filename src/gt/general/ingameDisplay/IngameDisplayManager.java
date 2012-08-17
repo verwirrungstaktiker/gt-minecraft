@@ -10,24 +10,25 @@ public class IngameDisplayManager implements Runnable{
 	
 	public static final int REFRESH_RATE = 20 * 5;
 
-	private final Set<DisplayString> strings = newHashSet();
+	private final Set<DisplayStringContainer> containers = newHashSet();
+	
 	
 	@Override
 	public void run() {
-		for(Hero hero : HeroManager.getAllHeros()) {
-		
-			for(DisplayString string : strings) {
-			
-				if(hero.getPlayer().getWorld() == string.getLocation().getWorld()) {
-					string.spawnForPlayer(hero.getSpoutPlayer());
+		for(DisplayStringContainer container : containers) {
+			for(DisplayString string : container.getDisplayStrings()) {
+				for(Hero hero : HeroManager.getAllHeros()) {
+					
+					if(hero.getPlayer().getWorld() == string.getLocation().getWorld()) {
+						string.spawnForPlayer(hero.getSpoutPlayer());
+					}
+					
 				}
-				
 			}
 		}
 	}
 	
-	public void add(final DisplayString displayString) {
-		strings.add(displayString);
+	public void add(final DisplayStringContainer container) {
+		containers.add(container);
 	}
-
 }

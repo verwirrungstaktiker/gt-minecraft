@@ -2,9 +2,11 @@ package gt.plugin.helloworld;
 
 import static com.google.common.collect.Lists.*;
 import static com.google.common.collect.Maps.*;
+import static com.google.common.collect.Sets.*;
 import gt.general.GameManager;
 import gt.general.character.HeroManager;
 import gt.general.character.TeamManager;
+import gt.general.ingameDisplay.ScoreBoard;
 import gt.general.world.InstantiatingWorldManager;
 import gt.general.world.WorldInstance;
 import gt.general.world.WorldManager;
@@ -16,9 +18,12 @@ import gt.plugin.meta.MultiListener;
 import gt.plugin.meta.PlayerCommandExecutor;
 
 import java.io.File;
+import java.util.Collection;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Level;
 
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
@@ -40,7 +45,13 @@ public class HelloWorld extends JavaPlugin {
 	
 	private TeamManager teamManager;
 	private WorldManager worldManager;
-	private Map<String,Highscore> highscores;
+	
+	private final Map<String,Highscore> highscores = newHashMap();
+	private final static Collection<String> availableLevels = newHashSet();
+	
+	static {
+		availableLevels.add("lastgnome");
+	}
 		
 	/**
 	 * Initialization of our plugin
@@ -63,21 +74,22 @@ public class HelloWorld extends JavaPlugin {
 		gameManager = new GameManager(worldManager, teamManager);
 		
 		setupCommands();
-		setupHighscores();
+		setupLevelTemplates();
 	}
 	
-	private void setupHighscores() {
-		highscores = newHashMap();
+	private void setupLevelTemplates() {
 		File worldsFolder = Hello.getPlugin().getServer().getWorldContainer();
-		//search for worlds
-		for (File world : worldsFolder.listFiles()) {
-			if (world.isDirectory()) {
-				//check if the world has a highscore, if not ignore it
-				File scoreFile = new File(world, Highscore.PERSISTANCE_FILE);
-				if (scoreFile.exists()) {
-					String worldName = world.getName();
-					highscores.put(worldName, new Highscore(worldName));
-				}
+		
+		for(String levelName : availableLevels) {
+			
+			File levelFolder = new File(worldsFolder, levelName);
+			if(levelFolder.exists()) {
+				
+				setupHighscore(levelName);
+				setupScoreBoards(levelName);
+				
+			} else {
+				Bukkit.getLogger().log(Level.WARNING, levelName + " seems not existant");
 			}
 		}
 	}
@@ -167,13 +179,18 @@ public class HelloWorld extends JavaPlugin {
 
 	}
 
-	private void setupScoreBoards() {
+	private void setupHighscore(final String levelName) {
+		highscores.put(levelName, new Highscore(levelName));
+	}
+	
+	private void setupScoreBoards(final String levelName) {
 		
 		List<Location> anchors = newArrayList();
 		anchors.add(new Location(worldManager.getInitialWorld(), 48, 87, 7, 0, 0));
 		
+		ScoreBoard sb = new ScoreBoard(highscores.get(levelName), anchors);
 		
-		//ScoreBoard sb = new ScoreBoard(highscore, anchors);
+		Hello.getIngameDisplayManager().add(sb);
 		
 	}
 }

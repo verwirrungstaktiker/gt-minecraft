@@ -11,7 +11,7 @@ import java.util.List;
 
 import org.bukkit.Location;
 
-public class ScoreBoard {
+public class ScoreBoard implements DisplayStringContainer {
 
 	private final List<HighscoreEntry> displayedEntries = newArrayList();
 	private final List<Location> anchors;
@@ -31,6 +31,7 @@ public class ScoreBoard {
 		generateDisplayStrings();
 	}
 	
+	@Override
 	public Collection<DisplayString> getDisplayStrings() {
 		
 		List<HighscoreEntry> currentEntries = highscore.getScores();
@@ -58,7 +59,7 @@ public class ScoreBoard {
 		
 		for(int i = 0; i < Math.min(anchors.size(), displayedEntries.size()); i++) {
 			
-			displayStrings.add(new DisplayString(displayedEntries.get(i).getName(),
+			displayStrings.add(new DisplayString(String.valueOf(i) + "ASDFASDAFAASDFASDFASDFASF",
 													1f,
 													anchors.get(i)));
 			
