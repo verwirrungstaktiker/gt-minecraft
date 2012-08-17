@@ -40,12 +40,12 @@ public class FreezingBlock extends PortableItem{
 
 	@Override
 	public void onAttachHero(final Hero hero) {
-		hero.freeze();
+		hero.pause();
 	}
 
 	@Override
 	public void onDetachHero(final Hero hero) {
-		hero.unfreeze();
+		hero.resume();
 	}
 	
 	@Override

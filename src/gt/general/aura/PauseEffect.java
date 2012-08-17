@@ -3,7 +3,7 @@ package gt.general.aura;
 import gt.general.character.Character;
 import gt.general.character.CharacterAttributes;
 
-public class FreezeEffect extends AbstractEffect {
+public class PauseEffect extends AbstractEffect {
 
 	@Override
 	public void performTick() {}

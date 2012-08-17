@@ -219,13 +219,13 @@ public class ZombieManager implements Listener, Runnable{
 	
 	public void freezeAllZombies() {
 		for(ZombieCharacter z : zombies) {
-			z.freeze();
+			z.pause();
 		}
 	}
 
 	public void unFreezeAllZombies() {
 		for(ZombieCharacter z : zombies) {
-			z.unfreeze();
+			z.resume();
 		}
 	}
 }
