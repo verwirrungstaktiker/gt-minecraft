@@ -70,6 +70,13 @@ public class ScoreBoard implements DisplayStringContainer {
 				
 				displayStrings.add(new DisplayString(name, 0.66f, pos));
 			}
+			
+			
+			Location rightPos = anchors.get(i).clone();
+			rightPos.add(rightPos.getDirection().multiply(18)).subtract(0.0, 1.0, 0.0);
+			
+			displayStrings.add(new RightBoundedDisplayString(String.valueOf(entry.getPoints()), 2f, rightPos));
+			
 		}
 	}
 }

@@ -10,9 +10,9 @@ import org.getspout.spoutapi.player.SpoutPlayer;
 
 public class DisplayString implements DisplayStringContainer {
 	
-	private final String text;
-	private final float scale;
-	private final Location location;	
+	protected final String text;
+	protected final float scale;
+	protected final Location location;	
 	
 	public DisplayString(final String text, final float scale, final Location location) {
 		this.text = text;

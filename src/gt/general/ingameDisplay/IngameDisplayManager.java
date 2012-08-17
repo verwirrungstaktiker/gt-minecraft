@@ -8,23 +8,25 @@ import java.util.Set;
 
 public class IngameDisplayManager implements Runnable{
 	
-	public static final int REFRESH_RATE = 20 * 5;
+	public static final int REFRESH_RATE = 20 * 15;
 
 	private final Set<DisplayStringContainer> containers = newHashSet();
 	
 	
 	@Override
 	public void run() {
-		System.out.println("refresh text");
 		
-		for(DisplayStringContainer container : containers) {
-			for(DisplayString string : container.getDisplayStrings()) {
-				for(Hero hero : HeroManager.getAllHeros()) {
-					
-					if(hero.getPlayer().getWorld() == string.getLocation().getWorld()) {
-						string.spawnForPlayer(hero.getSpoutPlayer());
+		if(HeroManager.getAllHeros().size() == 0) {
+		
+			for(DisplayStringContainer container : containers) {
+				for(DisplayString string : container.getDisplayStrings()) {
+					for(Hero hero : HeroManager.getAllHeros()) {
+						
+						if(hero.getPlayer().getWorld() == string.getLocation().getWorld()) {
+							string.spawnForPlayer(hero.getSpoutPlayer());
+						}
+						
 					}
-					
 				}
 			}
 		}
