@@ -7,9 +7,9 @@ import gt.general.character.HeroManager;
 import gt.general.character.Team;
 import gt.general.character.ZombieManager;
 import gt.general.gui.GuiElementType;
-import gt.general.world.WorldInstance;
 import gt.lastgnome.GnomeItem;
 import gt.lastgnome.gui.SpeedBar;
+import gt.lastgnome.scoring.ScoreManager;
 import gt.plugin.meta.Hello;
 
 import org.bukkit.World;
@@ -17,8 +17,11 @@ import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.entity.EntityDamageByEntityEvent;
+import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
+import org.getspout.spoutapi.SpoutManager;
 
 /**
  * Game Controller for a Last-Gnome-Scenario
@@ -138,6 +141,7 @@ public class LastGnomeGame extends AbstractLastGnomeGame implements Listener{
 	@Override
 	public void dispose() {
 		getZombieManager().cleanup();
+
 		super.dispose();
 		
 		if (gnomeBearer != null) {
@@ -150,8 +154,6 @@ public class LastGnomeGame extends AbstractLastGnomeGame implements Listener{
 			//TODO: maybe put that in a RespawnManager.dispose() ?
 			hero.getPlayer().setBedSpawnLocation(startWorld.getSpawnLocation());
 		}
-		
-		
 		
 		getTeam().dispose();
 		
@@ -169,17 +171,6 @@ public class LastGnomeGame extends AbstractLastGnomeGame implements Listener{
 	}
 	
 	/**
-	 * @param worldInstance where to play the game
-	 */
-	public void setWorldWrapper(final WorldInstance worldInstance) {
-		//this.worldInstance = worldInstance;
-		
-		
-	}
-	
-	
-	
-	/**
 	 * Detect Player Death
 	 * @param event player dies
 	 */
@@ -187,6 +178,7 @@ public class LastGnomeGame extends AbstractLastGnomeGame implements Listener{
 	public void onPlayerDeath(final PlayerDeathEvent event) {
 		Player player = event.getEntity();
 		if(gnomeBearer != null && player.equals(gnomeBearer.getPlayer())) {
+			scoreManager.stopMonitoring();			
 			lose();
 		}
 	}
@@ -278,5 +270,15 @@ public class LastGnomeGame extends AbstractLastGnomeGame implements Listener{
 	public void onResume() {
 		getZombieManager().unFreezeAllZombies();
 		getTeam().unfreezeAllHeros();
+	}
+	
+	@EventHandler
+	public void screamingGnome(EntityDamageByEntityEvent event) {
+		System.out.println("Event!!!");
+		if (event.getEntity().equals(gnomeBearer.getPlayer())) {
+			System.out.println("HAS GNOME!!!");
+			SpoutManager.getSoundManager().playGlobalCustomSoundEffect(Hello.getPlugin(), "file:///home/philipp/.scripts/fogblast.wav"
+					, false, event.getEntity().getLocation());
+		}
 	}
 }

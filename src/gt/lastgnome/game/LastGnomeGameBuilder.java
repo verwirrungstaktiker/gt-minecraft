@@ -12,6 +12,7 @@ import gt.general.logic.response.ZombieResponse;
 import gt.general.world.WorldManager;
 import gt.lastgnome.LeverRandomizer;
 import gt.lastgnome.MathRiddleRandomizer;
+import gt.lastgnome.scoring.ScoreManager;
 
 import org.bukkit.GameMode;
 import org.bukkit.entity.Player;
