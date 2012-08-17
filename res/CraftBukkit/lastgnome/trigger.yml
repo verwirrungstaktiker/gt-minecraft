@@ -804,7 +804,7 @@ global-responses:
       y: 65.0
       x: -7.0
     class: gt.general.logic.response.ZombieSpawnResponse
-    number: 6
+    number: 5
   door_response_525433239:
     data_lower: 0
     location:

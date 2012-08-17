@@ -33,7 +33,6 @@ public class WorldInstance {
 	private TriggerManager triggerManager;	
 	private Spawn spawn;	
 	
-	
 	/**
 	 * @param world the minecraft representation of this world
 	 */
