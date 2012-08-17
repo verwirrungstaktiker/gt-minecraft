@@ -119,6 +119,4 @@ public class Highscore {
 			throw new RuntimeException(e);
 		}
 	}
-	
-	
 }
