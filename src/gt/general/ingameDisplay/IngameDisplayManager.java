@@ -16,7 +16,7 @@ public class IngameDisplayManager implements Runnable{
 	@Override
 	public void run() {
 		
-		if(HeroManager.getAllHeros().size() == 0) {
+		if(HeroManager.getAllHeros().size() > 0) {
 		
 			for(DisplayStringContainer container : containers) {
 				for(DisplayString string : container.getDisplayStrings()) {
