@@ -7,31 +7,32 @@
 <project basedir="." default="build" name="gt-minecraft">
     <property environment="env"/>
     <property name="ECLIPSE_HOME" value="../../Program Files/eclipse-java"/>
+    <property name="workspace_loc:gt-minecraft/res/CraftBukkit" value="res/CraftBukkit"/>
     <property name="junit.output.dir" value="junit"/>
     <property name="debuglevel" value="source,lines,vars"/>
     <property name="target" value="1.6"/>
     <property name="source" value="1.6"/>
     <import file="custom.xml"/>
-    <path id="com.soyatec.uml.CONTAINER.libraryclasspath"/>
-    <path id="JUnit 4.libraryclasspath">
-        <pathelement location="${ECLIPSE_HOME}/plugins/org.junit_4.8.2.v4_8_2_v20110321-1705/junit.jar"/>
-        <pathelement location="${ECLIPSE_HOME}/plugins/org.hamcrest.core_1.1.0.v20090501071000.jar"/>
-    </path>
+    <path id="Persisted container [com.soyatec.uml.CONTAINER for project [gt-minecraft]].libraryclasspath"/>
     <path id="gt-minecraft.classpath">
         <pathelement location="bin"/>
-        <path refid="com.soyatec.uml.CONTAINER.libraryclasspath"/>
-        <path refid="JUnit 4.libraryclasspath"/>
-        <pathelement location="lib/bukkit-1.2.5-R1.4-20120503.060203-2.jar"/>
+        <path refid="Persisted container [com.soyatec.uml.CONTAINER for project [gt-minecraft]].libraryclasspath"/>
+        <pathelement location="lib/snakeyaml-1.10.jar"/>
+        <pathelement location="lib/guava-12.0.jar"/>
+        <pathelement location="lib/SpoutPlugin-1244.jar"/>
+        <pathelement location="res/CraftBukkit/craftbukkit-1.2.5-R4.1-#2258.jar"/>
+        <pathelement location="lib/bukkit-1.2.5-R4.1-1499.jar"/>
+    </path>
+    <path id="run.New_configuration (1).classpath"/>
+    <path id="run.New_configuration (1).bootclasspath">
+        <fileset dir="${java.home}/lib" includes="*.jar"/>
+        <fileset dir="${java.home}/lib/ext" includes="*.jar"/>
+        <pathelement location="res/CraftBukkit/craftbukkit-1.2.5-R3.0.jar"/>
     </path>
     <target name="init">
         <mkdir dir="bin"/>
         <copy includeemptydirs="false" todir="bin">
             <fileset dir="src">
-                <exclude name="**/*.java"/>
-            </fileset>
-        </copy>
-        <copy includeemptydirs="false" todir="bin">
-            <fileset dir="test">
                 <exclude name="**/*.java"/>
             </fileset>
         </copy>
@@ -46,10 +47,6 @@
         <echo message="${ant.project.name}: ${ant.file}"/>
         <javac debug="true" debuglevel="${debuglevel}" destdir="bin" source="${source}" target="${target}">
             <src path="src"/>
-            <classpath refid="gt-minecraft.classpath"/>
-        </javac>
-        <javac debug="true" debuglevel="${debuglevel}" destdir="bin" source="${source}" target="${target}">
-            <src path="test"/>
             <classpath refid="gt-minecraft.classpath"/>
         </javac>
     </target>
@@ -80,6 +77,36 @@
         <junit fork="yes" printsummary="withOutAndErr">
             <formatter type="xml"/>
             <test name="gt.general.GeneralTest" todir="${junit.output.dir}"/>
+            <classpath refid="gt-minecraft.classpath"/>
+        </junit>
+    </target>
+    <target name="GuiElementTest">
+        <mkdir dir="${junit.output.dir}"/>
+        <junit fork="yes" printsummary="withOutAndErr">
+            <formatter type="xml"/>
+            <test name="gt.gui.GuiElementTest" todir="${junit.output.dir}"/>
+            <classpath refid="gt-minecraft.classpath"/>
+        </junit>
+    </target>
+    <target name="New_configuration (1)">
+        <java classname="org.bukkit.craftbukkit.Main" dir="${workspace_loc:gt-minecraft/res/CraftBukkit}" failonerror="true" fork="yes">
+            <jvmarg line="-Xmx1024M -Xms1024M"/>
+            <classpath refid="run.New_configuration (1).classpath"/>
+            <bootclasspath>
+                <path refid="run.New_configuration (1).bootclasspath"/>
+            </bootclasspath>
+        </java>
+    </target>
+    <target name="Parser">
+        <java classname="gt.plugin.listener.Parser" failonerror="true" fork="yes">
+            <classpath refid="gt-minecraft.classpath"/>
+        </java>
+    </target>
+    <target name="SerializationTest">
+        <mkdir dir="${junit.output.dir}"/>
+        <junit fork="yes" printsummary="withOutAndErr">
+            <formatter type="xml"/>
+            <test name="gt.general.logic.SerializationTest" todir="${junit.output.dir}"/>
             <classpath refid="gt-minecraft.classpath"/>
         </junit>
     </target>
