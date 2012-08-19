@@ -212,4 +212,9 @@ public class HelloWorld extends JavaPlugin {
 		Hello.getIngameDisplayManager().add(sb);
 		
 	}
+	
+	// XXX Testing
+	public Highscore getHighscore(final String levelName) {
+		return highscores.get(levelName);
+	}
 }

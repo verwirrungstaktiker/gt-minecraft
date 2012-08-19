@@ -1,6 +1,10 @@
 package gt.plugin.helloworld;
 
+import gt.general.character.Hero;
+import gt.general.character.HeroManager;
+import gt.general.gui.GameScoreOverlay;
 import gt.general.ingameDisplay.DisplayString;
+import gt.lastgnome.scoring.HighscoreEntry;
 import gt.plugin.meta.Hello;
 
 import org.bukkit.ChatColor;
@@ -11,6 +15,7 @@ import org.getspout.spoutapi.event.input.KeyPressedEvent;
 import org.getspout.spoutapi.keyboard.Keyboard;
 
 public class KeyPressListener implements Listener {
+	
 	
 	/** 
 	 * prints the location of the target block in player chat 
@@ -31,10 +36,13 @@ public class KeyPressListener implements Listener {
 		}
 		
 		
-		if(event.getKey() == Keyboard.KEY_B) {
+		if(event.getKey() == Keyboard.KEY_B && Hello.getPlugin() instanceof HelloWorld) {
+			Hero h = HeroManager.getHero(event.getPlayer());
 			
-			Hello.getIngameDisplayManager().add(new DisplayString("SDAFasdgsagsag SDAFsadfsa sagh sadFsdafasdf", 1f, event.getPlayer().getEyeLocation()));
+			HelloWorld plugin = (HelloWorld) Hello.getPlugin();
+			HighscoreEntry entry = plugin.getHighscore("lastgnome").getScores().get(0);
 			
+			h.getGui().popup(new GameScoreOverlay(entry));
 		}
 	}
 }
