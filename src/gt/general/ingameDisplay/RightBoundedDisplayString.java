@@ -7,7 +7,8 @@ import org.getspout.spoutapi.player.SpoutPlayer;
 public class RightBoundedDisplayString extends DisplayString {
 
 	public RightBoundedDisplayString(String text, float scale, Location location) {
-		super(text, scale, location);
+		// reverse the string
+		super(new StringBuffer(text).reverse().toString(), scale, location);
 	}
 	
 	
