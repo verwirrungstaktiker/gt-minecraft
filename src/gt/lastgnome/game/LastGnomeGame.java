@@ -190,11 +190,13 @@ public class LastGnomeGame extends AbstractLastGnomeGame implements Listener{
 			@Override
 			public void onReject() {
 				System.out.println("back to the lobby");
-				
-				
+
 				//TODO: maybe put that in a RespawnManager.dispose() ?
 				World startWorld = Hello.getPlugin().getServer().getWorld("world");
 				for (Hero hero : getTeam().getPlayers()) {
+					hero.getGui().closePopup();
+
+					
 					hero.getPlayer().setBedSpawnLocation(startWorld.getSpawnLocation());
 					hero.getPlayer().teleport(startWorld.getSpawnLocation());
 				}
