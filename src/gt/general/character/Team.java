@@ -1,12 +1,9 @@
 package gt.general.character;
 
 import gt.general.Game;
-import gt.general.aura.Effect;
-import gt.general.aura.FreezeEffect;
 import gt.general.aura.FreezeEffect.FreezeCause;
 
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.Set;
 
 import org.bukkit.Location;

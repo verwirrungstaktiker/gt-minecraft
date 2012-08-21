@@ -42,7 +42,7 @@ public class KeyPressListener implements Listener {
 			HelloWorld plugin = (HelloWorld) Hello.getPlugin();
 			HighscoreEntry entry = plugin.getHighscore("lastgnome").getScores().get(0);
 			
-			h.getGui().popup(new GameScoreOverlay(entry));
+			//h.getGui().popup(new GameScoreOverlay(entry));
 		}
 	}
 }

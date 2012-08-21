@@ -1,15 +1,21 @@
 package gt.lastgnome.game;
 
+import static com.google.common.collect.Lists.*;
 import static org.bukkit.ChatColor.*;
+import gt.general.GameManager;
 import gt.general.RespawnManager;
+import gt.general.Vote;
 import gt.general.character.Hero;
 import gt.general.character.HeroManager;
 import gt.general.character.Team;
 import gt.general.character.ZombieManager;
+import gt.general.gui.GameScoreOverlay;
 import gt.general.gui.GuiElementType;
 import gt.lastgnome.GnomeItem;
 import gt.lastgnome.gui.SpeedBar;
+import gt.lastgnome.scoring.NullHighscoreEntry;
 import gt.lastgnome.scoring.ScoreManager;
+import gt.plugin.helloworld.HelloWorld;
 import gt.plugin.meta.Hello;
 
 import org.bukkit.World;
@@ -145,14 +151,11 @@ public class LastGnomeGame extends AbstractLastGnomeGame implements Listener{
 			gnomeBearer.removeActiveItem();
 		}
 		
-		World startWorld = Hello.getPlugin().getServer().getWorld("world");
 		for(Hero hero : getTeam().getPlayers()) {
 			hero.getGui().removeGuiElement(GuiElementType.SPEEDBAR);
-			//TODO: maybe put that in a RespawnManager.dispose() ?
-			hero.getPlayer().setBedSpawnLocation(startWorld.getSpawnLocation());
 		}
 		
-		getTeam().dispose();
+		respawnManager.dispose();
 		
 		//MultiListener.unregisterListener(scoreManager);
 	}
@@ -164,7 +167,48 @@ public class LastGnomeGame extends AbstractLastGnomeGame implements Listener{
 	
 	@Override
 	public void onEnd() {
-		dispose();		
+		dispose();
+		
+		Vote restartVote = new Vote(getTeam().getPlayers().size(), 1) {
+
+			@Override
+			public void onAccept() {
+				System.out.println("restarting game");
+				
+				for(Hero h : getTeam().getPlayers()) {
+					h.getGui().closePopup();
+				}
+				
+				
+				Hero randomHero = newArrayList(getTeam().getPlayers()).get(0);
+				// XXX quite ugly
+				randomHero.getPlayer().performCommand("gg force");
+				
+				
+			}
+
+			@Override
+			public void onReject() {
+				System.out.println("back to the lobby");
+				
+				
+				//TODO: maybe put that in a RespawnManager.dispose() ?
+				World startWorld = Hello.getPlugin().getServer().getWorld("world");
+				for (Hero hero : getTeam().getPlayers()) {
+					hero.getPlayer().setBedSpawnLocation(startWorld.getSpawnLocation());
+					hero.getPlayer().teleport(startWorld.getSpawnLocation());
+				}
+				
+				getTeam().dispose();
+			}
+			
+		};
+		
+		for(Hero hero : getTeam().getPlayers()) {
+			hero.getGui().popup(new GameScoreOverlay(new NullHighscoreEntry(), hero, restartVote));
+		}
+		
+		
 	}
 	
 	/**

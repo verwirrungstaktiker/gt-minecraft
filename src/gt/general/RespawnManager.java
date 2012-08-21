@@ -76,4 +76,8 @@ public class RespawnManager implements Listener {
 					currentRespawns.get(hero).getRespawnLocation());
 		}
 	}
+
+	public void dispose() {
+		currentRespawns.clear();
+	}
 }

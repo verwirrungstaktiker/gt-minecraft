@@ -36,7 +36,9 @@ public class StartGameCommandExecutor extends PlayerCommandExecutor {
 
 		Hero starter = HeroManager.getHero(player);
 		
-		if(starter.inGame()) {
+		boolean force = args.length > 0 && args[0].equalsIgnoreCase("force");
+		
+		if(starter.inGame() && !force ) {
 			starter.getPlayer().sendMessage(ChatColor.RED + "you are already in a game!");
 			return true;
 		}
@@ -47,10 +49,13 @@ public class StartGameCommandExecutor extends PlayerCommandExecutor {
 			team = teamManager.initiateTeam(starter);
 			
 			for(Hero hero : HeroManager.getAllHeros()) {
-				try {
-					teamManager.addHeroToTeam(team, hero);
-				} catch (TeamManager.TeamJoinException tje) {
-					player.sendMessage(tje.getMessage());
+				
+				if(team.getPlayers().size() < 4) {
+					try {
+						teamManager.addHeroToTeam(team, hero);
+					} catch (TeamManager.TeamJoinException tje) {
+						player.sendMessage(tje.getMessage());
+					}
 				}
 			}
 		}

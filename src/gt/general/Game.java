@@ -10,7 +10,6 @@ import gt.plugin.meta.MultiListener;
 import java.util.Set;
 import java.util.Vector;
 
-import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
 
 public abstract class Game implements Listener {

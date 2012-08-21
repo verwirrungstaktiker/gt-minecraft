@@ -100,6 +100,10 @@ public class HeroGui {
 		}
 	}
 	
+	public void closePopup() {
+		getMainScreen().closePopup();
+	}
+	
 	/**
 	 * @return the main screen of the holder
 	 */
