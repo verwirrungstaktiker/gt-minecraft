@@ -165,10 +165,11 @@ public class TriggerContext {
 		for(Trigger trigger : triggers) {
 			trigger.dispose();
 		}
-		
+		triggers.clear();
 		for(Response response : responses) {
 			response.dispose();
 		}
+		responses.clear();
 	}
 	
 	public Iterable<YamlSerializable> getAllItems() {

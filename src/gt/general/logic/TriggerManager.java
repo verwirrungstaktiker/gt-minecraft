@@ -65,6 +65,7 @@ public class TriggerManager extends YamlSerializable{
 		for(TriggerContext triggerContext : triggerContexts) {
 			triggerContext.dispose();
 		}
+		triggerContexts.clear();
 	}
 
 	@Override
