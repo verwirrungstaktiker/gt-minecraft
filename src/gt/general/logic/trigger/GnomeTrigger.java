@@ -1,5 +1,7 @@
 package gt.general.logic.trigger;
 
+import gt.general.character.Hero;
+import gt.general.character.HeroManager;
 import gt.general.logic.persistance.PersistanceMap;
 import gt.general.logic.persistance.exceptions.PersistanceException;
 import gt.general.world.BlockObserver;
@@ -7,6 +9,7 @@ import gt.general.world.ObservableCustomBlock;
 import gt.general.world.ObservableCustomBlock.BlockEvent;
 import gt.general.world.ObservableCustomBlock.BlockEventType;
 import gt.plugin.meta.CustomBlockType;
+import gt.general.PortableItem;
 
 import java.util.Set;
 
@@ -99,16 +102,15 @@ public class GnomeTrigger extends BlockTrigger implements BlockObserver{
     	}
 
         if(blockEvent.getBlockEventType() == BlockEventType.BLOCK_INTERACT && blockEvent.getBlock()==getBlock()) { 
-	        PlayerInventory inv = blockEvent.getPlayer().getInventory();
 
-        	//TODO this is a temporary fix as the gnome is flint underneath, as all CustomItems!
-	        if(inv.getItemInHand().getType() == Material.FLINT) {
+	        Hero hero = HeroManager.getHero(blockEvent.getPlayer());
+	        
+	        if(hero!=null && hero.getActiveItem()!=null && hero.getActiveItem().getType() == PortableItem.ItemType.GNOME) {
 	            triggered = !triggered;
 	            
 	            if(triggered) {
 	                CustomBlockType.GNOME_TRIGGER_POSITIVE.place(getBlock());
 	                getContext().updateTriggerState(this, true, blockEvent.getPlayer());
-	                
 	            } else {
 	                CustomBlockType.GNOME_TRIGGER_NEGATIVE.place(getBlock());
 	                getContext().updateTriggerState(this, true, blockEvent.getPlayer());

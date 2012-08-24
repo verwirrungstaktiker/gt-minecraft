@@ -15,12 +15,12 @@ import gt.general.character.Hero;
 import gt.general.character.HeroManager;
 import gt.plugin.meta.Hello;
 
-public class FreezingBlock extends PortableItem{
+public class BlockTool extends PortableItem{
 	
 	private ItemStack itemStack;
 
-	public FreezingBlock(Plugin plugin, String name, String texture) {
-		super(plugin, name, texture);
+	public BlockTool(Plugin plugin, String name, String texture) {
+		super(plugin, name, texture, PortableItem.ItemType.BLOCK_TOOL);
 
 		itemStack = new SpoutItemStack(this);
 		
@@ -30,8 +30,8 @@ public class FreezingBlock extends PortableItem{
 		
 	}
 	
-	public FreezingBlock() {
-		this(Hello.getPlugin(), "freezingBlock", "http://www.mariowiki.com/images/9/95/QuestionMarkBlockNSMB.png");
+	public BlockTool() {
+		this(Hello.getPlugin(), "BlockTool", "http://www.mariowiki.com/images/9/95/QuestionMarkBlockNSMB.png");
 	}
 
 	@Override

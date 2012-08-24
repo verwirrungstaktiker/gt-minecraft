@@ -38,9 +38,10 @@ public final class GnomeItem extends PortableItem {
 	 * @param plugin  the plugin we run
 	 * @param name the name of the gnome
 	 * @param texture texture for the gnome
+	 * @param game the corresponding game
 	 */
 	public GnomeItem(final Plugin plugin, final String name, final String texture, final Game game) {
-		super(plugin, name, texture);
+		super(plugin, name, texture, PortableItem.ItemType.GNOME);
 
 		gnomeAura = new GameAura(new EffectFactory() {
 			@Override
