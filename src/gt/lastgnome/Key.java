@@ -2,6 +2,7 @@ package gt.lastgnome;
 
 import gt.general.PortableItem;
 import gt.general.character.Hero;
+import gt.general.logic.trigger.ItemType;
 import gt.plugin.meta.Hello;
 
 import org.bukkit.inventory.ItemStack;
@@ -22,7 +23,7 @@ public final class Key extends PortableItem {
 	 * @param texture texture of the tool
 	 */
 	public Key(final Plugin plugin, final String name, final String texture) {
-		super(plugin, name, texture, PortableItem.ItemType.KEY);
+		super(plugin, name, texture, ItemType.KEY);
 
 		itemStack = new SpoutItemStack(this);
 		

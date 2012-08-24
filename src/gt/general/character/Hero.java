@@ -3,8 +3,6 @@ package gt.general.character;
 import gt.general.Game;
 import gt.general.PortableItem;
 import gt.general.gui.HeroGui;
-import gt.plugin.meta.Hello;
-
 import java.util.HashSet;
 import java.util.Set;
 
@@ -89,6 +87,9 @@ public class Hero extends Character{
 		this.team = team;
 	}
 
+	/**
+	 * @return true if hero has a team
+	 */
 	public boolean inTeam() {
 		return team != Team.NOTEAM;
 	}
@@ -126,6 +127,9 @@ public class Hero extends Character{
 		return false;
 	}
 	
+	/**
+	 * @return true if the item can be transfered to another player
+	 */
 	public boolean canTransferItem() {
 		return activeItem.isTransferable();
 	}
@@ -184,7 +188,9 @@ public class Hero extends Character{
 		return toRemove;
 	}
 
-
+	/**
+	 * equip the passive item in the active slot
+	 */
 	private void equipPassiveItem() {
 		if(activeItem==null
 				&& passiveItem!=null) {
