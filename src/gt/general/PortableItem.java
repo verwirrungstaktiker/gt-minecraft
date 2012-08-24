@@ -1,6 +1,8 @@
 package gt.general;
 
 import gt.general.character.Hero;
+import gt.general.logic.trigger.ItemType;
+
 import org.bukkit.event.Listener;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.Plugin;
@@ -20,12 +22,6 @@ public abstract class PortableItem extends GenericCustomItem implements Listener
 	private boolean transferable;
 	
 	private ItemType type;
-
-	public static enum ItemType {
-		GNOME,
-		BLOCK_TOOL,
-		KEY
-	}
 
 	/**
 	 * Creates a new PortableItem
