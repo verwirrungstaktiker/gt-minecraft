@@ -162,7 +162,7 @@ global-triggers:
       x: 21
   gnome_trigger_159541957:
     class: gt.general.logic.trigger.GnomeTrigger
-    type: !!gt.general.logic.trigger.ItemType 'GNOME'
+    type: 'GNOME'
     block:
       z: 10
       y: 66
@@ -467,7 +467,7 @@ global-triggers:
     material: !!org.bukkit.Material 'LEVER'
   gnome_trigger_1732461900:
     class: gt.general.logic.trigger.GnomeTrigger
-    type: !!gt.general.logic.trigger.ItemType 'GNOME'
+    type: 'GNOME'
     block:
       z: -19
       y: 70

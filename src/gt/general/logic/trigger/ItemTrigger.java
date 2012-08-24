@@ -9,6 +9,7 @@ import org.bukkit.block.Block;
 
 import gt.general.character.Hero;
 import gt.general.character.HeroManager;
+import gt.general.logic.TriggerContext;
 import gt.general.logic.persistance.PersistanceMap;
 import gt.general.logic.persistance.exceptions.PersistanceException;
 import gt.general.world.BlockObserver;
@@ -66,7 +67,7 @@ public abstract class ItemTrigger extends BlockTrigger implements BlockObserver{
             throws PersistanceException {
     	super.setup(values, world);
     	
-    	type = values.get(KEY_TYPE);
+    	type = ItemType.valueOf((String) values.get(KEY_TYPE));
     	
         triggered = false;
         
@@ -78,7 +79,7 @@ public abstract class ItemTrigger extends BlockTrigger implements BlockObserver{
     public PersistanceMap dump() {
         PersistanceMap map = super.dump();
 
-        map.put(KEY_TYPE, type);
+        map.put(KEY_TYPE, type.toString());
         
 		return map;
     }
