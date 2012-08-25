@@ -11,7 +11,7 @@ import gt.general.logic.response.SignResponse;
 import gt.general.logic.response.TeleportResponse;
 import gt.general.logic.response.ZombieSpawnResponse;
 import gt.general.logic.trigger.ButtonRedstoneTrigger;
-import gt.general.logic.trigger.GnomeTrigger;
+import gt.general.logic.trigger.GnomeItemTrigger;
 import gt.general.logic.trigger.LeverRedstoneTrigger;
 import gt.general.logic.trigger.PressurePlateRedstoneTrigger;
 import gt.general.logic.trigger.QuestionTrigger;
@@ -105,7 +105,7 @@ public class BuildManager implements Listener {
 					newTrigger = new QuestionTrigger(block);
 					break;
                 case GNOME_TRIGGER_NEGATIVE:
-                    newTrigger = new GnomeTrigger(block);
+                    newTrigger = new GnomeItemTrigger(block);
                     break;
                 case STEP_ON_TRIGGER:
                 	newTrigger = new StepOnTrigger(block);

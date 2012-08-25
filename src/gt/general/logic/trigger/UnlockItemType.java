@@ -1,6 +1,6 @@
 package gt.general.logic.trigger;
 
-public enum ItemType {
+public enum UnlockItemType {
 	GNOME,
 	BLOCK_TOOL,
 	KEY

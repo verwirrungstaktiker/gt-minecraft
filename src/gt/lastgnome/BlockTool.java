@@ -13,7 +13,7 @@ import gt.general.PortableItem;
 import gt.general.aura.FreezeEffect.FreezeCause;
 import gt.general.character.Hero;
 import gt.general.character.HeroManager;
-import gt.general.logic.trigger.ItemType;
+import gt.general.logic.trigger.UnlockItemType;
 import gt.plugin.meta.Hello;
 
 public class BlockTool extends PortableItem{
@@ -21,7 +21,7 @@ public class BlockTool extends PortableItem{
 	private ItemStack itemStack;
 
 	public BlockTool(Plugin plugin, String name, String texture) {
-		super(plugin, name, texture, ItemType.BLOCK_TOOL);
+		super(plugin, name, texture, UnlockItemType.BLOCK_TOOL);
 
 		itemStack = new SpoutItemStack(this);
 		

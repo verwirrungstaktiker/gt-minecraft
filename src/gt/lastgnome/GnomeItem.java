@@ -9,7 +9,7 @@ import gt.general.aura.GameAura;
 import gt.general.aura.GnomeCarrierEffect;
 import gt.general.aura.GnomeSlowEffect;
 import gt.general.character.Hero;
-import gt.general.logic.trigger.ItemType;
+import gt.general.logic.trigger.UnlockItemType;
 import gt.plugin.meta.Hello;
 
 import java.util.Iterator;
@@ -42,7 +42,7 @@ public final class GnomeItem extends PortableItem {
 	 * @param game the corresponding game
 	 */
 	public GnomeItem(final Plugin plugin, final String name, final String texture, final Game game) {
-		super(plugin, name, texture, ItemType.GNOME);
+		super(plugin, name, texture, UnlockItemType.GNOME);
 
 		gnomeAura = new GameAura(new EffectFactory() {
 			@Override

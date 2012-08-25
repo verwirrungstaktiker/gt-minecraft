@@ -28,14 +28,14 @@ public abstract class ItemTrigger extends BlockTrigger implements BlockObserver{
 	
 	private boolean triggered;
 	
-	private ItemType type;
+	private UnlockItemType type;
 	
 	/**
 	 * @param block the block of the trigger
 	 * @param name the name prefix of the trigger
 	 * @param type type of item that is needed to trigger
 	 */
-	public ItemTrigger(final String name, final Block block, final ItemType type) {
+	public ItemTrigger(final String name, final Block block, final UnlockItemType type) {
 		super(name, block);
 		
 		this.triggered = false;
@@ -67,7 +67,7 @@ public abstract class ItemTrigger extends BlockTrigger implements BlockObserver{
             throws PersistanceException {
     	super.setup(values, world);
     	
-    	type = ItemType.valueOf((String) values.get(KEY_TYPE));
+    	type = UnlockItemType.valueOf((String) values.get(KEY_TYPE));
     	
         triggered = false;
         

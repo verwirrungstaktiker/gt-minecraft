@@ -14,13 +14,13 @@ import org.bukkit.block.Block;
 /**
  * @author roman
  */
-public class GnomeTrigger extends ItemTrigger implements BlockObserver{
+public class KeyItemTrigger extends ItemTrigger implements BlockObserver{
 
 	/**
 	 * @param block THE block of the trigger
 	 */
-	public GnomeTrigger(final Block block) {
-	    super("gnome_trigger", block, ItemType.GNOME);
+	public KeyItemTrigger(final Block block) {
+	    super("key_trigger", block, UnlockItemType.KEY);
 		
 		CustomBlockType.GNOME_TRIGGER_NEGATIVE.place(block);
 	}
@@ -42,7 +42,7 @@ public class GnomeTrigger extends ItemTrigger implements BlockObserver{
 	}
 	
 	/** to be used in persistence */
-	public GnomeTrigger() {}
+	public KeyItemTrigger() {}
 
     @Override
     public void setup(final PersistanceMap values, final World world)

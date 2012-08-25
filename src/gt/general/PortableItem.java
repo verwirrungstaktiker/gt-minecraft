@@ -1,7 +1,7 @@
 package gt.general;
 
 import gt.general.character.Hero;
-import gt.general.logic.trigger.ItemType;
+import gt.general.logic.trigger.UnlockItemType;
 
 import org.bukkit.event.Listener;
 import org.bukkit.inventory.ItemStack;
@@ -21,7 +21,7 @@ public abstract class PortableItem extends GenericCustomItem implements Listener
 	/** if true the item can be transferred directly into another inventory */
 	private boolean transferable;
 	
-	private ItemType type;
+	private UnlockItemType type;
 
 	/**
 	 * Creates a new PortableItem
@@ -30,7 +30,7 @@ public abstract class PortableItem extends GenericCustomItem implements Listener
 	 * @param texture Texture for the new Item
 	 * @param type the kind of item
 	 */
-	public PortableItem(final Plugin plugin, final String name, final String texture, final ItemType type) {
+	public PortableItem(final Plugin plugin, final String name, final String texture, final UnlockItemType type) {
 		super(plugin, name, texture);
 
 		//TODO block type dependend values
@@ -87,7 +87,7 @@ public abstract class PortableItem extends GenericCustomItem implements Listener
 	/**
 	 * @return the kind of the item
 	 */
-	public ItemType getType() {
+	public UnlockItemType getType() {
 		return type;
 	}
 	
