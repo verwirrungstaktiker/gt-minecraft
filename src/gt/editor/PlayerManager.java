@@ -3,7 +3,7 @@ package gt.editor;
 import static com.google.common.collect.Maps.*;
 import static org.bukkit.ChatColor.*;
 import gt.general.logic.TriggerContext;
-import gt.general.logic.persistance.YamlSerializable;
+import gt.general.logic.persistence.YamlSerializable;
 
 import java.util.Collection;
 import java.util.Map;

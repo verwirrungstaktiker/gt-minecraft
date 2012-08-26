@@ -1,6 +1,6 @@
-package gt.general.logic.persistance.exceptions;
+package gt.general.logic.persistence.exceptions;
 
-public class PersistanceException extends Exception{
+public class PersistenceException extends Exception{
 
 	/**
 	 * 
@@ -9,7 +9,7 @@ public class PersistanceException extends Exception{
 	
 	private final String key;
 	
-	public PersistanceException(final String key) {
+	public PersistenceException(final String key) {
 		super();
 		this.key = key;
 	}

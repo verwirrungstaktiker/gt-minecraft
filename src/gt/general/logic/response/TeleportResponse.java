@@ -3,8 +3,8 @@ package gt.general.logic.response;
 import gt.general.RespawnManager;
 import gt.general.RespawnManager.RespawnPoint;
 import gt.general.logic.TriggerEvent;
-import gt.general.logic.persistance.PersistanceMap;
-import gt.general.logic.persistance.exceptions.PersistanceException;
+import gt.general.logic.persistence.PersistenceMap;
+import gt.general.logic.persistence.exceptions.PersistenceException;
 import gt.plugin.meta.CustomBlockType;
 
 import org.bukkit.Effect;
@@ -37,7 +37,7 @@ public class TeleportResponse extends CustomBlockResponse implements RespawnPoin
 	}
 	
 	@Override
-	public void setup(final PersistanceMap values, final World world) throws PersistanceException {
+	public void setup(final PersistenceMap values, final World world) throws PersistenceException {
 		super.setup(values, world);
 		
 		maximumContingent = values.getInt(KEY_CONTINGENT);
@@ -45,8 +45,8 @@ public class TeleportResponse extends CustomBlockResponse implements RespawnPoin
 	}
 	
 	@Override
-	public PersistanceMap dump() {
-		PersistanceMap map = super.dump();
+	public PersistenceMap dump() {
+		PersistenceMap map = super.dump();
 		map.put(KEY_CONTINGENT, maximumContingent);
 		return map;
 	}

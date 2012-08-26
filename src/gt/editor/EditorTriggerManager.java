@@ -5,7 +5,7 @@ import gt.editor.event.LogicChangeEvent;
 import gt.editor.event.LogicChangeEvent.ObserveeParent;
 import gt.general.logic.TriggerContext;
 import gt.general.logic.TriggerManager;
-import gt.general.logic.persistance.YamlSerializable;
+import gt.general.logic.persistence.YamlSerializable;
 import gt.general.logic.response.Response;
 import gt.general.logic.trigger.Trigger;
 import gt.plugin.meta.Hello;

@@ -10,7 +10,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.PlayerDeathEvent;
 
-import gt.general.logic.persistance.PersistanceMap;
+import gt.general.logic.persistence.PersistenceMap;
 import gt.general.logic.trigger.Trigger;
 import gt.lastgnome.game.LastGnomeGame;
 
@@ -48,13 +48,13 @@ public class TeamLostTrigger extends Trigger implements Listener{
 	}
 
 	@Override
-	public PersistanceMap dump() {
+	public PersistenceMap dump() {
 		
 		return null;
 	}
 
 	@Override
-	public void setup(final PersistanceMap values, final World world) {
+	public void setup(final PersistenceMap values, final World world) {
 		
 	}
 

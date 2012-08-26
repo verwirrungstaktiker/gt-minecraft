@@ -4,9 +4,9 @@ import static com.google.common.collect.Sets.newHashSet;
 import gt.general.RespawnManager.RespawnPoint;
 import gt.general.character.Hero;
 import gt.general.character.Team;
-import gt.general.logic.persistance.PersistanceMap;
-import gt.general.logic.persistance.YamlSerializable;
-import gt.general.logic.persistance.exceptions.PersistanceException;
+import gt.general.logic.persistence.PersistenceMap;
+import gt.general.logic.persistence.YamlSerializable;
+import gt.general.logic.persistence.exceptions.PersistenceException;
 import gt.general.world.BlockObserver;
 import gt.general.world.ObservableCustomBlock;
 import gt.general.world.ObservableCustomBlock.BlockEvent;
@@ -39,7 +39,7 @@ public class Spawn extends YamlSerializable implements BlockObserver, RespawnPoi
 	}
 
 	@Override
-	public void setup(final PersistanceMap values, final World world) throws PersistanceException {	
+	public void setup(final PersistenceMap values, final World world) throws PersistenceException {	
 		ObservableCustomBlock spawnBlock = CustomBlockType.SPAWN_BLOCK.getCustomBlock();
 		
 		for(Block block : values.getBlocks(KEY_SPAWN, world)) {	
@@ -52,8 +52,8 @@ public class Spawn extends YamlSerializable implements BlockObserver, RespawnPoi
 	}
 
 	@Override
-	public PersistanceMap dump() {	
-		PersistanceMap ret = new PersistanceMap();
+	public PersistenceMap dump() {	
+		PersistenceMap ret = new PersistenceMap();
 		ret.put(KEY_SPAWN, getBlocks());
 		
 		return ret;

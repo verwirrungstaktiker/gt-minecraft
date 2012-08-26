@@ -2,8 +2,8 @@ package gt.general.logic.response;
 
 
 import gt.general.logic.TriggerEvent;
-import gt.general.logic.persistance.PersistanceMap;
-import gt.general.logic.persistance.exceptions.PersistanceException;
+import gt.general.logic.persistence.PersistenceMap;
+import gt.general.logic.persistence.exceptions.PersistenceException;
 
 import org.bukkit.Effect;
 import org.bukkit.Material;
@@ -36,7 +36,7 @@ public class RedstoneTorchResponse extends BlockResponse {
 	public RedstoneTorchResponse() {}
 
 	@Override
-	public void setup(final PersistanceMap values, final World world) throws PersistanceException {
+	public void setup(final PersistenceMap values, final World world) throws PersistenceException {
 		super.setup(values, world);
 		
 		inverted = values.get(KEY_INVERTED);
@@ -70,8 +70,8 @@ public class RedstoneTorchResponse extends BlockResponse {
 	}
 
 	@Override
-	public PersistanceMap dump() {
-		PersistanceMap map = super.dump();
+	public PersistenceMap dump() {
+		PersistenceMap map = super.dump();
 		
 		map.put(KEY_INVERTED, inverted);
 		map.put(KEY_ORIENTATION, orientation);

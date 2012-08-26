@@ -2,8 +2,8 @@ package gt.general.logic.trigger;
 
 import gt.general.character.Hero;
 import gt.general.character.HeroManager;
-import gt.general.logic.persistance.PersistanceMap;
-import gt.general.logic.persistance.exceptions.PersistanceException;
+import gt.general.logic.persistence.PersistenceMap;
+import gt.general.logic.persistence.exceptions.PersistenceException;
 import gt.general.world.BlockObserver;
 import gt.general.world.ObservableCustomBlock;
 import gt.general.world.ObservableCustomBlock.BlockEvent;
@@ -45,8 +45,8 @@ public class KeyItemTrigger extends ItemTrigger implements BlockObserver{
 	public KeyItemTrigger() {}
 
     @Override
-    public void setup(final PersistanceMap values, final World world)
-            throws PersistanceException {
+    public void setup(final PersistenceMap values, final World world)
+            throws PersistenceException {
     	super.setup(values, world);
         
         CustomBlockType.GNOME_TRIGGER_NEGATIVE.place(getBlock());        

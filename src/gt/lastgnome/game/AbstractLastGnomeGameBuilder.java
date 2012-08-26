@@ -3,7 +3,7 @@ package gt.lastgnome.game;
 import gt.general.Game;
 import gt.general.GameBuilder;
 import gt.general.character.ZombieManager;
-import gt.general.logic.persistance.exceptions.PersistanceException;
+import gt.general.logic.persistence.exceptions.PersistenceException;
 import gt.general.world.WorldInstance;
 import gt.general.world.WorldManager;
 import gt.lastgnome.GnomeSocketEnd;
@@ -21,7 +21,7 @@ public abstract class AbstractLastGnomeGameBuilder implements GameBuilder {
 	protected abstract AbstractLastGnomeGame getAbstractGame();
 	
 	@Override
-	public void buildWorldInstance(final WorldManager worldManager, final String worldName) throws PersistanceException {
+	public void buildWorldInstance(final WorldManager worldManager, final String worldName) throws PersistenceException {
 		AbstractLastGnomeGame game = getAbstractGame();
 		
 		WorldInstance worldInstance = worldManager.getWorld(worldName);
@@ -31,7 +31,7 @@ public abstract class AbstractLastGnomeGameBuilder implements GameBuilder {
 	
 	
 	@Override
-	public void loadGameSpecific() throws PersistanceException {
+	public void loadGameSpecific() throws PersistenceException {
 		
 		AbstractLastGnomeGame game = getAbstractGame();
 		WorldInstance worldInstance = game.getWorldInstance();

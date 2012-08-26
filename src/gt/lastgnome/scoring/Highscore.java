@@ -1,8 +1,8 @@
 package gt.lastgnome.scoring;
 
-import gt.general.logic.persistance.PersistanceMap;
-import gt.general.logic.persistance.YamlSerializable;
-import gt.general.logic.persistance.exceptions.PersistanceException;
+import gt.general.logic.persistence.PersistenceMap;
+import gt.general.logic.persistence.YamlSerializable;
+import gt.general.logic.persistence.exceptions.PersistenceException;
 import gt.plugin.meta.Hello;
 
 import java.io.File;
@@ -70,8 +70,8 @@ public class Highscore {
 			for (Map<String, Object> scoreMap : entries) {
 				HighscoreEntry entry = new HighscoreEntry();
 				try {
-					entry.setup(new PersistanceMap(scoreMap));
-				} catch (PersistanceException e) {
+					entry.setup(new PersistenceMap(scoreMap));
+				} catch (PersistenceException e) {
 					System.out.println("persistance exception in highscore");
 				}
 				scores.add(entry);
@@ -103,7 +103,7 @@ public class Highscore {
 	 * @param worldName
 	 */
 	private void saveScores(String worldName) {
-		PersistanceMap values = new PersistanceMap();
+		PersistenceMap values = new PersistenceMap();
 		List<Map<String,Object>> entries = new ArrayList<Map<String,Object>>();
 		for (HighscoreEntry entry : scores) {
 			entries.add(entry.dump().getMap());

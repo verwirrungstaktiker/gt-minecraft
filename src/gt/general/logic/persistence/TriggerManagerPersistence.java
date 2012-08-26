@@ -1,10 +1,10 @@
-package gt.general.logic.persistance;
+package gt.general.logic.persistence;
 
 import static com.google.common.collect.Lists.newArrayList;
 import static com.google.common.collect.Maps.newHashMap;
 import gt.general.logic.TriggerContext;
 import gt.general.logic.TriggerManager;
-import gt.general.logic.persistance.exceptions.PersistanceException;
+import gt.general.logic.persistence.exceptions.PersistenceException;
 import gt.general.logic.response.Response;
 import gt.general.logic.trigger.Trigger;
 
@@ -15,7 +15,7 @@ import javax.management.RuntimeErrorException;
 
 import org.bukkit.World;
 
-public class TriggerManagerPersistance {
+public class TriggerManagerPersistence {
 	
 	private final TriggerManager triggerManager;
 	
@@ -38,7 +38,7 @@ public class TriggerManagerPersistance {
 	/**
 	 * @param triggerManager the TriggerManager to be persisted
 	 */
-	TriggerManagerPersistance(final TriggerManager triggerManager) {
+	TriggerManagerPersistence(final TriggerManager triggerManager) {
 		this.triggerManager = triggerManager;
 	}
 
@@ -46,7 +46,7 @@ public class TriggerManagerPersistance {
 	 * @param triggerManager the TriggerManager to be persisted
 	 * @param world the World in which the TriggerManager operates
 	 */
-	public TriggerManagerPersistance(final TriggerManager triggerManager, final World world) {
+	public TriggerManagerPersistence(final TriggerManager triggerManager, final World world) {
 		this.triggerManager = triggerManager;
 		this.world = world;
 	}
@@ -57,8 +57,8 @@ public class TriggerManagerPersistance {
 	 * @param values the data for the TriggerManager
 	 * @param world the world in which the TriggerManager operates
 	 */
-	public static void setupTriggerManager(final TriggerManager triggerManager, final PersistanceMap values, final World world) {
-		new TriggerManagerPersistance(triggerManager, world).setup(values);
+	public static void setupTriggerManager(final TriggerManager triggerManager, final PersistenceMap values, final World world) {
+		new TriggerManagerPersistence(triggerManager, world).setup(values);
 	}
 	
 	/**
@@ -67,19 +67,19 @@ public class TriggerManagerPersistance {
 	 * @return the data in a Serializable Object
 	 */
 	public static Map<String, Object> dumpTriggerManager(final TriggerManager triggerManager) {
-		return new TriggerManagerPersistance(triggerManager).dump();
+		return new TriggerManagerPersistence(triggerManager).dump();
 	}
 	
 	/**
 	 * Load data
-	 * @param values PersistanceMap that contains the data that is loaded
+	 * @param values PersistenceMap that contains the data that is loaded
 	 */
-	public void setup(final PersistanceMap values) {
+	public void setup(final PersistenceMap values) {
 		try {
 			globalContexts = values.get(KEY_GLOBAL_CONTEXTS);
 			globalResponses = values.get(KEY_GLOBAL_RESPONSES);
 			globalTriggers = values.get(KEY_GLOBAL_TRIGGERS);				
-		} catch (PersistanceException e) {
+		} catch (PersistenceException e) {
 			throw new RuntimeErrorException(null,"Error loading "+e.getKey());
 		}
 			 
@@ -113,7 +113,7 @@ public class TriggerManagerPersistance {
 							+triggerLabel+" in Context "+contextLabel+": Trigger cannot be found");					
 				}
 				
-				PersistanceMap triggerMap = new PersistanceMap(map);
+				PersistenceMap triggerMap = new PersistenceMap(map);
 				
 				Trigger t = null;
 				try {
@@ -121,7 +121,7 @@ public class TriggerManagerPersistance {
 				} catch (ClassCastException e) {
 					throw new RuntimeErrorException(null,"Error loading field '"+triggerMap.getLastKey()
 							+"' in Trigger "+triggerLabel+" in Context "+contextLabel+": Wrong Type");
-				} catch (PersistanceException e) {
+				} catch (PersistenceException e) {
 					throw new RuntimeErrorException(null,"Error loading field '"+e.getKey()+"' in Trigger "
 							+triggerLabel+" in Context "+contextLabel+": field is null or missing");
 				} catch (InstantiationException e) {
@@ -147,14 +147,14 @@ public class TriggerManagerPersistance {
 							+responseLabel+" in Context "+contextLabel+": Response cannot be found");					
 				}
 				
-				PersistanceMap responseMap = new PersistanceMap(map);
+				PersistenceMap responseMap = new PersistenceMap(map);
 				
 				try {
 					tc.addResponse((Response) loadSerializable(responseLabel, responseMap));
 				} catch (ClassCastException e) {
 					throw new RuntimeErrorException(null,"Error loading field '"+responseMap.getLastKey()
 							+"' in Response "+responseLabel+" in Context "+contextLabel+": Wrong Type ("+ e.getMessage() +")");
-				} catch (PersistanceException e) {
+				} catch (PersistenceException e) {
 					throw new RuntimeErrorException(null, "Error loading field '"+e.getKey()+"' in Response "
 							+responseLabel+" in Context "+contextLabel+": field is null or missing");					
 				} catch (InstantiationException e) {
@@ -183,15 +183,15 @@ public class TriggerManagerPersistance {
 	 * @throws InstantiationException thrown if Serializable Object can't be instantiated
 	 * @throws IllegalAccessException thrown if Serializable Object can't be instantiated
 	 * @throws ClassNotFoundException thrown for unknown class Type <T>
-	 * @throws PersistanceException 
+	 * @throws PersistenceException 
 	 */
 	@SuppressWarnings("unchecked")
-	private <T extends YamlSerializable> T loadSerializable(final String label, final PersistanceMap map) throws InstantiationException, IllegalAccessException, ClassNotFoundException, PersistanceException {
+	private <T extends YamlSerializable> T loadSerializable(final String label, final PersistenceMap map) throws InstantiationException, IllegalAccessException, ClassNotFoundException, PersistenceException {
 		
 		String className = (String) map.remove(KEY_CLASS);
 		
 		if (className == null) {
-			throw new PersistanceException(KEY_CLASS);
+			throw new PersistenceException(KEY_CLASS);
 		}
 		
 		T serializable = (T) Class.forName(className).newInstance();

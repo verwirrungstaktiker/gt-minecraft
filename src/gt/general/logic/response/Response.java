@@ -2,7 +2,7 @@ package gt.general.logic.response;
 
 import gt.general.RespawnManager;
 import gt.general.logic.TriggerEvent;
-import gt.general.logic.persistance.YamlSerializable;
+import gt.general.logic.persistence.YamlSerializable;
 
 public abstract class Response extends YamlSerializable {
 	

@@ -1,8 +1,8 @@
 package gt.general.logic.response;
 
 import gt.general.logic.TriggerEvent;
-import gt.general.logic.persistance.PersistanceMap;
-import gt.general.logic.persistance.exceptions.PersistanceException;
+import gt.general.logic.persistence.PersistenceMap;
+import gt.general.logic.persistence.exceptions.PersistenceException;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -94,8 +94,8 @@ public class MultiBlockDisappearResponse extends Response {
 	}
 
 	@Override
-	public PersistanceMap dump() {
-		PersistanceMap map = new PersistanceMap();
+	public PersistenceMap dump() {
+		PersistenceMap map = new PersistenceMap();
 		
 		map.put(KEY_INVERTED, inverted);
 		map.put(KEY_MATERIAL, material);
@@ -121,8 +121,8 @@ public class MultiBlockDisappearResponse extends Response {
 	}
 	
 	@Override
-	public void setup(final PersistanceMap values, final World world)
-			throws PersistanceException {
+	public void setup(final PersistenceMap values, final World world)
+			throws PersistenceException {
 		
 		inverted = values.get(KEY_INVERTED);
 		material = values.get(KEY_MATERIAL);

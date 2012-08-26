@@ -1,8 +1,8 @@
 package gt.general.logic.response;
 
 import gt.general.logic.TriggerEvent;
-import gt.general.logic.persistance.PersistanceMap;
-import gt.general.logic.persistance.exceptions.PersistanceException;
+import gt.general.logic.persistence.PersistenceMap;
+import gt.general.logic.persistence.exceptions.PersistenceException;
 
 import org.bukkit.Location;
 import org.bukkit.World;
@@ -27,16 +27,16 @@ public class ZombieTeleportResponse extends ZombieResponse{
 	}
 
 	@Override
-	public PersistanceMap dump() {
-		PersistanceMap map = new PersistanceMap();
+	public PersistenceMap dump() {
+		PersistenceMap map = new PersistenceMap();
 		
 		map.put(KEY_LOCATION, teleportLocation);
 		return map;
 	}
 
 	@Override
-	public void setup(PersistanceMap values, World world)
-			throws PersistanceException {
+	public void setup(PersistenceMap values, World world)
+			throws PersistenceException {
 		teleportLocation = values.getLocation(KEY_LOCATION, world);
 	}
 	
