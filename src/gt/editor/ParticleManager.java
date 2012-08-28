@@ -1,6 +1,6 @@
 package gt.editor;
 
-import gt.general.logic.persistance.YamlSerializable;
+import gt.general.logic.persistence.YamlSerializable;
 
 import org.bukkit.Location;
 import org.bukkit.block.Block;

@@ -2,8 +2,8 @@ package gt.lastgnome.scoring;
 
 import java.util.List;
 
-import gt.general.logic.persistance.PersistanceMap;
-import gt.general.logic.persistance.exceptions.PersistanceException;
+import gt.general.logic.persistence.PersistenceMap;
+import gt.general.logic.persistence.exceptions.PersistenceException;
 
 public class HighscoreEntry implements Comparable<HighscoreEntry>{
 	
@@ -54,7 +54,7 @@ public class HighscoreEntry implements Comparable<HighscoreEntry>{
 		return players;
 	}
 	
-	public void setup(final PersistanceMap map) throws PersistanceException {
+	public void setup(final PersistenceMap map) throws PersistenceException {
 		this.time = map.get(KEY_TIME);
 		this.damage = map.get(KEY_DAMAGE);
 		this.deaths = map.get(KEY_DEATHS);
@@ -63,8 +63,8 @@ public class HighscoreEntry implements Comparable<HighscoreEntry>{
 		players = map.get(KEY_PLAYERS);
 	}
 	
-	public PersistanceMap dump() {
-		PersistanceMap map = new PersistanceMap();
+	public PersistenceMap dump() {
+		PersistenceMap map = new PersistenceMap();
 		
 		map.put(KEY_TIME, time);
 		map.put(KEY_DAMAGE, damage);

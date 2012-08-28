@@ -1,7 +1,7 @@
 package gt.general.logic.trigger;
 
 import gt.general.logic.TriggerContext;
-import gt.general.logic.persistance.YamlSerializable;
+import gt.general.logic.persistence.YamlSerializable;
 
 /**
  * Abstract class to build triggers

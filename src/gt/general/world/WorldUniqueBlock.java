@@ -2,9 +2,9 @@ package gt.general.world;
 
 import static com.google.common.collect.Sets.newHashSet;
 
-import gt.general.logic.persistance.PersistanceMap;
-import gt.general.logic.persistance.YamlSerializable;
-import gt.general.logic.persistance.exceptions.PersistanceException;
+import gt.general.logic.persistence.PersistenceMap;
+import gt.general.logic.persistence.YamlSerializable;
+import gt.general.logic.persistence.exceptions.PersistenceException;
 import gt.general.world.ObservableCustomBlock.BlockEvent;
 
 import java.util.Set;
@@ -60,7 +60,7 @@ public class WorldUniqueBlock extends YamlSerializable implements BlockObserver 
 	}
 
 	@Override
-	public void setup(final PersistanceMap values, final World world) throws PersistanceException {
+	public void setup(final PersistenceMap values, final World world) throws PersistenceException {
 		
 		// TODO bad style
 		if(values.getMap() != null && values.getMap().containsKey(KEY_LOCATION)) {
@@ -73,8 +73,8 @@ public class WorldUniqueBlock extends YamlSerializable implements BlockObserver 
 	}
 
 	@Override
-	public PersistanceMap dump() {
-		PersistanceMap map = new PersistanceMap();
+	public PersistenceMap dump() {
+		PersistenceMap map = new PersistenceMap();
 		
 		if(block != null) {
 			map.put(KEY_LOCATION, block);

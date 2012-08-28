@@ -1,9 +1,9 @@
 package gt.general.logic;
 
 import static com.google.common.collect.Sets.newHashSet;
-import gt.general.logic.persistance.PersistanceMap;
-import gt.general.logic.persistance.TriggerManagerPersistance;
-import gt.general.logic.persistance.YamlSerializable;
+import gt.general.logic.persistence.PersistenceMap;
+import gt.general.logic.persistence.TriggerManagerPersistence;
+import gt.general.logic.persistence.YamlSerializable;
 import gt.general.logic.response.Response;
 import gt.general.logic.trigger.Trigger;
 
@@ -69,16 +69,16 @@ public class TriggerManager extends YamlSerializable{
 	}
 
 	@Override
-	public void setup(final PersistanceMap values, final World world) {
+	public void setup(final PersistenceMap values, final World world) {
 		
 		if(values != null) {
-			TriggerManagerPersistance.setupTriggerManager(this, values, world);
+			TriggerManagerPersistence.setupTriggerManager(this, values, world);
 		}
 	}
 
 	@Override
-	public PersistanceMap dump() {
-		return new PersistanceMap(TriggerManagerPersistance.dumpTriggerManager(this));
+	public PersistenceMap dump() {
+		return new PersistenceMap(TriggerManagerPersistence.dumpTriggerManager(this));
 	}
 
 	@Override

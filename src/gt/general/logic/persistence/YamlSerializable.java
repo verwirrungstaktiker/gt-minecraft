@@ -1,6 +1,6 @@
-package gt.general.logic.persistance;
+package gt.general.logic.persistence;
 
-import gt.general.logic.persistance.exceptions.PersistanceException;
+import gt.general.logic.persistence.exceptions.PersistenceException;
 import gt.general.world.WorldInstance;
 
 import java.util.Set;
@@ -53,17 +53,17 @@ public abstract class YamlSerializable {
 	 * 
 	 * @param values map containing coordinates & orientation
 	 * @param world the minecraft world
-	 * @throws PersistanceException 
+	 * @throws PersistenceException 
 	 */
-	public abstract void setup(PersistanceMap values, World world) throws PersistanceException;
+	public abstract void setup(PersistenceMap values, World world) throws PersistenceException;
 	
 	/**
 	 * load Metadata from a Yaml File
 	 * @param file a Yaml File that is read
 	 * @param worldInstance the WorldInstance that will get the loaded data
-	 * @throws PersistanceException 
+	 * @throws PersistenceException 
 	 */
-	public void setup(final String file, final WorldInstance worldInstance) throws PersistanceException {
+	public void setup(final String file, final WorldInstance worldInstance) throws PersistenceException {
 		setup(worldInstance.loadMeta(file), worldInstance.getWorld());
 	}
 	
@@ -71,7 +71,7 @@ public abstract class YamlSerializable {
 	 * 
 	 * @return the corresponding map containing coordinates & orientation
 	 */
-	public abstract PersistanceMap dump();
+	public abstract PersistenceMap dump();
 	
 	/**
 	 * delete the corresponding block in the world

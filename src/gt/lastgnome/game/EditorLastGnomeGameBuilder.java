@@ -8,7 +8,7 @@ import gt.editor.PlayerManager;
 import gt.editor.gui.BlockSet;
 import gt.editor.gui.EditorGuiManager;
 import gt.editor.gui.EditorOverlay.LandingPage;
-import gt.general.logic.persistance.exceptions.PersistanceException;
+import gt.general.logic.persistence.exceptions.PersistenceException;
 import gt.general.world.WorldManager;
 import gt.plugin.meta.Hello;
 import gt.plugin.meta.MultiListener;
@@ -36,7 +36,7 @@ public class EditorLastGnomeGameBuilder extends AbstractLastGnomeGameBuilder {
 	}
 
 	@Override
-	public void buildWorldInstance(final WorldManager worldManager, final String worldName) throws PersistanceException {
+	public void buildWorldInstance(final WorldManager worldManager, final String worldName) throws PersistenceException {
 		super.buildWorldInstance(worldManager, worldName);
 				
 		triggerManager = new EditorTriggerManager();
@@ -95,7 +95,7 @@ public class EditorLastGnomeGameBuilder extends AbstractLastGnomeGameBuilder {
 		return game;
 	}
 	
-	public void reload() throws PersistanceException {
+	public void reload() throws PersistenceException {
 		game.dispose();
 				
 		loadGameSpecific();

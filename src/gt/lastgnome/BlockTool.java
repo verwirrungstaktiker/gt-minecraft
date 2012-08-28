@@ -13,14 +13,21 @@ import gt.general.PortableItem;
 import gt.general.aura.FreezeEffect.FreezeCause;
 import gt.general.character.Hero;
 import gt.general.character.HeroManager;
+import gt.general.logic.trigger.UnlockItemType;
 import gt.plugin.meta.Hello;
 
-public class FreezingBlock extends PortableItem{
+/** a single use tool that spawns blocks */
+public class BlockTool extends PortableItem{
 	
 	private ItemStack itemStack;
-
-	public FreezingBlock(Plugin plugin, String name, String texture) {
-		super(plugin, name, texture);
+	
+	/**
+	 * @param plugin plugin that holds the tool
+	 * @param name name of the tool
+	 * @param texture link to the texture
+	 */
+	public BlockTool(final Plugin plugin, final String name, final String texture) {
+		super(plugin, name, texture, UnlockItemType.BLOCK_TOOL);
 
 		itemStack = new SpoutItemStack(this);
 		
@@ -30,8 +37,9 @@ public class FreezingBlock extends PortableItem{
 		
 	}
 	
-	public FreezingBlock() {
-		this(Hello.getPlugin(), "freezingBlock", "http://www.mariowiki.com/images/9/95/QuestionMarkBlockNSMB.png");
+	/** anonymous constructor */
+	public BlockTool() {
+		this(Hello.getPlugin(), "BlockTool", "http://www.mariowiki.com/images/9/95/QuestionMarkBlockNSMB.png");
 	}
 
 	@Override
@@ -52,9 +60,10 @@ public class FreezingBlock extends PortableItem{
 	@Override
 	public boolean onItemInteract(final SpoutPlayer player, final SpoutBlock block, final BlockFace face) {
 
-		if(block!=null) {
+		if(block!=null && block.getType()==Material.OBSIDIAN) {
+			
 			Block relBlock = block.getRelative(face);
-			relBlock.setType(Material.COBBLESTONE);
+			relBlock.setType(Material.OBSIDIAN);
 			
 			HeroManager.getHero(player).removeActiveItem();
 			return true;

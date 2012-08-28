@@ -1,7 +1,7 @@
 package gt.general.logic;
 
 import static com.google.common.collect.Sets.newHashSet;
-import gt.general.logic.persistance.YamlSerializable;
+import gt.general.logic.persistence.YamlSerializable;
 import gt.general.logic.response.Response;
 import gt.general.logic.trigger.Trigger;
 

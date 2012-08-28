@@ -12,7 +12,7 @@ import gt.general.world.InstantiatingWorldManager;
 import gt.general.world.WorldInstance;
 import gt.general.world.WorldManager;
 import gt.lastgnome.scoring.Highscore;
-import gt.lastgnome.FreezingBlock;
+import gt.lastgnome.BlockTool;
 
 import gt.plugin.helloworld.command.StartGameCommandExecutor;
 import gt.plugin.helloworld.command.TeamCommandExecutor;
@@ -140,7 +140,7 @@ public class HelloWorld extends JavaPlugin {
 				System.out.println("giving block tool");
 				Hero hero = HeroManager.getHero(player);
 				
-				hero.setActiveItem(new FreezingBlock());
+				hero.setActiveItem(new BlockTool());
 
 				return true;
 			}

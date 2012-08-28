@@ -9,6 +9,7 @@ import gt.general.aura.GameAura;
 import gt.general.aura.GnomeCarrierEffect;
 import gt.general.aura.GnomeSlowEffect;
 import gt.general.character.Hero;
+import gt.general.logic.trigger.UnlockItemType;
 import gt.plugin.meta.Hello;
 
 import java.util.Iterator;
@@ -38,9 +39,10 @@ public final class GnomeItem extends PortableItem {
 	 * @param plugin  the plugin we run
 	 * @param name the name of the gnome
 	 * @param texture texture for the gnome
+	 * @param game the corresponding game
 	 */
 	public GnomeItem(final Plugin plugin, final String name, final String texture, final Game game) {
-		super(plugin, name, texture);
+		super(plugin, name, texture, UnlockItemType.GNOME);
 
 		gnomeAura = new GameAura(new EffectFactory() {
 			@Override
@@ -64,6 +66,7 @@ public final class GnomeItem extends PortableItem {
 	/**
 	 * Creates a new Gnome
 	 * @param plugin the plugin we run
+	 * @param game the game that holds the Gnome
 	 */
 	public GnomeItem(final Plugin plugin, final Game game) {
 		this(plugin, "GnomeItem", "http://dl.dropbox.com/u/29386658/gt/textures/gnome2_16x16.png", game);
@@ -71,6 +74,7 @@ public final class GnomeItem extends PortableItem {
 
 	/**
 	 * Creates a new Gnome
+	 * @param game the game that holds the Gnome
 	 */
 	public GnomeItem(final Game game) {
 		this(Hello.getPlugin(), game);

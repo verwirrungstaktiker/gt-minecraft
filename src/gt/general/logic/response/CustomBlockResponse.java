@@ -1,6 +1,6 @@
 package gt.general.logic.response;
 
-import gt.general.logic.persistance.exceptions.PersistanceException;
+import gt.general.logic.persistence.exceptions.PersistenceException;
 import gt.general.world.WorldInstance;
 import gt.plugin.meta.CustomBlockType;
 
@@ -23,7 +23,7 @@ public abstract class CustomBlockResponse extends BlockResponse {
 	
 	
 	@Override
-	public void setup(final String file, final WorldInstance worldInstance) throws PersistanceException {
+	public void setup(final String file, final WorldInstance worldInstance) throws PersistenceException {
 		super.setup(file, worldInstance);
 		
 		type.place(getBlock());

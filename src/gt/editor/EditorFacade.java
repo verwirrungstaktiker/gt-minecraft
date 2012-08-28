@@ -2,7 +2,7 @@ package gt.editor;
 
 import gt.editor.EditorPlayer.TriggerState;
 import gt.general.logic.TriggerContext;
-import gt.general.logic.persistance.YamlSerializable;
+import gt.general.logic.persistence.YamlSerializable;
 
 import java.util.Collection;
 import java.util.Map;

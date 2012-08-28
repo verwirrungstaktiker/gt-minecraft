@@ -5,7 +5,7 @@ import gt.editor.event.HighlightSuppressEvent;
 import gt.editor.event.LogicChangeEvent;
 import gt.editor.event.LogicSelectionEvent;
 import gt.general.logic.TriggerContext;
-import gt.general.logic.persistance.YamlSerializable;
+import gt.general.logic.persistence.YamlSerializable;
 import gt.plugin.meta.MultiListener;
 
 import org.bukkit.event.EventHandler;

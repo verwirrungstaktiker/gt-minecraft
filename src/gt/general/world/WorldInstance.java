@@ -2,9 +2,9 @@ package gt.general.world;
 
 import gt.general.Spawn;
 import gt.general.logic.TriggerManager;
-import gt.general.logic.persistance.PersistanceMap;
-import gt.general.logic.persistance.YamlSerializable;
-import gt.general.logic.persistance.exceptions.PersistanceException;
+import gt.general.logic.persistence.PersistenceMap;
+import gt.general.logic.persistence.YamlSerializable;
+import gt.general.logic.persistence.exceptions.PersistenceException;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -65,9 +65,9 @@ public class WorldInstance {
 	 * intializes this world instance
 	 *  
 	 * @param triggerManager the Triggermanager to be used
-	 * @throws PersistanceException 
+	 * @throws PersistenceException 
 	 */
-	public void init(final TriggerManager triggerManager) throws PersistanceException {
+	public void init(final TriggerManager triggerManager) throws PersistenceException {
 		triggerManager.setup(TriggerManager.PERSISTANCE_FILE, this);
 		this.triggerManager = triggerManager;
 		
@@ -114,7 +114,7 @@ public class WorldInstance {
 	 * @param fileName the file to load
 	 * @return a map representing the file contents
 	 */
-	public PersistanceMap loadMeta(final String fileName) {		
+	public PersistenceMap loadMeta(final String fileName) {		
 		try {
 			File path = new File(world.getWorldFolder(), fileName);
 			Reader reader = Files.newReader(path, Charset.defaultCharset());
@@ -124,7 +124,7 @@ public class WorldInstance {
 			@SuppressWarnings("unchecked")
 			Map<String, Object> values = (Map<String, Object>) yaml.load(reader);
 			
-			return new PersistanceMap(values);
+			return new PersistenceMap(values);
 		
 		} catch (ClassCastException e) {
 			throw new RuntimeException("cannot cast contents of " + fileName, e);
@@ -139,7 +139,7 @@ public class WorldInstance {
 	 * @param fileName the file to write
 	 * @param values the data to write
 	 */
-	public void saveMeta(final String fileName, final PersistanceMap values) {
+	public void saveMeta(final String fileName, final PersistenceMap values) {
 		try {
 			File path = new File(world.getWorldFolder(), fileName);
 			Writer writer = Files.newWriter(path, Charset.defaultCharset());

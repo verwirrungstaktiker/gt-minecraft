@@ -1,8 +1,8 @@
 package gt.general.logic.trigger;
 
 import gt.general.logic.TriggerContext;
-import gt.general.logic.persistance.PersistanceMap;
-import gt.general.logic.persistance.exceptions.PersistanceException;
+import gt.general.logic.persistence.PersistenceMap;
+import gt.general.logic.persistence.exceptions.PersistenceException;
 import gt.plugin.meta.MultiListener;
 
 import org.bukkit.World;
@@ -75,7 +75,7 @@ public class RedstoneTrigger extends BlockTrigger implements Listener {
 	}
 	
 	@Override
-	public void setup(final PersistanceMap values, final World world) throws PersistanceException {
+	public void setup(final PersistenceMap values, final World world) throws PersistenceException {
 		super.setup(values, world);
 		
 		MultiListener.registerListener(this);
@@ -83,8 +83,8 @@ public class RedstoneTrigger extends BlockTrigger implements Listener {
 	}
 	
 	@Override
-	public PersistanceMap dump() {
-		PersistanceMap map = super.dump();
+	public PersistenceMap dump() {
+		PersistenceMap map = super.dump();
 		map.put(KEY_INVERTED, inverted);
 		
 		return map;

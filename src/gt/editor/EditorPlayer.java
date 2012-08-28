@@ -5,7 +5,7 @@ import static org.bukkit.ChatColor.*;
 import gt.editor.event.HighlightSuppressEvent;
 import gt.editor.event.LogicSelectionEvent;
 import gt.general.logic.TriggerContext;
-import gt.general.logic.persistance.YamlSerializable;
+import gt.general.logic.persistence.YamlSerializable;
 import gt.plugin.meta.CustomBlockType;
 import gt.plugin.meta.Hello;
 

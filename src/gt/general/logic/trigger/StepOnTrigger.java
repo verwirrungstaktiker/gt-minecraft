@@ -1,7 +1,7 @@
 package gt.general.logic.trigger;
 
-import gt.general.logic.persistance.PersistanceMap;
-import gt.general.logic.persistance.exceptions.PersistanceException;
+import gt.general.logic.persistence.PersistenceMap;
+import gt.general.logic.persistence.exceptions.PersistenceException;
 import gt.general.world.BlockObserver;
 import gt.general.world.ObservableCustomBlock;
 import gt.general.world.ObservableCustomBlock.BlockEvent;
@@ -41,8 +41,8 @@ public class StepOnTrigger extends Trigger implements BlockObserver {
     public StepOnTrigger() {}
 
 	@Override
-	public void setup(final PersistanceMap values, final World world)
-			throws PersistanceException {
+	public void setup(final PersistenceMap values, final World world)
+			throws PersistenceException {
 		
 		block = values.getBlock(KEY_BLOCK, world);
 		triggered = false;
@@ -55,8 +55,8 @@ public class StepOnTrigger extends Trigger implements BlockObserver {
 	}
 
 	@Override
-	public PersistanceMap dump() {
-		PersistanceMap map = new PersistanceMap();
+	public PersistenceMap dump() {
+		PersistenceMap map = new PersistenceMap();
 		
 		map.put(KEY_BLOCK, block);
 		

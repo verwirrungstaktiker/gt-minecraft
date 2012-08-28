@@ -1,8 +1,8 @@
 package gt.general.logic.response;
 
 import gt.general.logic.TriggerEvent;
-import gt.general.logic.persistance.PersistanceMap;
-import gt.general.logic.persistance.exceptions.PersistanceException;
+import gt.general.logic.persistence.PersistenceMap;
+import gt.general.logic.persistence.exceptions.PersistenceException;
 
 import org.bukkit.World;
 
@@ -25,14 +25,14 @@ public class ZombieClearResponse extends ZombieResponse {
 	}
 
 	@Override
-	public PersistanceMap dump() {
-		PersistanceMap map = new PersistanceMap();
+	public PersistenceMap dump() {
+		PersistenceMap map = new PersistenceMap();
 		return map;
 	}
 
 	@Override
-	public void setup(final PersistanceMap values, final World world)
-			throws PersistanceException {
+	public void setup(final PersistenceMap values, final World world)
+			throws PersistenceException {
 		
 	}
 
