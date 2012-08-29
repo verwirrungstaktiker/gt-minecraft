@@ -27,8 +27,9 @@ public class Hero extends Character{
 	private Player player;
 	/**Item in hand*/
 	private PortableItem activeItem;
+	
 	/**Passiv-Slot for tools*/
-	private PortableItem passiveItem;
+	//private PortableItem passiveItem;
 
 	private HeroGui gui;
 	
@@ -104,9 +105,9 @@ public class Hero extends Character{
 	/**
 	 * @return the current Item in the passive slot
 	 */
-	public PortableItem getPassivItem() {
-		return passiveItem;
-	}
+//	public PortableItem getPassivItem() {
+//		return passiveItem;
+//	}
 
 	/**
 	 * @return if true, the Hero can pick up another item
@@ -116,9 +117,9 @@ public class Hero extends Character{
 			return true;
 		}
 
-		if (activeItem.isTool() && passiveItem == null) {
-			return true;
-		}
+//		if (activeItem.isTool() && passiveItem == null) {
+//			return true;
+//		}
 
 		if (activeItem.isDropable()) {
 			return true;
@@ -145,11 +146,11 @@ public class Hero extends Character{
 			return;
 		}
 
-		if (activeItem.isTool() && passiveItem == null) {
-			passiveItem = activeItem;
-			innerSetActiveItem(item);
-			return;
-		}
+//		if (activeItem.isTool() && passiveItem == null) {
+//			passiveItem = activeItem;
+//			innerSetActiveItem(item);
+//			return;
+//		}
 
 		if (activeItem.isDropable()) {
 			dropActiveItem();
@@ -157,7 +158,7 @@ public class Hero extends Character{
 			return;
 		}
 		
-		System.out.println("active: " +activeItem+" passive: "+passiveItem);
+//		System.out.println("active: " +activeItem+" passive: "+passiveItem);
 		throw new RuntimeException();
 	}
 
@@ -183,7 +184,7 @@ public class Hero extends Character{
 		toRemove.onDetachHero(this);
 		notifyChanged(Notification.INVENTORY);
 		
-		equipPassiveItem();
+//		equipPassiveItem();
 		
 		return toRemove;
 	}
@@ -191,16 +192,16 @@ public class Hero extends Character{
 	/**
 	 * equip the passive item in the active slot
 	 */
-	private void equipPassiveItem() {
-		if(activeItem==null
-				&& passiveItem!=null) {
-			activeItem = passiveItem;
-			passiveItem = null;
-			
-			notifyChanged(Notification.INVENTORY);
-		}
-			
-	}
+//	private void equipPassiveItem() {
+//		if(activeItem==null
+//				&& passiveItem!=null) {
+//			activeItem = passiveItem;
+//			passiveItem = null;
+//			
+//			notifyChanged(Notification.INVENTORY);
+//		}
+//			
+//	}
 
 	/**
 	 * transfers the current active item into another inventory
