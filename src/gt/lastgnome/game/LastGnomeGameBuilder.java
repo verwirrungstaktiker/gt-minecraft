@@ -101,9 +101,8 @@ public class LastGnomeGameBuilder extends AbstractLastGnomeGameBuilder {
 	 * Score Manager setup
 	 */
 	private void setupScoreManager() {
-		ScoreManager sm = new ScoreManager();
+		ScoreManager sm = new ScoreManager(game);
 		game.setScoreManager(sm);
-		sm.setGame(game);
 		game.registerListener(sm);
 	}
 

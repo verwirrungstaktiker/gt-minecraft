@@ -2,7 +2,6 @@ package gt.lastgnome.game;
 
 import static com.google.common.collect.Lists.*;
 import static org.bukkit.ChatColor.*;
-import gt.general.GameManager;
 import gt.general.RespawnManager;
 import gt.general.Vote;
 import gt.general.character.Hero;
@@ -13,7 +12,8 @@ import gt.general.gui.GameScoreOverlay;
 import gt.general.gui.GuiElementType;
 import gt.lastgnome.GnomeItem;
 import gt.lastgnome.gui.SpeedBar;
-import gt.lastgnome.scoring.NullHighscoreEntry;
+import gt.lastgnome.scoring.Highscore;
+import gt.lastgnome.scoring.HighscoreEntry;
 import gt.lastgnome.scoring.ScoreManager;
 import gt.plugin.helloworld.HelloWorld;
 import gt.plugin.meta.Hello;
@@ -206,8 +206,10 @@ public class LastGnomeGame extends AbstractLastGnomeGame implements Listener{
 			
 		};
 		
+		HighscoreEntry entry = scoreManager.toHighscoreEntry();
+		
 		for(Hero hero : getTeam().getPlayers()) {
-			hero.getGui().popup(new GameScoreOverlay(new NullHighscoreEntry(), hero, restartVote));
+			hero.getGui().popup(new GameScoreOverlay(entry, hero, restartVote));
 		}
 		
 		
@@ -238,7 +240,12 @@ public class LastGnomeGame extends AbstractLastGnomeGame implements Listener{
 		for (Hero hero: getTeam().getPlayers()) {
 			hero.getPlayer().sendMessage(GREEN + "The last Gnome on earth has been saved!");			
 		}
-		onEnd();	   	
+		
+		
+		Highscore h = HelloWorld.getHighscore(getWorldInstance().getBaseName());
+		h.addEntry(scoreManager.toHighscoreEntry());
+		
+		onEnd();
 	}
 	
 	/**

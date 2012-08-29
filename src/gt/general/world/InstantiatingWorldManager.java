@@ -38,6 +38,7 @@ public class InstantiatingWorldManager extends WorldManager {
 		WorldInstance worldInstance = new WorldInstance(world);
 		
 		worldInstance.setName(newName);
+		worldInstance.setBaseName(baseName);
 		
 		return worldInstance;
 	}

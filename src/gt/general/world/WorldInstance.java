@@ -30,6 +30,8 @@ public class WorldInstance {
 	private World world;
 	private String name;
 	
+	private String baseName;
+	
 	private TriggerManager triggerManager;	
 	private Spawn spawn;	
 	
@@ -169,5 +171,19 @@ public class WorldInstance {
 	 */
 	public Location getSpawnLocation() {
 		return world.getSpawnLocation();
+	}
+
+	/**
+	 * @return the baseName
+	 */
+	public String getBaseName() {
+		return baseName;
+	}
+
+	/**
+	 * @param baseName the baseName to set
+	 */
+	public void setBaseName(String baseName) {
+		this.baseName = baseName;
 	}
 }

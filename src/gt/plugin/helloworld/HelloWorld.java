@@ -49,7 +49,7 @@ public class HelloWorld extends JavaPlugin {
 	private TeamManager teamManager;
 	private WorldManager worldManager;
 	
-	private final Map<String,Highscore> highscores = newHashMap();
+	private final static Map<String,Highscore> highscores = newHashMap();
 	private final static Collection<String> availableLevels = newHashSet();
 	
 	static {
@@ -98,7 +98,11 @@ public class HelloWorld extends JavaPlugin {
 	}
 	
 	/** */
-	public void onDisable() { }
+	public void onDisable() {
+		for(Highscore h : highscores.values()) {
+			h.saveScores();
+		}
+	}
 	
 	/**
 	 * initializes the commands associated with hello world
@@ -213,8 +217,7 @@ public class HelloWorld extends JavaPlugin {
 		
 	}
 	
-	// XXX Testing
-	public Highscore getHighscore(final String levelName) {
+	public static Highscore getHighscore(final String levelName) {
 		return highscores.get(levelName);
 	}
 }
