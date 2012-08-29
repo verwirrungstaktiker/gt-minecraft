@@ -43,6 +43,9 @@ public class LastGnomeGame extends AbstractLastGnomeGame implements Listener{
 
 	private ZombieManager zombieManager;
 	
+	
+	private boolean isWon = false;
+	
 	/**
 	 * initiates a new Last Gnome Game
 	 *
@@ -208,8 +211,10 @@ public class LastGnomeGame extends AbstractLastGnomeGame implements Listener{
 		
 		HighscoreEntry entry = scoreManager.toHighscoreEntry();
 		
+		String message = (isWon) ? "Victory!" : "Fail!";
+		
 		for(Hero hero : getTeam().getPlayers()) {
-			hero.getGui().popup(new GameScoreOverlay(entry, hero, restartVote));
+			hero.getGui().popup(new GameScoreOverlay(message, entry, hero, restartVote));
 		}
 		
 		
@@ -240,6 +245,7 @@ public class LastGnomeGame extends AbstractLastGnomeGame implements Listener{
 		for (Hero hero: getTeam().getPlayers()) {
 			hero.getPlayer().sendMessage(GREEN + "The last Gnome on earth has been saved!");			
 		}
+		isWon = true;
 		
 		
 		Highscore h = HelloWorld.getHighscore(getWorldInstance().getBaseName());

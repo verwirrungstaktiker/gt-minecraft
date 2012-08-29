@@ -20,13 +20,10 @@ import org.getspout.spoutapi.gui.WidgetAnchor;
 
 public class GameScoreOverlay extends GenericPopup {
 
-	
-	
-	
-	public GameScoreOverlay(final HighscoreEntry entry, final Hero hero, final Vote vote) {
+	public GameScoreOverlay(final String message, final HighscoreEntry entry, final Hero hero, final Vote vote) {
 				
 		
-		Label victoryLabel = new GenericLabel("Victory!");
+		Label victoryLabel = new GenericLabel(message);
 		victoryLabel.setTextColor(new Color(0f, 1f, 0f));
 		
 		victoryLabel.setScale(4f);
