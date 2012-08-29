@@ -49,7 +49,7 @@ public class BlockTool extends PortableItem{
 
 	@Override
 	public void onAttachHero(final Hero hero) {
-		hero.pause();
+		hero.freeze();
 	}
 
 	@Override
