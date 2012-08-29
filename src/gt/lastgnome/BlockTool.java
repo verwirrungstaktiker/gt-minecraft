@@ -1,5 +1,6 @@
 package gt.lastgnome;
 
+import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
@@ -18,6 +19,8 @@ import gt.plugin.meta.Hello;
 
 /** a single use tool that spawns blocks */
 public class BlockTool extends PortableItem{
+	
+	public static final Material MATERIAL = Material.OBSIDIAN;
 	
 	private ItemStack itemStack;
 	
@@ -60,15 +63,17 @@ public class BlockTool extends PortableItem{
 	@Override
 	public boolean onItemInteract(final SpoutPlayer player, final SpoutBlock block, final BlockFace face) {
 
-		if(block!=null && block.getType()==Material.OBSIDIAN) {
+		if(block!=null && block.getType()==MATERIAL) {
 			
 			Block relBlock = block.getRelative(face);
-			relBlock.setType(Material.OBSIDIAN);
+			relBlock.setType(MATERIAL);
 			
 			HeroManager.getHero(player).removeActiveItem();
 			return true;
+		} else {
+			player.sendMessage(ChatColor.RED + "Cannot be placed here! (Only on " + MATERIAL + ")");
+			return false;	
 		}
-		return false;
 	}
 
 }
