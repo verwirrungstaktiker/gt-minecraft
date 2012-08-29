@@ -1,6 +1,8 @@
 package gt.general.world;
 
 
+import java.util.Collection;
+
 import gt.plugin.meta.CustomBlockType;
 import gt.plugin.meta.Hello;
 

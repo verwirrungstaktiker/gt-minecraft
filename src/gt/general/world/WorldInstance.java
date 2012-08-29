@@ -5,8 +5,8 @@ import gt.general.logic.TriggerManager;
 import gt.general.logic.persistence.PersistenceMap;
 import gt.general.logic.persistence.YamlSerializable;
 import gt.general.logic.persistence.exceptions.PersistenceException;
-import gt.lastgnome.BlocktoolDispenser;
 import gt.lastgnome.DispenserContainer;
+import gt.plugin.meta.MultiListener;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -14,8 +14,6 @@ import java.io.Reader;
 import java.io.Writer;
 import java.nio.charset.Charset;
 import java.util.Map;
-import java.util.Set;
-
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.yaml.snakeyaml.Yaml;
@@ -38,7 +36,7 @@ public class WorldInstance {
 	private TriggerManager triggerManager;	
 	private Spawn spawn;
 	
-	private Set<BlocktoolDispenser> dispensers; 
+	private DispenserContainer container; 
 	
 	/**
 	 * @param world the minecraft representation of this world
@@ -82,10 +80,9 @@ public class WorldInstance {
 		spawn.setup(Spawn.PERSISTANCE_FILE, this);
 		this.spawn = spawn;
 		
-		DispenserContainer container = new DispenserContainer();
-		container.setup(DispenserContainer.FILENAME, this);
-		
-		dispensers = container.getDispensers();
+		container = new DispenserContainer();
+		MultiListener.registerListener(container);
+		container.setup(DispenserContainer.PERSISTANCE_FILE, this);
 
 	}
 	
@@ -109,6 +106,7 @@ public class WorldInstance {
 	public void save() {
 		saveMeta(TriggerManager.PERSISTANCE_FILE, triggerManager);
 		saveMeta(Spawn.PERSISTANCE_FILE, spawn);
+		saveMeta(DispenserContainer.PERSISTANCE_FILE, container);
 		
 		world.save();
 	}
@@ -119,6 +117,8 @@ public class WorldInstance {
 	public void dispose() {
 		triggerManager.dispose();
 		spawn.dispose();
+		MultiListener.unregisterListener(container);
+		container.dispose();
 	}
 	
 	/**

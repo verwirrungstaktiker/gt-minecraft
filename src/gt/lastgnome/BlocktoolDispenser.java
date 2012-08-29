@@ -1,5 +1,6 @@
 package gt.lastgnome;
 
+import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
@@ -17,12 +18,14 @@ import gt.plugin.meta.CustomBlockType;
 public class BlocktoolDispenser implements BlockObserver {
 	
 	private Block block;
+	private int contingent;
 	
 	/**
 	 * @param block the bukkit block that holds the dispenser
 	 */
 	public BlocktoolDispenser(final Block block) {
 		this.block = block;
+		contingent = 1;
 
 		CustomBlockType.BLOCKTOOL_DISPENSER.place(block);
 		
@@ -33,16 +36,16 @@ public class BlocktoolDispenser implements BlockObserver {
 	 * registers this dispenser
 	 */
 	public void registerWithSubject() {
-		ObservableCustomBlock triggerBlock = CustomBlockType.BLOCKTOOL_DISPENSER.getCustomBlock();
-		triggerBlock.addObserver(this, block.getWorld());
+		ObservableCustomBlock oBlock = CustomBlockType.BLOCKTOOL_DISPENSER.getCustomBlock();
+		oBlock.addObserver(this, block.getWorld());
 	}
 	
 	/**
 	 * unregisters this dispenser
 	 */
 	public void unregisterFromSubject() {
-		ObservableCustomBlock triggerBlock = CustomBlockType.BLOCKTOOL_DISPENSER.getCustomBlock();
-		triggerBlock.removeObserver(this, block.getWorld());
+		ObservableCustomBlock oBlock = CustomBlockType.BLOCKTOOL_DISPENSER.getCustomBlock();
+		oBlock.removeObserver(this, block.getWorld());
 	}
 	
 	public void dispose() {
@@ -60,9 +63,27 @@ public class BlocktoolDispenser implements BlockObserver {
 			Player player = blockEvent.getPlayer();
 			Hero hero = HeroManager.getHero(player);
 			
-			hero.setActiveItem(new BlockTool());
-			player.sendMessage("You obtained an Obsidian Placing Device.");
+			if(hero!=null) {
+				if(contingent>0) {
+					hero.setActiveItem(new BlockTool());
+					player.sendMessage(ChatColor.GREEN + "You obtained an Obsidian Placing Device.");
+					
+					contingent--;
+				} else {
+					player.sendMessage(ChatColor.YELLOW + "The Obsidian Placing Device is already in use.");
+				}
+			} else {
+				player.sendMessage(ChatColor.YELLOW + "The device is not available in the current game mode.");
+			}
 		}
 		
+	}
+
+	public int getContingent() {
+		return contingent;
+	}
+
+	public void setContingent(int contingent) {
+		this.contingent = contingent;
 	}
 }
