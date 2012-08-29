@@ -5,6 +5,8 @@ import gt.general.logic.TriggerManager;
 import gt.general.logic.persistence.PersistenceMap;
 import gt.general.logic.persistence.YamlSerializable;
 import gt.general.logic.persistence.exceptions.PersistenceException;
+import gt.lastgnome.BlocktoolDispenser;
+import gt.lastgnome.DispenserContainer;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -12,6 +14,7 @@ import java.io.Reader;
 import java.io.Writer;
 import java.nio.charset.Charset;
 import java.util.Map;
+import java.util.Set;
 
 import org.bukkit.Location;
 import org.bukkit.World;
@@ -33,7 +36,9 @@ public class WorldInstance {
 	private String baseName;
 	
 	private TriggerManager triggerManager;	
-	private Spawn spawn;	
+	private Spawn spawn;
+	
+	private Set<BlocktoolDispenser> dispensers; 
 	
 	/**
 	 * @param world the minecraft representation of this world
@@ -76,6 +81,12 @@ public class WorldInstance {
 		Spawn spawn = new Spawn();
 		spawn.setup(Spawn.PERSISTANCE_FILE, this);
 		this.spawn = spawn;
+		
+		DispenserContainer container = new DispenserContainer();
+		container.setup(DispenserContainer.FILENAME, this);
+		
+		dispensers = container.getDispensers();
+
 	}
 	
 	/**

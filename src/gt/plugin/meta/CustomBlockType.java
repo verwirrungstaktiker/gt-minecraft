@@ -163,6 +163,16 @@ public enum CustomBlockType {
 		
 	}),
 	
+	/** gives the blocktool */
+	BLOCKTOOL_DISPENSER(new CustomBlockInstatiator() {
+
+		@Override
+		public ObservableCustomBlock instantiate() {
+			return new ObservableCustomBlock("blocktool_dispenser",
+					"http://www.mariowiki.com/images/9/95/QuestionMarkBlockNSMB.png", 16);
+		}
+		
+	}),
 	
 	/** marks respawn locations */
 	RESPAWN_BLOCK(new CustomBlockInstatiator() {
