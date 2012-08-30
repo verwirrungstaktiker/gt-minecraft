@@ -198,4 +198,8 @@ public class Team {
 		}
 	}
 
+	public boolean containsHero(Hero hero) {
+		return members.contains(hero);
+	}
+
 }

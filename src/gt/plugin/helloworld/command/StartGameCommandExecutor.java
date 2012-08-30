@@ -60,13 +60,17 @@ public class StartGameCommandExecutor extends PlayerCommandExecutor {
 			}
 		}
 		
-		Bukkit
-			.getServer()
-			.broadcastMessage("starting gnome game: " + player.getName());
+		if(team.getPlayers().size() > 4) {
+			Bukkit
+				.getServer()
+				.broadcastMessage(ChatColor.RED + "team to big to start the gnome game (max. 4 players). use /team disband");
+		} else {
+			Bukkit
+				.getServer()
+				.broadcastMessage("starting gnome game: " + player.getName());
 		
-		
-		gameManager.startGame(new LastGnomeGameBuilder(team), "lastgnome");
-		
+			gameManager.startGame(new LastGnomeGameBuilder(team), "lastgnome");
+		}
 		return true;
 	}
 

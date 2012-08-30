@@ -152,6 +152,10 @@ public abstract class Game implements Listener {
 	public boolean isRunning() {
 		return running;
 	}
+	
+	public boolean isPlayedBy(final Hero hero) {
+		return getTeam().containsHero(hero);
+	}
 
 }
 

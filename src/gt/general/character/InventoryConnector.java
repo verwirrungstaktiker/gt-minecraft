@@ -31,12 +31,12 @@ public class InventoryConnector implements HeroObserver {
 			items[0] = null;
 		}
 
-		PortableItem passive = hero.getPassivItem();
-		if (passive != null) {
-			items[1] = passive.getItemStack();
-		} else {
-			items[1] = null;
-		}
+//		PortableItem passive = hero.getPassivItem();
+//		if (passive != null) {
+//			items[1] = passive.getItemStack();
+//		} else {
+//			items[1] = null;
+//		}
 
 		inventory.setContents(items);
 	}

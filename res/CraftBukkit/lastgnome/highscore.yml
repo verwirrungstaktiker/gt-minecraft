@@ -14,3 +14,9 @@ scores:
   - DubbelSnort
   damage: 0
   points: 23076
+- time: 10788
+  deaths: 0
+  players:
+  - da_Flag
+  damage: 0
+  points: 222

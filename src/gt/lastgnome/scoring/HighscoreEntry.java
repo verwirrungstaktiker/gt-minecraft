@@ -1,5 +1,7 @@
 package gt.lastgnome.scoring;
 
+import static com.google.common.collect.Lists.*;
+
 import java.util.List;
 
 import gt.general.logic.persistence.PersistenceMap;
@@ -7,11 +9,11 @@ import gt.general.logic.persistence.exceptions.PersistenceException;
 
 public class HighscoreEntry implements Comparable<HighscoreEntry>{
 	
-	private int time;
-	private int damage;
-	private int deaths;
-	private int points;
-	private List<String> players;
+	private int time = 0;
+	private int damage = 0;
+	private int deaths = 0;
+	private int points = 0;
+	private List<String> players = newArrayList();
 	
 	private final static String KEY_TIME = "time";
 	private final static String KEY_DAMAGE = "damage";
@@ -21,8 +23,7 @@ public class HighscoreEntry implements Comparable<HighscoreEntry>{
 	
 	
 	
-	public HighscoreEntry() {
-	}
+	public HighscoreEntry() {}
 	
 	public HighscoreEntry(int time, int damage, int deaths,
 			int points) {
@@ -30,28 +31,6 @@ public class HighscoreEntry implements Comparable<HighscoreEntry>{
 		this.damage = damage;
 		this.deaths = deaths;
 		this.points = points;
-	}
-
-
-	public int getTime() {
-		return time;
-	}
-	public int getDamage() {
-		return damage;
-	}
-	public int getDeaths() {
-		return deaths;
-	}
-	public int getPoints() {
-		return points;
-	}
-	
-	public void setPlayers(List<String> players) {
-		this.players = players;		
-	}
-	
-	public List<String> getPlayers() {
-		return players;
 	}
 	
 	public void setup(final PersistenceMap map) throws PersistenceException {
@@ -80,6 +59,79 @@ public class HighscoreEntry implements Comparable<HighscoreEntry>{
 	public int compareTo(HighscoreEntry o) {
 		return -Integer.valueOf(getPoints()).compareTo(o.getPoints());
 	}
+
+	/**
+	 * @return the time
+	 */
+	public int getTime() {
+		return time;
+	}
+
+	/**
+	 * @param time the time to set
+	 */
+	public void setTime(int time) {
+		this.time = time;
+	}
+
+	/**
+	 * @return the damage
+	 */
+	public int getDamage() {
+		return damage;
+	}
+
+	/**
+	 * @param damage the damage to set
+	 */
+	public void setDamage(int damage) {
+		this.damage = damage;
+	}
+
+	/**
+	 * @return the deaths
+	 */
+	public int getDeaths() {
+		return deaths;
+	}
+
+	/**
+	 * @param deaths the deaths to set
+	 */
+	public void setDeaths(int deaths) {
+		this.deaths = deaths;
+	}
+
+	/**
+	 * @return the points
+	 */
+	public int getPoints() {
+		return points;
+	}
+
+	/**
+	 * @param points the points to set
+	 */
+	public void setPoints(int points) {
+		this.points = points;
+	}
+
+	/**
+	 * @return the players
+	 */
+	public List<String> getPlayers() {
+		return players;
+	}
+
+	/**
+	 * @param players the players to set
+	 */
+	public void setPlayers(List<String> players) {
+		this.players = players;
+	}
 	
+	public void addPlayer(final String name) {
+		players.add(name);
+	}
 	
 }

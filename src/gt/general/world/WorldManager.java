@@ -64,6 +64,7 @@ public class WorldManager {
 			
 			WorldInstance worldInstance = new WorldInstance(world);
 			worldInstance.setName(worldName);
+			worldInstance.setBaseName(worldName);
 			
 			instanceMapping.put(world, worldInstance);
 			return worldInstance;

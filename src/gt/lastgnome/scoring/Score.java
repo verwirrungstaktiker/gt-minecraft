@@ -34,6 +34,10 @@ public class Score {
 	public void setTime(int time) {
 		this.time = time;
 	}
+	
+	public void addTime(long millies) {
+		time += millies;
+	}
 
 	public int getTotalDamage() {
 		return totalDamage;
@@ -67,13 +71,11 @@ public class Score {
 	
 	public int getPoints() {
 		//TODO: improve Forumla
-		int ten_minutes = 10*60*10; //Scoremanager schedules 10times per Second 
-		return (400-totalDamage-totalDeaths*2)*ten_minutes/time;
+		int tenMinutes = 10*60*10; //Scoremanager schedules 10times per Second 
+		return (400-totalDamage-totalDeaths*2)*tenMinutes/time;
 	}
 	
 	public HighscoreEntry toHighscoreEntry() {
 		return new HighscoreEntry(time, totalDamage, totalDeaths, getPoints());
 	}
-	
-
 }

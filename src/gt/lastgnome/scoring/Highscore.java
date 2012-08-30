@@ -93,16 +93,11 @@ public class Highscore {
 		scores.add(entry);
 		Collections.sort(scores);		
 	}
-	
-	public void saveScores() {
-		saveScores(worldName);
-	}
-	
+
 	/**
 	 * Saves the Highscore to the specified world
-	 * @param worldName
 	 */
-	private void saveScores(String worldName) {
+	public void saveScores() {
 		PersistenceMap values = new PersistenceMap();
 		List<Map<String,Object>> entries = new ArrayList<Map<String,Object>>();
 		for (HighscoreEntry entry : scores) {

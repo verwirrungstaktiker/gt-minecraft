@@ -1,47 +1,42 @@
 package gt.lastgnome.scoring;
 
+import static com.google.common.collect.Lists.*;
+import gt.general.Game;
+import gt.general.character.Hero;
+import gt.general.character.HeroManager;
+
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.PlayerDeathEvent;
-import gt.general.Game;
-import gt.general.character.Hero;
-import gt.general.character.HeroManager;
-import gt.general.character.Team;
-import gt.plugin.meta.Hello;
 
 
-public class ScoreManager implements Runnable, Listener{
+public class ScoreManager implements Listener{
 
-	private int taskID;
 	private boolean active;
+	private long monitoringStarted;
 	
-	private Game game;
+	private final Game game;
 
-	private Score score;
+	private final Score score;
+	
 	/**
 	 * construct new ScoreManager
 	 */
-	public ScoreManager() {
-		active = true;
-	}
-	
-	public Game getGame() {
-		return game;
-	}
-
-	public void setGame(Game game) {
+	public ScoreManager(final Game game) {
 		this.game = game;
+		active = true;
+		
 		score = new Score(game.getTeam());
 	}
 
 	/**
 	 * start counting
 	 */
-	public void startMonitoring() {
-		taskID = Hello.scheduleSyncTask(this, 0, 2);
+	public void startMonitoring() {		
+		monitoringStarted = System.currentTimeMillis();
 		active = true;
 	}
 	
@@ -49,25 +44,10 @@ public class ScoreManager implements Runnable, Listener{
 	 * stop counting
 	 */
 	public void stopMonitoring() {
-		Hello.cancelScheduledTask(taskID);
-		active = false;
-		System.out.println("### Time: " + getTime() + " Deaths: " + getDeaths() + " Damage taken: " + getDeaths());
-	}
-
-	public int getTime() {
-		return score.getTime();
-	}
-
-	public void setTime(final int time) {
-		score.setTime(time);
-	}
-
-	public boolean isActive() {
-		return active;
-	}
-
-	public void setActive(final boolean active) {
-		this.active = active;
+		if(active) {
+			score.addTime(System.currentTimeMillis() - monitoringStarted);
+			active = false;
+		}
 	}
 
 	/**
@@ -79,7 +59,7 @@ public class ScoreManager implements Runnable, Listener{
 		if(active) {
 			Player player = event.getEntity();
 			Hero hero = HeroManager.getHero(player);
-			if(isPartOfGame(hero)) {
+			if(game.isPlayedBy(hero)) {
 				score.addDeath(hero);
 			}
 		}
@@ -94,51 +74,22 @@ public class ScoreManager implements Runnable, Listener{
 		if(active && event.getEntityType() == EntityType.PLAYER) {
 			Player player = (Player) event.getEntity();
 			Hero hero = HeroManager.getHero(player);
-			if(isPartOfGame(hero)) {
+			if(game.isPlayedBy(hero)) {
 				score.addDamage(hero, event.getDamage());
 			}
 		}
 	}
 	
-	@Override
-	public void run() {
-		if(active) {
-			score.setTime(score.getTime()+1);
-		}
-	}
 
-	public int getDeaths() {
-		return score.getTotalDeaths();
-	}
-	
-	public int getDamage() {
-		return score.getTotalDamage();
-	}
-	
-	public int getDeaths(Hero hero) {
-		return score.getDeaths(hero);
-	}
-	
-	public int getDamage(Hero hero) {
-		return score.getDamage(hero);
-	}
-	
-	public Score getScore() {
-		return score;
-	}
-	
-	/**
-	 * @param Hero one of our heros
-	 * @return true if Hero participates in the current game
-	 */
-	private boolean isPartOfGame(final Hero hero) {
-		Team team = hero.getTeam();
+	public HighscoreEntry toHighscoreEntry() {
 		
-		//check if part of the the monitored team			
-		if(game.getTeam().equals(team)) {
-			return true;
-		} else {
-			return false;
+		HighscoreEntry hse = score.toHighscoreEntry();
+		
+		for(Hero h : game.getTeam().getPlayers()) {
+			hse.addPlayer(h.getPlayer().getName());
 		}
+		
+		return hse;
 	}
+	
 }
