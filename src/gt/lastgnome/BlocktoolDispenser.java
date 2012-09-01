@@ -48,11 +48,17 @@ public class BlocktoolDispenser implements BlockObserver {
 		oBlock.removeObserver(this, block.getWorld());
 	}
 	
+	/**
+	 * destroy the dispenser
+	 */
 	public void dispose() {
 		unregisterFromSubject();
 		block.setType(Material.AIR);
 	}
 	
+	/**
+	 * @return block that holds the dispenser
+	 */
 	public Block getBlock() {
 		return block;
 	}
@@ -65,7 +71,7 @@ public class BlocktoolDispenser implements BlockObserver {
 			
 			if(hero!=null) {
 				if(contingent>0) {
-					hero.setActiveItem(new BlockTool());
+					hero.setActiveItem(new BlockTool(this));
 					player.sendMessage(ChatColor.GREEN + "You obtained an Obsidian Placing Device.");
 					
 					contingent--;
@@ -85,5 +91,9 @@ public class BlocktoolDispenser implements BlockObserver {
 
 	public void setContingent(int contingent) {
 		this.contingent = contingent;
+	}
+	
+	public void increaseContingent() {
+		this.contingent++;
 	}
 }

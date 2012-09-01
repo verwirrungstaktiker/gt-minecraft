@@ -1,6 +1,7 @@
 package gt.lastgnome;
 
 import org.bukkit.ChatColor;
+import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
@@ -21,28 +22,35 @@ import gt.plugin.meta.Hello;
 public class BlockTool extends PortableItem{
 	
 	public static final Material MATERIAL = Material.OBSIDIAN;
-	
+	/** the maximum allowed range between dispenser and blocktool */
+	private static final double MAX_RANGE = 20.0;
+	/** the dispenser that created this blockTool */
+	private BlocktoolDispenser dispenser;
 	private ItemStack itemStack;
 	
 	/**
 	 * @param plugin plugin that holds the tool
 	 * @param name name of the tool
 	 * @param texture link to the texture
+	 * @param dispenser the dispenser that creates this blockTool
 	 */
-	public BlockTool(final Plugin plugin, final String name, final String texture) {
+	public BlockTool(final Plugin plugin, final String name, final String texture, final BlocktoolDispenser dispenser) {
 		super(plugin, name, texture, UnlockItemType.BLOCK_TOOL);
 
 		itemStack = new SpoutItemStack(this);
+		this.dispenser = dispenser;
 		
 		setTool(false);
-		setDropable(false);
+		setDropable(true);
 		setTransferable(true);
 		
 	}
 	
-	/** anonymous constructor */
-	public BlockTool() {
-		this(Hello.getPlugin(), "BlockTool", "http://www.mariowiki.com/images/9/95/QuestionMarkBlockNSMB.png");
+	/** 
+	 * @param dispenser the dispenser that creates this blockTool
+	 */
+	public BlockTool(final BlocktoolDispenser dispenser) {
+		this(Hello.getPlugin(), "BlockTool", "http://www.mariowiki.com/images/9/95/QuestionMarkBlockNSMB.png", dispenser);
 	}
 
 	@Override
@@ -66,14 +74,32 @@ public class BlockTool extends PortableItem{
 		if(block!=null && block.getType()==MATERIAL) {
 			
 			Block relBlock = block.getRelative(face);
-			relBlock.setType(MATERIAL);
 			
+			if(inRange(relBlock.getLocation())) {
+				// build
+				relBlock.setType(MATERIAL);
+				player.sendMessage(ChatColor.GREEN + "The device created a block.");
+			} else {
+				// recycle
+				dispenser.increaseContingent();
+				player.sendMessage(ChatColor.YELLOW + "The device was used too far from its origin. It vanished.");
+			}
 			HeroManager.getHero(player).removeActiveItem();
 			return true;
 		} else {
+			// wrong surface
 			player.sendMessage(ChatColor.RED + "Cannot be placed here! (Only on " + MATERIAL + ")");
-			return false;	
+			return false;
 		}
 	}
-
+	
+	/**
+	 * @param blockLoc location of the placed block
+	 * @return true if the Block can be placed here
+	 */
+	private boolean inRange(final Location blockLoc) {
+		Location dispenserLoc = dispenser.getBlock().getLocation();
+		
+		return (dispenserLoc.distance(blockLoc) <= MAX_RANGE);
+	}
 }
