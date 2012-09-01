@@ -32,7 +32,10 @@ public class LeverRandomizer {
 		}
 	}
 
-	private void randomizeLevers(TriggerContext context) {
+	/**
+	 * @param context context where levers are randomized
+	 */
+	private void randomizeLevers(final TriggerContext context) {
 		List<List<RandomLeverTrigger>> groups = getLeversInGroups(context);
 		
 		for (List<RandomLeverTrigger> group : groups) {
@@ -40,8 +43,8 @@ public class LeverRandomizer {
 				continue;
 			}
 			for (int i=0;i<2;++i) {
-				int random_index = rand.nextInt(group.size());
-				RandomLeverTrigger lever = group.get(random_index);
+				int randomIndex = rand.nextInt(group.size());
+				RandomLeverTrigger lever = group.get(randomIndex);
 				lever.setGreen(false);
 				context.setupInverted(lever);
 			}
@@ -49,7 +52,11 @@ public class LeverRandomizer {
 		}
 	}	
 	
-	private List<List<RandomLeverTrigger>> getLeversInGroups(TriggerContext context) {
+	/**
+	 * @param context the TriggerContext
+	 * @return a grouped list of triggers in a context
+	 */
+	private List<List<RandomLeverTrigger>> getLeversInGroups(final TriggerContext context) {
 		List<List<RandomLeverTrigger>> groups = new ArrayList<List<RandomLeverTrigger>>();
 		
 		for (Trigger trigger : context.getTriggers()) {
@@ -64,8 +71,9 @@ public class LeverRandomizer {
 				int groupNumber = Integer.parseInt(label.substring(index));
 				//Fill up as much as necessary
 				if (groups.size() <= groupNumber) {
-					for (int i=groups.size();i<=groupNumber; ++i)
-					groups.add(i, new ArrayList<RandomLeverTrigger>());
+					for (int i=groups.size();i<=groupNumber; ++i) {
+						groups.add(i, new ArrayList<RandomLeverTrigger>());
+					}
 				}
 				groups.get(groupNumber).add((RandomLeverTrigger) trigger);				
 			}

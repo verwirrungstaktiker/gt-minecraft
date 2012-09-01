@@ -56,6 +56,9 @@ public class RandomLeverTrigger extends LeverRedstoneTrigger{
 		changeSignals();
 	}
 
+	/**
+	 * sync the visuals with the internal invert
+	 */
 	private void changeSignals() {
 		ObservableCustomBlock signalBlock;
 		if (green) {
@@ -69,7 +72,11 @@ public class RandomLeverTrigger extends LeverRedstoneTrigger{
 		}
 	}
 	
-	public void setGreen(boolean green) {
+	/**
+	 * set if the trigger shall be secretly inverted
+	 * @param green true if not secretly inverted
+	 */
+	public void setGreen(final boolean green) {
 		if (this.green != green) {
 			this.green = green;
 			toggleInvert();

@@ -9,7 +9,6 @@ import org.bukkit.block.Block;
 
 import gt.general.character.Hero;
 import gt.general.character.HeroManager;
-import gt.general.logic.TriggerContext;
 import gt.general.logic.persistence.PersistenceMap;
 import gt.general.logic.persistence.exceptions.PersistenceException;
 import gt.general.world.BlockObserver;

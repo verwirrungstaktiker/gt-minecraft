@@ -9,12 +9,17 @@ public class PersistenceException extends Exception{
 	
 	private final String key;
 	
+	/**
+	 * @param key exception key
+	 */
 	public PersistenceException(final String key) {
 		super();
 		this.key = key;
 	}
 
-	
+	/**
+	 * @return exception key
+	 */
 	public String getKey() {
 		return key;
 	}

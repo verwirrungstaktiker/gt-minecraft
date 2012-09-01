@@ -97,7 +97,7 @@ public class RedstoneTrigger extends BlockTrigger implements Listener {
 	}
 	
 	@Override
-	public void setContext(TriggerContext context) {
+	public void setContext(final TriggerContext context) {
 		super.setContext(context);
 		
 		if(inverted) {
@@ -122,10 +122,13 @@ public class RedstoneTrigger extends BlockTrigger implements Listener {
 	/**
 	 * @param active the active to set
 	 */
-	public void setActive(boolean active) {
+	public void setActive(final boolean active) {
 		this.active = active;
 	}
 	
+	/**
+	 * @return true if inverted
+	 */
 	public boolean getInverted() {
 		return inverted;
 	}
