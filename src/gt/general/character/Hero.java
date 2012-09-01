@@ -300,10 +300,16 @@ public class Hero extends Character{
 		}
 	}
 
+	/**
+	 * @param player bukkit player
+	 */
 	public void setPlayer(final Player player) {
 		this.player = player;
 	}
 	
+	/**
+	 * @return hero of the game, if he is ingame
+	 */
 	public Game getGame() {
 		
 		if(! inGame()) {
@@ -313,6 +319,9 @@ public class Hero extends Character{
 		}
 	}
 	
+	/**
+	 * @return true if hero is part of a game
+	 */
 	public boolean inGame() {
 		
 		return inTeam() && getTeam().inGame();

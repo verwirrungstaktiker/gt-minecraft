@@ -81,10 +81,10 @@ public class BlockTool extends PortableItem{
 				player.sendMessage(ChatColor.GREEN + "The device created a block.");
 			} else {
 				// recycle
-				dispenser.increaseContingent();
 				player.sendMessage(ChatColor.YELLOW + "The device was used too far from its origin. It vanished.");
 			}
 			HeroManager.getHero(player).removeActiveItem();
+			dispenser.increaseContingent();
 			return true;
 		} else {
 			// wrong surface

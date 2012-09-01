@@ -46,6 +46,9 @@ public class DispenserContainer extends YamlSerializable implements Listener {
 		}
 	}
 	
+	/**
+	 * @return all dispensers
+	 */
 	public Collection<BlocktoolDispenser> getDispensers() {
 		return dispensers.values();
 	}
@@ -85,6 +88,10 @@ public class DispenserContainer extends YamlSerializable implements Listener {
 		return new HashSet<Block>();
 	}
 
+	/**
+	 * handle building of BlockToolDispensers
+	 * @param event block place
+	 */
 	@EventHandler
 	public void onBlockPlace(final BlockPlaceEvent event) {
 
@@ -107,6 +114,10 @@ public class DispenserContainer extends YamlSerializable implements Listener {
 		}
 	}
 	
+	/**
+	 * handle destroying of BlockToolDispensers
+	 * @param event block break
+	 */
 	@EventHandler
 	public void onBlockBreak(final BlockBreakEvent event) {
 
