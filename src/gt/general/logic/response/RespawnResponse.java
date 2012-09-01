@@ -45,5 +45,8 @@ public class RespawnResponse extends CustomBlockResponse implements RespawnPoint
 		return getBlock().getLocation().add(0.5, 1.0, 0.5);
 	}
 	
+	public RespawnManager getRespawnManager() {
+		return respawnManager;
+	}
 	
 }
