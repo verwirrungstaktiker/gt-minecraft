@@ -35,7 +35,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 
 /**
- * Basic Bukkit Plugin to test stuff
+ * The LastGnomeGame Plugin
  *
  * @author Roman
  *

@@ -22,7 +22,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 
 /**
- * Base for the editor plugin
+ * The Editor Plugin
  * 
  * @author Sebastian Fahnenschreiber
  */

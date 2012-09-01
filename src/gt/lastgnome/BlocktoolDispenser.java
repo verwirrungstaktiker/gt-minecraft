@@ -13,7 +13,9 @@ import gt.general.world.ObservableCustomBlock.BlockEventType;
 import gt.plugin.meta.CustomBlockType;
 
 /**
- * Item-class for GnomeSocket
+ * Provides BlockTools on interact
+ * @author Roman
+ *
  */
 public class BlocktoolDispenser implements BlockObserver {
 	/** maximum active blockTools at the same time */
