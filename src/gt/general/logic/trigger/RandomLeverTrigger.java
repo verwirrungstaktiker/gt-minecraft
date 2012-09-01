@@ -36,7 +36,7 @@ public class RandomLeverTrigger extends LeverRedstoneTrigger{
 	public PersistenceMap dump() {
 		PersistenceMap map = super.dump();
 		map.put(KEY_SIGNALS, signals);
-		map.put(KEY_INVERTED, false);
+		//map.put(KEY_INVERTED, );
 		return map;
 	}
 	
@@ -46,7 +46,11 @@ public class RandomLeverTrigger extends LeverRedstoneTrigger{
 		
 		signals = values.getBlocks(KEY_SIGNALS, world);
 		
-		green = true;
+		if (values.get(KEY_INVERTED)) {
+			setGreen(false);
+		} else {
+			green = true;
+		}
 		
 		//toggleInvert();
 		changeSignals();
