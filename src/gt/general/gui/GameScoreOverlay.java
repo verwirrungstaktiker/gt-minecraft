@@ -6,7 +6,6 @@ import gt.lastgnome.scoring.HighscoreEntry;
 import gt.plugin.meta.Hello;
 
 import org.getspout.spoutapi.event.screen.ButtonClickEvent;
-import org.getspout.spoutapi.event.screen.ScreenCloseEvent;
 import org.getspout.spoutapi.gui.Button;
 import org.getspout.spoutapi.gui.Color;
 import org.getspout.spoutapi.gui.Container;
