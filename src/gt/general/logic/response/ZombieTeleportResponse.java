@@ -13,12 +13,15 @@ public class ZombieTeleportResponse extends ZombieResponse{
 	
 	private Location teleportLocation;
 	
+	/**
+	 * don't delete this anonymous constructor
+	 */
 	public ZombieTeleportResponse() {
 		super("zombie_teleport");
 	}
 
 	@Override
-	public void triggered(TriggerEvent triggerEvent) {
+	public void triggered(final TriggerEvent triggerEvent) {
 		getZombieManager().teleportZombies(teleportLocation);
 	}
 
@@ -35,7 +38,7 @@ public class ZombieTeleportResponse extends ZombieResponse{
 	}
 
 	@Override
-	public void setup(PersistenceMap values, World world)
+	public void setup(final PersistenceMap values, final World world)
 			throws PersistenceException {
 		teleportLocation = values.getLocation(KEY_LOCATION, world);
 	}

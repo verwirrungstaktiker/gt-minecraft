@@ -1,6 +1,6 @@
 package gt.general.logic.response;
 
-import static com.google.common.collect.Sets.*;
+import static com.google.common.collect.Sets.newHashSet;
 import gt.general.character.ZombieManager;
 import gt.general.logic.TriggerEvent;
 import gt.general.logic.persistence.PersistenceMap;

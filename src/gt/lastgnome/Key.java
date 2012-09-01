@@ -10,7 +10,8 @@ import org.bukkit.plugin.Plugin;
 import org.getspout.spoutapi.inventory.SpoutItemStack;
 
 /**
- * Item-class for Key.
+ * @author Roman
+ * The Key item
  */
 public final class Key extends PortableItem {
 

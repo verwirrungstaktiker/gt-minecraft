@@ -4,16 +4,29 @@ import org.bukkit.block.Block;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.block.BlockRedstoneEvent;
 
+/**
+ * Kind of Trigger that resets after some time
+ */
 public class ResettingRedstoneTrigger extends RedstoneTrigger{
 
+	/**
+	 * construct a new resetting trigger
+	 */
 	public ResettingRedstoneTrigger() {}
 	
-	public ResettingRedstoneTrigger(String string, Block block) {
+	/**
+	 * @param string name prefix
+	 * @param block block that holds the trigger
+	 */
+	public ResettingRedstoneTrigger(final String string, final Block block) {
 		super (string, block);
 	}
 
+	/**
+	 * @param event a redstone signal is inverted somewhere
+	 */
 	@EventHandler
-	public void reset(BlockRedstoneEvent event) {
+	public void reset(final BlockRedstoneEvent event) {
 		if (event.getBlock() == getBlock()) {
 			if ( event.getNewCurrent() == 0) {
 				setActive(false);

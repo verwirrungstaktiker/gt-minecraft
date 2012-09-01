@@ -10,13 +10,22 @@ import org.bukkit.block.Block;
 
 public class RespawnResponse extends CustomBlockResponse implements RespawnPoint {
 
-	private final static CustomBlockType BLOCK = CustomBlockType.RESPAWN_BLOCK;
+	private static final CustomBlockType BLOCK = CustomBlockType.RESPAWN_BLOCK;
 	private RespawnManager respawnManager;	
 	
-	public RespawnResponse(String name, Block block, CustomBlockType type) {
+	/**
+	 * construct new RespawnResponse
+	 * @param name name prefix
+	 * @param block bukkit block that holds the response
+	 * @param type the type of customblock that is displayed
+	 */
+	public RespawnResponse(final String name, final Block block, final CustomBlockType type) {
 		super("respawn", block, BLOCK);
 	}
 	
+	/**
+	 * don't delete this anonymous constructor
+	 */
 	public RespawnResponse() {
 		super(BLOCK);
 	}

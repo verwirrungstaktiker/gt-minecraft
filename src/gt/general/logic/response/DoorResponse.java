@@ -54,8 +54,8 @@ public class DoorResponse extends Response {
 		
 		material = values.get(KEY_MATERIAL);
 		
-		int data_lower = values.get(KEY_DATA_LOWER);
-		int data_upper = values.get(KEY_DATA_UPPER);
+		int dataLower = values.get(KEY_DATA_LOWER);
+		int dataUpper = values.get(KEY_DATA_UPPER);
 		//orientation = values.get(KEY_ORIENTATION);
 
 		lowerBlock.setType(material);
@@ -69,8 +69,8 @@ public class DoorResponse extends Response {
 		door.setTopHalf(false);
 		door.setFacingDirection(orientation);		
 		lowerBlock.setData(door.getData(),true);*/
-		upperBlock.setData((byte) (data_upper),true);
-		lowerBlock.setData((byte) (data_lower),true);
+		upperBlock.setData((byte) (dataUpper),true);
+		lowerBlock.setData((byte) (dataLower),true);
 	}
 	
 	@Override

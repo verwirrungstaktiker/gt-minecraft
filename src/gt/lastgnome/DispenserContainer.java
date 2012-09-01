@@ -22,6 +22,11 @@ import gt.general.logic.persistence.exceptions.PersistenceException;
 import gt.general.world.ObservableCustomBlock;
 import gt.plugin.meta.CustomBlockType;
 
+/**
+ * Holds all Dispensers in a Level
+ * @author Roman
+ *
+ */
 public class DispenserContainer extends YamlSerializable implements Listener {
 	
 	public static final String PERSISTANCE_FILE = "blocktool_dispenser.yml";

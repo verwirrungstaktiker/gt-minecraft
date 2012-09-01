@@ -19,7 +19,11 @@ import gt.general.character.HeroManager;
 import gt.general.logic.trigger.UnlockItemType;
 import gt.plugin.meta.Hello;
 
-/** a single use tool that spawns blocks */
+/**
+ * a single use tool that spawns blocks
+ * @author Roman
+ *
+ */
 public class BlockTool extends PortableItem{
 	
 	public static final Material MATERIAL = Material.OBSIDIAN;
@@ -42,7 +46,7 @@ public class BlockTool extends PortableItem{
 		this.dispenser = dispenser;
 		
 		setTool(false);
-		setDropable(true);
+		setDropable(false);
 		setTransferable(true);
 		
 	}

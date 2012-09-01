@@ -37,21 +37,21 @@ public class ZombieManager implements Listener, Runnable{
 	private boolean frozen = false;
 	private final Game game;
 	
-	private final static double ACTIVATE_CATCHUP_DISTANCE = 13.0;
-	private final static double DEACTIVATE_CATCHUP_DISTANCE = 10.0;
+	private static final double ACTIVATE_CATCHUP_DISTANCE = 13.0;
+	private static final double DEACTIVATE_CATCHUP_DISTANCE = 10.0;
 	
 	public static final int SCHEDULE_RATE = 10;
 	
 	/**
 	 * Creates a new ZombieManager
 	 * @param world the world, where the Zombies will be spawned
+	 * @param game the game that holds this manager
 	 */
 	public ZombieManager(final World world, final Game game) {
 		this.game = game;
 		zombies = new Vector<ZombieCharacter>();
 		this.world = world;
 	}
-
 	
 	/**
 	 *  Handles events, when Zombie hits or is hit
@@ -70,6 +70,12 @@ public class ZombieManager implements Listener, Runnable{
 			if (event.getEntity() instanceof Zombie) {
 				event.setCancelled(true);
 			}
+		}
+		
+		//if player takes damage at least he shouldn't be hungry ;)
+		if (event.getEntityType()==EntityType.PLAYER) {
+			Player player = (Player) event.getEntity();
+			player.setFoodLevel(20);
 		}
 		
 	}
@@ -104,7 +110,6 @@ public class ZombieManager implements Listener, Runnable{
 	/**
 	 * Spawns a Zombie with different speed and an aura
 	 * @param spawnpoint location, where zombie should be spawned
-	 * @param aura an Aura which originates from the zombie 
 	 * @param speed the Zombies basic speed-multiplicator
 	 * 
 	 */
@@ -218,12 +223,18 @@ public class ZombieManager implements Listener, Runnable{
 		}
 	}
 	
+	/**
+	 * zombies won't move
+	 */
 	public void freezeAllZombies() {
 		for(ZombieCharacter z : zombies) {
 			z.pause();
 		}
 	}
 
+	/**
+	 * zombies will move again
+	 */
 	public void unFreezeAllZombies() {
 		for(ZombieCharacter z : zombies) {
 			z.resume(FreezeCause.PAUSE);

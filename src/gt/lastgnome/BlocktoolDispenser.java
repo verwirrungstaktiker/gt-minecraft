@@ -13,7 +13,9 @@ import gt.general.world.ObservableCustomBlock.BlockEventType;
 import gt.plugin.meta.CustomBlockType;
 
 /**
- * Item-class for GnomeSocket
+ * Provides BlockTools on interact
+ * @author Roman
+ *
  */
 public class BlocktoolDispenser implements BlockObserver {
 	/** maximum active blockTools at the same time */
@@ -81,14 +83,22 @@ public class BlocktoolDispenser implements BlockObserver {
 			
 			if(hero!=null) {
 				if(contingent>0) {
-					hero.setActiveItem(new BlockTool(this));
-					player.sendMessage(ChatColor.GREEN + "You obtained an Obsidian Placing Device.");
-					
-					contingent--;
+					if(hero.canRecieveItem()) {
+						//can receive
+						hero.setActiveItem(new BlockTool(this));
+						player.sendMessage(ChatColor.GREEN + "You obtained an Obsidian Placing Device.");
+						
+						contingent--;
+					} else {
+						// can not receive
+						player.sendMessage(ChatColor.YELLOW + "You already carry enough.");
+					}
 				} else {
+					// no contingent left
 					player.sendMessage(ChatColor.YELLOW + "The Obsidian Placing Device is already in use.");
 				}
 			} else {
+				// no hero (editor mode)
 				player.sendMessage(ChatColor.YELLOW + "The device is not available in the current game mode.");
 			}
 		}
