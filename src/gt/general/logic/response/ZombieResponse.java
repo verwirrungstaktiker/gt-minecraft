@@ -11,7 +11,11 @@ public abstract class ZombieResponse extends Response {
 
 	private ZombieManager zm;
 
-	public ZombieResponse(String labelPrefix) {
+	/**
+	 * don't delete
+	 * @param labelPrefix name prefix
+	 */
+	public ZombieResponse(final String labelPrefix) {
 		super(labelPrefix);
 	}
 
@@ -20,10 +24,16 @@ public abstract class ZombieResponse extends Response {
 		return new HashSet<Block>();
 	}
 	
-	public void setZombieManager(ZombieManager zm) {
+	/**
+	 * @param zm the new zombieManager
+	 */
+	public void setZombieManager(final ZombieManager zm) {
 		this.zm = zm;		
 	}
 	
+	/**
+	 * @return the zombieManager
+	 */
 	public ZombieManager getZombieManager() {
 		return zm;
 	}

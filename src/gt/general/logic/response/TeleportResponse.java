@@ -15,7 +15,7 @@ import org.bukkit.entity.Player;
 
 public class TeleportResponse extends CustomBlockResponse implements RespawnPoint {
 
-	private final static CustomBlockType BLOCK = CustomBlockType.TELEPORT_EXIT;
+	private static final CustomBlockType BLOCK = CustomBlockType.TELEPORT_EXIT;
 	
 	
 	private static final String KEY_CONTINGENT = "contingent";
@@ -24,6 +24,9 @@ public class TeleportResponse extends CustomBlockResponse implements RespawnPoin
 
 	private RespawnManager respawnManager;
 	
+	/**
+	 * @param block bukkit block
+	 */
 	public TeleportResponse(final Block block) {
 		super("teleport", block, BLOCK);
 
@@ -74,6 +77,10 @@ public class TeleportResponse extends CustomBlockResponse implements RespawnPoin
 		this.respawnManager = respawnManager;
 	}
 
+	/**
+	 * teleport the player to the teleport block
+	 * @param player bukkit player that is teleported
+	 */
 	private void teleportPlayer(final Player player) {
 		player.getWorld().playEffect(player.getLocation(), Effect.MOBSPAWNER_FLAMES, 25);
 		player.teleport(getBlock().getLocation().add(0.5, 1.0, 0.5));

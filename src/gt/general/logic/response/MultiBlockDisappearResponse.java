@@ -25,10 +25,17 @@ public class MultiBlockDisappearResponse extends Response {
 	private Block min;
 	private Block max;
 	
+	/**
+	 * don't delete this anonymous constructor
+	 */
 	public MultiBlockDisappearResponse() {
 		super();
 	}
 	
+	/**
+	 * @param block1 lower edge of the area
+	 * @param block2 upper edge of the area
+	 */
 	public MultiBlockDisappearResponse(final Block block1, final Block block2) {
 		super("multi_block_disappear");
 		
@@ -39,6 +46,10 @@ public class MultiBlockDisappearResponse extends Response {
 		loadBlocks(block1.getWorld());
 	}
 	
+	/**
+	 * @param loc1 location of the first block
+	 * @param loc2 location of the second block
+	 */
 	private void loadLocations(final Location loc1, final Location loc2) {
 		int x1, x2, y1, y2, z1, z2, temp;
 		
@@ -109,6 +120,10 @@ public class MultiBlockDisappearResponse extends Response {
 		return blocks;
 	}
 
+	/**
+	 * spawn all blocks
+	 * @param world the world that holds the blocks
+	 */
 	public void loadBlocks(final World world) {
 		for (int x=min.getX();x<=max.getX();x++) {
 			for (int y=min.getY();y<=max.getY();y++) {
@@ -145,18 +160,30 @@ public class MultiBlockDisappearResponse extends Response {
 		}
 	}
 
+	/**
+	 * @return true if the blocks appear on power
+	 */
 	public boolean isInverted() {
 		return inverted;
 	}
 
+	/**
+	 * @param inverted true if the blocks shall appear on power
+	 */
 	public void setInverted(final boolean inverted) {
 		this.inverted = inverted;
 	}
 
+	/**
+	 * @return the Material of the Blocks
+	 */
 	public Material getMaterial() {
 		return material;
 	}
 
+	/**
+	 * @param material the Material of the Blocks
+	 */
 	public void setMaterial(final Material material) {
 		this.material = material;
 	}	
