@@ -94,6 +94,11 @@ public abstract class Game implements Listener {
 	 * e.g. removes related tasks from the scheduler
 	 */
 	public void dispose() {
+		
+		for (Hero hero : team.getPlayers()) {
+			hero.removeActiveItem().getName();
+		}
+		
 		for (Listener listener : listeners) {
 			MultiListener.unregisterListener(listener);			
 		}

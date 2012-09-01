@@ -109,12 +109,13 @@ global-contexts:
     - lever_trigger_721890568
     - lever_trigger_428484879
     responses:
+    - zombie_spawn_1
     - door_response_1175158586
     - door_response_190054466
     - door_response_1732285648
     - door_response_740081667
     - initial_fence
-    input-function: OR
+    input-function: AND
   hallway1_room1:
     triggers:
     - lever_trigger__150167171
@@ -422,6 +423,7 @@ global-triggers:
       z: 43
       y: 69
       x: -29
+    contingent: 1
   lever_trigger__86438171:
     orientation: !!org.bukkit.block.BlockFace 'SOUTH'
     class: gt.general.logic.trigger.LeverRedstoneTrigger
@@ -464,6 +466,7 @@ global-triggers:
       z: 56
       y: 69
       x: -29
+    contingent: 1
   gnome_trigger_1732461900:
     class: gt.general.logic.trigger.GnomeItemTrigger
     block:
@@ -593,6 +596,7 @@ global-triggers:
       z: 43
       y: 69
       x: -27
+    contingent: 1
   lever_trigger_428484879:
     orientation: !!org.bukkit.block.BlockFace 'NORTH'
     class: gt.general.logic.trigger.LeverRedstoneTrigger
@@ -665,6 +669,7 @@ global-triggers:
       z: 56
       y: 69
       x: -27
+    contingent: 1
   red_lever_group2:
     orientation: !!org.bukkit.block.BlockFace 'SOUTH'
     class: gt.general.logic.trigger.RandomLeverTrigger
@@ -838,7 +843,6 @@ global-responses:
       y: 69
       x: -21
     class: gt.general.logic.response.TeleportResponse
-    contingent: -1
     material: !!org.bukkit.Material 'STONE'
   door_response_2083864723:
     data_lower: 0
@@ -967,7 +971,6 @@ global-responses:
       y: 69
       x: -21
     class: gt.general.logic.response.TeleportResponse
-    contingent: -1
     material: !!org.bukkit.Material 'STONE'
   math_riddle2_sign_6:
     orientation: !!org.bukkit.block.BlockFace 'NORTH'
@@ -1096,7 +1099,6 @@ global-responses:
       y: 64
       x: -27
     class: gt.general.logic.response.TeleportResponse
-    contingent: -1
     material: !!org.bukkit.Material 'STONE'
   appearable_block_1677364539:
     location:
@@ -1186,7 +1188,6 @@ global-responses:
       y: 64
       x: -29
     class: gt.general.logic.response.TeleportResponse
-    contingent: -1
     material: !!org.bukkit.Material 'STONE'
   door_response_1288078161:
     data_lower: 0
@@ -1203,6 +1204,14 @@ global-responses:
       y: 70.0
       x: 91.0
     class: gt.general.logic.response.ZombieTeleportResponse
+  zombie_spawn_1:
+    number: 6
+    speed: 1.0
+    location:
+      z: 17.0
+      y: 67.0
+      x: -5.0
+    class: gt.general.logic.response.ZombieSpawnResponse
   initial_fence:
     min:
       z: 47

@@ -136,20 +136,6 @@ public class HelloWorld extends JavaPlugin {
 			}
 		});
 		
-		getCommand("blocktool").setExecutor(new PlayerCommandExecutor() {
-			
-			@Override
-			public boolean onPlayerCommand(final Player player, final Command cmd, final String label,
-					final String[] args) {
-				System.out.println("giving block tool");
-				Hero hero = HeroManager.getHero(player);
-				
-				hero.setActiveItem(new BlockTool());
-
-				return true;
-			}
-		});
-		
 		getCommand("instances").setExecutor(new CommandExecutor() {
 			
 			@Override

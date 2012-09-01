@@ -18,17 +18,10 @@ public class TeleportResponse extends CustomBlockResponse implements RespawnPoin
 	private final static CustomBlockType BLOCK = CustomBlockType.TELEPORT_EXIT;
 	
 	
-	private static final String KEY_CONTINGENT = "contingent";
-	private int maximumContingent;
-	private int currentContingent;
-
 	private RespawnManager respawnManager;
 	
 	public TeleportResponse(final Block block) {
 		super("teleport", block, BLOCK);
-
-		maximumContingent = -1;
-		currentContingent = -1;
 	}
 	
 	/** */
@@ -40,14 +33,13 @@ public class TeleportResponse extends CustomBlockResponse implements RespawnPoin
 	public void setup(final PersistenceMap values, final World world) throws PersistenceException {
 		super.setup(values, world);
 		
-		maximumContingent = values.getInt(KEY_CONTINGENT);
-		currentContingent = maximumContingent;
+		//For some reason, generic version in parent Class does not work 
+		CustomBlockType.TELEPORT_EXIT.place(getBlock());
 	}
 	
 	@Override
 	public PersistenceMap dump() {
 		PersistenceMap map = super.dump();
-		map.put(KEY_CONTINGENT, maximumContingent);
 		return map;
 	}
 
@@ -55,8 +47,7 @@ public class TeleportResponse extends CustomBlockResponse implements RespawnPoin
 	public void triggered(final TriggerEvent triggerEvent) {
 		
 		if(triggerEvent.isActive()) {
-			if(currentContingent != 0) {
-				--currentContingent;
+			
 				Player player = triggerEvent.getPlayer();
 				
 				// there is no respawn manager in the editor - TODO ?
@@ -65,7 +56,7 @@ public class TeleportResponse extends CustomBlockResponse implements RespawnPoin
 				}
 				
 				teleportPlayer(player);
-			}
+			
 		}
 	}
 
@@ -75,7 +66,6 @@ public class TeleportResponse extends CustomBlockResponse implements RespawnPoin
 	}
 
 	private void teleportPlayer(final Player player) {
-		player.getWorld().playEffect(player.getLocation(), Effect.MOBSPAWNER_FLAMES, 25);
 		player.teleport(getBlock().getLocation().add(0.5, 1.0, 0.5));
 	}
 

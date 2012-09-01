@@ -86,16 +86,10 @@ public class GameManager implements GameObserver{
 	 */
 	public void endGame(final Game game) {
 		
-		// TODO make this better
 		game.getTeam()
 			.teleportTo(worldManager.getInitialWorld()
 									.getSpawnLocation());
-		
-		teamManager.disband(game.getTeam());
-		
-		game.getWorldInstance()
-			.dispose();
-		
+		game.getTeam().dispose();
 		game.dispose();
 	}
 	
