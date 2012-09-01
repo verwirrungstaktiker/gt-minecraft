@@ -209,7 +209,7 @@ public class Hero extends Character{
 	 * @param target where to put the inventory
 	 */
 	public void transferActiveItem(final Hero target) {
-		if (activeItem.isTransferable() && target.canRecieveItem()) {			
+		if (activeItem.isTransferable() && target.canRecieveItem()) {
 			target.setActiveItem(removeActiveItem());
 		}
 	}

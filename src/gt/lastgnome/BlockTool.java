@@ -5,6 +5,7 @@ import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
+import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.Plugin;
 import org.getspout.spoutapi.block.SpoutBlock;
@@ -60,12 +61,25 @@ public class BlockTool extends PortableItem{
 
 	@Override
 	public void onAttachHero(final Hero hero) {
-		hero.freeze();
+		Player player = hero.getPlayer();
+		
+		if(inRange(player.getLocation())) {
+			hero.freeze();
+		} else {
+			// out of range
+			hero.removeActiveItem();
+			dispenser.increaseContingent();
+		}
 	}
 
 	@Override
 	public void onDetachHero(final Hero hero) {
 		hero.resume(FreezeCause.FREEZE);
+		
+		Player player = hero.getPlayer();
+		if(!inRange(player.getLocation())) {
+			player.sendMessage(ChatColor.YELLOW + "The device was used too far from its origin. It vanished.");
+		}
 	}
 	
 	@Override
@@ -79,12 +93,9 @@ public class BlockTool extends PortableItem{
 				// build
 				relBlock.setType(MATERIAL);
 				player.sendMessage(ChatColor.GREEN + "The device created a block.");
-			} else {
-				// recycle
-				player.sendMessage(ChatColor.YELLOW + "The device was used too far from its origin. It vanished.");
 			}
-			HeroManager.getHero(player).removeActiveItem();
 			dispenser.increaseContingent();
+			HeroManager.getHero(player).removeActiveItem();
 			return true;
 		} else {
 			// wrong surface
