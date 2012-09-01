@@ -1,10 +1,9 @@
 package gt.plugin.helloworld;
 
-import static com.google.common.collect.Lists.*;
-import static com.google.common.collect.Maps.*;
-import static com.google.common.collect.Sets.*;
+import static com.google.common.collect.Lists.newArrayList;
+import static com.google.common.collect.Maps.newHashMap;
+import static com.google.common.collect.Sets.newHashSet;
 import gt.general.GameManager;
-import gt.general.character.Hero;
 import gt.general.character.HeroManager;
 import gt.general.character.TeamManager;
 import gt.general.ingameDisplay.ScoreBoard;
@@ -12,8 +11,6 @@ import gt.general.world.InstantiatingWorldManager;
 import gt.general.world.WorldInstance;
 import gt.general.world.WorldManager;
 import gt.lastgnome.scoring.Highscore;
-import gt.lastgnome.BlockTool;
-
 import gt.plugin.helloworld.command.StartGameCommandExecutor;
 import gt.plugin.helloworld.command.TeamCommandExecutor;
 import gt.plugin.meta.Hello;
@@ -38,7 +35,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 
 /**
- * Basic Bukkit Plugin to test stuff
+ * The LastGnomeGame Plugin
  *
  * @author Roman
  *
@@ -49,11 +46,11 @@ public class HelloWorld extends JavaPlugin {
 	private TeamManager teamManager;
 	private WorldManager worldManager;
 	
-	private final static Map<String,Highscore> highscores = newHashMap();
-	private final static Collection<String> availableLevels = newHashSet();
+	private static final Map<String,Highscore> HIGHSCORES = newHashMap();
+	private static final Collection<String> AVAILABLE_LEVELS = newHashSet();
 	
 	static {
-		availableLevels.add("lastgnome");
+		AVAILABLE_LEVELS.add("lastgnome");
 	}
 		
 	/**
@@ -80,10 +77,13 @@ public class HelloWorld extends JavaPlugin {
 		setupLevelTemplates();
 	}
 	
+	/**
+	 * setup the levels that are instantiated
+	 */
 	private void setupLevelTemplates() {
 		File worldsFolder = Hello.getPlugin().getServer().getWorldContainer();
 		
-		for(String levelName : availableLevels) {
+		for(String levelName : AVAILABLE_LEVELS) {
 			
 			File levelFolder = new File(worldsFolder, levelName);
 			if(levelFolder.exists()) {
@@ -99,7 +99,7 @@ public class HelloWorld extends JavaPlugin {
 	
 	/** */
 	public void onDisable() {
-		for(Highscore h : highscores.values()) {
+		for(Highscore h : HIGHSCORES.values()) {
 			h.saveScores();
 		}
 	}
@@ -132,20 +132,6 @@ public class HelloWorld extends JavaPlugin {
 			public boolean onCommand(final CommandSender arg0, final Command arg1, final String arg2, final String[] arg3) {
 				System.out.println("ending games");
 				gameManager.endAllGames();
-				return true;
-			}
-		});
-		
-		getCommand("blocktool").setExecutor(new PlayerCommandExecutor() {
-			
-			@Override
-			public boolean onPlayerCommand(final Player player, final Command cmd, final String label,
-					final String[] args) {
-				System.out.println("giving block tool");
-				Hero hero = HeroManager.getHero(player);
-				
-				hero.setActiveItem(new BlockTool());
-
 				return true;
 			}
 		});
@@ -200,10 +186,18 @@ public class HelloWorld extends JavaPlugin {
 
 	}
 
+	/**
+	 * load the highscores for a level
+	 * @param levelName name of the level
+	 */
 	private void setupHighscore(final String levelName) {
-		highscores.put(levelName, new Highscore(levelName));
+		HIGHSCORES.put(levelName, new Highscore(levelName));
 	}
-	
+
+	/**
+	 * load the highscore boards
+	 * @param levelName name of the level
+	 */
 	private void setupScoreBoards(final String levelName) {
 		
 		List<Location> anchors = newArrayList();
@@ -211,13 +205,17 @@ public class HelloWorld extends JavaPlugin {
 		anchors.add(new Location(worldManager.getInitialWorld(), 3, 80, 59, 90, 0));
 		anchors.add(new Location(worldManager.getInitialWorld(), 3, 73, 59, 90, 0));
 		
-		ScoreBoard sb = new ScoreBoard(highscores.get(levelName), anchors);
+		ScoreBoard sb = new ScoreBoard(HIGHSCORES.get(levelName), anchors);
 		
 		Hello.getIngameDisplayManager().add(sb);
 		
 	}
 	
+	/**
+	 * @param levelName name of the level
+	 * @return the highscores for a level
+	 */
 	public static Highscore getHighscore(final String levelName) {
-		return highscores.get(levelName);
+		return HIGHSCORES.get(levelName);
 	}
 }

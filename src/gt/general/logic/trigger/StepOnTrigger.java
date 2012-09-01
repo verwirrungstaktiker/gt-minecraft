@@ -20,21 +20,28 @@ import org.bukkit.block.Block;
 public class StepOnTrigger extends Trigger implements BlockObserver {
 	
 	private Block block;
-	private boolean triggered;
 	private boolean inUse;
 
-    private static final String KEY_BLOCK = "block";
+	private int maximumContingent;
+	private int currentContingent;
+	
+    private static final String KEY_BLOCK = "block";  
+	private static final String KEY_CONTINGENT = "contingent";
+    
     
     public StepOnTrigger(final Block block) {
     	super("step_on_trigger");
     	
     	this.block = block;
-    	this.triggered = false;
     	this.inUse = false;
     	
     	CustomBlockType.STEP_ON_TRIGGER.place(block);
     	
     	registerWithSubject();
+    	
+		maximumContingent = -1;
+		currentContingent = -1;
+		
     	
     }
     
@@ -45,12 +52,14 @@ public class StepOnTrigger extends Trigger implements BlockObserver {
 			throws PersistenceException {
 		
 		block = values.getBlock(KEY_BLOCK, world);
-		triggered = false;
 		inUse = false;
 		
 		CustomBlockType.STEP_ON_TRIGGER.place(block);
 		
 		registerWithSubject();
+		
+		maximumContingent = values.getInt(KEY_CONTINGENT);
+		currentContingent = maximumContingent;		
 
 	}
 
@@ -59,6 +68,8 @@ public class StepOnTrigger extends Trigger implements BlockObserver {
 		PersistenceMap map = new PersistenceMap();
 		
 		map.put(KEY_BLOCK, block);
+		map.put(KEY_CONTINGENT, maximumContingent);
+		
 		
 		return map;
 	}
@@ -99,18 +110,21 @@ public class StepOnTrigger extends Trigger implements BlockObserver {
 	public void onBlockEvent(final BlockEvent blockEvent) {
 		
 		if(!inUse && blockEvent.getBlock().equals(block) && blockEvent.getBlockEventType() == BlockEventType.PLAYER_STEP_ON) {
-			
-			//block.getWorld().playEffect(block.getLocation(), Effect.MOBSPAWNER_FLAMES, 25);
-            getContext().updateTriggerState(this, true, blockEvent.getPlayer());
-            
-            Hello.scheduleOneTimeTask(new Runnable() {
+			if(currentContingent != 0) {
+				--currentContingent;
+				block.getWorld().playEffect(block.getLocation(), Effect.MOBSPAWNER_FLAMES, 25);
+				getContext().updateTriggerState(this, true, blockEvent.getPlayer());
 				
-				@Override
-				public void run() {
-					getContext().updateTriggerState(StepOnTrigger.this, false, blockEvent.getPlayer());
-				}
-			}, 20 * 2);
-        }
+				Hello.scheduleOneTimeTask(new Runnable(){
+					@Override
+					public void run() {
+						getContext().updateTriggerState(StepOnTrigger.this, false, blockEvent.getPlayer());
+					}
+				}, 20 * 2);
+				
+				
+			}
+		}	
 	}
 
 }

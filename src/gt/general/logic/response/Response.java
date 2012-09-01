@@ -1,6 +1,5 @@
 package gt.general.logic.response;
 
-import gt.general.RespawnManager;
 import gt.general.logic.TriggerEvent;
 import gt.general.logic.persistence.YamlSerializable;
 
@@ -23,7 +22,7 @@ public abstract class Response extends YamlSerializable {
 	/**
 	 * will be called, when the triggerFunction in the TriggerContexts changes its state
 	 * 
-	 * @param active iff true, the function is now true
+	 * @param triggerEvent special event when a trigger is activated
 	 */
-	public abstract void triggered(TriggerEvent triggerEvent);
+	public abstract void triggered(final TriggerEvent triggerEvent);
 }

@@ -62,6 +62,12 @@ public class RespawnManager implements Listener {
 		currentRespawns.put(hero, respawnPoint);
 	}
 	
+	public void registerTeamRespawnPoint(final RespawnPoint respawnPoint) {
+		for (Hero h : currentRespawns.keySet()) {
+			currentRespawns.put(h, respawnPoint);
+		}
+	}
+	
 	
 	@EventHandler
 	public void onRespawn(final PlayerRespawnEvent event) {

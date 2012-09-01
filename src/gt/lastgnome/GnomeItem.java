@@ -19,7 +19,7 @@ import org.bukkit.plugin.Plugin;
 import org.getspout.spoutapi.inventory.SpoutItemStack;
 
 /**
- * Item-class for Gnome.
+ * The Gnome Item
  */
 public final class GnomeItem extends PortableItem {
 

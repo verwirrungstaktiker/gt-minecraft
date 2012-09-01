@@ -8,6 +8,9 @@ import org.bukkit.World;
 
 public class ZombieClearResponse extends ZombieResponse {
 
+	/**
+	 * don't delete this anonymous constructor
+	 */
 	public ZombieClearResponse() {
 		super("zombie_clear");
 	}

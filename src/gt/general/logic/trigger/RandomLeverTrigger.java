@@ -36,7 +36,7 @@ public class RandomLeverTrigger extends LeverRedstoneTrigger{
 	public PersistenceMap dump() {
 		PersistenceMap map = super.dump();
 		map.put(KEY_SIGNALS, signals);
-		map.put(KEY_INVERTED, false);
+		//map.put(KEY_INVERTED, );
 		return map;
 	}
 	
@@ -46,12 +46,19 @@ public class RandomLeverTrigger extends LeverRedstoneTrigger{
 		
 		signals = values.getBlocks(KEY_SIGNALS, world);
 		
-		green = true;
+		if (values.get(KEY_INVERTED)) {
+			setGreen(false);
+		} else {
+			green = true;
+		}
 		
 		//toggleInvert();
 		changeSignals();
 	}
 
+	/**
+	 * sync the visuals with the internal invert
+	 */
 	private void changeSignals() {
 		ObservableCustomBlock signalBlock;
 		if (green) {
@@ -65,7 +72,11 @@ public class RandomLeverTrigger extends LeverRedstoneTrigger{
 		}
 	}
 	
-	public void setGreen(boolean green) {
+	/**
+	 * set if the trigger shall be secretly inverted
+	 * @param green true if not secretly inverted
+	 */
+	public void setGreen(final boolean green) {
 		if (this.green != green) {
 			this.green = green;
 			toggleInvert();

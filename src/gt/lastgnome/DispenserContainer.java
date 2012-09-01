@@ -22,6 +22,11 @@ import gt.general.logic.persistence.exceptions.PersistenceException;
 import gt.general.world.ObservableCustomBlock;
 import gt.plugin.meta.CustomBlockType;
 
+/**
+ * Holds all Dispensers in a Level
+ * @author Roman
+ *
+ */
 public class DispenserContainer extends YamlSerializable implements Listener {
 	
 	public static final String PERSISTANCE_FILE = "blocktool_dispenser.yml";
@@ -46,6 +51,9 @@ public class DispenserContainer extends YamlSerializable implements Listener {
 		}
 	}
 	
+	/**
+	 * @return all dispensers
+	 */
 	public Collection<BlocktoolDispenser> getDispensers() {
 		return dispensers.values();
 	}
@@ -85,6 +93,10 @@ public class DispenserContainer extends YamlSerializable implements Listener {
 		return new HashSet<Block>();
 	}
 
+	/**
+	 * handle building of BlockToolDispensers
+	 * @param event block place
+	 */
 	@EventHandler
 	public void onBlockPlace(final BlockPlaceEvent event) {
 
@@ -107,6 +119,10 @@ public class DispenserContainer extends YamlSerializable implements Listener {
 		}
 	}
 	
+	/**
+	 * handle destroying of BlockToolDispensers
+	 * @param event block break
+	 */
 	@EventHandler
 	public void onBlockBreak(final BlockBreakEvent event) {
 
