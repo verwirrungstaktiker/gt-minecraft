@@ -42,7 +42,7 @@ public class BlockTool extends PortableItem{
 		this.dispenser = dispenser;
 		
 		setTool(false);
-		setDropable(true);
+		setDropable(false);
 		setTransferable(true);
 		
 	}
