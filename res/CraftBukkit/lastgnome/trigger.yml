@@ -2196,49 +2196,49 @@ global-responses:
     material: !!org.bukkit.Material 'OBSIDIAN'
   obsidian_fence_4:
     min:
-      z: -57
+      z: -71
       y: 65
-      x: -90
+      x: -56
     max:
-      z: -57
+      z: -71
       y: 68
-      x: -72
+      x: -39
     class: gt.general.logic.response.MultiBlockDisappearResponse
     inverted: false
     material: !!org.bukkit.Material 'IRON_FENCE'
   obsidian_fence_3:
     min:
-      z: -56
+      z: -89
       y: 65
-      x: -90
+      x: -57
     max:
-      z: -39
+      z: -72
       y: 68
-      x: -90
+      x: -57
     class: gt.general.logic.response.MultiBlockDisappearResponse
     inverted: false
     material: !!org.bukkit.Material 'IRON_FENCE'
   obsidian_fence_2:
     min:
-      z: -38
+      z: -90
       y: 65
-      x: -89
+      x: -56
     max:
-      z: -38
+      z: -90
       y: 68
-      x: -72
+      x: -39
     class: gt.general.logic.response.MultiBlockDisappearResponse
     inverted: false
     material: !!org.bukkit.Material 'IRON_FENCE'
   obsidian_fence_1:
     min:
-      z: -56
+      z: -89
       y: 65
-      x: 71
+      x: -38
     max:
-      z: -39
+      z: -72
       y: 68
-      x: 71
+      x: -38
     class: gt.general.logic.response.MultiBlockDisappearResponse
     inverted: false
     material: !!org.bukkit.Material 'IRON_FENCE'
