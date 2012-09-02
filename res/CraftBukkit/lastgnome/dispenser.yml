@@ -2,3 +2,4 @@ dispenser:
 - z: 15
   y: 66
   x: -11
+  type: BLOCKTOOL

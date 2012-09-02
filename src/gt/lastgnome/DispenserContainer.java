@@ -28,7 +28,7 @@ import gt.general.world.ObservableCustomBlock;
  */
 public class DispenserContainer extends YamlSerializable implements Listener {
 
-	public static final String PERSISTANCE_FILE = "blocktool_dispenser.yml";
+	public static final String PERSISTANCE_FILE = "dispenser.yml";
 	public static final String KEY_DISPENSER = "dispenser";
 	public static final String KEY_ALL_DISPENSERS = "all_dispensers";
 	public static final String KEY_DISPENSED_ITEM_TYPE = "type";
