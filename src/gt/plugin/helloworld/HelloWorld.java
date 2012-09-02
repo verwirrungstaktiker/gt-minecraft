@@ -136,6 +136,15 @@ public class HelloWorld extends JavaPlugin {
 			}
 		});
 		
+		getCommand("pause").setExecutor(new CommandExecutor() {
+			@Override
+			public boolean onCommand(final CommandSender arg0, final Command arg1, final String arg2, final String[] arg3) {
+				System.out.println("toggle pause");
+				gameManager.togglePauseAllGames();
+				return true;
+			}
+		});
+		
 		getCommand("instances").setExecutor(new CommandExecutor() {
 			
 			@Override

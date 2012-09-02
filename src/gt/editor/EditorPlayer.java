@@ -25,6 +25,7 @@ public class EditorPlayer {
 		new ItemStack(Material.WOOD_PLATE),
 		new ItemStack(Material.STONE_PLATE),
 		CustomBlockType.GNOME_TRIGGER_NEGATIVE.getItemStack(),
+		CustomBlockType.GNOME_STORAGE_NEGATIVE.getItemStack(),
 		CustomBlockType.STEP_ON_TRIGGER.getItemStack()
 	};
 	

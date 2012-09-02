@@ -103,4 +103,10 @@ public class GameManager implements GameObserver{
 		}
 	}
 
+	public void togglePauseAllGames() {
+		for(Game game : runningGames) {
+			game.toggleForcePause();
+		}
+	}
+
 }

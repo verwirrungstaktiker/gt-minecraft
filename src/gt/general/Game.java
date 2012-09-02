@@ -25,6 +25,8 @@ public abstract class Game implements Listener {
 	
 	private final Set<Hero> disconnectedHeros = newHashSet();
 	private boolean running;
+
+	private boolean cmdPause;
 	
 	/**
 	 * @param team The team playing this game
@@ -65,6 +67,11 @@ public abstract class Game implements Listener {
 	}
 
 	
+	public void toggleForcePause() {
+		cmdPause = !cmdPause;
+		setRunning(running);
+	}
+	
 	/**
 	 * sets the running state and calls the appropriate handlers
 	 * 
@@ -73,7 +80,7 @@ public abstract class Game implements Listener {
 	public void setRunning(final boolean running) {
 		this.running = running;
 		
-		if(running) {
+		if(running && !cmdPause) {
 			onResume();
 		} else {
 			onPause();
