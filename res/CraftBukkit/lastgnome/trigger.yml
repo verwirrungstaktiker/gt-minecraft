@@ -150,7 +150,7 @@ global-contexts:
     - obsidian_corner1
     - obsidian_corner2
     input-function: OR
-  red_lock_lock:
+  red_lock:
     triggers:
     - red_lock_lock
     responses:
@@ -472,7 +472,7 @@ global-triggers:
       y: 71
       x: -26
   red_lock_lock:
-    color: BLUE_KEY
+    color: RED_KEY
     class: gt.general.logic.trigger.KeyItemTrigger
     block:
       z: -74
@@ -504,7 +504,7 @@ global-triggers:
     type: GNOME
     material: !!org.bukkit.Material 'STONE'
   green_lock_lock:
-    color: BLUE_KEY
+    color: GREEN_KEY
     class: gt.general.logic.trigger.KeyItemTrigger
     block:
       z: -77
@@ -935,7 +935,7 @@ global-triggers:
       y: 71
       x: -38
   yellow_lock_lock:
-    color: BLUE_KEY
+    color: YELLOW_KEY
     class: gt.general.logic.trigger.KeyItemTrigger
     block:
       z: -80
