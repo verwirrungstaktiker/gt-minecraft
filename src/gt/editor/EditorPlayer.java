@@ -27,7 +27,8 @@ public class EditorPlayer {
 		CustomBlockType.GNOME_TRIGGER_NEGATIVE.getItemStack(),
 		CustomBlockType.GNOME_STORAGE_NEGATIVE.getItemStack(),
 		CustomBlockType.STEP_ON_TRIGGER.getItemStack(),
-		CustomBlockType.QUESTION_BLOCK.getItemStack()
+		CustomBlockType.QUESTION_BLOCK.getItemStack(),
+		CustomBlockType.BLUE_LOCK.getItemStack()
 	};
 	
 	private static final ItemStack[] RESPONSE_BLOCKS = new ItemStack[]{

@@ -20,7 +20,6 @@ import gt.general.logic.persistence.PersistenceMap;
 import gt.general.logic.persistence.YamlSerializable;
 import gt.general.logic.persistence.exceptions.PersistenceException;
 import gt.general.world.ObservableCustomBlock;
-import gt.plugin.meta.CustomBlockType;
 
 /**
  * Holds all Dispensers in a Level
@@ -28,24 +27,52 @@ import gt.plugin.meta.CustomBlockType;
  *
  */
 public class DispenserContainer extends YamlSerializable implements Listener {
-	
+
 	public static final String PERSISTANCE_FILE = "blocktool_dispenser.yml";
 	public static final String KEY_DISPENSER = "dispenser";
+	public static final String KEY_ALL_DISPENSERS = "all_dispensers";
+	public static final String KEY_DISPENSED_ITEM_TYPE = "type";
 	
-	private Map<Block,BlocktoolDispenser> dispensers = new HashMap<Block,BlocktoolDispenser>();
+	private Map<Block,Dispenser> dispensers = new HashMap<Block,Dispenser>();
 	
 	@Override
 	public void setup(final PersistenceMap values, final World world)
 			throws PersistenceException {
-		ArrayList<Map<String,Integer>> dispenserList = values.get(KEY_DISPENSER);
+		ArrayList<Map<String,Object>> dispenserList = values.get(KEY_DISPENSER);
 
-		for(Map<String,Integer>  map : dispenserList) {
-			int x = map.get("x");
-			int y = map.get("y");
-			int z = map.get("z");
+		for(Map<String,Object>  map : dispenserList) {
+			int x = (Integer) map.get("x");
+			int y = (Integer) map.get("y");
+			int z = (Integer) map.get("z");
+			
+			DispenserItem type = DispenserItem.valueOf((String) map.get(KEY_DISPENSED_ITEM_TYPE));
 
 			Block block = world.getBlockAt(x, y, z);
-			BlocktoolDispenser dispenser = new BlocktoolDispenser(block);
+			Dispenser dispenser;
+			
+			switch(type) {
+			case BLOCKTOOL: 
+				dispenser = new BlocktoolDispenser(block);
+				break;
+			case BLUE_KEY:
+				dispenser = new KeyDispenser(block, DispenserItem.BLUE_KEY);
+				break;
+			case RED_KEY:
+				dispenser = new KeyDispenser(block, DispenserItem.RED_KEY);
+				break;
+			case GREEN_KEY:
+				dispenser = new KeyDispenser(block, DispenserItem.GREEN_KEY);
+				break;
+			case YELLOW_KEY:
+				dispenser = new KeyDispenser(block, DispenserItem.YELLOW_KEY);
+				break;
+			default:
+				dispenser = new BlocktoolDispenser(block);
+				System.out.println("Something went wrong when reading the DispenserItem type in DispenserContainer." +
+						" Made a BlockToolDispenser");
+			
+			}
+			
 			
 			dispensers.put(block,dispenser);
 		}
@@ -54,22 +81,24 @@ public class DispenserContainer extends YamlSerializable implements Listener {
 	/**
 	 * @return all dispensers
 	 */
-	public Collection<BlocktoolDispenser> getDispensers() {
+	public Collection<Dispenser> getDispensers() {
 		return dispensers.values();
 	}
 
 	@Override
 	public PersistenceMap dump() {
 		PersistenceMap map = new PersistenceMap();
-		ArrayList<Map<String, Integer>> coordinates = new ArrayList<Map<String, Integer>>();
+		ArrayList<Map<String, Object>> coordinates = new ArrayList<Map<String, Object>>();
 		
-		for(BlocktoolDispenser dispenser : getDispensers()) {
-			Map<String, Integer> dispenserCoordinates = new HashMap<String, Integer>();
+		for(Dispenser dispenser : getDispensers()) {
+			Map<String, Object> dispenserCoordinates = new HashMap<String, Object>();
 			Block block = dispenser.getBlock();
 			
 			dispenserCoordinates.put("x",block.getX());
 			dispenserCoordinates.put("y",block.getY());
 			dispenserCoordinates.put("z",block.getZ());
+			
+			dispenserCoordinates.put(KEY_DISPENSED_ITEM_TYPE,dispenser.getItemType().toString());
 			
 			coordinates.add(dispenserCoordinates);
 		}
@@ -82,7 +111,7 @@ public class DispenserContainer extends YamlSerializable implements Listener {
 	@Override
 	public void dispose() {
 		// unregister all block observers
-		for(BlocktoolDispenser dispenser : getDispensers()) {
+		for(Dispenser dispenser : getDispensers()) {
 			dispenser.dispose();
 		}
 		dispensers.clear();
@@ -108,13 +137,30 @@ public class DispenserContainer extends YamlSerializable implements Listener {
 			if(sBlock.getCustomBlock() instanceof ObservableCustomBlock) {
 				ObservableCustomBlock oBlock = (ObservableCustomBlock) sBlock.getCustomBlock();
 				
-				if(oBlock.getCustomBlockType()==CustomBlockType.BLOCKTOOL_DISPENSER) {
-					
-					BlocktoolDispenser dispenser = new BlocktoolDispenser(block);
-					dispensers.put(block,dispenser);
-					
-					event.getPlayer().sendMessage(ChatColor.GREEN + "BuildTool Dispenser placed.");
+				Dispenser dispenser = null;
+				
+				switch(oBlock.getCustomBlockType()) {
+				case BLOCKTOOL_DISPENSER:
+					dispenser = new BlocktoolDispenser(block);
+					break;
+				case BLUE_KEY_DISPENSER:
+					dispenser = new KeyDispenser(block, DispenserItem.BLUE_KEY);
+					break;
+				case RED_KEY_DISPENSER:
+					dispenser = new KeyDispenser(block, DispenserItem.RED_KEY);
+					break;
+				case GREEN_KEY_DISPENSER:
+					dispenser = new KeyDispenser(block, DispenserItem.GREEN_KEY);
+					break;
+				case YELLOW_KEY_DISPENSER:
+					dispenser = new KeyDispenser(block, DispenserItem.YELLOW_KEY);
+					break;
+				default:
+					return;
 				}
+				dispensers.put(block,dispenser);
+				
+				event.getPlayer().sendMessage(ChatColor.GREEN + "" + dispenser.getItemType() + " placed.");
 			}
 		}
 	}
@@ -127,7 +173,7 @@ public class DispenserContainer extends YamlSerializable implements Listener {
 	public void onBlockBreak(final BlockBreakEvent event) {
 
 		Block block = event.getBlock();
-		BlocktoolDispenser dispenser = dispensers.remove(block);
+		Dispenser dispenser = dispensers.remove(block);
 		
 		if(dispenser!=null) {
 			dispenser.dispose();

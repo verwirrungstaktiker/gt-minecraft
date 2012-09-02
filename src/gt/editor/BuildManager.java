@@ -13,12 +13,14 @@ import gt.general.logic.response.ZombieSpawnResponse;
 import gt.general.logic.trigger.ButtonRedstoneTrigger;
 import gt.general.logic.trigger.GnomeItemTrigger;
 import gt.general.logic.trigger.GnomeStorageTrigger;
+import gt.general.logic.trigger.KeyItemTrigger;
 import gt.general.logic.trigger.LeverRedstoneTrigger;
 import gt.general.logic.trigger.PressurePlateRedstoneTrigger;
 import gt.general.logic.trigger.QuestionTrigger;
 import gt.general.logic.trigger.StepOnTrigger;
 import gt.general.logic.trigger.Trigger;
 import gt.general.world.ObservableCustomBlock;
+import gt.lastgnome.DispenserItem;
 
 import org.bukkit.ChatColor;
 import org.bukkit.block.Block;
@@ -114,6 +116,19 @@ public class BuildManager implements Listener {
                 case STEP_ON_TRIGGER:
                 	newTrigger = new StepOnTrigger(block);
                 	break;
+                case BLUE_LOCK:
+                	newTrigger = new KeyItemTrigger(block, DispenserItem.BLUE_KEY);
+                	break;
+                case RED_LOCK:
+                	newTrigger = new KeyItemTrigger(block, DispenserItem.RED_KEY);
+                	break;
+                case GREEN_LOCK:
+                	newTrigger = new KeyItemTrigger(block, DispenserItem.GREEN_KEY);
+                	break;
+                case YELLOW_LOCK:
+                	newTrigger = new KeyItemTrigger(block, DispenserItem.YELLOW_KEY);
+                	break;
+                	
 				default:
 					// fail feedback
 					player.sendMessage(RED + "This CustomBlock can't be used as Trigger.");
