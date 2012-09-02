@@ -34,6 +34,7 @@ global-contexts:
     - door_response_1524145666
     - door_response_1874421134
     - hallway1_room2_lower_door
+    - team_respawn_2
     input-function: AND
   gnome_passing:
     triggers:
@@ -74,6 +75,7 @@ global-contexts:
     - door_response_164496148
     - door_response_1546585782
     - hallway2_room2_lower_door
+    - team_respawn_5
     input-function: AND
   context_159362754:
     triggers:
@@ -92,6 +94,7 @@ global-contexts:
     - lever_trigger__2020826099
     - lever_trigger__610836886
     responses:
+    - team_respawn_4
     - door_response_906842278
     - hallway2_room1_lower_door
     - door_response_1558247749
@@ -124,6 +127,7 @@ global-contexts:
     - lever_trigger__1991153945
     - gnome_trigger_159541957
     responses:
+    - team_respawn_1
     - hallway1_room1_lower_door
     - door_response_356249028
     - door_response_2083864723
@@ -147,6 +151,7 @@ global-contexts:
     - math_riddle1_sign_3
     - zombie_teleport_1
     - door_response_1763826860
+    - team_respawn_3
     input-function: AND
   context_616872979:
     triggers:
@@ -1224,3 +1229,38 @@ global-responses:
     class: gt.general.logic.response.MultiBlockDisappearResponse
     inverted: false
     material: !!org.bukkit.Material 'IRON_FENCE'
+  team_respawn_1:
+    location:
+      x: 5
+      y: 65
+      z: 15
+    class: gt.general.logic.response.TeamRespawnResponse
+    material: !!org.bukkit.Material 'STONE'
+  team_respawn_2:
+    location:
+      x: 35
+      y: 65
+      z: 15
+    class: gt.general.logic.response.TeamRespawnResponse
+    material: !!org.bukkit.Material 'STONE'
+  team_respawn_3:
+    location:
+      x: 76
+      y: 67
+      z: -23
+    class: gt.general.logic.response.TeamRespawnResponse
+    material: !!org.bukkit.Material 'STONE'
+  team_respawn_4:
+    location:
+      x: 38
+      y: 65
+      z: -35
+    class: gt.general.logic.response.TeamRespawnResponse
+    material: !!org.bukkit.Material 'STONE'
+  team_respawn_5:
+    location:
+      x: 38
+      y: 65
+      z: -77
+    class: gt.general.logic.response.TeamRespawnResponse
+    material: !!org.bukkit.Material 'STONE'
