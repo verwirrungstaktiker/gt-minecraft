@@ -1477,7 +1477,7 @@ global-responses:
       y: 70
       z: -26
     max:
-      x: -42
+      x: -41
       y: 72
       z: -26
     class: gt.general.logic.response.MultiBlockDisappearResponse
