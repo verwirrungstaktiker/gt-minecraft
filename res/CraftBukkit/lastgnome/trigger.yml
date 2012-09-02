@@ -337,7 +337,7 @@ global-triggers:
       y: 69
       x: 13
   red_room1_gnome:
-    class: gt.general.logic.trigger.GnomeStorageTrigger
+    class: gt.general.logic.trigger.GnomeItemTrigger
     block:
       z: -99
       y: 65
@@ -444,7 +444,7 @@ global-triggers:
       y: 71
       x: -26
   big_room_gnome6:
-    class: gt.general.logic.trigger.GnomeStorageTrigger
+    class: gt.general.logic.trigger.GnomeItemTrigger
     block:
       z: -80
       y: 79
@@ -458,21 +458,21 @@ global-triggers:
       x: -29
     contingent: 1
   big_room_gnome5:
-    class: gt.general.logic.trigger.GnomeStorageTrigger
+    class: gt.general.logic.trigger.GnomeItemTrigger
     block:
       z: -81
       y: 79
       x: -48
     material: !!org.bukkit.Material 'STONE'
   big_room_gnome4:
-    class: gt.general.logic.trigger.GnomeStorageTrigger
+    class: gt.general.logic.trigger.GnomeItemTrigger
     block:
       z: -80
       y: 80
       x: -48
     material: !!org.bukkit.Material 'STONE'
   big_room_gnome3:
-    class: gt.general.logic.trigger.GnomeStorageTrigger
+    class: gt.general.logic.trigger.GnomeItemTrigger
     block:
       z: -80
       y: 79
@@ -488,7 +488,7 @@ global-triggers:
     inverted: false
     material: !!org.bukkit.Material 'LEVER'
   red_room2_gnome_1:
-    class: gt.general.logic.trigger.GnomeStorageTrigger
+    class: gt.general.logic.trigger.GnomeItemTrigger
     block:
       z: -86
       y: 70
@@ -517,7 +517,7 @@ global-triggers:
       y: 71
       x: -26
   big_room_gnome8:
-    class: gt.general.logic.trigger.GnomeStorageTrigger
+    class: gt.general.logic.trigger.GnomeItemTrigger
     block:
       z: -81
       y: 80
@@ -533,7 +533,7 @@ global-triggers:
     question: no question
     material: !!org.bukkit.Material 'STONE'
   big_room_gnome7:
-    class: gt.general.logic.trigger.GnomeStorageTrigger
+    class: gt.general.logic.trigger.GnomeItemTrigger
     block:
       z: -80
       y: 80
@@ -590,21 +590,21 @@ global-triggers:
       y: 71
       x: -14
   big_room_gnome2:
-    class: gt.general.logic.trigger.GnomeStorageTrigger
+    class: gt.general.logic.trigger.GnomeItemTrigger
     block:
       z: -81
       y: 79
       x: -47
     material: !!org.bukkit.Material 'STONE'
   red_room2_gnome3:
-    class: gt.general.logic.trigger.GnomeStorageTrigger
+    class: gt.general.logic.trigger.GnomeItemTrigger
     block:
       z: -93
       y: 65
       x: -96
     material: !!org.bukkit.Material 'STONE'
   big_room_gnome1:
-    class: gt.general.logic.trigger.GnomeStorageTrigger
+    class: gt.general.logic.trigger.GnomeItemTrigger
     block:
       z: -81
       y: 80
@@ -636,7 +636,7 @@ global-triggers:
       y: 69
       x: 29
   red_room2_gnome2:
-    class: gt.general.logic.trigger.GnomeStorageTrigger
+    class: gt.general.logic.trigger.GnomeItemTrigger
     block:
       z: -106
       y: 70
@@ -696,14 +696,14 @@ global-triggers:
       y: 71
       x: -38
   blue_room_initial_gnome2:
-    class: gt.general.logic.trigger.GnomeStorageTrigger
+    class: gt.general.logic.trigger.GnomeItemTrigger
     block:
       z: -88
       y: 71
       x: -9
     material: !!org.bukkit.Material 'STONE'
   blue_room_initial_gnome1:
-    class: gt.general.logic.trigger.GnomeStorageTrigger
+    class: gt.general.logic.trigger.GnomeItemTrigger
     block:
       z: -104
       y: 71
@@ -763,14 +763,14 @@ global-triggers:
       y: 71
       x: -26
   red_room3_gnome1:
-    class: gt.general.logic.trigger.GnomeStorageTrigger
+    class: gt.general.logic.trigger.GnomeItemTrigger
     block:
       z: -86
       y: 70
       x: -108
     material: !!org.bukkit.Material 'STONE'
   red_room3_gnome2:
-    class: gt.general.logic.trigger.GnomeStorageTrigger
+    class: gt.general.logic.trigger.GnomeItemTrigger
     block:
       z: -106
       y: 70
@@ -820,7 +820,7 @@ global-triggers:
     inverted: false
     material: !!org.bukkit.Material 'LEVER'
   green_room_gnome:
-    class: gt.general.logic.trigger.GnomeStorageTrigger
+    class: gt.general.logic.trigger.GnomeItemTrigger
     block:
       z: -63
       y: 65
@@ -1147,21 +1147,21 @@ global-triggers:
     inverted: false
     material: !!org.bukkit.Material 'LEVER'
   red_room4_gnome2:
-    class: gt.general.logic.trigger.GnomeStorageTrigger
+    class: gt.general.logic.trigger.GnomeItemTrigger
     block:
       z: -97
       y: 70
       x: -117
     material: !!org.bukkit.Material 'STONE'
   blue_room_gnome2:
-    class: gt.general.logic.trigger.GnomeStorageTrigger
+    class: gt.general.logic.trigger.GnomeItemTrigger
     block:
       z: -83
       y: 66
       x: -16
     material: !!org.bukkit.Material 'STONE'
   blue_room_gnome1:
-    class: gt.general.logic.trigger.GnomeStorageTrigger
+    class: gt.general.logic.trigger.GnomeItemTrigger
     block:
       z: -97
       y: 66
@@ -1177,14 +1177,14 @@ global-triggers:
     inverted: false
     material: !!org.bukkit.Material 'LEVER'
   red_room4_gnome1:
-    class: gt.general.logic.trigger.GnomeStorageTrigger
+    class: gt.general.logic.trigger.GnomeItemTrigger
     block:
       z: -95
       y: 70
       x: -117
     material: !!org.bukkit.Material 'STONE'
   blue_room_gnome3:
-    class: gt.general.logic.trigger.GnomeStorageTrigger
+    class: gt.general.logic.trigger.GnomeItemTrigger
     block:
       z: -64
       y: 66
