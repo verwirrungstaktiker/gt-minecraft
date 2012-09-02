@@ -55,7 +55,7 @@ public class BlockTool extends PortableItem{
 	 * @param dispenser the dispenser that creates this blockTool
 	 */
 	public BlockTool(final BlocktoolDispenser dispenser) {
-		this(Hello.getPlugin(), "BlockTool", "http://www.mariowiki.com/images/9/95/QuestionMarkBlockNSMB.png", dispenser);
+		this(Hello.getPlugin(), "BlockTool", "https://raw.github.com/verwirrungstaktiker/gt-minecraft/master/res/texture/block_tool.png", dispenser);
 	}
 
 	@Override

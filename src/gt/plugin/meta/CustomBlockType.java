@@ -191,8 +191,7 @@ public enum CustomBlockType {
 		@Override
 		public ObservableCustomBlock instantiate() {
 			return new ObservableCustomBlock("blocktool_dispenser",
-					//TODO
-					"http://www.mariowiki.com/images/9/95/QuestionMarkBlockNSMB.png", 16);
+					"https://raw.github.com/verwirrungstaktiker/gt-minecraft/master/res/texture/block_tool_block.png", 16);
 		}
 		
 	}),
