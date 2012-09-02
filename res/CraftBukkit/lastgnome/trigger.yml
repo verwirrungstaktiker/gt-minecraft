@@ -282,7 +282,7 @@ global-contexts:
     - blue_room_initial_gnome1
     responses:
     - blue_room_initial_gate
-    input-function: OR
+    input-function: AND
 global-triggers:
   lever_trigger__1441222539_group2:
     orientation: !!org.bukkit.block.BlockFace 'EAST'
