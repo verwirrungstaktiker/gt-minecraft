@@ -198,8 +198,15 @@ public class Team {
 		}
 	}
 
-	public boolean containsHero(Hero hero) {
+	public boolean containsHero(final Hero hero) {
 		return members.contains(hero);
 	}
 
+	public void sendMessage(final String string) {
+		for(Hero hero : members) {
+			hero.getPlayer().sendMessage(string);
+		}
+		
+	}
+	
 }

@@ -10,6 +10,7 @@ import gt.plugin.meta.MultiListener;
 import java.util.Set;
 import java.util.Vector;
 
+import org.bukkit.ChatColor;
 import org.bukkit.event.Listener;
 
 public abstract class Game implements Listener {
@@ -81,8 +82,10 @@ public abstract class Game implements Listener {
 		this.running = running;
 		
 		if(running && !cmdPause) {
+			team.sendMessage(ChatColor.GREEN + "game resumed");
 			onResume();
 		} else {
+			team.sendMessage(ChatColor.RED + "game paused");
 			onPause();
 		}
 	}
