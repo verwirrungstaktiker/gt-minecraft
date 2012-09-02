@@ -113,7 +113,7 @@ public class Hero extends Character{
 	 * @return if true, the Hero can pick up another item
 	 */
 	public boolean canRecieveItem() {
-		if (activeItem == null) {
+		if (!hasActiveItem()) {
 			return true;
 		}
 
@@ -126,6 +126,10 @@ public class Hero extends Character{
 		}
 
 		return false;
+	}
+	
+	public boolean hasActiveItem() {
+		return activeItem != null;
 	}
 	
 	/**
