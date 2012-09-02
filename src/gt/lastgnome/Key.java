@@ -40,7 +40,7 @@ public class Key extends PortableItem {
 	 * @param plugin the plugin we run
 	 */
 	public Key(final Plugin plugin, final DispenserItem color) {
-		this(plugin, "PlaceHolder", "http://www.upedu.org/applet/images/key_concept.gif",color);
+		this(plugin, "PlaceHolder", "https://raw.github.com/verwirrungstaktiker/gt-minecraft/master/res/texture/key_black.png",color);
 	}
 
 	/**

@@ -203,8 +203,7 @@ public enum CustomBlockType {
 		@Override
 		public ObservableCustomBlock instantiate() {
 			return new ObservableCustomBlock("blue_lock",
-					//TODO
-					"https://raw.github.com/verwirrungstaktiker/gt-minecraft/master/res/texture/key_dispenser_black.png", 16);
+					"https://raw.github.com/verwirrungstaktiker/gt-minecraft/master/res/texture/lock_blue.png", 16);
 		}
 		
 	}),
@@ -215,8 +214,7 @@ public enum CustomBlockType {
 		@Override
 		public ObservableCustomBlock instantiate() {
 			return new ObservableCustomBlock("red_lock",
-					//TODO
-					"https://raw.github.com/verwirrungstaktiker/gt-minecraft/master/res/texture/key_dispenser_black.png", 16);
+					"https://raw.github.com/verwirrungstaktiker/gt-minecraft/master/res/texture/lock_red.png", 16);
 		}
 		
 	}),
@@ -227,8 +225,7 @@ public enum CustomBlockType {
 		@Override
 		public ObservableCustomBlock instantiate() {
 			return new ObservableCustomBlock("green_lock",
-					//TODO
-					"https://raw.github.com/verwirrungstaktiker/gt-minecraft/master/res/texture/key_dispenser_black.png", 16);
+					"https://raw.github.com/verwirrungstaktiker/gt-minecraft/master/res/texture/lock_green.png", 16);
 		}
 		
 	}),
@@ -239,8 +236,7 @@ public enum CustomBlockType {
 		@Override
 		public ObservableCustomBlock instantiate() {
 			return new ObservableCustomBlock("yellow_lock",
-					//TODO
-					"https://raw.github.com/verwirrungstaktiker/gt-minecraft/master/res/texture/key_dispenser_black.png", 16);
+					"https://raw.github.com/verwirrungstaktiker/gt-minecraft/master/res/texture/lock_yellow.png", 16);
 		}
 		
 	}),
@@ -251,8 +247,7 @@ public enum CustomBlockType {
 		@Override
 		public ObservableCustomBlock instantiate() {
 			return new ObservableCustomBlock("blue_key_dispenser",
-					//TODO
-					"https://raw.github.com/verwirrungstaktiker/gt-minecraft/master/res/texture/key_dispenser_black.png", 16);
+					"https://raw.github.com/verwirrungstaktiker/gt-minecraft/master/res/texture/key_dispenser_blue.png", 16);
 		}
 		
 	}),
@@ -263,8 +258,7 @@ public enum CustomBlockType {
 		@Override
 		public ObservableCustomBlock instantiate() {
 			return new ObservableCustomBlock("red_key_dispenser",
-					//TODO
-					"http://www.upedu.org/applet/images/key_concept.gif", 16);
+					"https://raw.github.com/verwirrungstaktiker/gt-minecraft/master/res/texture/key_dispenser_red.png", 16);
 		}
 		
 	}),
@@ -275,8 +269,7 @@ public enum CustomBlockType {
 		@Override
 		public ObservableCustomBlock instantiate() {
 			return new ObservableCustomBlock("green_key_dispenser",
-					//TODO
-					"http://www.upedu.org/applet/images/key_concept.gif", 16);
+					"https://raw.github.com/verwirrungstaktiker/gt-minecraft/master/res/texture/key_dispenser_green.png", 16);
 		}
 		
 	}),
@@ -287,8 +280,7 @@ public enum CustomBlockType {
 		@Override
 		public ObservableCustomBlock instantiate() {
 			return new ObservableCustomBlock("yellow_key_dispenser",
-					//TODO
-					"http://www.upedu.org/applet/images/key_concept.gif", 16);
+					"https://raw.github.com/verwirrungstaktiker/gt-minecraft/master/res/texture/key_dispenser_yellow.png", 16);
 		}
 		
 	}),
