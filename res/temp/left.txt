@@ -1,0 +1,96 @@
+  final_flight_zombie_fence_left_0
+    min:
+      z: -92
+      y: 65
+      x: -21
+    max:
+      z: -92
+      y: 67
+      x: -19
+    class: gt.general.logic.response.MultiBlockDisappearResponse
+    inverted: false
+    material: !!org.bukkit.Material 'IRON_FENCE'
+  final_flight_zombie_fence_left_1
+    min:
+      z: -92
+      y: 65
+      x: -10
+    max:
+      z: -92
+      y: 67
+      x: -8
+    class: gt.general.logic.response.MultiBlockDisappearResponse
+    inverted: false
+    material: !!org.bukkit.Material 'IRON_FENCE'
+  final_flight_zombie_fence_left_2
+    min:
+      z: -92
+      y: 65
+      x: 1
+    max:
+      z: -92
+      y: 67
+      x: 3
+    class: gt.general.logic.response.MultiBlockDisappearResponse
+    inverted: false
+    material: !!org.bukkit.Material 'IRON_FENCE'
+  final_flight_zombie_fence_left_3
+    min:
+      z: -92
+      y: 65
+      x: 12
+    max:
+      z: -92
+      y: 67
+      x: 14
+    class: gt.general.logic.response.MultiBlockDisappearResponse
+    inverted: false
+    material: !!org.bukkit.Material 'IRON_FENCE'
+  final_flight_zombie_fence_left_4
+    min:
+      z: -92
+      y: 65
+      x: 23
+    max:
+      z: -92
+      y: 67
+      x: 25
+    class: gt.general.logic.response.MultiBlockDisappearResponse
+    inverted: false
+    material: !!org.bukkit.Material 'IRON_FENCE'
+  final_flight_zombie_fence_left_5
+    min:
+      z: -92
+      y: 65
+      x: 34
+    max:
+      z: -92
+      y: 67
+      x: 36
+    class: gt.general.logic.response.MultiBlockDisappearResponse
+    inverted: false
+    material: !!org.bukkit.Material 'IRON_FENCE'
+  final_flight_zombie_fence_left_6
+    min:
+      z: -92
+      y: 65
+      x: 45
+    max:
+      z: -92
+      y: 67
+      x: 47
+    class: gt.general.logic.response.MultiBlockDisappearResponse
+    inverted: false
+    material: !!org.bukkit.Material 'IRON_FENCE'
+  final_flight_zombie_fence_left_7
+    min:
+      z: -92
+      y: 65
+      x: 56
+    max:
+      z: -92
+      y: 67
+      x: 58
+    class: gt.general.logic.response.MultiBlockDisappearResponse
+    inverted: false
+    material: !!org.bukkit.Material 'IRON_FENCE'
