@@ -19,4 +19,6 @@ commands:
     description: spectates the given instance
   blocktool:
     description: gives a block tool
+  pause:
+    description: pauses all games
   
