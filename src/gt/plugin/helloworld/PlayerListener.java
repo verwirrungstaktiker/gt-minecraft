@@ -2,7 +2,6 @@ package gt.plugin.helloworld;
 
 import gt.general.PortableItem;
 import gt.lastgnome.GnomeItem;
-import gt.plugin.meta.Hello;
 
 import org.bukkit.ChatColor;
 import org.bukkit.GameMode;
@@ -10,17 +9,14 @@ import org.bukkit.entity.HumanEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.player.PlayerDropItemEvent;
+import org.bukkit.event.player.PlayerKickEvent;
 import org.bukkit.event.player.PlayerPickupItemEvent;
-import org.bukkit.event.player.PlayerToggleSprintEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
-import org.bukkit.util.Vector;
 import org.getspout.spoutapi.inventory.SpoutItemStack;
 import org.getspout.spoutapi.material.Material;
-import org.getspout.spoutapi.player.SpoutPlayer;
 
 public class PlayerListener implements Listener {
 	
@@ -88,6 +84,14 @@ public class PlayerListener implements Listener {
 		boolean twoItemsCarried = inventoryContainsTwoPlusStacks(inv);
 		if (itemAlreadyCarried || gnomeCarried || twoItemsCarried) {
 			event.setCancelled(true);
+		}
+	}
+
+	@EventHandler
+	public final void preventKicking(final PlayerKickEvent event) {
+		if(event.getReason().contains("quickly")) {
+		    event.setLeaveMessage("");
+		    event.setCancelled(true);
 		}
 	}
 	
