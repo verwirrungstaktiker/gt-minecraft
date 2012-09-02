@@ -106,7 +106,9 @@ public abstract class Game implements Listener {
 	public void dispose() {
 		
 		for (Hero hero : team.getPlayers()) {
-			hero.removeActiveItem().getName();
+			if(hero.hasActiveItem()) {
+				hero.removeActiveItem();
+			}
 		}
 		
 		for (Listener listener : listeners) {

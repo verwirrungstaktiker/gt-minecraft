@@ -105,8 +105,8 @@ public enum CustomBlockType {
         @Override
         public ObservableCustomBlock instantiate() {
             return new ObservableCustomBlock(
-                    "gnome_trigger_negative",
-                    "https://dl.dropbox.com/u/29386658/gt/textures/gnome_socket_end_16x16.png",
+                    "gnome_storage_negative",
+                    "https://raw.github.com/verwirrungstaktiker/gt-minecraft/master/res/texture/sleep_gnome_negative.png",
                     16);
 
         }
@@ -116,8 +116,8 @@ public enum CustomBlockType {
         @Override
         public ObservableCustomBlock instantiate() {
             return new ObservableCustomBlock(
-                    "gnome_trigger_positive",
-                    "https://dl.dropbox.com/u/29386658/gt/textures/gnome_16x16.png",
+                    "gnome_storage_positive",
+                    "https://raw.github.com/verwirrungstaktiker/gt-minecraft/master/res/texture/sleep_gnome_positive.png",
                     16);
 
         }
@@ -191,7 +191,96 @@ public enum CustomBlockType {
 		@Override
 		public ObservableCustomBlock instantiate() {
 			return new ObservableCustomBlock("blocktool_dispenser",
+					//TODO
 					"http://www.mariowiki.com/images/9/95/QuestionMarkBlockNSMB.png", 16);
+		}
+		
+	}),
+	
+	/** blue lock */
+	BLUE_LOCK(new CustomBlockInstatiator() {
+
+		@Override
+		public ObservableCustomBlock instantiate() {
+			return new ObservableCustomBlock("blue_lock",
+					"https://raw.github.com/verwirrungstaktiker/gt-minecraft/master/res/texture/lock_blue.png", 16);
+		}
+		
+	}),
+	
+	/** red lock */
+	RED_LOCK(new CustomBlockInstatiator() {
+
+		@Override
+		public ObservableCustomBlock instantiate() {
+			return new ObservableCustomBlock("red_lock",
+					"https://raw.github.com/verwirrungstaktiker/gt-minecraft/master/res/texture/lock_red.png", 16);
+		}
+		
+	}),
+	
+	/** green lock */
+	GREEN_LOCK(new CustomBlockInstatiator() {
+
+		@Override
+		public ObservableCustomBlock instantiate() {
+			return new ObservableCustomBlock("green_lock",
+					"https://raw.github.com/verwirrungstaktiker/gt-minecraft/master/res/texture/lock_green.png", 16);
+		}
+		
+	}),
+	
+	/** yellow lock */
+	YELLOW_LOCK(new CustomBlockInstatiator() {
+
+		@Override
+		public ObservableCustomBlock instantiate() {
+			return new ObservableCustomBlock("yellow_lock",
+					"https://raw.github.com/verwirrungstaktiker/gt-minecraft/master/res/texture/lock_yellow.png", 16);
+		}
+		
+	}),
+	
+	/** gives the blue key */
+	BLUE_KEY_DISPENSER(new CustomBlockInstatiator() {
+
+		@Override
+		public ObservableCustomBlock instantiate() {
+			return new ObservableCustomBlock("blue_key_dispenser",
+					"https://raw.github.com/verwirrungstaktiker/gt-minecraft/master/res/texture/key_dispenser_blue.png", 16);
+		}
+		
+	}),
+	
+	/** gives the red key */
+	RED_KEY_DISPENSER(new CustomBlockInstatiator() {
+
+		@Override
+		public ObservableCustomBlock instantiate() {
+			return new ObservableCustomBlock("red_key_dispenser",
+					"https://raw.github.com/verwirrungstaktiker/gt-minecraft/master/res/texture/key_dispenser_red.png", 16);
+		}
+		
+	}),
+	
+	/** gives the green key */
+	GREEN_KEY_DISPENSER(new CustomBlockInstatiator() {
+
+		@Override
+		public ObservableCustomBlock instantiate() {
+			return new ObservableCustomBlock("green_key_dispenser",
+					"https://raw.github.com/verwirrungstaktiker/gt-minecraft/master/res/texture/key_dispenser_green.png", 16);
+		}
+		
+	}),
+	
+	/** gives the yellow key */
+	YELLOW_KEY_DISPENSER(new CustomBlockInstatiator() {
+
+		@Override
+		public ObservableCustomBlock instantiate() {
+			return new ObservableCustomBlock("yellow_key_dispenser",
+					"https://raw.github.com/verwirrungstaktiker/gt-minecraft/master/res/texture/key_dispenser_yellow.png", 16);
 		}
 		
 	}),

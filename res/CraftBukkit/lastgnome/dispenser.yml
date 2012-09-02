@@ -1,0 +1,9 @@
+dispenser:
+- type: BLOCKTOOL
+  z: 15
+  y: 66
+  x: -11
+- type: BLOCKTOOL
+  z: -127
+  y: 66
+  x: -48
