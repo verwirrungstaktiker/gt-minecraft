@@ -101,6 +101,28 @@ public enum CustomBlockType {
         }
     }),
 
+    GNOME_STORAGE_NEGATIVE(new CustomBlockInstatiator() {
+        @Override
+        public ObservableCustomBlock instantiate() {
+            return new ObservableCustomBlock(
+                    "gnome_trigger_negative",
+                    "https://dl.dropbox.com/u/29386658/gt/textures/gnome_socket_end_16x16.png",
+                    16);
+
+        }
+    }),
+    
+    GNOME_STORAGE_POSITIVE(new CustomBlockInstatiator() {
+        @Override
+        public ObservableCustomBlock instantiate() {
+            return new ObservableCustomBlock(
+                    "gnome_trigger_positive",
+                    "https://dl.dropbox.com/u/29386658/gt/textures/gnome_16x16.png",
+                    16);
+
+        }
+    }),    
+    
 	/** spawns players */
 	SPAWN_BLOCK(new CustomBlockInstatiator() {
 		@Override

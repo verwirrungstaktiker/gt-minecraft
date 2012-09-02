@@ -30,13 +30,14 @@ public class GnomeStorageTrigger extends BlockTrigger implements BlockObserver{
 	 * @param name the name prefix of the trigger
 	 * @param type type of item that is needed to trigger
 	 */
-	public GnomeStorageTrigger(final String name, final Block block) {
-		super(name, block);
+	public GnomeStorageTrigger(final Block block) {
+		super("gnome_trigger", block);
 		
 		this.triggered = false;
 
 		registerWithSubject();
 	}
+
 	
 	/** to be used in persistence*/
 	public GnomeStorageTrigger() {}
@@ -45,10 +46,10 @@ public class GnomeStorageTrigger extends BlockTrigger implements BlockObserver{
 	 * registers this trigger
 	 */
 	public void registerWithSubject() {
-		ObservableCustomBlock triggerBlock = CustomBlockType.GNOME_TRIGGER_NEGATIVE.getCustomBlock();
+		ObservableCustomBlock triggerBlock = CustomBlockType.GNOME_STORAGE_NEGATIVE.getCustomBlock();
 		triggerBlock.addObserver(this, getBlock().getWorld());
 
-		triggerBlock = CustomBlockType.GNOME_TRIGGER_POSITIVE.getCustomBlock();
+		triggerBlock = CustomBlockType.GNOME_STORAGE_POSITIVE.getCustomBlock();
 		triggerBlock.addObserver(this, getBlock().getWorld());
 	}
 	
@@ -56,10 +57,10 @@ public class GnomeStorageTrigger extends BlockTrigger implements BlockObserver{
 	 * unregisters this trigger
 	 */
 	public void unregisterFromSubject() {
-		ObservableCustomBlock triggerBlock = CustomBlockType.GNOME_TRIGGER_NEGATIVE.getCustomBlock();
+		ObservableCustomBlock triggerBlock = CustomBlockType.GNOME_STORAGE_NEGATIVE.getCustomBlock();
 		triggerBlock.removeObserver(this, getBlock().getWorld());
 
-		triggerBlock = CustomBlockType.GNOME_TRIGGER_POSITIVE.getCustomBlock();
+		triggerBlock = CustomBlockType.GNOME_STORAGE_POSITIVE.getCustomBlock();
 		triggerBlock.removeObserver(this, getBlock().getWorld());
 	}
 
@@ -74,7 +75,7 @@ public class GnomeStorageTrigger extends BlockTrigger implements BlockObserver{
     	super.setup(values, world);
     	
         triggered = false;
-        CustomBlockType.GNOME_TRIGGER_NEGATIVE.place(getBlock());        
+        CustomBlockType.GNOME_STORAGE_NEGATIVE.place(getBlock());        
         //state = CustomBlockType.GNOME_TRIGGER_NEGATIVE.getCustomBlock();       
         registerWithSubject();
         
@@ -115,7 +116,7 @@ public class GnomeStorageTrigger extends BlockTrigger implements BlockObserver{
 	        		&& hero.getActiveItem().getType() == TYPE) {
 	            triggered = true;
 	   
-                CustomBlockType.GNOME_TRIGGER_POSITIVE.place(getBlock());
+                CustomBlockType.GNOME_STORAGE_POSITIVE.place(getBlock());
 	        	blockEvent.getPlayer().sendMessage(ChatColor.YELLOW + "Gnome stored");
 	        	
 	        	gnome = (GnomeItem) hero.removeActiveItem();
@@ -123,7 +124,7 @@ public class GnomeStorageTrigger extends BlockTrigger implements BlockObserver{
 	        } else if(triggered && hero!=null && hero.getActiveItem() == null) {
 	            triggered = false;
 	   
-                CustomBlockType.GNOME_TRIGGER_NEGATIVE.place(getBlock());
+                CustomBlockType.GNOME_STORAGE_NEGATIVE.place(getBlock());
 	        	blockEvent.getPlayer().sendMessage(ChatColor.YELLOW + "Gnome retrieved");
 	        	
 	        	hero.setActiveItem(gnome);	        	
