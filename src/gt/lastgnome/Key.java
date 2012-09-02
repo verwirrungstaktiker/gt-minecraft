@@ -13,9 +13,10 @@ import org.getspout.spoutapi.inventory.SpoutItemStack;
  * @author Roman
  * The Key item
  */
-public final class Key extends PortableItem {
+public class Key extends PortableItem {
 
 	private final ItemStack itemStack;
+	private final DispenserItem keyColor;
 
 	/**
 	 * Creates a new Key.
@@ -23,10 +24,11 @@ public final class Key extends PortableItem {
 	 * @param name the name of the tool
 	 * @param texture texture of the tool
 	 */
-	public Key(final Plugin plugin, final String name, final String texture) {
+	public Key(final Plugin plugin, final String name, final String texture, final DispenserItem color) {
 		super(plugin, name, texture, UnlockItemType.KEY);
 
 		itemStack = new SpoutItemStack(this);
+		keyColor = color;
 		
 		setTool(true);
 		setDropable(true);
@@ -37,15 +39,15 @@ public final class Key extends PortableItem {
 	 * Creates a new key
 	 * @param plugin the plugin we run
 	 */
-	public Key(final Plugin plugin) {
-		this(plugin, "PlaceHolder", "http://www.upedu.org/applet/images/key_concept.gif");
+	public Key(final Plugin plugin, final DispenserItem color) {
+		this(plugin, "PlaceHolder", "http://www.upedu.org/applet/images/key_concept.gif",color);
 	}
 
 	/**
 	 * Creates a new key
 	 */
-	public Key() {
-		this(Hello.getPlugin());
+	public Key(final DispenserItem color) {
+		this(Hello.getPlugin(),color);
 	}
 
 	@Override
@@ -61,6 +63,10 @@ public final class Key extends PortableItem {
 	@Override
 	public void onDetachHero(final Hero hero) {
 		System.out.println("dropped key.");
+	}
+	
+	public DispenserItem getKeyColor() {
+		return keyColor;
 	}
 
 }

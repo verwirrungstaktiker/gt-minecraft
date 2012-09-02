@@ -1,5 +1,6 @@
 package gt.general.logic.trigger;
 
+import gt.general.character.Hero;
 import gt.general.logic.persistence.PersistenceMap;
 import gt.general.logic.persistence.exceptions.PersistenceException;
 import gt.general.world.BlockObserver;
@@ -20,6 +21,7 @@ public class GnomeItemTrigger extends ItemTrigger implements BlockObserver{
 	public GnomeItemTrigger(final Block block) {
 	    super("gnome_trigger", block, UnlockItemType.GNOME);
 		
+	    registerWithSubject();
 		CustomBlockType.GNOME_TRIGGER_NEGATIVE.place(block);
 	}
 	
@@ -47,12 +49,18 @@ public class GnomeItemTrigger extends ItemTrigger implements BlockObserver{
             throws PersistenceException {
     	super.setup(values, world);
         
+    	registerWithSubject();
         CustomBlockType.GNOME_TRIGGER_NEGATIVE.place(getBlock());        
     }
 
 	@Override
 	protected void triggered(final BlockEvent event) {
 		// nothing to do here
+	}
+
+	@Override
+	protected boolean rightItemForTrigger(final Hero hero) {
+		return hero.getActiveItem().getType() == getType();
 	}
 
 

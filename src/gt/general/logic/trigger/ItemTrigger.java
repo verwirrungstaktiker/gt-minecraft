@@ -27,8 +27,9 @@ public abstract class ItemTrigger extends BlockTrigger implements BlockObserver{
 	
 	private boolean triggered;
 	
-	private UnlockItemType type;
-	
+	private UnlockItemType unlockType;
+	private CustomBlockType customType;
+
 	/**
 	 * @param block the block of the trigger
 	 * @param name the name prefix of the trigger
@@ -38,9 +39,7 @@ public abstract class ItemTrigger extends BlockTrigger implements BlockObserver{
 		super(name, block);
 		
 		this.triggered = false;
-		this.type = type;
-		
-		registerWithSubject();
+		this.unlockType = type;
 	}
 	
 	/** to be used in persistence*/
@@ -66,11 +65,9 @@ public abstract class ItemTrigger extends BlockTrigger implements BlockObserver{
             throws PersistenceException {
     	super.setup(values, world);
     	
-    	type = UnlockItemType.valueOf((String) values.get(KEY_TYPE));
-    	
+    	unlockType = UnlockItemType.valueOf((String) values.get(KEY_TYPE));
+
         triggered = false;
-        
-        registerWithSubject();
         
     }
     
@@ -78,7 +75,7 @@ public abstract class ItemTrigger extends BlockTrigger implements BlockObserver{
     public PersistenceMap dump() {
         PersistenceMap map = super.dump();
 
-        map.put(KEY_TYPE, type.toString());
+        map.put(KEY_TYPE, unlockType.toString());
         
 		return map;
     }
@@ -106,7 +103,7 @@ public abstract class ItemTrigger extends BlockTrigger implements BlockObserver{
 
 	        Hero hero = HeroManager.getHero(blockEvent.getPlayer());
 
-	        if(hero!=null && hero.getActiveItem()!=null && hero.getActiveItem().getType() == type) {
+	        if(hero!=null && hero.getActiveItem()!=null && rightItemForTrigger(hero)) {
 	            triggered = !triggered;
 	            
 	            if(triggered) {
@@ -123,9 +120,25 @@ public abstract class ItemTrigger extends BlockTrigger implements BlockObserver{
         }
     }
 
-    /**
+    protected abstract boolean rightItemForTrigger(Hero hero);
+
+	/**
      * additional action that shall be performed when triggered
      * @param event event that caused the trigger
      */
 	protected abstract void triggered(final BlockEvent event);
+	
+	
+	public UnlockItemType getType() {
+		return unlockType;
+	}
+
+	public CustomBlockType getCustomType() {
+		return customType;
+	}
+
+	public void setCustomType(CustomBlockType customType) {
+		this.customType = customType;
+	}
+
 }
