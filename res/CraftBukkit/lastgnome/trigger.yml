@@ -2172,25 +2172,25 @@ global-responses:
     material: !!org.bukkit.Material 'IRON_FENCE'
   obsidian_block_1:
     min:
-      z: -54
+      x: -54
       y: 65
-      x: -87
+      z: -87
     max:
-      z: -41
+      x: -41
       y: 67
-      x: -74
+      z: -74
     class: gt.general.logic.response.MultiBlockDisappearResponse
     inverted: true
     material: !!org.bukkit.Material 'OBSIDIAN'
   obsidian_block_2:
     min:
-      z: -51
+      x: -51
       y: 68
-      x: -84
+      z: -84
     max:
-      z: -44
+      x: -44
       y: 70
-      x: -77
+      z: -77
     class: gt.general.logic.response.MultiBlockDisappearResponse
     inverted: true
     material: !!org.bukkit.Material 'OBSIDIAN'
