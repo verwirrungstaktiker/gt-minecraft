@@ -105,8 +105,8 @@ public enum CustomBlockType {
         @Override
         public ObservableCustomBlock instantiate() {
             return new ObservableCustomBlock(
-                    "gnome_trigger_negative",
-                    "https://dl.dropbox.com/u/29386658/gt/textures/gnome_socket_end_16x16.png",
+                    "gnome_storage_negative",
+                    "https://raw.github.com/verwirrungstaktiker/gt-minecraft/master/res/texture/sleep_gnome_negative.png",
                     16);
 
         }
@@ -116,8 +116,8 @@ public enum CustomBlockType {
         @Override
         public ObservableCustomBlock instantiate() {
             return new ObservableCustomBlock(
-                    "gnome_trigger_positive",
-                    "https://dl.dropbox.com/u/29386658/gt/textures/gnome_16x16.png",
+                    "gnome_storage_positive",
+                    "https://raw.github.com/verwirrungstaktiker/gt-minecraft/master/res/texture/sleep_gnome_positive.png",
                     16);
 
         }
