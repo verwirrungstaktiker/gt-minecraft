@@ -3,6 +3,7 @@ package gt.lastgnome;
 import gt.general.PortableItem;
 import gt.general.character.Hero;
 import gt.general.logic.trigger.UnlockItemType;
+import gt.plugin.meta.CustomBlockType;
 import gt.plugin.meta.Hello;
 
 import org.bukkit.inventory.ItemStack;
@@ -30,9 +31,34 @@ public class Key extends PortableItem {
 		itemStack = new SpoutItemStack(this);
 		keyColor = color;
 		
+		setVisuals(color);
+		
 		setTool(true);
 		setDropable(true);
 		setTransferable(false);
+	}
+
+	private void setVisuals(DispenserItem color) {
+		switch(color) {
+		case BLUE_KEY:
+			setTexture("https://raw.github.com/verwirrungstaktiker/gt-minecraft/master/res/texture/key_blue.png");
+			setName("blue_key");
+			break;
+		case RED_KEY:
+			setTexture("https://raw.github.com/verwirrungstaktiker/gt-minecraft/master/res/texture/key_red.png");
+			setName("red_key");
+			break;
+		case GREEN_KEY:
+			setTexture("https://raw.github.com/verwirrungstaktiker/gt-minecraft/master/res/texture/key_green.png");
+			setName("green_key");
+			break;
+		case YELLOW_KEY:
+			setTexture("https://raw.github.com/verwirrungstaktiker/gt-minecraft/master/res/texture/key_yellow.png");
+			setName("yellow_key");
+			break;
+		default:
+			break;
+		}
 	}
 
 	/**

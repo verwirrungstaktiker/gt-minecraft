@@ -115,7 +115,7 @@ public abstract class ItemTrigger extends BlockTrigger implements BlockObserver{
 	                getContext().updateTriggerState(this, true, blockEvent.getPlayer());
 	            }
 	        } else {
-	        	blockEvent.getPlayer().sendMessage(ChatColor.YELLOW + "You might need the gnome here");
+	        	blockEvent.getPlayer().sendMessage(ChatColor.YELLOW + "You might need a special item here");
 	        }
         }
     }

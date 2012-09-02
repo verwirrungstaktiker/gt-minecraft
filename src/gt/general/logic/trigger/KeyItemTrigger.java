@@ -100,7 +100,7 @@ public class KeyItemTrigger extends ItemTrigger implements BlockObserver{
 	public PersistenceMap dump() {
 		PersistenceMap map = super.dump();
 		
-		map.put(KEY_COLOR, keyColor);
+		map.put(KEY_COLOR, keyColor.toString());
 		
 		return map;
 	}
