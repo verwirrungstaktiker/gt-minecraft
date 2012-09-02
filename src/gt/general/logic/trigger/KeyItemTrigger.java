@@ -31,6 +31,7 @@ public class KeyItemTrigger extends ItemTrigger implements BlockObserver{
 	public KeyItemTrigger(final Block block, final DispenserItem color) {
 	    super("key_trigger", block, UnlockItemType.KEY);
 		
+	    keyColor = color;
 	    setCustomBlockType(color);
 	    
 	    registerWithSubject();
