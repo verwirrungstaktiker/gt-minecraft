@@ -71,7 +71,7 @@ public class ScoreManager implements Listener{
 	 */
 	@EventHandler
 	public void countPlayerDamage(final EntityDamageByEntityEvent event) {
-		if(active && event.getEntityType() == EntityType.PLAYER) {
+		if(active && event.getEntityType() == EntityType.PLAYER && event.isCancelled()) {
 			Player player = (Player) event.getEntity();
 			Hero hero = HeroManager.getHero(player);
 			if(game.isPlayedBy(hero)) {

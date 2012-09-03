@@ -9,6 +9,7 @@ import org.bukkit.entity.HumanEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.entity.FoodLevelChangeEvent;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.player.PlayerDropItemEvent;
 import org.bukkit.event.player.PlayerKickEvent;
@@ -50,7 +51,7 @@ public class PlayerListener implements Listener {
 	}
 
 	/** 
-	 * prevents item dropping for Gnomes only.
+	 * prevents item dropping for tools
 	 * @param event player drops an item
 	 **/
 	@EventHandler
@@ -68,6 +69,16 @@ public class PlayerListener implements Listener {
 		
 	}
 
+	/** 
+	 * no hunger during games
+	 * @param event foodlevel changes for a player
+	 **/
+	@EventHandler
+	public final void noHunger(final FoodLevelChangeEvent event) {
+		event.setFoodLevel(20);
+		event.setCancelled(true);		
+	}
+	
 	/** 
 	 * prevents carrying more than one item of the same kind 
 	 * @param event player picks up an item

@@ -28,7 +28,7 @@ public class BlockTool extends PortableItem{
 	
 	public static final Material MATERIAL = Material.OBSIDIAN;
 	/** the maximum allowed range between dispenser and blocktool */
-	private static final double MAX_RANGE = 20.0;
+	private static final double MAX_RANGE = 40.0;
 	/** the dispenser that created this blockTool */
 	private BlocktoolDispenser dispenser;
 	private ItemStack itemStack;
@@ -103,7 +103,8 @@ public class BlockTool extends PortableItem{
 			return true;
 		} else {
 			// wrong surface
-			player.sendMessage(ChatColor.RED + "Cannot be placed here! (Only on " + MATERIAL + ")");
+			player.sendMessage(ChatColor.RED + "Cannot be placed here! (Only on " + MATERIAL + ")." +
+					" Or maybe your teammate is too far away?");
 			return false;
 		}
 	}

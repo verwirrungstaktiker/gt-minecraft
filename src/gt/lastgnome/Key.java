@@ -33,8 +33,8 @@ public class Key extends PortableItem {
 		
 		setVisuals(color);
 		
-		setTool(true);
-		setDropable(true);
+		setTool(false);
+		setDropable(false);
 		setTransferable(false);
 	}
 

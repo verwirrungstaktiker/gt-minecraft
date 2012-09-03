@@ -71,8 +71,16 @@ public class Score {
 	
 	public int getPoints() {
 		//TODO: improve Forumla
-		int tenMinutes = 10*60*10; //Scoremanager schedules 10times per Second 
-		return (400-totalDamage-totalDeaths*2)*tenMinutes/time;
+		int averageTime = 20*60*10; //Scoremanager schedules 10times per Second 
+
+		//TODO this is debugging output
+		System.out.println("time: " + time + " \n" + 
+				"totalDamage: " + totalDamage + " \n" +
+				"totalDeaths: " + totalDeaths + " \n" +
+				damage + " \n" +
+				deaths );
+		
+		return (400-totalDamage-totalDeaths*2)*averageTime/time;
 	}
 	
 	public HighscoreEntry toHighscoreEntry() {
