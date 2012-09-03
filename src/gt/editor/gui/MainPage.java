@@ -200,7 +200,6 @@ public class MainPage extends OverlayPage implements Listener {
 
 	@EventHandler
 	public void onLogicChange(final LogicChangeEvent e) {
-		System.out.println("logic changed");
 		contextButton.updateSide();
 		buildContextList();
 	}
@@ -208,7 +207,6 @@ public class MainPage extends OverlayPage implements Listener {
 	@EventHandler
 	public void onHighlightSuppress(final HighlightSuppressEvent e) {		
 		if (e.getPlayer().equals(player)) {
-			System.out.println("highlight suppress state changed");
 			
 			highlightButton.updateSide();
 		}
@@ -217,7 +215,6 @@ public class MainPage extends OverlayPage implements Listener {
 	@EventHandler
 	public void onContextSwitch(final LogicSelectionEvent e) {
 		if (e.getPlayer().equals(player)) {
-			System.out.println("switched context");
 			contextButton.updateSide();
 			buildContextList();
 		}
