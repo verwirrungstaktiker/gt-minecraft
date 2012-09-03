@@ -136,7 +136,7 @@ public class Hero extends Character{
 	 * @return true if the item can be transfered to another player
 	 */
 	public boolean canTransferItem() {
-		return activeItem.isTransferable();
+		return hasActiveItem() && activeItem.isTransferable();
 	}
 
 	/**

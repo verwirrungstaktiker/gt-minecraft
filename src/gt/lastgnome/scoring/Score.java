@@ -70,7 +70,7 @@ public class Score {
 	}
 	
 	public int getPoints() {
-		//TODO: improve Forumla
+		//TODO: improve Formular
 		int averageTime = 20*60*1000; //Scoremanager counts millies 
 
 		//TODO this is debugging output
@@ -80,7 +80,7 @@ public class Score {
 				damage + " \n" +
 				deaths );
 		
-		return 2000*(10/(totalDamage+10)+(1/(totalDeaths+1)))*averageTime/time;
+		return 300000*(10/(totalDamage+10)+(1/(totalDeaths+1)))*averageTime/time;
 	}
 	
 	public HighscoreEntry toHighscoreEntry() {
