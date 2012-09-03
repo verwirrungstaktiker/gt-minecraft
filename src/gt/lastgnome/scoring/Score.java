@@ -8,7 +8,7 @@ import java.util.Map;
 
 public class Score {
 	
-	private int time;	// *100ms
+	private int time;	// *1ms
 	private int totalDamage;
 	private int totalDeaths;
 	private Map<Hero,Integer> deaths;
@@ -71,7 +71,7 @@ public class Score {
 	
 	public int getPoints() {
 		//TODO: improve Forumla
-		int averageTime = 20*60*10; //Scoremanager schedules 10times per Second 
+		int averageTime = 20*60*1000; //Scoremanager counts millies 
 
 		//TODO this is debugging output
 		System.out.println("time: " + time + " \n" + 
@@ -80,7 +80,7 @@ public class Score {
 				damage + " \n" +
 				deaths );
 		
-		return (400-totalDamage-totalDeaths*2)*averageTime/time;
+		return 2000*(10/(totalDamage+10)+(1/(totalDeaths+1)))*averageTime/time;
 	}
 	
 	public HighscoreEntry toHighscoreEntry() {

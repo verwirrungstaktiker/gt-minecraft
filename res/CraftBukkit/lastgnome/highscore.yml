@@ -8,12 +8,24 @@ scores:
   - Duke Nukem (TM)
   damage: 0
   points: 205984
+- time: 14441
+  deaths: 0
+  players:
+  - Kaossilat0r
+  damage: 0
+  points: 33238
 - time: 104
   deaths: 0
   players:
   - DubbelSnort
   damage: 0
   points: 23076
+- time: 16237
+  deaths: 0
+  players:
+  - Kaossilat0r
+  damage: 0
+  points: 295
 - time: 10788
   deaths: 0
   players:
@@ -32,3 +44,9 @@ scores:
   - DubbelSnort
   damage: 0
   points: 17
+- time: 113638
+  deaths: 0
+  players:
+  - Kaossilat0r
+  damage: 0
+  points: 0
