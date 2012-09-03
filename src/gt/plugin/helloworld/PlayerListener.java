@@ -5,10 +5,13 @@ import gt.lastgnome.GnomeItem;
 
 import org.bukkit.ChatColor;
 import org.bukkit.GameMode;
+import org.bukkit.entity.EntityType;
 import org.bukkit.entity.HumanEntity;
 import org.bukkit.entity.Player;
+import org.bukkit.entity.Zombie;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.FoodLevelChangeEvent;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.player.PlayerDropItemEvent;
@@ -124,6 +127,15 @@ public class PlayerListener implements Listener {
 		}
 		return false;
 	}
+	
+	@EventHandler
+	public void preventPlayerAttacks(final EntityDamageByEntityEvent event) {
+
+		if (event.getDamager() instanceof Player) {
+				event.setCancelled(true);
+
+		}
+	}		
 	
 	
 }

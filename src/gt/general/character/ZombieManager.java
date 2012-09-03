@@ -28,7 +28,7 @@ import org.bukkit.event.entity.EntityDamageByEntityEvent;
  * @author philipp
  *
  */
-public class ZombieManager implements Listener, Runnable{
+public class ZombieManager implements Runnable{
 	
 	private LivingEntity target;
 	private Vector<ZombieCharacter> zombies;
@@ -53,32 +53,7 @@ public class ZombieManager implements Listener, Runnable{
 		this.world = world;
 	}
 	
-	/**
-	 *  Handles events, when Zombie hits or is hit
-	 * @param event an EntityDamageByEntity Event
-	 */
-	@EventHandler
-	public void damageEntityEvent(final EntityDamageByEntityEvent event) {
-		//On hit, Zombie drains 8 half hearts
-		if (event.getDamager() instanceof Zombie) {
-			event.setDamage(8);
-		}
-		
-		//Zombies cannot be harmed by Players
 
-		if (event.getDamager() instanceof Player) {
-			if (event.getEntity() instanceof Zombie) {
-				event.setCancelled(true);
-			}
-		}
-		
-		//if player takes damage at least he shouldn't be hungry ;)
-		if (event.getEntityType()==EntityType.PLAYER) {
-			Player player = (Player) event.getEntity();
-			player.setFoodLevel(20);
-		}
-		
-	}
 	
 	/**
 	 * 
