@@ -82,7 +82,7 @@ global-contexts:
     - lever_trigger__1922810118
     - lever_trigger__1432619885
     - lever_trigger__566231620
-    - lever_trigger__86438171
+    - gnome__86438171
     - lever_trigger__1934237210
     responses:
     - team_respawn_4
@@ -281,11 +281,8 @@ global-contexts:
     triggers:
     - red_lock_lock
     responses:
-    - obsidian_fence_2
-    - obsidian_fence_4
+    - obsidian_dispenser_gate
     - gnome_storage_fence
-    - obsidian_fence_3
-    - obsidian_fence_1
     input-function: OR
   yellow_lock:
     triggers:
@@ -307,7 +304,10 @@ global-contexts:
     - green_lock_lock
     responses:
     - red_room_initial_gate
-    - obsidian_dispenser_gate
+    - obsidian_fence_2
+    - obsidian_fence_4
+    - obsidian_fence_3
+    - obsidian_fence_1
     input-function: OR
   gnome_passing2:
     triggers:
@@ -928,9 +928,9 @@ global-triggers:
   red_room4_gnome2:
     class: gt.general.logic.trigger.GnomeItemTrigger
     block:
-      z: -97
+      z: -89
       y: 70
-      x: -117
+      x: -114
     type: GNOME
     material: !!org.bukkit.Material 'STONE'
   lever_trigger__610836886:
@@ -945,9 +945,9 @@ global-triggers:
   red_room4_gnome1:
     class: gt.general.logic.trigger.GnomeItemTrigger
     block:
-      z: -95
+      z: -103
       y: 70
-      x: -117
+      x: -114
     type: GNOME
     material: !!org.bukkit.Material 'STONE'
   step_on_trigger_1040462656:
@@ -1379,15 +1379,14 @@ global-triggers:
     - z: -59
       y: 69
       x: 17
-  lever_trigger__86438171:
-    orientation: !!org.bukkit.block.BlockFace 'SOUTH'
-    class: gt.general.logic.trigger.LeverRedstoneTrigger
+  gnome__86438171:
+    class: gt.general.logic.trigger.GnomeItemTrigger
     block:
       z: -28
       y: 66
       x: 34
-    inverted: false
-    material: !!org.bukkit.Material 'LEVER'
+    material: !!org.bukkit.Material 'STONE'
+    type: GNOME
   yellow_gate_light_green_group1:
     orientation: !!org.bukkit.block.BlockFace 'SOUTH'
     class: gt.general.logic.trigger.RandomLeverTrigger
@@ -2699,7 +2698,7 @@ global-responses:
     min:
       z: -60
       y: 69
-      x: -48
+      x: -49
     max:
       z: -60
       y: 70
