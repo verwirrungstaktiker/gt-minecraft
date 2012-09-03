@@ -87,8 +87,9 @@ public class LastGnomeGameBuilder extends AbstractLastGnomeGameBuilder {
 			Player p = hero.getPlayer();
 			p.setGameMode(GameMode.SURVIVAL);
 			p.getInventory().clear();
-			//Make sure player is in good health
+			//Make sure player is in good health and not too hungry
 			p.setHealth(p.getMaxHealth());
+			p.setFoodLevel(20);
 		}
 	}
 	
