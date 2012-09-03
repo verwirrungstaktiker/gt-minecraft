@@ -1,16 +1,8 @@
 dispenser:
-- type: BLOCKTOOL
-  z: 15
-  y: 66
-  x: -11
 - type: GREEN_KEY
   z: -65
   y: 66
   x: -89
-- type: BLOCKTOOL
-  z: -54
-  y: 70
-  x: -47
 - type: RED_KEY
   z: -96
   y: 66
@@ -24,6 +16,22 @@ dispenser:
   y: 66
   x: -19
 - type: BLOCKTOOL
-  z: -127
-  y: 66
   x: -48
+  y: 66
+  z: -127
+- type: BLOCKTOOL
+  x: -58
+  y: 67
+  z: -128
+- type: BLOCKTOOL
+  x: -31
+  y: 68
+  z: -153
+- type: BLOCKTOOL
+  x: -47
+  y: 70
+  z: -56
+- type: BLOCKTOOL
+  x: -48
+  y: 70
+  z: -56

@@ -276,11 +276,6 @@ global-contexts:
     - final_part1_gate2
     - final_part1_gate1
     - final_flight_zombie_fence_right_-2
-    - final_spawn_l6
-    - final_spawn_r7
-    - final_spawn_r6
-    - final_spawn_r5
-    - final_spawn_l7
     input-function: OR
   red_lock:
     triggers:
@@ -291,11 +286,6 @@ global-contexts:
     - gnome_storage_fence
     - obsidian_fence_3
     - obsidian_fence_1
-    - final_spawn_r-2
-    - final_spawn_l0
-    - final_spawn1
-    - final_spawn_l1
-    - final_spawn_r-1
     input-function: OR
   yellow_lock:
     triggers:
@@ -345,6 +335,17 @@ global-contexts:
     - big_room_gnome6
     - big_room_gnome2
     responses:
+    - big_room_gate
+    - final_spawn_l6
+    - final_spawn_r7
+    - final_spawn_r6
+    - final_spawn_r5
+    - final_spawn_l7
+    - final_spawn_r-2
+    - final_spawn_l0
+    - final_spawn1
+    - final_spawn_l1
+    - final_spawn_r-1
     - final_spawn_l2
     - final_spawn_r2
     - final_spawn_r0
@@ -352,7 +353,6 @@ global-contexts:
     - final_spawn_r1
     - final_spawn_r4
     - final_spawn_l5
-    - big_room_gate
     - final_spawn_l4
     - final_spawn_r3
     input-function: AND
@@ -1512,30 +1512,6 @@ global-responses:
     class: gt.general.logic.response.DoorResponse
     data_upper: 9
     material: !!org.bukkit.Material 'IRON_DOOR_BLOCK'
-  final_spawn_r6:
-    speed: 1.0
-    location:
-      z: 45.0
-      y: 65.0
-      x: -109.0
-    class: gt.general.logic.response.ZombieSpawnResponse
-    number: 2
-  final_spawn_r5:
-    speed: 1.0
-    location:
-      z: 34.0
-      y: 65.0
-      x: -109.0
-    class: gt.general.logic.response.ZombieSpawnResponse
-    number: 2
-  final_spawn_r7:
-    speed: 1.0
-    location:
-      z: 56.0
-      y: 65.0
-      x: -109.0
-    class: gt.general.logic.response.ZombieSpawnResponse
-    number: 2
   zombie_spawn_1:
     speed: 1.0
     location:
@@ -1625,14 +1601,6 @@ global-responses:
     class: gt.general.logic.response.MultiBlockDisappearResponse
     inverted: false
     material: !!org.bukkit.Material 'IRON_FENCE'
-  final_spawn_r0:
-    speed: 1.0
-    location:
-      z: -21.0
-      y: 65.0
-      x: -109.0
-    class: gt.general.logic.response.ZombieSpawnResponse
-    number: 2
   math_riddle3_sign6:
     orientation: !!org.bukkit.block.BlockFace 'EAST'
     triggered_message: "\n triggered"
@@ -1656,22 +1624,6 @@ global-responses:
     class: gt.general.logic.response.MultiBlockDisappearResponse
     inverted: false
     material: !!org.bukkit.Material 'IRON_FENCE'
-  final_spawn_r1:
-    speed: 1.0
-    location:
-      z: -10.0
-      y: 65.0
-      x: -109.0
-    class: gt.general.logic.response.ZombieSpawnResponse
-    number: 2
-  final_spawn_r2:
-    speed: 1.0
-    location:
-      z: 1.0
-      y: 65.0
-      x: -109.0
-    class: gt.general.logic.response.ZombieSpawnResponse
-    number: 2
   math_riddle3_sign4:
     orientation: !!org.bukkit.block.BlockFace 'WEST'
     triggered_message: "\n triggered"
@@ -1683,14 +1635,6 @@ global-responses:
       x: -79
     class: gt.general.logic.response.SignResponse
     material: !!org.bukkit.Material 'WALL_SIGN'
-  final_spawn_r3:
-    speed: 1.0
-    location:
-      z: 12.0
-      y: 65.0
-      x: -109.0
-    class: gt.general.logic.response.ZombieSpawnResponse
-    number: 2
   math_riddle3_sign5:
     orientation: !!org.bukkit.block.BlockFace 'WEST'
     triggered_message: "\n triggered"
@@ -1702,14 +1646,6 @@ global-responses:
       x: -79
     class: gt.general.logic.response.SignResponse
     material: !!org.bukkit.Material 'WALL_SIGN'
-  final_spawn_r4:
-    speed: 1.0
-    location:
-      z: 23.0
-      y: 65.0
-      x: -109.0
-    class: gt.general.logic.response.ZombieSpawnResponse
-    number: 2
   door_response_1511941288:
     data_lower: 2
     location:
@@ -1728,14 +1664,6 @@ global-responses:
     class: gt.general.logic.response.DoorResponse
     data_upper: 8
     material: !!org.bukkit.Material 'IRON_DOOR_BLOCK'
-  final_spawn_r-1:
-    speed: 1.0
-    location:
-      z: -32.0
-      y: 65.0
-      x: -109.0
-    class: gt.general.logic.response.ZombieSpawnResponse
-    number: 2
   yellow_gate_initial_gate:
     min:
       z: -49
@@ -1748,14 +1676,6 @@ global-responses:
     class: gt.general.logic.response.MultiBlockDisappearResponse
     inverted: false
     material: !!org.bukkit.Material 'IRON_FENCE'
-  final_spawn_r-2:
-    speed: 1.0
-    location:
-      z: -43.0
-      y: 65.0
-      x: -109.0
-    class: gt.general.logic.response.ZombieSpawnResponse
-    number: 2
   room4_part1_gate1:
     min:
       z: -120
@@ -2083,7 +2003,7 @@ global-responses:
       x: -15
     class: gt.general.logic.response.BlockDisappearResponse
     inverted: false
-    material: !!org.bukkit.Material 'DIAMOND_BLOCK'
+    material: !!org.bukkit.Material 'AIR'
   door_response_1162670521:
     data_lower: 2
     location:
@@ -2112,11 +2032,11 @@ global-responses:
     min:
       z: -111
       y: 65
-      x: -30
+      x: -34
     max:
       z: -111
       y: 68
-      x: -34
+      x: -30
     class: gt.general.logic.response.MultiBlockDisappearResponse
     inverted: false
     material: !!org.bukkit.Material 'IRON_FENCE'
@@ -2129,14 +2049,6 @@ global-responses:
     class: gt.general.logic.response.DoorResponse
     data_upper: 8
     material: !!org.bukkit.Material 'IRON_DOOR_BLOCK'
-  final_spawn1:
-    speed: 1.0
-    location:
-      z: -49.0
-      y: 65.0
-      x: -103.0
-    class: gt.general.logic.response.ZombieSpawnResponse
-    number: 6
   yellow_gate_room1_gate2:
     min:
       z: -26
@@ -2437,14 +2349,6 @@ global-responses:
     class: gt.general.logic.response.MultiBlockDisappearResponse
     inverted: false
     material: !!org.bukkit.Material 'IRON_FENCE'
-  final_spawn_l7:
-    speed: 1.0
-    location:
-      z: 56.0
-      y: 65.0
-      x: -91.0
-    class: gt.general.logic.response.ZombieSpawnResponse
-    number: 2
   final_part2_gate:
     min:
       z: -3
@@ -2457,14 +2361,6 @@ global-responses:
     class: gt.general.logic.response.MultiBlockDisappearResponse
     inverted: false
     material: !!org.bukkit.Material 'IRON_FENCE'
-  final_spawn_l3:
-    speed: 1.0
-    location:
-      z: 12.0
-      y: 65.0
-      x: -91.0
-    class: gt.general.logic.response.ZombieSpawnResponse
-    number: 2
   door_response_1732285648:
     data_lower: 3
     location:
@@ -2486,30 +2382,6 @@ global-responses:
     class: gt.general.logic.response.MultiBlockDisappearResponse
     inverted: false
     material: !!org.bukkit.Material 'IRON_FENCE'
-  final_spawn_l4:
-    speed: 1.0
-    location:
-      z: 23.0
-      y: 65.0
-      x: -91.0
-    class: gt.general.logic.response.ZombieSpawnResponse
-    number: 2
-  final_spawn_l5:
-    speed: 1.0
-    location:
-      z: 34.0
-      y: 65.0
-      x: -91.0
-    class: gt.general.logic.response.ZombieSpawnResponse
-    number: 2
-  final_spawn_l6:
-    speed: 1.0
-    location:
-      z: 45.0
-      y: 65.0
-      x: -91.0
-    class: gt.general.logic.response.ZombieSpawnResponse
-    number: 2
   red_room2_gate3:
     min:
       z: -98
@@ -2529,14 +2401,6 @@ global-responses:
       x: -21
     class: gt.general.logic.response.TeleportResponse
     material: !!org.bukkit.Material 'STONE'
-  final_spawn_l0:
-    speed: 1.0
-    location:
-      z: -21.0
-      y: 65.0
-      x: -91.0
-    class: gt.general.logic.response.ZombieSpawnResponse
-    number: 2
   green_room_gate1:
     min:
       z: -67
@@ -2569,14 +2433,6 @@ global-responses:
     class: gt.general.logic.response.BlockDisappearResponse
     inverted: true
     material: !!org.bukkit.Material 'IRON_FENCE'
-  final_spawn_l1:
-    speed: 1.0
-    location:
-      z: -10.0
-      y: 65.0
-      x: -91.0
-    class: gt.general.logic.response.ZombieSpawnResponse
-    number: 2
   red_room2_gate2:
     min:
       z: -105
@@ -2601,14 +2457,6 @@ global-responses:
     class: gt.general.logic.response.MultiBlockDisappearResponse
     inverted: false
     material: !!org.bukkit.Material 'IRON_FENCE'
-  final_spawn_l2:
-    speed: 1.0
-    location:
-      z: 1.0
-      y: 65.0
-      x: -91.0
-    class: gt.general.logic.response.ZombieSpawnResponse
-    number: 2
   door_response_190054466:
     data_lower: 3
     location:
@@ -3017,3 +2865,155 @@ global-responses:
     class: gt.general.logic.response.MultiBlockDisappearResponse
     inverted: false
     material: !!org.bukkit.Material 'IRON_FENCE'
+  final_spawn_r6:
+    speed: 1.0
+    location:
+      z: 46.0
+      y: 65.0
+      x: -109.0
+    class: gt.general.logic.response.ZombieSpawnResponse
+    number: 2
+  final_spawn_r5:
+    speed: 1.0
+    location:
+      z: 35.0
+      y: 65.0
+      x: -109.0
+    class: gt.general.logic.response.ZombieSpawnResponse
+    number: 2
+  final_spawn_r7:
+    speed: 1.0
+    location:
+      z: 57.0
+      y: 65.0
+      x: -109.0
+    class: gt.general.logic.response.ZombieSpawnResponse
+    number: 2
+  final_spawn_r0:
+    speed: 1.0
+    location:
+      z: -20.0
+      y: 65.0
+      x: -109.0
+    class: gt.general.logic.response.ZombieSpawnResponse
+    number: 2
+  final_spawn_r1:
+    speed: 1.0
+    location:
+      z: -9.0
+      y: 65.0
+      x: -109.0
+    class: gt.general.logic.response.ZombieSpawnResponse
+    number: 2
+  final_spawn_r2:
+    speed: 1.0
+    location:
+      z: 2.0
+      y: 65.0
+      x: -109.0
+    class: gt.general.logic.response.ZombieSpawnResponse
+    number: 2
+  final_spawn_r3:
+    speed: 1.0
+    location:
+      z: 13.0
+      y: 65.0
+      x: -109.0
+    class: gt.general.logic.response.ZombieSpawnResponse
+    number: 2
+  final_spawn_r4:
+    speed: 1.0
+    location:
+      z: 24.0
+      y: 65.0
+      x: -109.0
+    class: gt.general.logic.response.ZombieSpawnResponse
+    number: 2
+  final_spawn_r-1:
+    speed: 1.0
+    location:
+      z: -31.0
+      y: 65.0
+      x: -109.0
+    class: gt.general.logic.response.ZombieSpawnResponse
+    number: 2
+  final_spawn_r-2:
+    speed: 1.0
+    location:
+      z: -42.0
+      y: 65.0
+      x: -109.0
+    class: gt.general.logic.response.ZombieSpawnResponse
+    number: 2
+  final_spawn1:
+    speed: 1.0
+    location:
+      z: -49.0
+      y: 65.0
+      x: -100.0
+    class: gt.general.logic.response.ZombieSpawnResponse
+    number: 6
+  final_spawn_l7:
+    speed: 1.0
+    location:
+      z: 57.0
+      y: 65.0
+      x: -91.0
+    class: gt.general.logic.response.ZombieSpawnResponse
+    number: 2
+  final_spawn_l3:
+    speed: 1.0
+    location:
+      z: 13.0
+      y: 65.0
+      x: -91.0
+    class: gt.general.logic.response.ZombieSpawnResponse
+    number: 2
+  final_spawn_l4:
+    speed: 1.0
+    location:
+      z: 24.0
+      y: 65.0
+      x: -91.0
+    class: gt.general.logic.response.ZombieSpawnResponse
+    number: 2
+  final_spawn_l5:
+    speed: 1.0
+    location:
+      z: 35.0
+      y: 65.0
+      x: -91.0
+    class: gt.general.logic.response.ZombieSpawnResponse
+    number: 2
+  final_spawn_l6:
+    speed: 1.0
+    location:
+      z: 46.0
+      y: 65.0
+      x: -91.0
+    class: gt.general.logic.response.ZombieSpawnResponse
+    number: 2
+  final_spawn_l0:
+    speed: 1.0
+    location:
+      z: -20.0
+      y: 65.0
+      x: -91.0
+    class: gt.general.logic.response.ZombieSpawnResponse
+    number: 2
+  final_spawn_l1:
+    speed: 1.0
+    location:
+      z: -9.0
+      y: 65.0
+      x: -91.0
+    class: gt.general.logic.response.ZombieSpawnResponse
+    number: 2
+  final_spawn_l2:
+    speed: 1.0
+    location:
+      z: 2.0
+      y: 65.0
+      x: -91.0
+    class: gt.general.logic.response.ZombieSpawnResponse
+    number: 2
