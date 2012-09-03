@@ -319,6 +319,7 @@ global-contexts:
     - gnome_passing2_fence2
     - gnome_passing2_door3
     - gnome_passing2_door4
+    - zombie_clear_1
     input-function: OR
   room4_part1:
     triggers:
@@ -3016,3 +3017,5 @@ global-responses:
       x: -91.0
     class: gt.general.logic.response.ZombieSpawnResponse
     number: 2
+  zombie_clear_1:
+    class: gt.general.logic.response.ZombieClearResponse

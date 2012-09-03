@@ -125,7 +125,7 @@ public class LastGnomeGame extends AbstractLastGnomeGame implements Listener{
 	 * @param newBearer
 	 *            the new gnome bearer
 	 */
-	void setGnomeBearer(final Hero newBearer) {
+	public void setGnomeBearer(final Hero newBearer) {
 		gnomeBearer = newBearer;
 		getZombieManager().setTarget(newBearer);
 	}

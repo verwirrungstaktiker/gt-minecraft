@@ -9,6 +9,7 @@ import gt.general.world.ObservableCustomBlock;
 import gt.general.world.ObservableCustomBlock.BlockEvent;
 import gt.general.world.ObservableCustomBlock.BlockEventType;
 import gt.lastgnome.GnomeItem;
+import gt.lastgnome.game.LastGnomeGame;
 import gt.plugin.meta.CustomBlockType;
 
 import java.util.Set;
@@ -120,6 +121,8 @@ public class GnomeStorageTrigger extends BlockTrigger implements BlockObserver{
 	        	blockEvent.getPlayer().sendMessage(ChatColor.YELLOW + "Gnome stored");
 	        	
 	        	gnome = (GnomeItem) hero.removeActiveItem();
+	        	LastGnomeGame lgg = (LastGnomeGame)hero.getGame();
+	        	lgg.setGnomeBearer(null);
           
 	        } else if(triggered && hero!=null && hero.getActiveItem() == null) {
 	            triggered = false;
@@ -127,7 +130,9 @@ public class GnomeStorageTrigger extends BlockTrigger implements BlockObserver{
                 CustomBlockType.GNOME_STORAGE_NEGATIVE.place(getBlock());
 	        	blockEvent.getPlayer().sendMessage(ChatColor.YELLOW + "Gnome retrieved");
 	        	
-	        	hero.setActiveItem(gnome);	        	
+	        	hero.setActiveItem(gnome);	
+	        	LastGnomeGame lgg = (LastGnomeGame)hero.getGame();
+	        	lgg.setGnomeBearer(hero);
 	        }
 	        
 	        getContext().updateTriggerState(this, true, blockEvent.getPlayer());
