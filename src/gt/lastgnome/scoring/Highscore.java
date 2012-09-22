@@ -24,8 +24,8 @@ public class Highscore {
 
 	private final List<HighscoreEntry> scores;
 	
-	public final static String PERSISTANCE_FILE="highscore.yml";
-	private final static String KEY_SCORES="scores";
+	public static final String PERSISTANCE_FILE="highscore.yml";
+	private static final String KEY_SCORES="scores";
 	
 	private final String worldName;
 	
@@ -33,12 +33,15 @@ public class Highscore {
 	 * Creates a new Highscore and loads entrys for the specified world
 	 * @param worldName the specified world
 	 */
-	public Highscore(String worldName) {
+	public Highscore(final String worldName) {
 		scores = new ArrayList<HighscoreEntry>();
 		this.worldName = worldName;
 		loadScores(worldName);
 	}
 	
+	/**
+	 * @return List of HighScore Entries
+	 */
 	public List<HighscoreEntry> getScores() {
 		return scores;
 	}
@@ -48,7 +51,7 @@ public class Highscore {
 	 * @param worldName specified world
 	 */
 	@SuppressWarnings("unchecked")
-	private void loadScores(String worldName) {
+	private void loadScores(final String worldName) {
 		File file = Hello.getPlugin().getServer().getWorldContainer();
 		File worldFolder = new File(file, worldName);
 		File path = new File(worldFolder, PERSISTANCE_FILE);
@@ -89,7 +92,7 @@ public class Highscore {
 	 * Adds a new Highscore-Entry to the highscore
 	 * @param entry the entry to be added
 	 */
-	public void addEntry(HighscoreEntry entry) {
+	public void addEntry(final HighscoreEntry entry) {
 		scores.add(entry);
 		Collections.sort(scores);		
 	}

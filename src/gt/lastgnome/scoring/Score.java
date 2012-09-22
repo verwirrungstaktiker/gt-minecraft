@@ -70,8 +70,8 @@ public class Score {
 	}
 	
 	public int getPoints() {
-		//TODO: improve Formular
-		int averageTime = 20*60*1000; //Scoremanager counts millies 
+		//TODO: improve Formula
+		double averageTime = 20*60*1000; //Scoremanager counts millies 
 
 		//TODO this is debugging output
 		System.out.println("time: " + time + " \n" + 
@@ -80,7 +80,7 @@ public class Score {
 				damage + " \n" +
 				deaths );
 		
-		return 300000*(10/(totalDamage+10)+(1/(totalDeaths+1)))*averageTime/time;
+		return (int) ((10.0/(totalDamage+10.0)+(1.0/(totalDeaths+1.0)))*averageTime/time*3000);
 	}
 	
 	public HighscoreEntry toHighscoreEntry() {

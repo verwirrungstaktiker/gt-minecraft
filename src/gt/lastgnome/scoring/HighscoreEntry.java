@@ -15,24 +15,34 @@ public class HighscoreEntry implements Comparable<HighscoreEntry>{
 	private int points = 0;
 	private List<String> players = newArrayList();
 	
-	private final static String KEY_TIME = "time";
-	private final static String KEY_DAMAGE = "damage";
-	private final static String KEY_DEATHS = "deaths";
-	private final static String KEY_POINTS = "points";
-	private final static String KEY_PLAYERS = "players";
+	private static final String KEY_TIME = "time";
+	private static final String KEY_DAMAGE = "damage";
+	private static final String KEY_DEATHS = "deaths";
+	private static final String KEY_POINTS = "points";
+	private static final String KEY_PLAYERS = "players";
 	
-	
-	
+	/** construct new Highscore Entry */
 	public HighscoreEntry() {}
 	
-	public HighscoreEntry(int time, int damage, int deaths,
-			int points) {
+	/**
+	 * @param time time needed
+	 * @param damage damage taken by all players
+	 * @param deaths deaths by all players
+	 * @param points points that have been scored
+	 */
+	public HighscoreEntry(final int time, final int damage, final int deaths,
+			final int points) {
 		this.time = time;
 		this.damage = damage;
 		this.deaths = deaths;
 		this.points = points;
 	}
 	
+	/**
+	 * de-serialize scoring data
+	 * @param map source of data
+	 * @throws PersistenceException
+	 */
 	public void setup(final PersistenceMap map) throws PersistenceException {
 		this.time = map.get(KEY_TIME);
 		this.damage = map.get(KEY_DAMAGE);
@@ -42,6 +52,10 @@ public class HighscoreEntry implements Comparable<HighscoreEntry>{
 		players = map.get(KEY_PLAYERS);
 	}
 	
+	/**
+	 * serialize scoring data
+	 * @return serialized data
+	 */
 	public PersistenceMap dump() {
 		PersistenceMap map = new PersistenceMap();
 		
@@ -56,7 +70,7 @@ public class HighscoreEntry implements Comparable<HighscoreEntry>{
 	}
 
 	@Override
-	public int compareTo(HighscoreEntry o) {
+	public int compareTo(final HighscoreEntry o) {
 		return -Integer.valueOf(getPoints()).compareTo(o.getPoints());
 	}
 
@@ -70,7 +84,7 @@ public class HighscoreEntry implements Comparable<HighscoreEntry>{
 	/**
 	 * @param time the time to set
 	 */
-	public void setTime(int time) {
+	public void setTime(final int time) {
 		this.time = time;
 	}
 
@@ -84,7 +98,7 @@ public class HighscoreEntry implements Comparable<HighscoreEntry>{
 	/**
 	 * @param damage the damage to set
 	 */
-	public void setDamage(int damage) {
+	public void setDamage(final int damage) {
 		this.damage = damage;
 	}
 
@@ -98,7 +112,7 @@ public class HighscoreEntry implements Comparable<HighscoreEntry>{
 	/**
 	 * @param deaths the deaths to set
 	 */
-	public void setDeaths(int deaths) {
+	public void setDeaths(final int deaths) {
 		this.deaths = deaths;
 	}
 
@@ -112,7 +126,7 @@ public class HighscoreEntry implements Comparable<HighscoreEntry>{
 	/**
 	 * @param points the points to set
 	 */
-	public void setPoints(int points) {
+	public void setPoints(final int points) {
 		this.points = points;
 	}
 
@@ -126,10 +140,13 @@ public class HighscoreEntry implements Comparable<HighscoreEntry>{
 	/**
 	 * @param players the players to set
 	 */
-	public void setPlayers(List<String> players) {
+	public void setPlayers(final List<String> players) {
 		this.players = players;
 	}
 	
+	/**
+	 * @param name name of the player to be added
+	 */
 	public void addPlayer(final String name) {
 		players.add(name);
 	}
