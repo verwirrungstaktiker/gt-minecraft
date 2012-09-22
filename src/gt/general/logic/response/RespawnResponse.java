@@ -5,6 +5,7 @@ import gt.general.RespawnManager.RespawnPoint;
 import gt.general.logic.TriggerEvent;
 import gt.plugin.meta.CustomBlockType;
 
+import org.bukkit.Effect;
 import org.bukkit.Location;
 import org.bukkit.block.Block;
 
@@ -38,6 +39,7 @@ public class RespawnResponse extends CustomBlockResponse implements RespawnPoint
 	@Override
 	public void triggered(final TriggerEvent triggerEvent) {
 		respawnManager.registerRespawnPoint(triggerEvent.getPlayer(), this);
+		getBlock().getWorld().playEffect(getBlock().getLocation(), Effect.SMOKE, Response.EFFECT_RANGE);
 	}
 
 	@Override

@@ -93,7 +93,7 @@ public class MultiBlockDisappearResponse extends Response {
 				block.setType(material);
 			}
 			// play a fancy effect
-			block.getWorld().playEffect(block.getLocation(), Effect.POTION_BREAK, 10);
+			block.getWorld().playEffect(block.getLocation(), Effect.DOOR_TOGGLE, Response.EFFECT_RANGE);
 		}		
 	}
 

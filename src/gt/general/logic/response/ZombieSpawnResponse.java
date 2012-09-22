@@ -9,6 +9,7 @@ import gt.general.logic.persistence.exceptions.PersistenceException;
 import java.util.HashSet;
 import java.util.Set;
 
+import org.bukkit.Effect;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.block.Block;
@@ -90,6 +91,7 @@ public class ZombieSpawnResponse extends ZombieResponse{
 					getZombieManager().spawnZombie(spawnLocation, speed);
 				}
 			}
+			spawnLocation.getWorld().playEffect(spawnLocation, Effect.ZOMBIE_CHEW_IRON_DOOR, Response.EFFECT_RANGE);
 		}
 	}
 	

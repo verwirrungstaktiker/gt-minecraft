@@ -66,7 +66,7 @@ public class RedstoneTorchResponse extends BlockResponse {
 			getBlock().setType(Material.AIR);
 		}
 		// play a fancy effect
-		getBlock().getWorld().playEffect(getBlock().getLocation(), Effect.ENDER_SIGNAL, 20);
+		getBlock().getWorld().playEffect(getBlock().getLocation(), Effect.ENDER_SIGNAL, Response.EFFECT_RANGE);
 	}
 
 	@Override

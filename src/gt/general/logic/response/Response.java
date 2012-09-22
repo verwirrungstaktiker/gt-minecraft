@@ -5,6 +5,8 @@ import gt.general.logic.persistence.YamlSerializable;
 
 public abstract class Response extends YamlSerializable {
 	
+	public static final int EFFECT_RANGE = 75;
+	
 	/**
 	 * don't delete this anonymous constructor
 	 */

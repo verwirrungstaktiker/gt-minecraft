@@ -98,7 +98,7 @@ public class SignResponse extends BlockResponse {
 		}
 
 		// play a fancy effect
-		getBlock().getWorld().playEffect(getBlock().getLocation(), Effect.ENDER_SIGNAL, 25); // we can set the radius here
+		getBlock().getWorld().playEffect(getBlock().getLocation(), Effect.ENDER_SIGNAL, Response.EFFECT_RANGE); // we can set the radius here
 	}
 	
 

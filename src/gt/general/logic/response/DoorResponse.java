@@ -17,7 +17,6 @@ import org.bukkit.material.Door;
 
 public class DoorResponse extends Response {
 
-	//private static final String KEY_ORIENTATION = "orientation";
 	private static final String KEY_MATERIAL = "material";
 	private static final String KEY_LOCATION = "location";
 	private static final String KEY_DATA_UPPER = "data_upper";
@@ -26,7 +25,6 @@ public class DoorResponse extends Response {
 	
 	private Block lowerBlock, upperBlock;
 	private Material material;
-	//private BlockFace orientation;
 	
 	/**
 	 * @param lowerBlock the lower block of a door
@@ -56,19 +54,10 @@ public class DoorResponse extends Response {
 		
 		int dataLower = values.get(KEY_DATA_LOWER);
 		int dataUpper = values.get(KEY_DATA_UPPER);
-		//orientation = values.get(KEY_ORIENTATION);
 
 		lowerBlock.setType(material);
 		upperBlock.setType(material);
 
-		/*Door door = new Door(material);
-
-		
-		door.setTopHalf(true);
-		upperBlock.setData(door.getData(),true);
-		door.setTopHalf(false);
-		door.setFacingDirection(orientation);		
-		lowerBlock.setData(door.getData(),true);*/
 		upperBlock.setData((byte) (dataUpper),true);
 		lowerBlock.setData((byte) (dataLower),true);
 	}
@@ -80,7 +69,7 @@ public class DoorResponse extends Response {
 
 		door.setOpen(e.isActive());
 		// play the door toggle sound
-		lowerBlock.getWorld().playEffect(lowerBlock.getLocation(), Effect.DOOR_TOGGLE, 25); // we can set the radius here
+		lowerBlock.getWorld().playEffect(lowerBlock.getLocation(), Effect.DOOR_TOGGLE, Response.EFFECT_RANGE);
 		
 		lowerBlock.setData(door.getData(), true);
 	}
@@ -90,9 +79,7 @@ public class DoorResponse extends Response {
 		PersistenceMap map = new PersistenceMap();
 		map.put(KEY_LOCATION, lowerBlock);
 		map.put(KEY_MATERIAL, material);
-		
-		// the orientation has to be read right before saving
-		//Door door = (Door) lowerBlock.getState().getData();
+
 		map.put(KEY_DATA_LOWER, lowerBlock.getData());
 		map.put(KEY_DATA_UPPER, upperBlock.getData());
 		
