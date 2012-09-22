@@ -76,7 +76,6 @@ public class ScoreManager implements Listener{
 			Hero hero = HeroManager.getHero(player);
 			if(game.isPlayedBy(hero)) {
 				score.addDamage(hero, event.getDamage());
-				System.out.println(score.getDamage(hero));
 			}
 		}
 	}

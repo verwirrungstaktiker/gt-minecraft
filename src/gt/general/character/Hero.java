@@ -183,12 +183,14 @@ public class Hero extends Character{
 	public PortableItem removeActiveItem() {
 		PortableItem toRemove = activeItem;
 	
-		activeItem = null;
-		
-		toRemove.onDetachHero(this);
-		notifyChanged(Notification.INVENTORY);
-		
-//		equipPassiveItem();
+		if(hasActiveItem()) {
+			activeItem = null;
+			
+			toRemove.onDetachHero(this);
+			notifyChanged(Notification.INVENTORY);
+			
+	//		equipPassiveItem();
+		}
 		
 		return toRemove;
 	}
