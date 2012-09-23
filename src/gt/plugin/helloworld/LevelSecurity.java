@@ -24,9 +24,9 @@ public class LevelSecurity implements Listener {
 	 */
 	@EventHandler
 	public void zombieDamage(final EntityDamageByEntityEvent event) {
-		//On hit, Zombie drains 8 half hearts
+		//On hit, Zombie drains 2 half hearts (for presentation only)
 		if (event.getDamager() instanceof Zombie) {
-			event.setDamage(8);
+			event.setDamage(2);
 		}
 	}
 }
