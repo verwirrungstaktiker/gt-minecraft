@@ -1,15 +1,17 @@
 package gt.plugin.helloworld;
 
-import static com.google.common.collect.Lists.newArrayList;
-import static com.google.common.collect.Maps.newHashMap;
-import static com.google.common.collect.Sets.newHashSet;
+import static com.google.common.collect.Lists.*;
+import static com.google.common.collect.Maps.*;
+import static com.google.common.collect.Sets.*;
 import gt.general.GameManager;
+import gt.general.character.Hero;
 import gt.general.character.HeroManager;
 import gt.general.character.TeamManager;
 import gt.general.ingameDisplay.ScoreBoard;
 import gt.general.world.InstantiatingWorldManager;
 import gt.general.world.WorldInstance;
 import gt.general.world.WorldManager;
+import gt.lastgnome.GnomeItem;
 import gt.lastgnome.scoring.Highscore;
 import gt.plugin.helloworld.command.StartGameCommandExecutor;
 import gt.plugin.helloworld.command.TeamCommandExecutor;
@@ -27,6 +29,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
+import org.bukkit.World;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -207,6 +210,45 @@ public class HelloWorld extends JavaPlugin {
 			}
 		});
 		
+		getCommand("demotp1").setExecutor(new PlayerCommandExecutor() {
+			
+			@Override
+			public boolean onPlayerCommand(Player player, Command cmd, String label, String[] args) {
+
+				World w = player.getWorld();
+				Location target = new Location(w, -32, 66, -96);
+				
+				for(Player p : w.getPlayers()) {
+					p.teleport(target);
+				}
+				
+				return false;
+			}
+		});
+		
+		
+		getCommand("demotp2").setExecutor(new PlayerCommandExecutor() {
+			
+			@Override
+			public boolean onPlayerCommand(Player player, Command cmd, String label, String[] args) {
+
+				World w = player.getWorld();
+				Location target = new Location(w, -32, 66, -96);
+				
+				for(Player p : w.getPlayers()) {
+					p.teleport(target);
+					
+					Hero h = HeroManager.getHero(p);
+					
+					if(! (h.getActiveItem() instanceof GnomeItem)) {
+						h.removeActiveItem();
+					}
+					
+				}
+				
+				return false;
+			}
+		});
 
 
 	}
