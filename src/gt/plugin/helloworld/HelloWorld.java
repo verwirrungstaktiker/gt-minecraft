@@ -233,7 +233,7 @@ public class HelloWorld extends JavaPlugin {
 			public boolean onPlayerCommand(Player player, Command cmd, String label, String[] args) {
 
 				World w = player.getWorld();
-				Location target = new Location(w, -32, 66, -96);
+				Location target = new Location(w, -63, 66, -34);
 				
 				for(Player p : w.getPlayers()) {
 					p.teleport(target);
