@@ -127,6 +127,22 @@ public class HelloWorld extends JavaPlugin {
 			}
 		});		
 		
+		
+		getCommand("nofly").setExecutor(new CommandExecutor() {
+			@Override
+			public boolean onCommand(final CommandSender arg0, final Command arg1, final String arg2, final String[] arg3) {
+				if (arg0 instanceof Player) {
+					Player player = (Player) arg0;
+					player.setAllowFlight(false);
+					player.setFlying(false);
+					
+					return true;
+				}
+				return false;
+			}
+		});		
+		
+		
 		getCommand("end").setExecutor(new CommandExecutor() {
 			@Override
 			public boolean onCommand(final CommandSender arg0, final Command arg1, final String arg2, final String[] arg3) {
