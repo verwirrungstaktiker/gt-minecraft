@@ -11,6 +11,8 @@ commands:
     description: manages the team TODO
   fly:
     description: allows the player to fly
+  nofly:
+    description: revokes the permission to fly
   prompt:
     description: shows the prompt
   instances:
