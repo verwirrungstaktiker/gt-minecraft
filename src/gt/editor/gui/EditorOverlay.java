@@ -62,8 +62,10 @@ public class EditorOverlay extends GenericPopup implements Listener {
 		
 	}
 
-	
-	
+	/**
+	 * Switch to another Gui Overlay Element
+	 * @param page the new Overlay Page
+	 */
 	public void switchToPage(final OverlayPage page) {
 		
 		if(activePage != null) {
@@ -74,20 +76,34 @@ public class EditorOverlay extends GenericPopup implements Listener {
 		page.show();
 	}
 	
-	
+	/**
+	 * @return the Main Overlay Page
+	 */
 	public MainPage getMainPage () {
 		return new MainPage(this, player, facade);
 	}
 	
+	/**
+	 * @return the Block Overlay Page
+	 */
 	public BlocksPage getBlocksPage() {
 		return new BlocksPage(this, player, facade);
 	}
 	
+	/** 
+	 * @param message Questions of the Prompt
+	 * @param callback Callback of the Prompt
+	 * @return a Prompt Overlay Page
+	 */
 	public PromptPage getPromptPage(final String message, final PromptCallback callback) {
 		return new PromptPage(this, player, facade, message, callback);
 	}
 	
-	
+	/**
+	 * is executed on Overlay closing
+	 * cleanup after closing
+	 * @param event event: closing of an Overlay
+	 */
 	@EventHandler
 	public void onClose(final ScreenCloseEvent event){
 		if(event.getScreen() == this) {
@@ -97,6 +113,9 @@ public class EditorOverlay extends GenericPopup implements Listener {
 		}
 	}
 
+	/**
+	 * @return true if Page can be closed with a Hotkey
+	 */
 	public boolean closeWithHotkey() {
 		
 		if(activePage != null) {
