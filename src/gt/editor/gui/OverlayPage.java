@@ -25,24 +25,45 @@ public abstract class OverlayPage {
 	
 	private final Set<Widget> attachedWidgets = newHashSet();
 	
+	/**
+	 * @param overlay the currently open overlay
+	 * @param player the player who opens the overlay
+	 * @param facade the facade of the editor
+	 */
 	protected OverlayPage(final EditorOverlay overlay, final SpoutPlayer player, final EditorFacade facade) {
 		this.overlay = overlay;
 		this.player = player;
 		this.facade = facade;
 	}
 	
+	/**
+	 * @param widget the widget to be attached
+	 */
 	protected void attachWidget(final Widget widget) {
 		overlay.attachWidget(Hello.getPlugin(), widget);
 		attachedWidgets.add(widget);
 	}
 	
+	/**
+	 * called when the page is shown
+	 */
 	protected abstract void setup();
+	
+	/**
+	 * called when the page is hidden
+	 */
 	protected abstract void dispose();	
 	
+	/**
+	 * opens the page
+	 */
 	public void show() {
 		setup();
 	}
 
+	/**
+	 * closes the page
+	 */
 	public void hide() {
 		
 		dispose();
@@ -52,5 +73,8 @@ public abstract class OverlayPage {
 		}
 	}
 
+	/** 
+	 * @return true if it is allowed to close the page with the hotkey
+	 */
 	public abstract boolean closeWithHotkey();
 }

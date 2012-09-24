@@ -31,6 +31,10 @@ public class PromptPage extends OverlayPage{
 	private final String message;
 	
 	/**
+	 * 
+	 * @param overlay the open overlay
+	 * @param player the opening player
+	 * @param facade the facade of the editor
 	 * @param message the question of the prompt
 	 * @param callback callback
 	 */
