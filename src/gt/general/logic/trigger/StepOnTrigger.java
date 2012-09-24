@@ -110,7 +110,7 @@ public class StepOnTrigger extends Trigger implements BlockObserver {
 	public void onBlockEvent(final BlockEvent blockEvent) {
 		
 		if(!inUse && blockEvent.getBlock().equals(block) && blockEvent.getBlockEventType() == BlockEventType.PLAYER_STEP_ON) {
-			System.out.println(currentContingent);
+
 			if(currentContingent != 0) {
 				
 				--currentContingent;
