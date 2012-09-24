@@ -33,7 +33,6 @@ public abstract class PortableItem extends GenericCustomItem implements Listener
 	public PortableItem(final Plugin plugin, final String name, final String texture, final UnlockItemType type) {
 		super(plugin, name, texture);
 
-		//TODO block type dependend values
 		dropable = false;
 		tool = false;
 		transferable = false;

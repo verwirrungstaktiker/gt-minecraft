@@ -25,8 +25,6 @@ public class HeroFrame implements HeroObserver{
 	private static final GenericItemWidget NOITEM = null;
 	private GenericItemWidget active = NOITEM;
 
-	/* TODO passive item tracking */
-	
 	/**
 	 * @param teamFrame The parent of this HeroFrame.
 	 * @param hero The Hero associated with this HeroFrame.
