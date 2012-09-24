@@ -1,7 +1,8 @@
 package gt.editor;
 
-import static com.google.common.collect.Maps.*;
-import static org.bukkit.ChatColor.*;
+import static com.google.common.collect.Maps.newHashMap;
+import static org.bukkit.ChatColor.GREEN;
+import static org.bukkit.ChatColor.YELLOW;
 import gt.general.logic.TriggerContext;
 import gt.general.logic.persistence.YamlSerializable;
 
@@ -27,6 +28,7 @@ public class PlayerManager implements Listener{
 	
 	/**
 	 * @param triggerManager holds the TriggerContexts of the current map
+	 * @param particleManager the ParticleManager (for highlighting)
 	 */
 	public PlayerManager(final EditorTriggerManager triggerManager, final ParticleManager particleManager) {
 		this.triggerManager = triggerManager;
@@ -74,7 +76,11 @@ public class PlayerManager implements Listener{
 		}
 	}
 
-
+	/**
+	 * switch to another active TriggerContext
+	 * @param player a bukkit player
+	 * @param context the new TriggerContext
+	 */
 	public void switchToContext(final EditorPlayer player, final TriggerContext context) {
 		
 		if(player.getActiveContext() != null) {
@@ -220,11 +226,18 @@ public class PlayerManager implements Listener{
 		return players.values();
 	}
 
-
+	/**
+	 * @param player a bukkit player
+	 * @return the EditorPlayer that corresponds to the bukkit player
+	 */
 	public EditorPlayer getEditorPlayer (final Player player) {
 		return players.get(player);
 	}
 	
+	/**
+	 * @param event event: a Block is destroyed
+	 * @return the corresponding EditorPlayer who broke the block
+	 */
 	public EditorPlayer getEditorPlayer (final BlockBreakEvent event) {
 		return players.get(event.getPlayer());
 	}

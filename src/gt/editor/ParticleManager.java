@@ -19,6 +19,10 @@ public class ParticleManager implements Runnable, Listener {
 		STANDARD, SPECIAL
 	}
 	
+	/**
+	 * Construct new ParticleManager
+	 * @param playerManager the Manager of Logic Building
+	 */
 	public ParticleManager(final PlayerManager playerManager) {
 		this.playerManager = playerManager;
 	}
