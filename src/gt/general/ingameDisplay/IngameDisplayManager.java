@@ -8,7 +8,7 @@
  ******************************************************************************/
 package gt.general.ingameDisplay;
 
-import static com.google.common.collect.Sets.*;
+import static com.google.common.collect.Sets.newHashSet;
 import gt.general.character.Hero;
 import gt.general.character.HeroManager;
 
@@ -40,6 +40,10 @@ public class IngameDisplayManager implements Runnable{
 		}
 	}
 	
+	/**
+	 * add a container that itself contains DisplayStrings
+	 * @param container the Container to be added
+	 */
 	public void add(final DisplayStringContainer container) {
 		containers.add(container);
 	}

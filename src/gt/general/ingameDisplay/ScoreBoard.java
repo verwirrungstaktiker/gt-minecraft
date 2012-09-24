@@ -8,8 +8,8 @@
  ******************************************************************************/
 package gt.general.ingameDisplay;
 
-import static com.google.common.collect.Lists.*;
-import static com.google.common.collect.Sets.*;
+import static com.google.common.collect.Lists.newArrayList;
+import static com.google.common.collect.Sets.newHashSet;
 import gt.lastgnome.scoring.Highscore;
 import gt.lastgnome.scoring.HighscoreEntry;
 import gt.lastgnome.scoring.NullHighscoreEntry;
@@ -28,6 +28,11 @@ public class ScoreBoard implements DisplayStringContainer {
 	
 	private final Collection<DisplayString> displayStrings = newHashSet();
 	
+	/**
+	 * 
+	 * @param highscore the Top 3 Scores
+	 * @param anchors the edges of the Scoreboard where the DisplayStrings are spawned
+	 */
 	public ScoreBoard(final Highscore highscore, final List<Location> anchors) {
 		this.highscore = highscore;
 		
@@ -62,6 +67,10 @@ public class ScoreBoard implements DisplayStringContainer {
 		return displayStrings;
 	}
 
+	/**
+	 * generate the DisplayStrings for a text 
+	 * note: each Letter has its own DisplayString
+	 */
 	private void generateDisplayStrings() {
 		displayStrings.clear();
 		

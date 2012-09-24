@@ -41,7 +41,11 @@ import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.getspout.spout.block.SpoutCraftBlock;
 
-
+/**
+ * manages building of new Logic
+ * @author Roman
+ *
+ */
 public class BuildManager implements Listener {	
 	
 	private final PlayerManager playerManager;

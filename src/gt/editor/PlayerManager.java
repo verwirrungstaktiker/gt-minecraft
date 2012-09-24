@@ -27,6 +27,11 @@ import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.getspout.spoutapi.event.input.KeyPressedEvent;
 
+/**
+ * Manages Player states when they use the Editor
+ * @author Roman
+ *
+ */
 public class PlayerManager implements Listener{	
 
 	private final Map<Player, EditorPlayer> players = newHashMap();

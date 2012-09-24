@@ -14,7 +14,13 @@ import org.getspout.spoutapi.player.SpoutPlayer;
 
 public class RightBoundedDisplayString extends DisplayString {
 
-	public RightBoundedDisplayString(String text, float scale, Location location) {
+	/**
+	 * Construct a new RightBoundedDisplayString
+	 * @param text displayed text
+	 * @param scale size of the letters
+	 * @param location location of the spawned text
+	 */
+	public RightBoundedDisplayString(final String text, final float scale, final Location location) {
 		// reverse the string
 		super(new StringBuffer(text).reverse().toString(), scale, location);
 	}

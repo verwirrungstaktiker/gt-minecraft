@@ -12,6 +12,9 @@ import java.util.Collection;
 
 public interface DisplayStringContainer {
 
+	/**
+	 * @return all displayed strings
+	 */
 	Collection<DisplayString> getDisplayStrings();
 	
 }

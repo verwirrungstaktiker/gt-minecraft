@@ -19,7 +19,11 @@ import org.getspout.spoutapi.particle.Particle;
 import org.getspout.spoutapi.particle.Particle.ParticleType;
 import org.getspout.spoutapi.player.SpoutPlayer;
 
-
+/**
+ * Manages particles that are used to highlight Logic
+ * @author Roman
+ *
+ */
 public class ParticleManager implements Runnable, Listener {	
 	private final PlayerManager playerManager;
 	
