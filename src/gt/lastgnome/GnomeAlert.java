@@ -6,6 +6,7 @@ import gt.lastgnome.game.LastGnomeGame;
 import gt.plugin.meta.Hello;
 
 import org.getspout.spoutapi.SpoutManager;
+import org.getspout.spoutapi.sound.SoundEffect;
 
 
 public class GnomeAlert implements Runnable {
@@ -27,16 +28,12 @@ public class GnomeAlert implements Runnable {
 		}
 		
 		double speed = bearer.getAttribute(CharacterAttributes.SPEED);
-		
 		if (speed > 0) {
-			activated = true;
+			activated = false;
 			return;
 		} else if (!activated) {
-			activated = false;
-			SpoutManager.getSoundManager()
-				.playGlobalCustomSoundEffect(Hello.getPlugin(), 
-				"https://raw.github.com/verwirrungstaktiker/gt-minecraft/master/res/sound/gnome_alert.wav", 
-				false, bearer.getLocation(),75);
+			activated = true;
+			SpoutManager.getSoundManager().playGlobalSoundEffect(SoundEffect.WOLF_HOWL, bearer.getLocation());
 		}
 		
 		
