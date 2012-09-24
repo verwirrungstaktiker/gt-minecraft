@@ -142,6 +142,16 @@ public enum CustomBlockType {
 
 		}
 	}),
+
+	/** detects entities walking on it, is disabled */
+	STEP_ON_TRIGGER_DISABLED(new CustomBlockInstatiator() {
+		@Override
+		public ObservableCustomBlock instantiate() {
+			return new ObservableCustomBlock("tele_floor_disabled",
+					"https://raw.github.com/verwirrungstaktiker/gt-minecraft/master/res/texture/teleporter-floor_disabled.png", 16);
+
+		}
+	}),
 	
 	/** spawns zombies */
 	ZOMBIESPAWN_BLOCK(new CustomBlockInstatiator() {
