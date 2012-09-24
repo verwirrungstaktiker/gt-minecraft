@@ -123,7 +123,7 @@ public abstract class Aura implements Runnable {
 				}
 			}
 		} else {
-			// TODO spread auras - this is a feature :-)
+			// spread auras - this is a feature not a todo :-)
 			throw new RuntimeException("not implemented yet");
 		}
 	}

@@ -179,12 +179,8 @@ public class LastGnomeGame extends AbstractLastGnomeGame implements Listener{
 					h.getGui().closePopup();
 				}
 				
-				
 				Hero randomHero = newArrayList(getTeam().getPlayers()).get(0);
-				// XXX quite ugly
-				randomHero.getPlayer().performCommand("gg force");
-				
-				
+				randomHero.getPlayer().performCommand("gg force");			
 			}
 
 			@Override
