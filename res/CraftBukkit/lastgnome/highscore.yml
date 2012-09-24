@@ -1,52 +1,25 @@
 scores:
-- time: 117
+- time: 600000
   deaths: 0
   players:
   - Duff Man
   - Gordon Freeman
   - Serious Sam
   - Duke Nukem (TM)
-  damage: 0
-  points: 205984
-- time: 14441
+  damage: 5
+  points: 31337
+- time: 100000
   deaths: 0
   players:
   - Kaossilat0r
-  damage: 0
-  points: 33238
-- time: 104
-  deaths: 0
-  players:
-  - DubbelSnort
-  damage: 0
-  points: 23076
-- time: 16237
-  deaths: 0
-  players:
-  - Kaossilat0r
-  damage: 0
-  points: 295
-- time: 10788
-  deaths: 0
-  players:
   - da_Flag
+  - DubbelSnort
+  - niC0lei
   damage: 0
-  points: 222
-- time: 56212
+  points: 9000
+- time: 999999
   deaths: 0
   players:
   - DubbelSnort
   damage: 0
   points: 42
-- time: 137054
-  deaths: 0
-  players:
-  - DubbelSnort
-  damage: 0
-  points: 17
-- time: 113638
-  deaths: 0
-  players:
-  - Kaossilat0r
-  damage: 0
-  points: 0
