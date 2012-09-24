@@ -107,15 +107,6 @@ public class HelloEditor extends JavaPlugin implements Listener {
 			}
 		});
 		
-		getCommand("blocks").setExecutor(new PlayerCommandExecutor() {
-			
-			@Override
-			public boolean onPlayerCommand(final Player player, final Command cmd, final String label, final String[] args) {
-				Hello.giveCustomBlocks(player);
-				return false;
-			}
-		});
-		
 		getCommand("save").setExecutor(new CommandExecutor() {
 			@Override
 			public boolean onCommand(final CommandSender sender, final Command cmd, final String label, final String[] args) {

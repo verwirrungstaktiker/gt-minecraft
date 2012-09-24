@@ -54,7 +54,6 @@ public class GameManager implements GameObserver{
 			builder.buildWorldInstance(worldManager, worldName);
 			builder.loadGameSpecific();
 		} catch (PersistenceException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 			
