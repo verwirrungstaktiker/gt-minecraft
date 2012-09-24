@@ -23,4 +23,8 @@ commands:
     description: gives a block tool
   pause:
     description: pauses all games
+  demotp1:
+    description: presentation, teleport to big room
+  demotp2:
+    description: presentation, teleport to last hallway
   
