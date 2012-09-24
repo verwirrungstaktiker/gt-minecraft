@@ -76,6 +76,9 @@ public abstract class Aura implements Runnable {
 				Hello.getPlugin(), this, initial, rate);
 	}
 	
+	/**
+	 * @return owner of the aura
+	 */
 	protected Character getOwner() {
 		return owner;
 	}
@@ -136,5 +139,8 @@ public abstract class Aura implements Runnable {
 		}
 	}
 	
+	/**
+	 * @return true if effect could be spreaded
+	 */
 	protected abstract boolean spreadEffectNow();
 }

@@ -9,7 +9,6 @@
 package gt.plugin.helloeditor;
 
 import gt.general.GameManager;
-import gt.general.character.TeamManager;
 import gt.general.logic.persistence.exceptions.PersistenceException;
 import gt.general.world.WorldManager;
 import gt.lastgnome.game.EditorLastGnomeGame;
@@ -47,7 +46,7 @@ public class HelloEditor extends JavaPlugin implements Listener {
 		
 		gameBuilder = new EditorLastGnomeGameBuilder();
 		
-		gameManager = new GameManager(new WorldManager(), new TeamManager());
+		gameManager = new GameManager(new WorldManager());
 		gameManager.startGame(gameBuilder, "lastgnome");
 		
 		game = gameBuilder.getEditorGame();

@@ -8,8 +8,7 @@
  ******************************************************************************/
 package gt.general;
 
-import static com.google.common.collect.Sets.*;
-
+import static com.google.common.collect.Sets.newHashSet;
 import gt.general.character.Hero;
 
 import java.util.Set;
@@ -29,11 +28,20 @@ public abstract class Vote {
 	
 	private boolean open = true;
 	
+	/**
+	 * Construct a new Vote
+	 * @param acceptThreshold Threshold which accepts the vote
+	 * @param rejectThreshold Threshold which rejects the vote
+	 */
 	public Vote(final int acceptThreshold, final int rejectThreshold) {
 		this.acceptThreshold = acceptThreshold;
 		this.rejectThreshold = rejectThreshold;
 	}
 	
+	/**
+	 * hero has accepted the vote
+	 * @param h the hero that accepted
+	 */
 	public void voteAccept(final Hero h) {
 		rejecting.remove(h);
 		accepting.add(h);
@@ -41,6 +49,10 @@ public abstract class Vote {
 		evaluateVote();
 	}
 	
+	/**
+	 * hero has rejected the vote
+	 * @param h the hero that rejected
+	 */
 	public void voteReject(final Hero h) {
 		accepting.remove(h);
 		rejecting.add(h);
@@ -48,10 +60,17 @@ public abstract class Vote {
 		evaluateVote();
 	}
 	
-	private void sendMessage(Hero h) {
+	/**
+	 * send a message about the vote status to a hero
+	 * @param h hero that receives the message
+	 */
+	private void sendMessage(final Hero h) {
 		h.getPlayer().sendMessage(ChatColor.GREEN + "" + accepting.size() + "/" + acceptThreshold + " accepting, " + ChatColor.RED + rejecting.size() + "/" + rejectThreshold + " rejecting");
 	}
 
+	/**
+	 * vote evaluation
+	 */
 	private void evaluateVote() {
 		
 		for(Hero h : Iterables.concat(accepting, rejecting)) {
@@ -73,9 +92,9 @@ public abstract class Vote {
 	
 	
 	
-	
+	/** vote has been accepted */
 	public abstract void onAccept();
-	
+	/** vote has been rejected */
 	public abstract void onReject();
 	
 }

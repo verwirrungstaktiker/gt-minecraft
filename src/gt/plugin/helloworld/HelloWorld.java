@@ -79,7 +79,7 @@ public class HelloWorld extends JavaPlugin {
 		
 		Hello.scheduleSyncTask(heroManager, 0, 10);
 		
-		gameManager = new GameManager(worldManager, teamManager);
+		gameManager = new GameManager(worldManager);
 		
 		setupCommands();
 		setupLevelTemplates();

@@ -14,8 +14,16 @@ public class GameAura extends Aura {
 
 	private final Game game;
 	
-	public GameAura(EffectFactory effectFactory, int distance, int duration,
-			int rate, final Game game) {
+	/**
+	 * construct a new GameAura
+	 * @param effectFactory factory that creates the effects
+	 * @param distance aura radius
+	 * @param duration aura duration
+	 * @param rate arua rate
+	 * @param game corresponding game
+	 */
+	public GameAura(final EffectFactory effectFactory, final int distance, final int duration,
+			final int rate, final Game game) {
 		super(effectFactory, distance, duration, rate);
 		this.game = game;
 	}

@@ -27,7 +27,6 @@ import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.block.Block;
-import org.bukkit.entity.Player;
 import org.getspout.spoutapi.SpoutManager;
 
 public class Spawn extends YamlSerializable implements BlockObserver, RespawnPoint {
@@ -120,7 +119,10 @@ public class Spawn extends YamlSerializable implements BlockObserver, RespawnPoi
 		}
 	}
 
-	/** spawn is not registered the default way! */
+	/** 
+	 * spawn is not registered the default way! 
+	 * @param respawnManager RespawnManager to be registered
+	 */
 	@Override
 	public void registerRespawnManager(final RespawnManager respawnManager) {}
 	
