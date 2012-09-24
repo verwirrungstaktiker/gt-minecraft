@@ -124,7 +124,6 @@ public class HelloEditor extends JavaPlugin implements Listener {
 				try {
 					gameBuilder.reload();
 				} catch (PersistenceException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 				

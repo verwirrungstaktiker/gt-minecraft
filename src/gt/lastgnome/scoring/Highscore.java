@@ -83,7 +83,6 @@ public class Highscore {
 			System.out.println("sort");
 		
 		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
