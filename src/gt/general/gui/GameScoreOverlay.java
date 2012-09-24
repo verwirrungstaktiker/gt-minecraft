@@ -27,6 +27,12 @@ import org.getspout.spoutapi.gui.WidgetAnchor;
 
 public class GameScoreOverlay extends GenericPopup {
 
+	/**
+	 * @param message a message like "victory"
+	 * @param entry the associated highscore entry
+	 * @param hero who sees this overlay
+	 * @param vote the ongoing vote
+	 */
 	public GameScoreOverlay(final String message, final HighscoreEntry entry, final Hero hero, final Vote vote) {
 				
 		
@@ -118,6 +124,10 @@ public class GameScoreOverlay extends GenericPopup {
 		
 	}
 	
+	/**
+	 * @param type the layout type of the generated container
+	 * @return a new container
+	 */
 	private GenericContainer newContainer(final ContainerType type) {
 		GenericContainer container = new GenericContainer();
 		container.setLayout(type);

@@ -102,6 +102,9 @@ public class HeroGui {
 		}
 	}
 	
+	/**
+	 * closes the open Popup
+	 */
 	public void closePopup() {
 		getMainScreen().closePopup();
 	}
@@ -114,6 +117,9 @@ public class HeroGui {
 	}
 
 	
+	/**
+	 * attaches the active gui elements - e.g. after disconnect
+	 */
 	public void reattach() {
 		for(GuiElement ge : guiElements.values()) {
 			ge.attach(holder);
