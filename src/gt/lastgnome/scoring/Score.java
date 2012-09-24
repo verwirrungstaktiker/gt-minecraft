@@ -70,11 +70,10 @@ public class Score {
 	}
 	
 	public int getPoints() {
-		//TODO: improve Formula
 		double averageTime = 20*60*1000; //Scoremanager counts millies 
 
-		//TODO this is debugging output
-		System.out.println("time: " + time + " \n" + 
+		System.out.println("new score: \n" +
+				"time: " + time + " \n" + 
 				"totalDamage: " + totalDamage + " \n" +
 				"totalDeaths: " + totalDeaths + " \n" +
 				damage + " \n" +

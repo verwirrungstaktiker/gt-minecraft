@@ -224,8 +224,8 @@ public abstract class Character {
 	}
 	
 	public void resume(FreezeCause cause) {
+		
 		// search all freeze effects and remove them
-		// TODO this smells of Code Duplication
 		Iterator<Effect> it = getEffects().iterator();
 		while(it.hasNext()) {
 			Effect effect = it.next();

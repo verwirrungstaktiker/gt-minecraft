@@ -12,13 +12,12 @@ import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.block.Sign;
 
-// TODO this needs an orientation !
 public class SignResponse extends BlockResponse {
 
 	private String untriggeredMessage;
 	private String triggeredMessage;
 	
-	private boolean onWall; // is this inverted? at least in the persistance ...
+	private boolean onWall;
 	private boolean isTriggered = false;
 	
 	private BlockFace orientation;
@@ -34,7 +33,6 @@ public class SignResponse extends BlockResponse {
 	public SignResponse(final Block signBlock) {
 		super("sign", signBlock);
 
-		// TODO this is just for testing
 		this.untriggeredMessage = "\n untriggered ";
 		this.triggeredMessage = "\n triggered";
 		

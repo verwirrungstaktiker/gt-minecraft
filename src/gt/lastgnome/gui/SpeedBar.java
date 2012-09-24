@@ -87,7 +87,6 @@ public class SpeedBar implements GuiElement, HeroObserver {
 			
 		} else if (notification == Notification.ATTRIBUTES) {
 			
-			// TODO maybe this should be done during the processing of the attributes
 			Double speed = Math.max(hero.getAttribute(CharacterAttributes.SPEED),
 								0.0);
 			

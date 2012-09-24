@@ -98,8 +98,10 @@ public class GameManager implements GameObserver{
 	public void endAllGames() {
 		for(Game game : runningGames) {
 			endGame(game);
-			// TODO remove from list
 		}
+		
+		runningGames.clear();
+		
 	}
 
 	public void togglePauseAllGames() {
