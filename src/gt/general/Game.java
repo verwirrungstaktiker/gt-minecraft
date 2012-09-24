@@ -75,7 +75,9 @@ public abstract class Game implements Listener {
 		}	
 	}
 
-	
+	/**
+	 * toggles the game pause
+	 */
 	public void toggleForcePause() {
 		cmdPause = !cmdPause;
 		setRunning(running);
@@ -97,9 +99,15 @@ public abstract class Game implements Listener {
 			onPause();
 		}
 	}
-
+	
+	/**
+	 * called if game is paused
+	 */
 	public abstract void onPause();
 	
+	/**
+	 * called if game is resumed
+	 */
 	public abstract void onResume();
 	
 	/**
