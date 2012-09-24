@@ -1,9 +1,9 @@
 /*******************************************************************************
  * Projektpraktikum: Game Technology 2012
- * Minecraft-Modifikation für kollaboratives Spielen
+ * Minecraft-Modifikation fï¿½r kollaboratives Spielen
  * 
  * Sebastian Fahnenschreiber (sebastian.fahnenschreiber@stud.tu-darmstadt.de)
- * Roman Neß (roman.ness@stud.tu-darmstadt.de)
+ * Roman Neï¿½ (roman.ness@stud.tu-darmstadt.de)
  * Philipp Pascal Battenberg (philipp.battenberg@stud.tu-darmstadt.de)
  ******************************************************************************/
 package gt.lastgnome.game;
@@ -18,6 +18,7 @@ import gt.general.logic.persistence.exceptions.PersistenceException;
 import gt.general.logic.response.Response;
 import gt.general.logic.response.ZombieResponse;
 import gt.general.world.WorldManager;
+import gt.lastgnome.GnomeAlert;
 import gt.lastgnome.LeverRandomizer;
 import gt.lastgnome.MathRiddleRandomizer;
 import gt.lastgnome.scoring.ScoreManager;
@@ -74,6 +75,8 @@ public class LastGnomeGameBuilder extends AbstractLastGnomeGameBuilder {
 		leverRandomizer.randomizeLevers();
 		
 		game.registerListener(game);
+		
+		game.registerSyncTask(new GnomeAlert(game), 20, 20);
 
 		setupZombieManager(triggerManager);
 		setupAllHeroes(triggerManager);
