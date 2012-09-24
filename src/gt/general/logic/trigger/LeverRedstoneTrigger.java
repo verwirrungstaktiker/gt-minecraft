@@ -1,5 +1,7 @@
 package gt.general.logic.trigger;
 
+import java.util.Set;
+
 import gt.general.logic.persistence.PersistenceMap;
 import gt.general.logic.persistence.exceptions.PersistenceException;
 import gt.general.world.ObservableCustomBlock;
@@ -68,8 +70,23 @@ public class LeverRedstoneTrigger extends RedstoneTrigger implements Listener {
 		super.dispose();
 		SpoutManager
 			.getMaterialManager()
-			.removeBlockOverride(getBlock()
-									.getRelative(orientation.getOppositeFace()));
+			.removeBlockOverride(getSignalBlock());
+	}
+	
+	/**
+	 * @return the SignalBlock behind the Lever
+	 */
+	private Block getSignalBlock() {
+		return getBlock()
+				.getRelative(orientation.getOppositeFace());
+	}
+	
+	@Override
+	public Set<Block> getBlocks() {
+		Set<Block> blocks = super.getBlocks();
+		blocks.add(getSignalBlock());
+		
+		return blocks;
 	}
 	
 //	@EventHandler
