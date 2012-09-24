@@ -8,7 +8,7 @@
  ******************************************************************************/
 package gt.general.ingameDisplay;
 
-import static com.google.common.collect.Lists.*;
+import static com.google.common.collect.Lists.newArrayList;
 
 import java.util.Collection;
 
@@ -22,18 +22,29 @@ public class DisplayString implements DisplayStringContainer {
 	protected final float scale;
 	protected final Location location;	
 	
+	/**
+	 * construct a new DisplayString
+	 * @param text displayed Text
+	 * @param scale size of the Letters
+	 * @param location location of the displayed text
+	 */
 	public DisplayString(final String text, final float scale, final Location location) {
 		this.text = text;
 		this.scale = scale;
 		this.location = location;
 	}
 	
-	
+	/**
+	 * @return location where the Letters shall be displayed
+	 */
 	public Location getLocation() {
 		return location;
 	}
 
-
+	/**
+	 * spawn the text so it is visible for a certain player
+	 * @param spoutPlayer the SpoutPlayer that shall see the text
+	 */
 	public void spawnForPlayer(final SpoutPlayer spoutPlayer) {
 
 		Location l = location.clone();
