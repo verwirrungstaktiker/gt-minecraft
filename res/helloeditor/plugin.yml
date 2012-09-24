@@ -11,5 +11,3 @@ commands:
     description: reloads the metadata
   teleport:
     description: teleport the yourself to the editor level
-  blocks:
-    description: gives a basic set of custom blocks

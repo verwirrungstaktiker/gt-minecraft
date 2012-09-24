@@ -72,9 +72,6 @@ public class LastGnomeGame extends AbstractLastGnomeGame implements Listener{
 	}
 
 	/**
-	 * TODO downgrade? is here the right place for this stuff?
-	 * 		better in game manager?
-	 * 
 	 * @param hero whose gui to be upgraded
 	 */
 	public void upgradeGui(final Hero hero) {
@@ -182,19 +179,14 @@ public class LastGnomeGame extends AbstractLastGnomeGame implements Listener{
 					h.getGui().closePopup();
 				}
 				
-				
 				Hero randomHero = newArrayList(getTeam().getPlayers()).get(0);
-				// XXX quite ugly
-				randomHero.getPlayer().performCommand("gg force");
-				
-				
+				randomHero.getPlayer().performCommand("gg force");			
 			}
 
 			@Override
 			public void onReject() {
 				System.out.println("back to the lobby");
 
-				//TODO: maybe put that in a RespawnManager.dispose() ?
 				World startWorld = Hello.getPlugin().getServer().getWorld("world");
 				for (Hero hero : getTeam().getPlayers()) {
 					hero.getGui().closePopup();
@@ -210,6 +202,8 @@ public class LastGnomeGame extends AbstractLastGnomeGame implements Listener{
 		};
 		
 		HighscoreEntry entry = scoreManager.toHighscoreEntry();
+		
+		respawnManager.dispose();
 		
 		String message = (isWon) ? "Victory!" : "Fail!";
 		

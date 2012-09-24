@@ -48,10 +48,11 @@ public class LastGnomeGameBuilder extends AbstractLastGnomeGameBuilder {
 		
 		game.getWorldInstance().init(triggerManager);
 		
-		// TODO connect this to the game, so it can be stopped when the game is finished
 		respawnManager = new RespawnManager(team, 
 											triggerManager,
-											game.getWorldInstance().getSpawn());		
+											game.getWorldInstance().getSpawn());
+		
+		game.setRespawnManager(respawnManager);
 	}
 
 	@Override

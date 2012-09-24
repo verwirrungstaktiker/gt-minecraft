@@ -10,7 +10,6 @@ import gt.plugin.helloworld.KeyPressListener;
 import gt.plugin.meta.Hello;
 import gt.plugin.meta.MultiListener;
 import gt.plugin.meta.PlayerCommandExecutor;
-import gt.plugin.meta.TestListener;
 
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
@@ -48,11 +47,7 @@ public class HelloEditor extends JavaPlugin implements Listener {
 		MultiListener.registerListeners(new KeyPressListener());
 		printInformation();
 		
-		setupCommands();
-		
-		// XXX TESTING ONLY
-		MultiListener.registerListener(new TestListener());
-		
+		setupCommands();		
 	}
 	
 	/** */
@@ -107,15 +102,6 @@ public class HelloEditor extends JavaPlugin implements Listener {
 			}
 		});
 		
-		getCommand("blocks").setExecutor(new PlayerCommandExecutor() {
-			
-			@Override
-			public boolean onPlayerCommand(final Player player, final Command cmd, final String label, final String[] args) {
-				Hello.giveCustomBlocks(player);
-				return false;
-			}
-		});
-		
 		getCommand("save").setExecutor(new CommandExecutor() {
 			@Override
 			public boolean onCommand(final CommandSender sender, final Command cmd, final String label, final String[] args) {
@@ -133,7 +119,6 @@ public class HelloEditor extends JavaPlugin implements Listener {
 				try {
 					gameBuilder.reload();
 				} catch (PersistenceException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 				

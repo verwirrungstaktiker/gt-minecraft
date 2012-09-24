@@ -43,7 +43,7 @@ public class RedstoneTorchResponse extends BlockResponse {
 		orientation = values.get(KEY_ORIENTATION);
 				
 		if( !inverted ) {
-			//TODO Maybe we can find another Material to represent a RedstoneTorch that's not glowing
+			// Feature: Maybe we can find another Material to represent a RedstoneTorch that's not glowing
 			getBlock().setType(Material.AIR);
 		} else {
 			RedstoneTorch torch = (RedstoneTorch) getBlock().getState().getData();
@@ -60,7 +60,6 @@ public class RedstoneTorchResponse extends BlockResponse {
 		if(e.isActive() ^ inverted) {
 			// torch on
 			getBlock().setType(getMaterial());
-			//TODO do we need to set the orientation here?
 		} else {
 			// torch off
 			getBlock().setType(Material.AIR);

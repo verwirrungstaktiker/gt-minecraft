@@ -86,7 +86,7 @@ public class PlayerListener implements Listener {
 	 * prevents carrying more than one item of the same kind 
 	 * @param event player picks up an item
 	 * 
-	 * XXX: buggy if 2+ items picked up at same time
+	 * Warning: buggy if 2+ items picked up at same time
 	 */
 	@EventHandler
 	public final void carryOnlyOneOfEachKind(final PlayerPickupItemEvent event) {

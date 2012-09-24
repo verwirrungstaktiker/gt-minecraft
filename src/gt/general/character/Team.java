@@ -12,18 +12,14 @@ import org.bukkit.Location;
  * Team which manages a group of four players
  */
 public class Team {
-	/**
-	 * The empty team, assigned to all teamless heros
-	 * TODO is this really that intelligent?
-	 * 
-	 */
+	
+	/** The empty team, assigned to all teamless heros */
 	public static final Team NOTEAM = null;
 	
 	private boolean fixed;
 
 	/** 
 	 * Array of heros belonging to this team
-	 * TODO this needs to be ordered
 	 */
 	private Set<Hero> members;
 	
@@ -33,7 +29,6 @@ public class Team {
 	private final  Set<TeamObserver> observers;
 
 	public enum Notification {
-		// TODO fire this notification
 		MEMBERCHANGE
 	}
 	

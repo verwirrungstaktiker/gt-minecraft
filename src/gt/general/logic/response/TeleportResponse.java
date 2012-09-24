@@ -53,7 +53,7 @@ public class TeleportResponse extends CustomBlockResponse implements RespawnPoin
 			
 				Player player = triggerEvent.getPlayer();
 				
-				// there is no respawn manager in the editor - TODO ?
+				// there is no respawn manager in the editor
 				if(respawnManager != null) {
 					respawnManager.registerRespawnPoint(player, this);
 				}

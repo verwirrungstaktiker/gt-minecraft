@@ -31,7 +31,6 @@ public class ObservableCustomBlock extends GenericCustomBlock {
 		PLAYER_STEP_ON
 	}
 	
-	// TODO this must be done better
 	public class BlockEvent {		
 		private Block block;
 		private LivingEntity entity;
@@ -114,12 +113,10 @@ public class ObservableCustomBlock extends GenericCustomBlock {
 	 * @param textureSize	texture size of the new block
 	 */
 	public ObservableCustomBlock(final String name, final String textureUrl, final int textureSize){
-		//TODO remove 1 (underlying block) if bug in spout is fixed
 		super(Hello.getPlugin(), name, 1, false);
 		
 		GenericCubeBlockDesign design = new GenericCubeBlockDesign(Hello.getPlugin(), textureUrl, textureSize);
 		design.setRenderPass(1);
-		//TODO set these when updated to new spoutversion (old version has a bug here)
 		setBlockDesign(design);
 		
 		setOpaque(false);

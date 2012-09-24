@@ -5,7 +5,6 @@ import gt.general.ingameDisplay.IngameDisplayManager;
 import java.io.File;
 
 import org.bukkit.Bukkit;
-import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -109,34 +108,24 @@ public final class Hello {
 	public static void cancelScheduledTask(final int id) {
 		Bukkit.getScheduler().cancelTask(id);
 	}
-
-	
-	/**
-	 * Adds the Set of CustomBlocks to the player inventory
-	 * TODO don't forget to add other CustomBlocks later
-	 * 
-	 * @param player a bukkit player
-	 */
-	public static void giveCustomBlocks(final Player player) {
-		player.getInventory().setItemInHand(CustomBlockType.INVISIBLE_BLOCK.getItemStack());
-	}
 	 
 	/**
 	 * @return the currently running plugin
 	 */
 	public static JavaPlugin getPlugin() {
-		return Hello.getInstance().plugin;
+		return getInstance().plugin;
 	}
 	
+	/**
+	 * @param event the event to be fired by bukkit
+	 */
 	public static void callEvent(final Event event) {
 		Bukkit
 			.getServer()
 			.getPluginManager()
 			.callEvent(event);
 	}
-	
 
-	
 	/**
 	 * Deletes a directory including content
 	 * @param dir directory to be deleted
@@ -154,6 +143,9 @@ public final class Hello {
 		dir.delete();
 	}
 	
+	/**
+	 * @return the currently running Ingame Display manager (particle style text in the game)
+	 */
 	public static IngameDisplayManager getIngameDisplayManager() {
 		return getInstance().ingameDisplayManager;
 	}
