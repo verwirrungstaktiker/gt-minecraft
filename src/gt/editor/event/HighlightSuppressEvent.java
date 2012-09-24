@@ -19,7 +19,8 @@ public class HighlightSuppressEvent extends PlayerEvent {
 	private static final HandlerList HANDLERS = new HandlerList();	
 	
 	/**
-	 * @param who the player this event ist about
+	 * @param who the player this event is about
+	 * @param suppressed true if highlighting is suppressed for the player
 	 */
 	public HighlightSuppressEvent(final Player who, final boolean suppressed) {
 		super(who);
@@ -31,6 +32,9 @@ public class HighlightSuppressEvent extends PlayerEvent {
 		return HANDLERS;
 	}
 
+	/**
+	 * @return the global HandlerList
+	 */
     public static HandlerList getHandlerList() {
         return HANDLERS;
     }

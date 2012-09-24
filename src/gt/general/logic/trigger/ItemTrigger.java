@@ -128,6 +128,10 @@ public abstract class ItemTrigger extends BlockTrigger implements BlockObserver{
         }
     }
 
+    /**
+     * @param hero Hero that triggers the trigger
+     * @return true if the Heroes item fits the lock of the Trigger
+     */
     protected abstract boolean rightItemForTrigger(Hero hero);
 
 	/**
@@ -136,16 +140,24 @@ public abstract class ItemTrigger extends BlockTrigger implements BlockObserver{
      */
 	protected abstract void triggered(final BlockEvent event);
 	
-	
+	/**
+	 * @return get the kind of "key" that fits the Trigger
+	 */
 	public UnlockItemType getType() {
 		return unlockType;
 	}
 
+	/**
+	 * @return The visual kind of block
+	 */
 	public CustomBlockType getCustomType() {
 		return customType;
 	}
 
-	public void setCustomType(CustomBlockType customType) {
+	/**
+	 * @param customType The visual kind of block
+	 */
+	public void setCustomType(final CustomBlockType customType) {
 		this.customType = customType;
 	}
 

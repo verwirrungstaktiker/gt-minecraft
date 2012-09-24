@@ -23,29 +23,45 @@ public class EditorFacade {
 
 	private final PlayerManager playerManager;
 	private final EditorTriggerManager triggerManager;
-	private final ParticleManager particleManager;
 
-	public EditorFacade(final EditorTriggerManager triggerManager, final PlayerManager playerManager, final ParticleManager particleManager) {
+	/**
+	 * Construct a new EditorFacade 
+	 * @param triggerManager Manager of TriggerContexts
+	 * @param playerManager Manager of building new Logic
+	 */
+	public EditorFacade(final EditorTriggerManager triggerManager, final PlayerManager playerManager) {
 		this.triggerManager = triggerManager;
 		this.playerManager = playerManager;
-		this.particleManager = particleManager;
 	}
 	
-	/*
-	 * state of system
+	/**
+	 * @param player a bukkit player
+	 * @return the active TriggerContext of the player
 	 */
 	public TriggerContext getActiveContext(final Player player) {
 		return getEditorPlayer(player).getActiveContext();
 	}
 	
+	/**
+	 * @param player a bukkit player
+	 * @return the Trigger/Response that the player has selected
+	 */
 	public YamlSerializable getSelectedItem(final Player player) {
 		return getEditorPlayer(player).getSelectedItem();
 	}
 	
+	/**
+	 * sets the selected Trigger/Response
+	 * @param player a bukkit player
+	 * @param selectedItem the selected Trigger/Response
+	 */
 	public void setSelectedItem(final Player player, final YamlSerializable selectedItem) {
 		getEditorPlayer(player).setSelectedItem(selectedItem);
 	}
 	
+	/**
+	 * @return all currently working TriggerContexts
+	 */
 	public Collection<TriggerContext> getAllTriggerContexts() {
 		return triggerManager.getTriggerContexts();
 	}
@@ -53,30 +69,54 @@ public class EditorFacade {
 	/*
 	 * manipulate contexts
 	 */
+	
+	/**
+	 * add an active TriggerContext for a player
+	 * @param player a bukkit player
+	 */
 	public void createContext(final Player player) {
 		playerManager.createContext(getEditorPlayer(player));
 	}
 	
+	/**
+	 * delete an active TriggerContext for a player
+	 * @param player a bukkit player
+	 */
 	public void deleteContext(final Player player) {
 		playerManager.cancelContext(getEditorPlayer(player));
 	}
 
-	
+	/**
+	 * set the active TriggerContext for a player
+	 * @param player a bukkit player
+	 * @param context the Triggercontext
+	 */
 	public void enterContext(final Player player, final TriggerContext context) {
 		getEditorPlayer(player).enterContext(context);
 	}
 	
-	public void exitContext(SpoutPlayer player) {
+	/**
+	 * remove the active TriggerContext for a player
+	 * @param player a bukkit player
+	 */
+	public void exitContext(final SpoutPlayer player) {
 		getEditorPlayer(player).exitContext();
 	}
 	
+	/**
+	 * @param player a bukkit player
+	 * @return true if the player is allowed to create a new TriggerContext
+	 */
 	public boolean playerCanCreateContext(final Player player) {
 		
 		TriggerContext c = getEditorPlayer(player).getActiveContext();
 		return c == null || c.isComplete();
 	}
 	
-	
+	/**
+	 * @param player a bukkit player
+	 * @return the EditorPlayer
+	 */
 	public EditorPlayer getEditorPlayer(final Player player) {
 		return playerManager.getEditorPlayer(player);
 	}
@@ -85,22 +125,44 @@ public class EditorFacade {
 	 * state of highlight
 	 */
 	
-	public void setSuppressHighlight(final Player player, boolean supress) {
-		getEditorPlayer(player).setSuppressHighlight(supress);
+	/**
+	 * set the suppressing of block highlights for a player
+	 * @param player a bukkit player
+	 * @param suppress suppressed if true
+	 */
+	public void setSuppressHighlight(final Player player, final boolean suppress) {
+		getEditorPlayer(player).setSuppressHighlight(suppress);
 	}
 	
+	/**
+	 * @param player a bukkit player
+	 * @return true if highlight is suppressed for the player
+	 */
 	public boolean isSuppressHighlight(final Player player) {
 		return getEditorPlayer(player).isSuppressHighlight();
 	}
 	
+	/**
+	 * @param player a bukkit player
+	 * @return the TriggerState of the player (Trigger/Response/Standbye)
+	 */
 	public TriggerState getTriggerState(final Player player) {
 		return getEditorPlayer(player).getTriggerState();
 	}
 	
+	/**
+	 * set the TriggerState for a player (Trigger/Response/Standbye)
+	 * @param player a bukkit player
+	 * @param triggerState the new TriggerState
+	 */
 	public void setTriggerState(final Player player, final TriggerState triggerState) {
 		getEditorPlayer(player).setTriggerState(triggerState);
 	}
 	
+	/**
+	 * @param player a bukkit player
+	 * @return the Inventories for all TriggerStates of a player
+	 */
 	public Map<TriggerState, ItemStack[]> getInventories(final Player player) {
 		return getEditorPlayer(player).getInventories();
 	}

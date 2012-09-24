@@ -18,8 +18,12 @@ import org.getspout.spoutapi.keyboard.BindingExecutionDelegate;
 public class EditorGuiManager implements BindingExecutionDelegate {
 	
 	private final EditorFacade facade;
-		
-	public EditorGuiManager(EditorFacade facade) {
+	
+	/**
+	 * Construct a new EditorGuiManager
+	 * @param facade its EditorFacade
+	 */
+	public EditorGuiManager(final EditorFacade facade) {
 		this.facade = facade;
 	}
 

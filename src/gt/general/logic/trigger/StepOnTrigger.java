@@ -36,7 +36,10 @@ public class StepOnTrigger extends Trigger implements BlockObserver {
     private static final String KEY_BLOCK = "block";  
 	private static final String KEY_CONTINGENT = "contingent";
     
-    
+    /**
+     * construct a new trigger
+     * @param block underlying block of the StepOnTrigger
+     */
     public StepOnTrigger(final Block block) {
     	super("step_on_trigger");
     	
@@ -48,11 +51,12 @@ public class StepOnTrigger extends Trigger implements BlockObserver {
     	registerWithSubject();
     	
 		maximumContingent = -1;
-		currentContingent = -1;
-		
-    	
+		currentContingent = -1;    	
     }
     
+    /**
+     * construct a new StepOnTrigger
+     */
     public StepOnTrigger() {}
 
 	@Override

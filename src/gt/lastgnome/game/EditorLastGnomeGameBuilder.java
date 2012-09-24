@@ -62,8 +62,7 @@ public class EditorLastGnomeGameBuilder extends AbstractLastGnomeGameBuilder {
 	public void startGame() {
 		
 		EditorFacade facade = new EditorFacade(triggerManager,
-												playerManager,
-												particleManager);
+												playerManager);
 		
 		MultiListener.registerListeners(playerManager,
 				buildManager,

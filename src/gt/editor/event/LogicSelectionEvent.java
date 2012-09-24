@@ -14,6 +14,10 @@ import org.bukkit.event.player.PlayerEvent;
 
 public class LogicSelectionEvent extends PlayerEvent {
 
+	/**
+	 * Construct a new LogicSelectionEvent
+	 * @param player the corresponding bukkit player
+	 */
 	public LogicSelectionEvent(final Player player) {
 		super(player);
 	}
@@ -25,6 +29,9 @@ public class LogicSelectionEvent extends PlayerEvent {
 		return HANDLERS;
 	}
 	
+	/**
+	 * @return the global HandlerList
+	 */
 	public static HandlerList getHandlerList() {
 		return HANDLERS;
 	}

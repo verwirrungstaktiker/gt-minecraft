@@ -79,25 +79,7 @@ public class LeverRedstoneTrigger extends RedstoneTrigger implements Listener {
 			.removeBlockOverride(getBlock()
 									.getRelative(orientation.getOppositeFace()));
 	}
-	
-//	@EventHandler
-//	@Override
-//	public void onBlockRedstoneChange(final BlockRedstoneEvent event) {
-//		if(isBlockRedstoneEventHere(event)) {
-//			super.onBlockRedstoneChange(event);
-//			
-//			Block signalBlock = getBlock().getRelative(orientation.getOppositeFace());
-//			
-//			if(event.getNewCurrent() > 0) {
-//				ObservableCustomBlock green = CustomBlockType.GREEN_SIGNAL.getCustomBlock();
-//				SpoutManager.getMaterialManager().overrideBlock(signalBlock, green);
-//			} else {
-//				ObservableCustomBlock red = CustomBlockType.RED_SIGNAL.getCustomBlock();
-//				SpoutManager.getMaterialManager().overrideBlock(signalBlock, red);
-//			}
-//		}
-//	}
-	
+
 	@EventHandler
 	@Override
 	public void onPlayerInteract(final PlayerInteractEvent event) {

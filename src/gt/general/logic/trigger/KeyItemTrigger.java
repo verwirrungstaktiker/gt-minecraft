@@ -34,7 +34,8 @@ public class KeyItemTrigger extends ItemTrigger implements BlockObserver{
 	private DispenserItem keyColor;
 
 	/**
-	 * @param block THE block of the trigger
+	 * @param block The block of the trigger
+	 * @param color The color of the key
 	 */
 	public KeyItemTrigger(final Block block, final DispenserItem color) {
 	    super("key_trigger", block, UnlockItemType.KEY);
@@ -46,7 +47,10 @@ public class KeyItemTrigger extends ItemTrigger implements BlockObserver{
 		getCustomType().place(block);
 	}
 	
-	private void setCustomBlockType(DispenserItem color) {
+	/**
+	 * @param color Color of the Key
+	 */
+	private void setCustomBlockType(final DispenserItem color) {
 	    
 	    switch(color) {
 	    case BLUE_KEY:

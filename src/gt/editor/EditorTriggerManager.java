@@ -8,7 +8,7 @@
  ******************************************************************************/
 package gt.editor;
 
-import static com.google.common.collect.Maps.*;
+import static com.google.common.collect.Maps.newHashMap;
 import gt.editor.event.LogicChangeEvent;
 import gt.editor.event.LogicChangeEvent.ObserveeParent;
 import gt.general.logic.TriggerContext;
