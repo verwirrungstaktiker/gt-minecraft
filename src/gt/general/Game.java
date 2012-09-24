@@ -8,7 +8,7 @@
  ******************************************************************************/
 package gt.general;
 
-import static com.google.common.collect.Sets.*;
+import static com.google.common.collect.Sets.newHashSet;
 import gt.general.character.Hero;
 import gt.general.character.Team;
 import gt.general.world.WorldInstance;
@@ -160,19 +160,39 @@ public abstract class Game implements Listener {
 		this.world = world;
 	}
 	
-	public void registerListener(Listener listener) {
+	/**
+	 * register a new Listener
+	 * @param listener Listener to be registered
+	 */
+	public void registerListener(final Listener listener) {
 		MultiListener.registerListener(listener);
 		listeners.add(listener);
 	}
 	
-	public void registerAsyncTask(Runnable task, int initial, int ticks) {
+	/**
+	 * Shortcut: schedule an async Task (new thread)
+	 * @param task work of a task
+	 * @param initial intitial wainting time
+	 * @param ticks ticks between execution
+	 */
+	public void registerAsyncTask(final Runnable task, final int initial, final int ticks) {
 		tasks.add(Hello.scheduleAsyncTask(task, initial, ticks));
 	}
 	
-	public void registerSyncTask(Runnable task, int initial, int ticks) {
+	/**
+	 * Shortcut: schedule a sync task
+	 * @param task work of a task
+	 * @param initial intitial wainting time
+	 * @param ticks ticks between execution
+	 */
+	public void registerSyncTask(final Runnable task, final int initial, final int ticks) {
 		tasks.add(Hello.scheduleSyncTask(task, initial, ticks));
 	}
 	
+	/**
+	 * register multiple Listeners
+	 * @param listeners Listeners to be registered
+	 */
 	public void registerListeners(final Listener... listeners) {
 		for (Listener listener : listeners) {
 			registerListener(listener);
@@ -186,6 +206,10 @@ public abstract class Game implements Listener {
 		return running;
 	}
 	
+	/**
+	 * @param hero a player
+	 * @return true if the hero is part of a game
+	 */
 	public boolean isPlayedBy(final Hero hero) {
 		return getTeam().containsHero(hero);
 	}
