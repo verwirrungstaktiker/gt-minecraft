@@ -160,11 +160,17 @@ public abstract class Dispenser implements BlockObserver {
 		this.contingent++;
 	}
 
+	/**
+	 * @return type ItemType that will be dispensed
+	 */
 	public DispenserItem getItemType() {
 		return itemType;
 	}
 
-	public void setItemType(DispenserItem itemType) {
+	/**
+	 * @param itemType ItemType that will be dispensed
+	 */
+	public void setItemType(final DispenserItem itemType) {
 		this.itemType = itemType;
 	}
 }

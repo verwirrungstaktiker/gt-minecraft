@@ -15,7 +15,11 @@ public class TriggerEvent {
 	private final Player player;
 	private final boolean active;
 
-	
+	/**
+	 * Construct a new TriggerEvent
+	 * @param active true if active
+	 * @param player the corresponding bukkit Player
+	 */
 	public TriggerEvent(final boolean active, final Player player) {
 		this.active = active;
 		this.player = player;

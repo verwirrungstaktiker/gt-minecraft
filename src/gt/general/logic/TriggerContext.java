@@ -70,6 +70,7 @@ public class TriggerContext {
 	/**
 	 * @param trigger trigger which changes its state
 	 * @param state new state of the trigger
+	 * @param player the corresponding bukkit Player
 	 */
 	public void updateTriggerState(final Trigger trigger, final boolean state, final Player player) {		
 		boolean oldState = evalInputFuntion();
@@ -180,11 +181,18 @@ public class TriggerContext {
 		responses.clear();
 	}
 	
+	/**
+	 * @return all Triggers/Responses of a TriggerContext
+	 */
 	public Iterable<YamlSerializable> getAllItems() {
 		return Iterables.concat(triggers, responses);
 	}
 
-	public void setupInverted(Trigger trigger) {
+	/**
+	 * activate a Trigger
+	 * @param trigger Trigger to be activated
+	 */
+	public void setupInverted(final Trigger trigger) {
 		activeTriggers.add(trigger);		
 	}
 	

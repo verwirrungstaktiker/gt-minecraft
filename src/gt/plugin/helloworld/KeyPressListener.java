@@ -8,13 +8,6 @@
  ******************************************************************************/
 package gt.plugin.helloworld;
 
-import gt.general.character.Hero;
-import gt.general.character.HeroManager;
-import gt.general.gui.GameScoreOverlay;
-import gt.general.ingameDisplay.DisplayString;
-import gt.lastgnome.scoring.HighscoreEntry;
-import gt.plugin.meta.Hello;
-
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.event.EventHandler;
@@ -41,16 +34,6 @@ public class KeyPressListener implements Listener {
 		if(event.getKey() == Keyboard.KEY_J) {
 			Location loc = event.getPlayer().getLocation();
 			event.getPlayer().sendMessage("pitch: " + loc.getPitch() + " yaw: " + loc.getYaw());
-		}
-		
-		
-		if(event.getKey() == Keyboard.KEY_B && Hello.getPlugin() instanceof HelloWorld) {
-			Hero h = HeroManager.getHero(event.getPlayer());
-			
-			HelloWorld plugin = (HelloWorld) Hello.getPlugin();
-			HighscoreEntry entry = plugin.getHighscore("lastgnome").getScores().get(0);
-			
-			//h.getGui().popup(new GameScoreOverlay(entry));
 		}
 	}
 }

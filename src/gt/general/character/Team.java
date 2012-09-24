@@ -107,6 +107,9 @@ public class Team {
 		this.game = game;
 	}
 	
+	/**
+	 * @return true if the team is in a game
+	 */
 	public boolean inGame() {
 		return game != null;
 	}
@@ -189,22 +192,36 @@ public class Team {
 		fixed = true;
 	}
 	
+	/**
+	 * freeze movement for all heroes of a team
+	 */
 	public void freezeAllHeros() {
 		for(Hero h : members) {
 			h.pause();
 		}
 	}
 	
+	/**
+	 * unfreeze movement for all heroes of a team
+	 */
 	public void unfreezeAllHeros() {
 		for(Hero h : members) {
 			h.resume(FreezeCause.PAUSE);
 		}
 	}
 
+	/**
+	 * @param hero a player
+	 * @return true if hero is part of this team
+	 */
 	public boolean containsHero(final Hero hero) {
 		return members.contains(hero);
 	}
 
+	/**
+	 * send a chat message to the team
+	 * @param string the message
+	 */
 	public void sendMessage(final String string) {
 		for(Hero hero : members) {
 			hero.getPlayer().sendMessage(string);

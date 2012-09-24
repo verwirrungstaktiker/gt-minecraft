@@ -202,7 +202,7 @@ public class WorldInstance {
 	/**
 	 * @param baseName the baseName to set
 	 */
-	public void setBaseName(String baseName) {
+	public void setBaseName(final String baseName) {
 		this.baseName = baseName;
 	}
 }

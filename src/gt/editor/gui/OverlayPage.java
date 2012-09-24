@@ -8,7 +8,7 @@
  ******************************************************************************/
 package gt.editor.gui;
 
-import static com.google.common.collect.Sets.*;
+import static com.google.common.collect.Sets.newHashSet;
 import gt.editor.EditorFacade;
 import gt.plugin.meta.Hello;
 

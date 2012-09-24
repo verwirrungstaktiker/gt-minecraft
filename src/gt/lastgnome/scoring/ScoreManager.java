@@ -8,7 +8,6 @@
  ******************************************************************************/
 package gt.lastgnome.scoring;
 
-import static com.google.common.collect.Lists.*;
 import gt.general.Game;
 import gt.general.character.Hero;
 import gt.general.character.HeroManager;
@@ -32,6 +31,7 @@ public class ScoreManager implements Listener{
 	
 	/**
 	 * construct new ScoreManager
+	 * @param game the corresponding game
 	 */
 	public ScoreManager(final Game game) {
 		this.game = game;
@@ -88,7 +88,9 @@ public class ScoreManager implements Listener{
 		}
 	}
 	
-
+	/**
+	 * @return a HighscoreEntry for the current game
+	 */
 	public HighscoreEntry toHighscoreEntry() {
 		
 		HighscoreEntry hse = score.toHighscoreEntry();

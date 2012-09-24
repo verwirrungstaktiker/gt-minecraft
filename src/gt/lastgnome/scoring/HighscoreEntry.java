@@ -8,12 +8,11 @@
  ******************************************************************************/
 package gt.lastgnome.scoring;
 
-import static com.google.common.collect.Lists.*;
-
-import java.util.List;
-
+import static com.google.common.collect.Lists.newArrayList;
 import gt.general.logic.persistence.PersistenceMap;
 import gt.general.logic.persistence.exceptions.PersistenceException;
+
+import java.util.List;
 
 public class HighscoreEntry implements Comparable<HighscoreEntry>{
 	
@@ -49,7 +48,7 @@ public class HighscoreEntry implements Comparable<HighscoreEntry>{
 	/**
 	 * de-serialize scoring data
 	 * @param map source of data
-	 * @throws PersistenceException
+	 * @throws PersistenceException error in the persistence of serialized data
 	 */
 	public void setup(final PersistenceMap map) throws PersistenceException {
 		this.time = map.get(KEY_TIME);

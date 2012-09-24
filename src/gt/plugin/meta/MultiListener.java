@@ -8,7 +8,7 @@
  ******************************************************************************/
 package gt.plugin.meta;
 
-import static com.google.common.collect.Sets.*;
+import static com.google.common.collect.Sets.newHashSet;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;

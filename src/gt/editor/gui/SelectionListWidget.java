@@ -8,7 +8,7 @@
  ******************************************************************************/
 package gt.editor.gui;
 
-import static com.google.common.collect.Maps.*;
+import static com.google.common.collect.Maps.newHashMap;
 
 import java.util.Map;
 

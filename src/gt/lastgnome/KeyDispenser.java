@@ -9,8 +9,6 @@
 package gt.lastgnome;
 
 import gt.general.character.Hero;
-import gt.plugin.meta.CustomBlockType;
-
 import org.bukkit.ChatColor;
 import org.bukkit.block.Block;
 

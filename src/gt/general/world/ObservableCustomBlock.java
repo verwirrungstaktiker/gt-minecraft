@@ -9,8 +9,6 @@
 package gt.general.world;
 
 
-import java.util.Collection;
-
 import gt.plugin.meta.CustomBlockType;
 import gt.plugin.meta.Hello;
 
@@ -57,7 +55,7 @@ public class ObservableCustomBlock extends GenericCustomBlock {
 		/**
 		 * @param block the block to set
 		 */
-		public void setBlock(Block block) {
+		public void setBlock(final Block block) {
 			this.block = block;
 		}
 		/**
@@ -73,7 +71,7 @@ public class ObservableCustomBlock extends GenericCustomBlock {
 		/**
 		 * @param entity the entity to set
 		 */
-		public void setEntity(LivingEntity entity) {
+		public void setEntity(final LivingEntity entity) {
 			this.entity = entity;
 		}
 		/**
@@ -85,7 +83,7 @@ public class ObservableCustomBlock extends GenericCustomBlock {
 		/**
 		 * @param blockEventType the blockEventType to set
 		 */
-		public void setBlockEventType(BlockEventType blockEventType) {
+		public void setBlockEventType(final BlockEventType blockEventType) {
 			this.blockEventType = blockEventType;
 		}
 		/**
@@ -100,10 +98,14 @@ public class ObservableCustomBlock extends GenericCustomBlock {
 		/**
 		 * @param player the player to set
 		 */
-		public void setPlayer(Player player) {
+		public void setPlayer(final Player player) {
 			this.player = player;
 		}
 		
+		/**
+		 * print a warning message for bukkit
+		 * @param field warning message
+		 */
 		private void printWarning(final String field) {			
 			String message = "BlockEvent: field is null :" + field + "\n" +
 								"--type: " + blockEventType.toString() + "\n";
@@ -186,7 +188,7 @@ public class ObservableCustomBlock extends GenericCustomBlock {
 	}
 	
 	@Override
-	public void onEntityMoveAt(World world, int x, int y, int z, Entity entity) {
+	public void onEntityMoveAt(final World world, final int x, final int y, final int z, final Entity entity) {
 		
 		if(entity instanceof Player) {
 			Player player = (Player) entity;

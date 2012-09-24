@@ -136,6 +136,9 @@ public class Hero extends Character{
 		return false;
 	}
 	
+	/**
+	 * @return true if the hero holds an item
+	 */
 	public boolean hasActiveItem() {
 		return activeItem != null;
 	}

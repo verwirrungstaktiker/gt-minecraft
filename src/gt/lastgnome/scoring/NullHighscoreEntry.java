@@ -8,10 +8,13 @@
  ******************************************************************************/
 package gt.lastgnome.scoring;
 
-import static com.google.common.collect.Lists.*;
+import static com.google.common.collect.Lists.newArrayList;
 
 public class NullHighscoreEntry extends HighscoreEntry {
 
+	/**
+	 * Construct a new Dummy-HighscoreEntry
+	 */
 	public NullHighscoreEntry() {
 		super(0, 0, 0, 0);
 		setPlayers(newArrayList("----","----","----","----"));
