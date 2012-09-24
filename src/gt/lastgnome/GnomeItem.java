@@ -1,9 +1,9 @@
 /*******************************************************************************
  * Projektpraktikum: Game Technology 2012
- * Minecraft-Modifikation für kollaboratives Spielen
+ * Minecraft-Modifikation fï¿½r kollaboratives Spielen
  * 
  * Sebastian Fahnenschreiber (sebastian.fahnenschreiber@stud.tu-darmstadt.de)
- * Roman Neß (roman.ness@stud.tu-darmstadt.de)
+ * Roman Neï¿½ (roman.ness@stud.tu-darmstadt.de)
  * Philipp Pascal Battenberg (philipp.battenberg@stud.tu-darmstadt.de)
  ******************************************************************************/
 package gt.lastgnome;
@@ -77,8 +77,7 @@ public final class GnomeItem extends PortableItem {
 	 * @param game the game that holds the Gnome
 	 */
 	public GnomeItem(final Plugin plugin, final Game game) {
-		this(plugin, "GnomeItem", "http://dl.dropbox.com/u/29386658/gt/textures/gnome2_16x16.png", game);
-	}
+		this(plugin, "GnomeItem", "https://raw.github.com/verwirrungstaktiker/gt-minecraft/master/res/texture/gnome_item.png", game);	}
 
 	/**
 	 * Creates a new Gnome

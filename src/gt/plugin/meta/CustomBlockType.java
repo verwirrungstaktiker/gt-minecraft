@@ -1,9 +1,9 @@
 /*******************************************************************************
  * Projektpraktikum: Game Technology 2012
- * Minecraft-Modifikation für kollaboratives Spielen
+ * Minecraft-Modifikation fï¿½r kollaboratives Spielen
  * 
  * Sebastian Fahnenschreiber (sebastian.fahnenschreiber@stud.tu-darmstadt.de)
- * Roman Neß (roman.ness@stud.tu-darmstadt.de)
+ * Roman Neï¿½ (roman.ness@stud.tu-darmstadt.de)
  * Philipp Pascal Battenberg (philipp.battenberg@stud.tu-darmstadt.de)
  ******************************************************************************/
 package gt.plugin.meta;
@@ -27,7 +27,7 @@ public enum CustomBlockType {
 		@Override
 		public ObservableCustomBlock instantiate() {
 			return new ObservableCustomBlock("green_signal",
-					"http://img703.imageshack.us/img703/5993/signalgreen.png",
+					"https://raw.github.com/verwirrungstaktiker/gt-minecraft/master/res/texture/signal-green.png",
 					16);
 		}
 	}),
@@ -37,7 +37,7 @@ public enum CustomBlockType {
 		@Override
 		public ObservableCustomBlock instantiate() {
 			return new ObservableCustomBlock("red_signal",
-					"http://img213.imageshack.us/img213/5175/signalred.png", 16);
+					"https://raw.github.com/verwirrungstaktiker/gt-minecraft/master/res/texture/signal-red.png", 16);
 		}
 	}),
 
@@ -46,7 +46,7 @@ public enum CustomBlockType {
 		@Override
 		public ObservableCustomBlock instantiate() {
 			return new ObservableCustomBlock("question_block",
-					"http://img546.imageshack.us/img546/8513/questioncs.png",
+					"https://raw.github.com/verwirrungstaktiker/gt-minecraft/master/res/texture/question.png",
 					16);
 		}
 	}),
@@ -57,7 +57,7 @@ public enum CustomBlockType {
 		public ObservableCustomBlock instantiate() {
 			ObservableCustomBlock block = new ObservableCustomBlock(
 					"invisibleBlock",
-					"https://dl.dropbox.com/u/29386658/gt/textures/invisible.png",
+					"https://raw.github.com/verwirrungstaktiker/gt-minecraft/master/res/texture/invisible.png",
 					16);
 			block.setOpaque(true);
 			return block;
@@ -70,7 +70,7 @@ public enum CustomBlockType {
 		public ObservableCustomBlock instantiate() {
 			return new ObservableCustomBlock(
 					"end_socket",
-					"http://dl.dropbox.com/u/29386658/gt/textures/gnome_socket_end_16x16.png",
+					"https://raw.github.com/verwirrungstaktiker/gt-minecraft/master/res/texture/gnome_socket_end.png",
 					16);
 		}
 	}),
@@ -81,7 +81,7 @@ public enum CustomBlockType {
 		public ObservableCustomBlock instantiate() {
 			return new ObservableCustomBlock(
 					"start_socket",
-					"http://dl.dropbox.com/u/29386658/gt/textures/gnome_socket_start_16x16.png",
+					"https://raw.github.com/verwirrungstaktiker/gt-minecraft/master/res/texture/gnome_socket_start.png",
 					16);
 
 		}
@@ -92,7 +92,7 @@ public enum CustomBlockType {
         public ObservableCustomBlock instantiate() {
             return new ObservableCustomBlock(
                     "gnome_trigger_negative",
-                    "https://dl.dropbox.com/u/29386658/gt/textures/gnome_socket_end_16x16.png",
+                    "https://raw.github.com/verwirrungstaktiker/gt-minecraft/master/res/texture/gnome_socket_end.png",
                     16);
 
         }
@@ -103,7 +103,7 @@ public enum CustomBlockType {
         public ObservableCustomBlock instantiate() {
             return new ObservableCustomBlock(
                     "gnome_trigger_positive",
-                    "https://dl.dropbox.com/u/29386658/gt/textures/gnome_16x16.png",
+                    "https://raw.github.com/verwirrungstaktiker/gt-minecraft/master/res/texture/gnome_positive.png",
                     16);
 
         }
@@ -136,7 +136,7 @@ public enum CustomBlockType {
 		@Override
 		public ObservableCustomBlock instantiate() {
 			return new ObservableCustomBlock("spawn",
-					"http://img27.imageshack.us/img27/4669/spawnpv.png", 16);
+					"https://raw.github.com/verwirrungstaktiker/gt-minecraft/master/res/texture/spawn.png", 16);
 
 		}
 	}),
@@ -166,7 +166,7 @@ public enum CustomBlockType {
 		@Override
 		public ObservableCustomBlock instantiate() {
 			return new ObservableCustomBlock("zombiespawn",
-					"http://img27.imageshack.us/img27/4669/spawnpv.png", 16);
+					"https://raw.github.com/verwirrungstaktiker/gt-minecraft/master/res/texture/spawn.png", 16);
 
 		}
 	}),
