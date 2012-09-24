@@ -54,7 +54,6 @@ public class GameManager implements GameObserver{
 			builder.buildWorldInstance(worldManager, worldName);
 			builder.loadGameSpecific();
 		} catch (PersistenceException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 			
@@ -99,8 +98,10 @@ public class GameManager implements GameObserver{
 	public void endAllGames() {
 		for(Game game : runningGames) {
 			endGame(game);
-			// TODO remove from list
 		}
+		
+		runningGames.clear();
+		
 	}
 
 	public void togglePauseAllGames() {

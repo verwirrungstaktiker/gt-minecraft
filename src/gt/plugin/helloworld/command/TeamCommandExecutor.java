@@ -61,8 +61,6 @@ public class TeamCommandExecutor extends PlayerCommandExecutor {
 			}
 		}
 		
-		// XXX DEBUG
-		System.out.println(invoker.getTeam().toString());
 		return true;
 	}
 

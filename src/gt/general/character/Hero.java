@@ -222,7 +222,6 @@ public class Hero extends Character{
 
 	/**
 	 * Method to drop the active Item
-	 * TODO real dropping
 	 */
 	public void dropActiveItem() {
 		if (activeItemDropable()) {
@@ -235,12 +234,8 @@ public class Hero extends Character{
 			world.dropItem(getLocation(), item);
 			//remove Item from MC-Player's inventory
 			getPlayer().setItemInHand(null);
-			activeItem = null;
-			
-			// TODO event!
-			
+			activeItem = null;			
 		}
-		// TODO debug in else branch
 	}
 
 	/**

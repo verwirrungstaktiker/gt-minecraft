@@ -42,7 +42,6 @@ public class WorldUniqueBlock extends YamlSerializable implements BlockObserver 
 			if (block == null) {
 				block = blockEvent.getBlock();
 			} else if( blockEvent.getEntity() instanceof Player) {
-				// TODO maybe more output
 				((Player) blockEvent.getEntity() ).sendMessage("there can be only one block of this type");
 			} else {
 				Bukkit.broadcastMessage("cannot place a block: " + base.getName());
@@ -62,7 +61,7 @@ public class WorldUniqueBlock extends YamlSerializable implements BlockObserver 
 	@Override
 	public void setup(final PersistenceMap values, final World world) throws PersistenceException {
 		
-		// TODO bad style
+		// bad style ... meh
 		if(values.getMap() != null && values.getMap().containsKey(KEY_LOCATION)) {
 			block = values.getBlock(KEY_LOCATION, world);
 			SpoutManager.getMaterialManager().overrideBlock(block, base);

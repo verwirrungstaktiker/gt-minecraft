@@ -100,7 +100,6 @@ public class InstantiatingWorldManager extends WorldManager {
 			}
 			
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}		

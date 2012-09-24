@@ -22,10 +22,6 @@ public class BlocksPage extends OverlayPage {
 
 	@Override
 	protected void setup() {
-		// TODO Auto-generated method stub
-		
-		System.out.println("hello from the blocks page");
-		
 		Map<TriggerState, ItemStack[]> inventories = facade.getInventories(player);	
 		
 		GenericContainer list = new GenericContainer();
@@ -66,13 +62,10 @@ public class BlocksPage extends OverlayPage {
 
 	@Override
 	protected void dispose() {
-		// TODO Auto-generated method stub
-
 	}
 
 	@Override
 	public boolean closeWithHotkey() {
-		// TODO Auto-generated method stub
 		return true;
 	}
 

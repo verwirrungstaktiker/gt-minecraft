@@ -33,7 +33,6 @@ public class GnomeSlowEffect extends AbstractEffect {
 
 	@Override
 	public int getPriorityIndex() {
-		// TODO Auto-generated method stub
 		return 0;
 	}
 
