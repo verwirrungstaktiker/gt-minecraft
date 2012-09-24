@@ -114,13 +114,7 @@ public abstract class Aura implements Runnable {
 	 */
 	private void spreadEffect() {
 
-		// TODO CLEANUP !!!
-		if (distance == OWNER_ONLY) {
-			
-			/*if(owner instanceof Hero) {
-				((Hero)owner).getPlayer().sendMessage("adding aura stack");
-			}*/
-			
+		if (distance == OWNER_ONLY) {			
 			if (spreadEffectNow()) {
 				
 				Effect e = effectFactory.getEffect();
@@ -130,7 +124,7 @@ public abstract class Aura implements Runnable {
 				}
 			}
 		} else {
-			// TODO spread auras
+			// TODO spread auras - this is a feature :-)
 			throw new RuntimeException("not implemented yet");
 		}
 	}

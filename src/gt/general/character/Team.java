@@ -33,7 +33,6 @@ public class Team {
 	private final  Set<TeamObserver> observers;
 
 	public enum Notification {
-		// TODO fire this notification
 		MEMBERCHANGE
 	}
 	

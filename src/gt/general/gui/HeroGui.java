@@ -12,9 +12,8 @@ import org.getspout.spoutapi.gui.Widget;
 
 public class HeroGui {
 
-	// XXX do we really need this set?
+	// do we really need this map?
 	private final Map<GuiElementType, GuiElement> guiElements;
-	
 	private final Hero holder;
 	
 	/**
@@ -30,12 +29,7 @@ public class HeroGui {
 	 * @param get The type of the gui element to be added
 	 * @param ge The GuiElement to be added to this Gui
 	 */
-	public void addGuiElement(final GuiElementType get, final GuiElement ge) {
-		
-		/*
-		 * TODO catch if there is already more than one element
-		 */
-		
+	public void addGuiElement(final GuiElementType get, final GuiElement ge) {		
 		guiElements.put(get, ge);
 		ge.attach(holder);
 	}

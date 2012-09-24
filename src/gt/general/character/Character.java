@@ -157,7 +157,6 @@ public abstract class Character {
 	 */
 	public void simulateEffects() {
 
-		// TODO CODE DUPLICATION
 		Iterator<Effect> it = effects.iterator();
 		while(it.hasNext()) {
 			Effect e = it.next();

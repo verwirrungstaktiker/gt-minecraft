@@ -72,9 +72,6 @@ public class LastGnomeGame extends AbstractLastGnomeGame implements Listener{
 	}
 
 	/**
-	 * TODO downgrade? is here the right place for this stuff?
-	 * 		better in game manager?
-	 * 
 	 * @param hero whose gui to be upgraded
 	 */
 	public void upgradeGui(final Hero hero) {
@@ -210,6 +207,8 @@ public class LastGnomeGame extends AbstractLastGnomeGame implements Listener{
 		};
 		
 		HighscoreEntry entry = scoreManager.toHighscoreEntry();
+		
+		respawnManager.dispose();
 		
 		String message = (isWon) ? "Victory!" : "Fail!";
 		
