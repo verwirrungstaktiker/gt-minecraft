@@ -1,7 +1,17 @@
+/*******************************************************************************
+ * Projektpraktikum: Game Technology 2012
+ * Minecraft-Modifikation für kollaboratives Spielen
+ * 
+ * Sebastian Fahnenschreiber (sebastian.fahnenschreiber@stud.tu-darmstadt.de)
+ * Roman Neß (roman.ness@stud.tu-darmstadt.de)
+ * Philipp Pascal Battenberg (philipp.battenberg@stud.tu-darmstadt.de)
+ ******************************************************************************/
 package gt.lastgnome.game;
 
-import static com.google.common.collect.Lists.*;
-import static org.bukkit.ChatColor.*;
+import static com.google.common.collect.Lists.newArrayList;
+import static org.bukkit.ChatColor.GREEN;
+import static org.bukkit.ChatColor.RED;
+import static org.bukkit.ChatColor.YELLOW;
 import gt.general.RespawnManager;
 import gt.general.Vote;
 import gt.general.character.Hero;
@@ -57,17 +67,24 @@ public class LastGnomeGame extends AbstractLastGnomeGame implements Listener{
 		gnome = new GnomeItem(this);
 	}
 
-	
+	/**
+	 * @return the corresponding ScoreManager
+	 */
 	public ScoreManager getScoreManager() {
 		return scoreManager;
 	}
 
-	public void setRespawnManager(RespawnManager respawnManager) {
+	/**
+	 * @param respawnManager the new RespawnManager
+	 */
+	public void setRespawnManager(final RespawnManager respawnManager) {
 		this.respawnManager = respawnManager;
 	}
 
-
-	public void setScoreManager(ScoreManager scoreManager) {
+	/**
+	 * @param scoreManager the new ScoreManager
+	 */
+	public void setScoreManager(final ScoreManager scoreManager) {
 		this.scoreManager = scoreManager;
 	}
 
@@ -227,7 +244,9 @@ public class LastGnomeGame extends AbstractLastGnomeGame implements Listener{
 		}
 	}
 	
-
+	/**
+	 * Game Losing handling
+	 */
 	private void lose() {
 		for (Hero hero: getTeam().getPlayers()) {
 			hero.getPlayer().sendMessage(RED + "The Gnome has been eaten! You lost!");			
@@ -235,6 +254,9 @@ public class LastGnomeGame extends AbstractLastGnomeGame implements Listener{
 		onEnd();
 	}
 	
+	/**
+	 * Game Winning handling
+	 */
 	private void win() {
 		for (Hero hero: getTeam().getPlayers()) {
 			hero.getPlayer().sendMessage(GREEN + "The last Gnome on earth has been saved!");			

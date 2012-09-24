@@ -1,6 +1,15 @@
+/*******************************************************************************
+ * Projektpraktikum: Game Technology 2012
+ * Minecraft-Modifikation für kollaboratives Spielen
+ * 
+ * Sebastian Fahnenschreiber (sebastian.fahnenschreiber@stud.tu-darmstadt.de)
+ * Roman Neß (roman.ness@stud.tu-darmstadt.de)
+ * Philipp Pascal Battenberg (philipp.battenberg@stud.tu-darmstadt.de)
+ ******************************************************************************/
 package gt.editor;
 
-import static org.bukkit.ChatColor.*;
+import static org.bukkit.ChatColor.GREEN;
+import static org.bukkit.ChatColor.RED;
 import gt.editor.EditorPlayer.TriggerState;
 import gt.general.logic.TriggerContext;
 import gt.general.logic.response.BlockDisappearResponse;

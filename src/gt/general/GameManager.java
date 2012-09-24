@@ -1,6 +1,13 @@
+/*******************************************************************************
+ * Projektpraktikum: Game Technology 2012
+ * Minecraft-Modifikation für kollaboratives Spielen
+ * 
+ * Sebastian Fahnenschreiber (sebastian.fahnenschreiber@stud.tu-darmstadt.de)
+ * Roman Neß (roman.ness@stud.tu-darmstadt.de)
+ * Philipp Pascal Battenberg (philipp.battenberg@stud.tu-darmstadt.de)
+ ******************************************************************************/
 package gt.general;
 
-import gt.general.character.TeamManager;
 import gt.general.logic.persistence.exceptions.PersistenceException;
 import gt.general.world.WorldManager;
 
@@ -15,9 +22,6 @@ import java.util.Set;
 public class GameManager implements GameObserver{
 
 	private final Set<Game> runningGames;
-
-	
-	private final TeamManager teamManager;
 	
 	private final WorldManager worldManager;
 	
@@ -30,13 +34,11 @@ public class GameManager implements GameObserver{
 
 	/**
 	 * @param worldManager the global WorldManager
-	 * @param teamManager the global TeamManager
 	 */
-	public GameManager(final WorldManager worldManager, final TeamManager teamManager) {
+	public GameManager(final WorldManager worldManager) {
 		runningGames = new HashSet<Game>();
 		
 		this.worldManager = worldManager;
-		this.teamManager = teamManager;
 	}
 	
 	
@@ -104,6 +106,9 @@ public class GameManager implements GameObserver{
 		
 	}
 
+	/**
+	 * toggle the pause function for all running games
+	 */
 	public void togglePauseAllGames() {
 		for(Game game : runningGames) {
 			game.toggleForcePause();

@@ -1,9 +1,16 @@
+/*******************************************************************************
+ * Projektpraktikum: Game Technology 2012
+ * Minecraft-Modifikation für kollaboratives Spielen
+ * 
+ * Sebastian Fahnenschreiber (sebastian.fahnenschreiber@stud.tu-darmstadt.de)
+ * Roman Neß (roman.ness@stud.tu-darmstadt.de)
+ * Philipp Pascal Battenberg (philipp.battenberg@stud.tu-darmstadt.de)
+ ******************************************************************************/
 package gt.lastgnome;
 
 import gt.general.PortableItem;
 import gt.general.character.Hero;
 import gt.general.logic.trigger.UnlockItemType;
-import gt.plugin.meta.CustomBlockType;
 import gt.plugin.meta.Hello;
 
 import org.bukkit.inventory.ItemStack;
@@ -24,6 +31,7 @@ public class Key extends PortableItem {
 	 * @param plugin  the plugin we run
 	 * @param name the name of the tool
 	 * @param texture texture of the tool
+	 * @param color color of the key
 	 */
 	public Key(final Plugin plugin, final String name, final String texture, final DispenserItem color) {
 		super(plugin, name, texture, UnlockItemType.KEY);
@@ -38,7 +46,11 @@ public class Key extends PortableItem {
 		setTransferable(false);
 	}
 
-	private void setVisuals(DispenserItem color) {
+	/**
+	 * set the visual corresponding to the keyColor
+	 * @param color the color of the key
+	 */
+	private void setVisuals(final DispenserItem color) {
 		switch(color) {
 		case BLUE_KEY:
 			setTexture("https://raw.github.com/verwirrungstaktiker/gt-minecraft/master/res/texture/key_blue.png");
@@ -64,6 +76,7 @@ public class Key extends PortableItem {
 	/**
 	 * Creates a new key
 	 * @param plugin the plugin we run
+	 * @param color the color of the key
 	 */
 	public Key(final Plugin plugin, final DispenserItem color) {
 		this(plugin, "PlaceHolder", "https://raw.github.com/verwirrungstaktiker/gt-minecraft/master/res/texture/key_black.png",color);
@@ -71,6 +84,7 @@ public class Key extends PortableItem {
 
 	/**
 	 * Creates a new key
+	 * @param color color of the key
 	 */
 	public Key(final DispenserItem color) {
 		this(Hello.getPlugin(),color);
@@ -91,6 +105,9 @@ public class Key extends PortableItem {
 		System.out.println("dropped key.");
 	}
 	
+	/**
+	 * @return the color of the key
+	 */
 	public DispenserItem getKeyColor() {
 		return keyColor;
 	}

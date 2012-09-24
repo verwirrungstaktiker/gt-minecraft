@@ -1,3 +1,11 @@
+/*******************************************************************************
+ * Projektpraktikum: Game Technology 2012
+ * Minecraft-Modifikation für kollaboratives Spielen
+ * 
+ * Sebastian Fahnenschreiber (sebastian.fahnenschreiber@stud.tu-darmstadt.de)
+ * Roman Neß (roman.ness@stud.tu-darmstadt.de)
+ * Philipp Pascal Battenberg (philipp.battenberg@stud.tu-darmstadt.de)
+ ******************************************************************************/
 package gt.lastgnome;
 
 import org.bukkit.ChatColor;
@@ -27,7 +35,7 @@ import gt.plugin.meta.Hello;
 public class BlockTool extends PortableItem{
 	
 	public static final Material MATERIAL = Material.OBSIDIAN;
-	/** the maximum allowed range between dispenser and blocktool */
+	/** the maximum allowed range between dispenser and blockTool */
 	private static final double MAX_RANGE = 40.0;
 	/** the dispenser that created this blockTool */
 	private BlocktoolDispenser dispenser;

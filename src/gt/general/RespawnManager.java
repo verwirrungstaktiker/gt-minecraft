@@ -1,6 +1,14 @@
+/*******************************************************************************
+ * Projektpraktikum: Game Technology 2012
+ * Minecraft-Modifikation für kollaboratives Spielen
+ * 
+ * Sebastian Fahnenschreiber (sebastian.fahnenschreiber@stud.tu-darmstadt.de)
+ * Roman Neß (roman.ness@stud.tu-darmstadt.de)
+ * Philipp Pascal Battenberg (philipp.battenberg@stud.tu-darmstadt.de)
+ ******************************************************************************/
 package gt.general;
 
-import static com.google.common.collect.Maps.*;
+import static com.google.common.collect.Maps.newHashMap;
 import gt.general.character.Hero;
 import gt.general.character.HeroManager;
 import gt.general.character.Team;
@@ -23,7 +31,14 @@ public class RespawnManager implements Listener {
 	private final Map<Hero, RespawnPoint> currentRespawns = newHashMap();
 	
 	public interface RespawnPoint {
-		void registerRespawnManager(RespawnManager respawnManager);
+		/**
+		 * @param respawnManager respawnManager to be registered
+		 */
+		void registerRespawnManager(final RespawnManager respawnManager);
+		 
+		/**
+		 * @return location of respawn
+		 */
 		Location getRespawnLocation();
 	}
 	
@@ -42,6 +57,9 @@ public class RespawnManager implements Listener {
 		collectRespawnResponses();
 	}
 	
+	/**
+	 * collect all respawn points
+	 */
 	private void collectRespawnResponses() {
 		
 		for(TriggerContext context : triggerManager.getTriggerContexts()) {
@@ -55,20 +73,31 @@ public class RespawnManager implements Listener {
 		}
 	}
 
-	
+	/**
+	 * register a new respawnpoint for a player
+	 * @param player a bukkit player
+	 * @param respawnPoint new respawnpoint of a player
+	 */
 	public void registerRespawnPoint(final Player player, final RespawnPoint respawnPoint) {
 		
 		Hero hero = HeroManager.getHero(player);
 		currentRespawns.put(hero, respawnPoint);
 	}
 	
+	/**
+	 * register a new respawnpoint for the whole team
+	 * @param respawnPoint the new respawnpoint for the whole team
+	 */
 	public void registerTeamRespawnPoint(final RespawnPoint respawnPoint) {
 		for (Hero h : currentRespawns.keySet()) {
 			currentRespawns.put(h, respawnPoint);
 		}
 	}
 	
-	
+	/**
+	 * handling during respawn
+	 * @param event event: a player respawns
+	 */
 	@EventHandler
 	public void onRespawn(final PlayerRespawnEvent event) {
 		
@@ -83,6 +112,9 @@ public class RespawnManager implements Listener {
 		}
 	}
 
+	/**
+	 * clear all respawn points
+	 */
 	public void dispose() {
 		currentRespawns.clear();
 	}

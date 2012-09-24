@@ -1,3 +1,11 @@
+/*******************************************************************************
+ * Projektpraktikum: Game Technology 2012
+ * Minecraft-Modifikation für kollaboratives Spielen
+ * 
+ * Sebastian Fahnenschreiber (sebastian.fahnenschreiber@stud.tu-darmstadt.de)
+ * Roman Neß (roman.ness@stud.tu-darmstadt.de)
+ * Philipp Pascal Battenberg (philipp.battenberg@stud.tu-darmstadt.de)
+ ******************************************************************************/
 package gt.lastgnome;
 
 import org.bukkit.ChatColor;
@@ -152,11 +160,17 @@ public abstract class Dispenser implements BlockObserver {
 		this.contingent++;
 	}
 
+	/**
+	 * @return type ItemType that will be dispensed
+	 */
 	public DispenserItem getItemType() {
 		return itemType;
 	}
 
-	public void setItemType(DispenserItem itemType) {
+	/**
+	 * @param itemType ItemType that will be dispensed
+	 */
+	public void setItemType(final DispenserItem itemType) {
 		this.itemType = itemType;
 	}
 }

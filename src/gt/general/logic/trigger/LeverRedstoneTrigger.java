@@ -1,3 +1,11 @@
+/*******************************************************************************
+ * Projektpraktikum: Game Technology 2012
+ * Minecraft-Modifikation für kollaboratives Spielen
+ * 
+ * Sebastian Fahnenschreiber (sebastian.fahnenschreiber@stud.tu-darmstadt.de)
+ * Roman Neß (roman.ness@stud.tu-darmstadt.de)
+ * Philipp Pascal Battenberg (philipp.battenberg@stud.tu-darmstadt.de)
+ ******************************************************************************/
 package gt.general.logic.trigger;
 
 import java.util.Set;
@@ -88,25 +96,7 @@ public class LeverRedstoneTrigger extends RedstoneTrigger implements Listener {
 		
 		return blocks;
 	}
-	
-//	@EventHandler
-//	@Override
-//	public void onBlockRedstoneChange(final BlockRedstoneEvent event) {
-//		if(isBlockRedstoneEventHere(event)) {
-//			super.onBlockRedstoneChange(event);
-//			
-//			Block signalBlock = getBlock().getRelative(orientation.getOppositeFace());
-//			
-//			if(event.getNewCurrent() > 0) {
-//				ObservableCustomBlock green = CustomBlockType.GREEN_SIGNAL.getCustomBlock();
-//				SpoutManager.getMaterialManager().overrideBlock(signalBlock, green);
-//			} else {
-//				ObservableCustomBlock red = CustomBlockType.RED_SIGNAL.getCustomBlock();
-//				SpoutManager.getMaterialManager().overrideBlock(signalBlock, red);
-//			}
-//		}
-//	}
-	
+
 	@EventHandler
 	@Override
 	public void onPlayerInteract(final PlayerInteractEvent event) {

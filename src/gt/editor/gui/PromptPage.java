@@ -1,3 +1,11 @@
+/*******************************************************************************
+ * Projektpraktikum: Game Technology 2012
+ * Minecraft-Modifikation für kollaboratives Spielen
+ * 
+ * Sebastian Fahnenschreiber (sebastian.fahnenschreiber@stud.tu-darmstadt.de)
+ * Roman Neß (roman.ness@stud.tu-darmstadt.de)
+ * Philipp Pascal Battenberg (philipp.battenberg@stud.tu-darmstadt.de)
+ ******************************************************************************/
 package gt.editor.gui;
 
 import gt.editor.EditorFacade;
@@ -23,6 +31,10 @@ public class PromptPage extends OverlayPage{
 	private final String message;
 	
 	/**
+	 * 
+	 * @param overlay the open overlay
+	 * @param player the opening player
+	 * @param facade the facade of the editor
 	 * @param message the question of the prompt
 	 * @param callback callback
 	 */

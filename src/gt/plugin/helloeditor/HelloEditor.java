@@ -1,7 +1,14 @@
+/*******************************************************************************
+ * Projektpraktikum: Game Technology 2012
+ * Minecraft-Modifikation für kollaboratives Spielen
+ * 
+ * Sebastian Fahnenschreiber (sebastian.fahnenschreiber@stud.tu-darmstadt.de)
+ * Roman Neß (roman.ness@stud.tu-darmstadt.de)
+ * Philipp Pascal Battenberg (philipp.battenberg@stud.tu-darmstadt.de)
+ ******************************************************************************/
 package gt.plugin.helloeditor;
 
 import gt.general.GameManager;
-import gt.general.character.TeamManager;
 import gt.general.logic.persistence.exceptions.PersistenceException;
 import gt.general.world.WorldManager;
 import gt.lastgnome.game.EditorLastGnomeGame;
@@ -39,7 +46,7 @@ public class HelloEditor extends JavaPlugin implements Listener {
 		
 		gameBuilder = new EditorLastGnomeGameBuilder();
 		
-		gameManager = new GameManager(new WorldManager(), new TeamManager());
+		gameManager = new GameManager(new WorldManager());
 		gameManager.startGame(gameBuilder, "lastgnome");
 		
 		game = gameBuilder.getEditorGame();

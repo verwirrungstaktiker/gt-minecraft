@@ -1,6 +1,14 @@
+/*******************************************************************************
+ * Projektpraktikum: Game Technology 2012
+ * Minecraft-Modifikation für kollaboratives Spielen
+ * 
+ * Sebastian Fahnenschreiber (sebastian.fahnenschreiber@stud.tu-darmstadt.de)
+ * Roman Neß (roman.ness@stud.tu-darmstadt.de)
+ * Philipp Pascal Battenberg (philipp.battenberg@stud.tu-darmstadt.de)
+ ******************************************************************************/
 package gt.general.character;
 
-import static com.google.common.collect.Maps.*;
+import static com.google.common.collect.Maps.newHashMap;
 import gt.general.gui.HeroGui;
 
 import java.util.Collection;
@@ -22,9 +30,13 @@ public class HeroManager implements Listener, Runnable {
 	
 	private final InventoryConnector inventoryConnector = new InventoryConnector();
 	
-	private static final HeroManager instance = new HeroManager();	
+	private static final HeroManager INSTANCE = new HeroManager();	
+	
+	/**
+	 * @return an Instance of this Class
+	 */
 	public static HeroManager getInstance() {
-		return instance;
+		return INSTANCE;
 	}
 
 	/**
@@ -79,12 +91,20 @@ public class HeroManager implements Listener, Runnable {
 		notifyGameDisconnect(hero);
 	}
 
+	/**
+	 * reconnection handling
+	 * @param hero a player 
+	 */
 	private void notifyGameReconnect(final Hero hero) {
 		if(hero.inGame()) {
 			hero.getGame().reconnectHero(hero);
 		}
 	}
 	
+	/**
+	 * disconnect handling
+	 * @param hero a player
+	 */
 	private void notifyGameDisconnect(final Hero hero) {
 		if(hero.inGame()) {
 			hero.getGame().disconnectHero(hero);
@@ -98,11 +118,17 @@ public class HeroManager implements Listener, Runnable {
 		}
 	}
 
-	
+	/**
+	 * @return all heroes
+	 */
 	public Map<String, Hero> getHeros() {
 		return heros;
 	}
 
+	/**
+	 * @param player a bukkit player
+	 * @return the name of the bukkit player
+	 */
 	private String getPlayerName(final Player player) {
 		return player.getName().toLowerCase();
 	}

@@ -1,3 +1,11 @@
+/*******************************************************************************
+ * Projektpraktikum: Game Technology 2012
+ * Minecraft-Modifikation für kollaboratives Spielen
+ * 
+ * Sebastian Fahnenschreiber (sebastian.fahnenschreiber@stud.tu-darmstadt.de)
+ * Roman Neß (roman.ness@stud.tu-darmstadt.de)
+ * Philipp Pascal Battenberg (philipp.battenberg@stud.tu-darmstadt.de)
+ ******************************************************************************/
 package gt.general.logic.response;
 
 import gt.general.RespawnManager;
@@ -7,7 +15,6 @@ import gt.general.logic.persistence.PersistenceMap;
 import gt.general.logic.persistence.exceptions.PersistenceException;
 import gt.plugin.meta.CustomBlockType;
 
-import org.bukkit.Effect;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.block.Block;

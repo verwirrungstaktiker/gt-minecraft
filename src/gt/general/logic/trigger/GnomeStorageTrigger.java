@@ -1,3 +1,11 @@
+/*******************************************************************************
+ * Projektpraktikum: Game Technology 2012
+ * Minecraft-Modifikation für kollaboratives Spielen
+ * 
+ * Sebastian Fahnenschreiber (sebastian.fahnenschreiber@stud.tu-darmstadt.de)
+ * Roman Neß (roman.ness@stud.tu-darmstadt.de)
+ * Philipp Pascal Battenberg (philipp.battenberg@stud.tu-darmstadt.de)
+ ******************************************************************************/
 package gt.general.logic.trigger;
 
 import gt.general.character.Hero;
@@ -23,13 +31,11 @@ import org.bukkit.entity.Player;
 public class GnomeStorageTrigger extends BlockTrigger implements BlockObserver{
 
 	private boolean triggered;
-	private final static UnlockItemType TYPE = UnlockItemType.GNOME;
+	private static final UnlockItemType TYPE = UnlockItemType.GNOME;
 	private GnomeItem gnome;
 	
 	/**
 	 * @param block the block of the trigger
-	 * @param name the name prefix of the trigger
-	 * @param type type of item that is needed to trigger
 	 */
 	public GnomeStorageTrigger(final Block block) {
 		super("gnome_trigger", block);

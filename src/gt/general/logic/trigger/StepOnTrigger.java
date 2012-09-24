@@ -1,3 +1,11 @@
+/*******************************************************************************
+ * Projektpraktikum: Game Technology 2012
+ * Minecraft-Modifikation für kollaboratives Spielen
+ * 
+ * Sebastian Fahnenschreiber (sebastian.fahnenschreiber@stud.tu-darmstadt.de)
+ * Roman Neß (roman.ness@stud.tu-darmstadt.de)
+ * Philipp Pascal Battenberg (philipp.battenberg@stud.tu-darmstadt.de)
+ ******************************************************************************/
 package gt.general.logic.trigger;
 
 import gt.general.logic.persistence.PersistenceMap;
@@ -28,7 +36,10 @@ public class StepOnTrigger extends Trigger implements BlockObserver {
     private static final String KEY_BLOCK = "block";  
 	private static final String KEY_CONTINGENT = "contingent";
     
-    
+    /**
+     * construct a new trigger
+     * @param block underlying block of the StepOnTrigger
+     */
     public StepOnTrigger(final Block block) {
     	super("step_on_trigger");
     	
@@ -40,11 +51,12 @@ public class StepOnTrigger extends Trigger implements BlockObserver {
     	registerWithSubject();
     	
 		maximumContingent = -1;
-		currentContingent = -1;
-		
-    	
+		currentContingent = -1;    	
     }
     
+    /**
+     * construct a new StepOnTrigger
+     */
     public StepOnTrigger() {}
 
 	@Override

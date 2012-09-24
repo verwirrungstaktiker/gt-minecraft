@@ -1,3 +1,11 @@
+/*******************************************************************************
+ * Projektpraktikum: Game Technology 2012
+ * Minecraft-Modifikation für kollaboratives Spielen
+ * 
+ * Sebastian Fahnenschreiber (sebastian.fahnenschreiber@stud.tu-darmstadt.de)
+ * Roman Neß (roman.ness@stud.tu-darmstadt.de)
+ * Philipp Pascal Battenberg (philipp.battenberg@stud.tu-darmstadt.de)
+ ******************************************************************************/
 package gt.editor.gui;
 
 import org.getspout.spoutapi.event.screen.ButtonClickEvent;
@@ -9,6 +17,9 @@ public abstract class ToggleButton extends GenericButton {
 	
 	private Side side;
 	
+	/**
+	 * updateds the text of the button
+	 */
 	public void updateSide() {
 		side = determineSide();
 		
@@ -18,6 +29,8 @@ public abstract class ToggleButton extends GenericButton {
 			break;
 		case B:
 			setText(getBSideText());
+			break;
+		default:
 			break;
 		}
 		
@@ -33,17 +46,35 @@ public abstract class ToggleButton extends GenericButton {
 		case B:
 			onBSideClick(event);
 			break;
+		default:
+			break;
 		}
 		
 		
 	};	
 	
-	
+	/**
+	 * @return text of side A
+	 */
 	protected abstract String getASideText();
+	
+	/**
+	 * @return text of side B
+	 */
 	protected abstract String getBSideText();	
 	
+	/**
+	 * @param event called when the A side is active and the button is clicked
+	 */
 	protected abstract void onASideClick(ButtonClickEvent event);
+	
+	/**
+	 * @param event called when the B side is active and the button is clicked
+	 */
 	protected abstract void onBSideClick(ButtonClickEvent event);
 	
+	/**
+	 * @return the currently active side
+	 */
 	protected abstract Side determineSide();
 }

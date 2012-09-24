@@ -1,3 +1,11 @@
+/*******************************************************************************
+ * Projektpraktikum: Game Technology 2012
+ * Minecraft-Modifikation für kollaboratives Spielen
+ * 
+ * Sebastian Fahnenschreiber (sebastian.fahnenschreiber@stud.tu-darmstadt.de)
+ * Roman Neß (roman.ness@stud.tu-darmstadt.de)
+ * Philipp Pascal Battenberg (philipp.battenberg@stud.tu-darmstadt.de)
+ ******************************************************************************/
 package gt.general.aura;
 
 import gt.general.character.Character;
@@ -68,6 +76,9 @@ public abstract class Aura implements Runnable {
 				Hello.getPlugin(), this, initial, rate);
 	}
 	
+	/**
+	 * @return owner of the aura
+	 */
 	protected Character getOwner() {
 		return owner;
 	}
@@ -128,5 +139,8 @@ public abstract class Aura implements Runnable {
 		}
 	}
 	
+	/**
+	 * @return true if effect could be spreaded
+	 */
 	protected abstract boolean spreadEffectNow();
 }

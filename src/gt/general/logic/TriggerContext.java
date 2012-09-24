@@ -1,3 +1,11 @@
+/*******************************************************************************
+ * Projektpraktikum: Game Technology 2012
+ * Minecraft-Modifikation für kollaboratives Spielen
+ * 
+ * Sebastian Fahnenschreiber (sebastian.fahnenschreiber@stud.tu-darmstadt.de)
+ * Roman Neß (roman.ness@stud.tu-darmstadt.de)
+ * Philipp Pascal Battenberg (philipp.battenberg@stud.tu-darmstadt.de)
+ ******************************************************************************/
 package gt.general.logic;
 
 import static com.google.common.collect.Sets.newHashSet;
@@ -62,6 +70,7 @@ public class TriggerContext {
 	/**
 	 * @param trigger trigger which changes its state
 	 * @param state new state of the trigger
+	 * @param player the corresponding bukkit Player
 	 */
 	public void updateTriggerState(final Trigger trigger, final boolean state, final Player player) {		
 		boolean oldState = evalInputFuntion();
@@ -172,11 +181,18 @@ public class TriggerContext {
 		responses.clear();
 	}
 	
+	/**
+	 * @return all Triggers/Responses of a TriggerContext
+	 */
 	public Iterable<YamlSerializable> getAllItems() {
 		return Iterables.concat(triggers, responses);
 	}
 
-	public void setupInverted(Trigger trigger) {
+	/**
+	 * activate a Trigger
+	 * @param trigger Trigger to be activated
+	 */
+	public void setupInverted(final Trigger trigger) {
 		activeTriggers.add(trigger);		
 	}
 	

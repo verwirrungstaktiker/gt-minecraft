@@ -1,8 +1,14 @@
+/*******************************************************************************
+ * Projektpraktikum: Game Technology 2012
+ * Minecraft-Modifikation für kollaboratives Spielen
+ * 
+ * Sebastian Fahnenschreiber (sebastian.fahnenschreiber@stud.tu-darmstadt.de)
+ * Roman Neß (roman.ness@stud.tu-darmstadt.de)
+ * Philipp Pascal Battenberg (philipp.battenberg@stud.tu-darmstadt.de)
+ ******************************************************************************/
 package gt.editor.gui;
 
-import static com.google.common.collect.Maps.*;
-
-import gt.general.logic.TriggerContext;
+import static com.google.common.collect.Maps.newHashMap;
 
 import java.util.Map;
 
@@ -33,6 +39,10 @@ abstract class SelectionListWidget <T> extends GenericListWidget {
 		return map.get(getSelectedItem());
 	}
 	
+	/**
+	 * @param item the list entry
+	 * @return the represented object
+	 */
 	public T getObject(final ListWidgetItem item) {
 		return map.get(item);
 	}
@@ -53,6 +63,9 @@ abstract class SelectionListWidget <T> extends GenericListWidget {
 		super.setSelection(n);
 	}
 	
+	/**
+	 * @return the old selctedIndex
+	 */
 	public int getOldSelectedIndex() {
 		return oldSelectedIndex;
 	}
@@ -78,7 +91,15 @@ abstract class SelectionListWidget <T> extends GenericListWidget {
 		}
 	}
 
+	/**
+	 * @param oldSelected the old selected object
+	 * @return true if the selection can be changed 
+	 */
 	protected abstract boolean canLeaveOldSelected(T oldSelected);
+	
+	/**
+	 * called when it is allowed to change the selection
+	 */
 	protected abstract void onAllowedSelectionChange();
 	
 }

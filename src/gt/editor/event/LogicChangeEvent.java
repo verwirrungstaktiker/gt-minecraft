@@ -1,3 +1,11 @@
+/*******************************************************************************
+ * Projektpraktikum: Game Technology 2012
+ * Minecraft-Modifikation für kollaboratives Spielen
+ * 
+ * Sebastian Fahnenschreiber (sebastian.fahnenschreiber@stud.tu-darmstadt.de)
+ * Roman Neß (roman.ness@stud.tu-darmstadt.de)
+ * Philipp Pascal Battenberg (philipp.battenberg@stud.tu-darmstadt.de)
+ ******************************************************************************/
 package gt.editor.event;
 
 import org.bukkit.event.Event;
@@ -16,6 +24,11 @@ public class LogicChangeEvent extends Event {
 	private final ObserveeParent type;
 	private final Object concrete;
 	
+	/**
+	 * Construct new LogicChangeEvent
+	 * @param type who has changed
+	 * @param concrete the Object that has changed
+	 */
 	public LogicChangeEvent(final ObserveeParent type, final Object concrete) {
 		this.type =  type;
 		this.concrete = concrete;
@@ -42,6 +55,9 @@ public class LogicChangeEvent extends Event {
 		return HANDLERS;
 	}
 	
+	/**
+	 * @return the global HanderList
+	 */
 	public static HandlerList getHandlerList() {
 		return HANDLERS;
 	}

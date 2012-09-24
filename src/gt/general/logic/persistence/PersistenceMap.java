@@ -1,3 +1,11 @@
+/*******************************************************************************
+ * Projektpraktikum: Game Technology 2012
+ * Minecraft-Modifikation für kollaboratives Spielen
+ * 
+ * Sebastian Fahnenschreiber (sebastian.fahnenschreiber@stud.tu-darmstadt.de)
+ * Roman Neß (roman.ness@stud.tu-darmstadt.de)
+ * Philipp Pascal Battenberg (philipp.battenberg@stud.tu-darmstadt.de)
+ ******************************************************************************/
 package gt.general.logic.persistence;
 
 import static com.google.common.collect.Maps.newHashMap;
@@ -36,7 +44,6 @@ public class PersistenceMap {
 	/**
 	 * creates a new PersistenceMap
 	 * @param map usual Map that shall be integrated
-	 * @throws PersistenceNotFoundException 
 	 */
 	public PersistenceMap(final Map<String, Object> map) {
 		this.map = map;
@@ -57,9 +64,7 @@ public class PersistenceMap {
 	 */
 	public double getDouble(final String key) {
 		Double result = (Double)map.get(key);
-		if (result == null) {
-			
-		}
+
 		return result.doubleValue();
 	}
 	
@@ -69,9 +74,7 @@ public class PersistenceMap {
 	 */
 	public boolean getBoolean(final String key) {
 		Boolean result = (Boolean)map.get(key);
-		if (result == null) {
-			
-		}
+
 		return result.booleanValue();
 	}
 	
@@ -234,7 +237,6 @@ public class PersistenceMap {
 	 * @param key name of the field that shall be deleted
 	 * @param <T> type of the Object that is deleted
 	 * @return the removed Object
-	 * @throws PersistenceException 
 	 */
 	@SuppressWarnings("unchecked")
 	public <T> T remove(final String key) {
@@ -248,6 +250,9 @@ public class PersistenceMap {
 		return map;
 	}
 	
+	/**
+	 * @return the last used key in the Map
+	 */
 	public String getLastKey() {
 		return lastKey;
 	}

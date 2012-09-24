@@ -1,3 +1,11 @@
+/*******************************************************************************
+ * Projektpraktikum: Game Technology 2012
+ * Minecraft-Modifikation für kollaboratives Spielen
+ * 
+ * Sebastian Fahnenschreiber (sebastian.fahnenschreiber@stud.tu-darmstadt.de)
+ * Roman Neß (roman.ness@stud.tu-darmstadt.de)
+ * Philipp Pascal Battenberg (philipp.battenberg@stud.tu-darmstadt.de)
+ ******************************************************************************/
 package gt.editor.gui;
 
 import gt.editor.EditorFacade;
@@ -15,6 +23,11 @@ import org.getspout.spoutapi.player.SpoutPlayer;
 
 public class BlocksPage extends OverlayPage {
 
+	/**
+	 * @param overlay the visual Overlay Box
+	 * @param player the corresponding SpoutPlayer
+	 * @param facade the corresponding EditorFacade
+	 */
 	protected BlocksPage(final EditorOverlay overlay, final SpoutPlayer player,
 			final EditorFacade facade) {
 		super(overlay, player, facade);

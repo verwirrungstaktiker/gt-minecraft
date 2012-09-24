@@ -1,3 +1,11 @@
+/*******************************************************************************
+ * Projektpraktikum: Game Technology 2012
+ * Minecraft-Modifikation für kollaboratives Spielen
+ * 
+ * Sebastian Fahnenschreiber (sebastian.fahnenschreiber@stud.tu-darmstadt.de)
+ * Roman Neß (roman.ness@stud.tu-darmstadt.de)
+ * Philipp Pascal Battenberg (philipp.battenberg@stud.tu-darmstadt.de)
+ ******************************************************************************/
 package gt.lastgnome.game;
 
 import gt.editor.BuildManager;
@@ -5,7 +13,6 @@ import gt.editor.EditorFacade;
 import gt.editor.EditorTriggerManager;
 import gt.editor.ParticleManager;
 import gt.editor.PlayerManager;
-import gt.editor.gui.BlockSet;
 import gt.editor.gui.EditorGuiManager;
 import gt.editor.gui.EditorOverlay.LandingPage;
 import gt.general.logic.persistence.exceptions.PersistenceException;
@@ -13,12 +20,8 @@ import gt.general.world.WorldManager;
 import gt.plugin.meta.Hello;
 import gt.plugin.meta.MultiListener;
 
-import org.bukkit.inventory.ItemStack;
 import org.getspout.spoutapi.SpoutManager;
-import org.getspout.spoutapi.event.input.KeyBindingEvent;
-import org.getspout.spoutapi.keyboard.BindingExecutionDelegate;
 import org.getspout.spoutapi.keyboard.Keyboard;
-import org.getspout.spoutapi.player.SpoutPlayer;
 
 
 public class EditorLastGnomeGameBuilder extends AbstractLastGnomeGameBuilder {
@@ -54,8 +57,7 @@ public class EditorLastGnomeGameBuilder extends AbstractLastGnomeGameBuilder {
 	public void startGame() {
 		
 		EditorFacade facade = new EditorFacade(triggerManager,
-												playerManager,
-												particleManager);
+												playerManager);
 		
 		MultiListener.registerListeners(playerManager,
 				buildManager,
@@ -95,6 +97,10 @@ public class EditorLastGnomeGameBuilder extends AbstractLastGnomeGameBuilder {
 		return game;
 	}
 	
+	/**
+	 * reload the game with logic
+	 * @throws PersistenceException problem in persitence during serialization
+	 */
 	public void reload() throws PersistenceException {
 		game.dispose();
 				

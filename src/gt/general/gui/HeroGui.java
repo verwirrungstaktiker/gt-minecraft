@@ -1,3 +1,11 @@
+/*******************************************************************************
+ * Projektpraktikum: Game Technology 2012
+ * Minecraft-Modifikation für kollaboratives Spielen
+ * 
+ * Sebastian Fahnenschreiber (sebastian.fahnenschreiber@stud.tu-darmstadt.de)
+ * Roman Neß (roman.ness@stud.tu-darmstadt.de)
+ * Philipp Pascal Battenberg (philipp.battenberg@stud.tu-darmstadt.de)
+ ******************************************************************************/
 package gt.general.gui;
 
 import gt.general.character.Hero;
@@ -94,6 +102,9 @@ public class HeroGui {
 		}
 	}
 	
+	/**
+	 * closes the open Popup
+	 */
 	public void closePopup() {
 		getMainScreen().closePopup();
 	}
@@ -106,6 +117,9 @@ public class HeroGui {
 	}
 
 	
+	/**
+	 * attaches the active gui elements - e.g. after disconnect
+	 */
 	public void reattach() {
 		for(GuiElement ge : guiElements.values()) {
 			ge.attach(holder);

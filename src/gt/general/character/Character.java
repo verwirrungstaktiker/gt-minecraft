@@ -1,3 +1,11 @@
+/*******************************************************************************
+ * Projektpraktikum: Game Technology 2012
+ * Minecraft-Modifikation für kollaboratives Spielen
+ * 
+ * Sebastian Fahnenschreiber (sebastian.fahnenschreiber@stud.tu-darmstadt.de)
+ * Roman Neß (roman.ness@stud.tu-darmstadt.de)
+ * Philipp Pascal Battenberg (philipp.battenberg@stud.tu-darmstadt.de)
+ ******************************************************************************/
 package gt.general.character;
 
 import gt.general.aura.Aura;
@@ -215,15 +223,25 @@ public abstract class Character {
 		this.computedAttributesTainted = computedAttributesTainted;
 	}
 	
+	/**
+	 * freeze caused by pause
+	 */
 	public void pause() {
 		addEffect(new FreezeEffect(FreezeCause.PAUSE));
 	}
 
+	/**
+	 * freeze caused by stun
+	 */
 	public void freeze() {
 		addEffect(new FreezeEffect(FreezeCause.FREEZE));
 	}
 	
-	public void resume(FreezeCause cause) {
+	/**
+	 * unfreeze all effects with a specific cause
+	 * @param cause the freeze cause to be removed
+	 */
+	public void resume(final FreezeCause cause) {
 		
 		// search all freeze effects and remove them
 		Iterator<Effect> it = getEffects().iterator();

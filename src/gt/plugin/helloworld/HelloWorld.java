@@ -1,3 +1,11 @@
+/*******************************************************************************
+ * Projektpraktikum: Game Technology 2012
+ * Minecraft-Modifikation für kollaboratives Spielen
+ * 
+ * Sebastian Fahnenschreiber (sebastian.fahnenschreiber@stud.tu-darmstadt.de)
+ * Roman Neß (roman.ness@stud.tu-darmstadt.de)
+ * Philipp Pascal Battenberg (philipp.battenberg@stud.tu-darmstadt.de)
+ ******************************************************************************/
 package gt.plugin.helloworld;
 
 import static com.google.common.collect.Lists.*;
@@ -74,7 +82,7 @@ public class HelloWorld extends JavaPlugin {
 		
 		Hello.scheduleSyncTask(heroManager, 0, 10);
 		
-		gameManager = new GameManager(worldManager, teamManager);
+		gameManager = new GameManager(worldManager);
 		
 		setupCommands();
 		setupLevelTemplates();

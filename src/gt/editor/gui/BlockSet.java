@@ -1,6 +1,12 @@
+/*******************************************************************************
+ * Projektpraktikum: Game Technology 2012
+ * Minecraft-Modifikation für kollaboratives Spielen
+ * 
+ * Sebastian Fahnenschreiber (sebastian.fahnenschreiber@stud.tu-darmstadt.de)
+ * Roman Neß (roman.ness@stud.tu-darmstadt.de)
+ * Philipp Pascal Battenberg (philipp.battenberg@stud.tu-darmstadt.de)
+ ******************************************************************************/
 package gt.editor.gui;
-
-import gt.editor.EditorPlayer.TriggerState;
 
 import org.bukkit.inventory.ItemStack;
 import org.getspout.spoutapi.event.screen.ButtonClickEvent;
@@ -14,6 +20,10 @@ import org.getspout.spoutapi.gui.GenericWidget;
 
 public abstract  class BlockSet extends GenericContainer {
 
+	/**
+	 * @param name name of BlockSet
+	 * @param inventory items that correspond to a BlockSet
+	 */
 	public BlockSet(final String name, final ItemStack[] inventory) {		
 		setLayout(ContainerType.VERTICAL);
 		
@@ -73,5 +83,8 @@ public abstract  class BlockSet extends GenericContainer {
 		
 	}
 	
+	/**
+	 * is executed on selection of this BlockSet
+	 */
 	public abstract void onSelect();
 }

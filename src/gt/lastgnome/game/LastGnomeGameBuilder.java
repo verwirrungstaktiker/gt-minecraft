@@ -1,3 +1,11 @@
+/*******************************************************************************
+ * Projektpraktikum: Game Technology 2012
+ * Minecraft-Modifikation für kollaboratives Spielen
+ * 
+ * Sebastian Fahnenschreiber (sebastian.fahnenschreiber@stud.tu-darmstadt.de)
+ * Roman Neß (roman.ness@stud.tu-darmstadt.de)
+ * Philipp Pascal Battenberg (philipp.battenberg@stud.tu-darmstadt.de)
+ ******************************************************************************/
 package gt.lastgnome.game;
 
 import gt.general.RespawnManager;
@@ -74,6 +82,10 @@ public class LastGnomeGameBuilder extends AbstractLastGnomeGameBuilder {
 		game.setRespawnManager(respawnManager);
 	}
 
+	/**
+	 * setup the heroes for the game start
+	 * @param triggerManager the corresponding TriggerManager
+	 */
 	private void setupAllHeroes(final TriggerManager triggerManager) {		
 		game.getWorldInstance()
 			.getSpawn()

@@ -1,3 +1,11 @@
+/*******************************************************************************
+ * Projektpraktikum: Game Technology 2012
+ * Minecraft-Modifikation für kollaboratives Spielen
+ * 
+ * Sebastian Fahnenschreiber (sebastian.fahnenschreiber@stud.tu-darmstadt.de)
+ * Roman Neß (roman.ness@stud.tu-darmstadt.de)
+ * Philipp Pascal Battenberg (philipp.battenberg@stud.tu-darmstadt.de)
+ ******************************************************************************/
 package gt.editor;
 
 import gt.general.logic.persistence.YamlSerializable;
@@ -19,6 +27,10 @@ public class ParticleManager implements Runnable, Listener {
 		STANDARD, SPECIAL
 	}
 	
+	/**
+	 * Construct new ParticleManager
+	 * @param playerManager the Manager of Logic Building
+	 */
 	public ParticleManager(final PlayerManager playerManager) {
 		this.playerManager = playerManager;
 	}

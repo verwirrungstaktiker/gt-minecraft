@@ -1,3 +1,11 @@
+/*******************************************************************************
+ * Projektpraktikum: Game Technology 2012
+ * Minecraft-Modifikation für kollaboratives Spielen
+ * 
+ * Sebastian Fahnenschreiber (sebastian.fahnenschreiber@stud.tu-darmstadt.de)
+ * Roman Neß (roman.ness@stud.tu-darmstadt.de)
+ * Philipp Pascal Battenberg (philipp.battenberg@stud.tu-darmstadt.de)
+ ******************************************************************************/
 package gt.plugin.helloworld;
 
 import gt.general.PortableItem;
@@ -5,10 +13,8 @@ import gt.lastgnome.GnomeItem;
 
 import org.bukkit.ChatColor;
 import org.bukkit.GameMode;
-import org.bukkit.entity.EntityType;
 import org.bukkit.entity.HumanEntity;
 import org.bukkit.entity.Player;
-import org.bukkit.entity.Zombie;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
@@ -24,23 +30,10 @@ import org.getspout.spoutapi.material.Material;
 
 public class PlayerListener implements Listener {
 	
-	/** 
-	 * prevent sprinting 
-	 * @param event player toggles sprint
-	 **/
-//	@EventHandler
-//	public final void preventSprinting(final PlayerToggleSprintEvent event) {
-//		SpoutPlayer player = (SpoutPlayer) event.getPlayer();
-//		// cancelling the event doesn't do anything, so have this dirty hack instead
-//		if (event.isSprinting()) {
-//			player.setWalkingMultiplier(player.getWalkingMultiplier()*0.66);
-//		} else {
-//			player.setWalkingMultiplier(player.getWalkingMultiplier()*1.5);
-//		}
-//
-//		event.setCancelled(true);
-//	}
-	
+	/**
+	 * Prevent intentory modification with the mouse
+	 * @param event event: mouse click in player inventory
+	 */
 	@EventHandler
 	public final void preventInventoryModification(final InventoryClickEvent event) {
 		HumanEntity human = event.getWhoClicked();
@@ -101,6 +94,10 @@ public class PlayerListener implements Listener {
 		}
 	}
 
+	/**
+	 * Prevent players kick other players from the server
+	 * @param event event: player is kicked from the server
+	 */
 	@EventHandler
 	public final void preventKicking(final PlayerKickEvent event) {
 		if(event.getReason().contains("quickly")) {
@@ -110,7 +107,6 @@ public class PlayerListener implements Listener {
 	}
 	
 	/**
-	 * quick & dirty
 	 * @return true if inventory contains > 1 stacks
 	 * @param inv the player's inventory
 	 */
@@ -128,6 +124,10 @@ public class PlayerListener implements Listener {
 		return false;
 	}
 	
+	/**
+	 * prevent Players to deal damage
+	 * @param event event: an entity deals damage to another entitys
+	 */
 	@EventHandler
 	public void preventPlayerAttacks(final EntityDamageByEntityEvent event) {
 

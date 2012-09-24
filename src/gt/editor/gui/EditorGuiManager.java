@@ -1,3 +1,11 @@
+/*******************************************************************************
+ * Projektpraktikum: Game Technology 2012
+ * Minecraft-Modifikation für kollaboratives Spielen
+ * 
+ * Sebastian Fahnenschreiber (sebastian.fahnenschreiber@stud.tu-darmstadt.de)
+ * Roman Neß (roman.ness@stud.tu-darmstadt.de)
+ * Philipp Pascal Battenberg (philipp.battenberg@stud.tu-darmstadt.de)
+ ******************************************************************************/
 package gt.editor.gui;
 
 import gt.editor.EditorFacade;
@@ -10,8 +18,12 @@ import org.getspout.spoutapi.keyboard.BindingExecutionDelegate;
 public class EditorGuiManager implements BindingExecutionDelegate {
 	
 	private final EditorFacade facade;
-		
-	public EditorGuiManager(EditorFacade facade) {
+	
+	/**
+	 * Construct a new EditorGuiManager
+	 * @param facade its EditorFacade
+	 */
+	public EditorGuiManager(final EditorFacade facade) {
 		this.facade = facade;
 	}
 

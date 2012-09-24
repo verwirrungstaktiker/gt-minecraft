@@ -1,11 +1,18 @@
+/*******************************************************************************
+ * Projektpraktikum: Game Technology 2012
+ * Minecraft-Modifikation für kollaboratives Spielen
+ * 
+ * Sebastian Fahnenschreiber (sebastian.fahnenschreiber@stud.tu-darmstadt.de)
+ * Roman Neß (roman.ness@stud.tu-darmstadt.de)
+ * Philipp Pascal Battenberg (philipp.battenberg@stud.tu-darmstadt.de)
+ ******************************************************************************/
 package gt.lastgnome.scoring;
 
-import static com.google.common.collect.Lists.*;
-
-import java.util.List;
-
+import static com.google.common.collect.Lists.newArrayList;
 import gt.general.logic.persistence.PersistenceMap;
 import gt.general.logic.persistence.exceptions.PersistenceException;
+
+import java.util.List;
 
 public class HighscoreEntry implements Comparable<HighscoreEntry>{
 	
@@ -41,7 +48,7 @@ public class HighscoreEntry implements Comparable<HighscoreEntry>{
 	/**
 	 * de-serialize scoring data
 	 * @param map source of data
-	 * @throws PersistenceException
+	 * @throws PersistenceException error in the persistence of serialized data
 	 */
 	public void setup(final PersistenceMap map) throws PersistenceException {
 		this.time = map.get(KEY_TIME);

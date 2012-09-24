@@ -1,3 +1,11 @@
+/*******************************************************************************
+ * Projektpraktikum: Game Technology 2012
+ * Minecraft-Modifikation für kollaboratives Spielen
+ * 
+ * Sebastian Fahnenschreiber (sebastian.fahnenschreiber@stud.tu-darmstadt.de)
+ * Roman Neß (roman.ness@stud.tu-darmstadt.de)
+ * Philipp Pascal Battenberg (philipp.battenberg@stud.tu-darmstadt.de)
+ ******************************************************************************/
 package gt.editor.gui;
 
 import gt.editor.EditorFacade;
@@ -47,7 +55,7 @@ public class MainPage extends OverlayPage implements Listener {
 	private SelectionListWidget<YamlSerializable> itemList = new SelectionListWidget<YamlSerializable>() {
 
 		@Override
-		protected boolean canLeaveOldSelected(YamlSerializable oldSelected) {
+		protected boolean canLeaveOldSelected(final YamlSerializable oldSelected) {
 			return true;
 		}
 
@@ -180,6 +188,11 @@ public class MainPage extends OverlayPage implements Listener {
 		};
 	};
 
+	/**
+	 * @param overlay the open overlay
+	 * @param player the opening player
+	 * @param facade the facade of the editor
+	 */
 	MainPage(final EditorOverlay overlay, final SpoutPlayer player,
 			final EditorFacade facade) {
 		super(overlay, player, facade);
@@ -198,12 +211,18 @@ public class MainPage extends OverlayPage implements Listener {
 		MultiListener.unregisterListener(this);
 	}
 
+	/**
+	 * @param e called when the logic changes
+	 */
 	@EventHandler
 	public void onLogicChange(final LogicChangeEvent e) {
 		contextButton.updateSide();
 		buildContextList();
 	}
 
+	/**
+	 * @param e called when the highlight suppress state is toggled
+	 */
 	@EventHandler
 	public void onHighlightSuppress(final HighlightSuppressEvent e) {		
 		if (e.getPlayer().equals(player)) {
@@ -212,6 +231,9 @@ public class MainPage extends OverlayPage implements Listener {
 		}
 	}
 
+	/**
+	 * @param e called when the context is switched
+	 */
 	@EventHandler
 	public void onContextSwitch(final LogicSelectionEvent e) {
 		if (e.getPlayer().equals(player)) {
@@ -274,6 +296,9 @@ public class MainPage extends OverlayPage implements Listener {
 		}
 	}
 
+	/**
+	 * initializes the gui
+	 */
 	private void setupGui() {
 		// setup context list
 		contextList.setWidth(200).setHeight(200)

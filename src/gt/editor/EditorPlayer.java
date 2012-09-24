@@ -1,7 +1,17 @@
+/*******************************************************************************
+ * Projektpraktikum: Game Technology 2012
+ * Minecraft-Modifikation für kollaboratives Spielen
+ * 
+ * Sebastian Fahnenschreiber (sebastian.fahnenschreiber@stud.tu-darmstadt.de)
+ * Roman Neß (roman.ness@stud.tu-darmstadt.de)
+ * Philipp Pascal Battenberg (philipp.battenberg@stud.tu-darmstadt.de)
+ ******************************************************************************/
 package gt.editor;
 
-import static com.google.common.collect.Maps.*;
-import static org.bukkit.ChatColor.*;
+import static com.google.common.collect.Maps.newEnumMap;
+import static org.bukkit.ChatColor.GREEN;
+import static org.bukkit.ChatColor.RED;
+import static org.bukkit.ChatColor.YELLOW;
 import gt.editor.event.HighlightSuppressEvent;
 import gt.editor.event.LogicSelectionEvent;
 import gt.general.logic.TriggerContext;
@@ -17,7 +27,7 @@ import org.bukkit.inventory.ItemStack;
 
 public class EditorPlayer {
 
-	private final static TriggerContext NO_CONTEXT = null;
+	private static final TriggerContext NO_CONTEXT = null;
 
 	private static final ItemStack[] TRIGGER_BLOCKS = new ItemStack[]{
 		new ItemStack(Material.LEVER),
@@ -58,7 +68,10 @@ public class EditorPlayer {
 	
 	private boolean suppressHighlight;
 	
-	
+	/**
+	 * Construct a new EditorPlayer
+	 * @param player a bukkit player
+	 */
 	public EditorPlayer (final Player player) {
 		this.player = player;
 		
@@ -103,6 +116,9 @@ public class EditorPlayer {
 		sendMessage(GREEN + "Entered TriggerState: " + triggerState);
 	}	
 	
+	/**
+	 * Switch through the different TriggerStates
+	 */
 	public void toggleTriggerState() {
 	
 		switch (triggerState) {
@@ -134,7 +150,7 @@ public class EditorPlayer {
 
 
 	/**
-	 * @param activeContext the activeContext to set
+	 * @param context the active TriggerContext to set
 	 */
 	public void enterContext(final TriggerContext context) {
 		activeContext = context;
@@ -142,6 +158,9 @@ public class EditorPlayer {
 		Hello.callEvent(new LogicSelectionEvent(player));
 	}
 	
+	/**
+	 * Leave the active TriggerContext
+	 */
 	public void exitContext() {		
 		
 		// if we are in a triggerstate, that makes only sense in a context -> leave it
@@ -155,15 +174,25 @@ public class EditorPlayer {
 		Hello.callEvent(new LogicSelectionEvent(player));
 	}
 	
-	
+	/**
+	 * @param other a TriggerContext
+	 * @return Check if a TriggerContext is the active TriggerContext of that player
+	 */
 	public boolean isInContext(final TriggerContext other) {
 		return activeContext == other;
 	}
 	
+	/**
+	 * @return true if the player has no active TriggerContext
+	 */
 	public boolean hasActiveContext() {
 		return activeContext != NO_CONTEXT;
 	}
 	
+	/**
+	 * send a message to the player
+	 * @param msg the message
+	 */
 	public void sendMessage(final String msg) {
 		player.sendMessage(msg);
 	}
@@ -205,12 +234,14 @@ public class EditorPlayer {
 	/**
 	 * @param selectedItem the selectedItem to set
 	 */
-	public void setSelectedItem(YamlSerializable selectedItem) {
+	public void setSelectedItem(final YamlSerializable selectedItem) {
 		this.selectedItem = selectedItem;
 		Hello.callEvent(new LogicSelectionEvent(player));
 	}
 
-
+	/**
+	 * @return the corresponding Inventories for all TriggerStates
+	 */
 	public Map<TriggerState, ItemStack[]> getInventories() {
 		
 		if(triggerState == TriggerState.STANDBY) {

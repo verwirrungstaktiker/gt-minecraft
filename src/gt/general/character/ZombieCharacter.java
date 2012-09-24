@@ -1,3 +1,11 @@
+/*******************************************************************************
+ * Projektpraktikum: Game Technology 2012
+ * Minecraft-Modifikation für kollaboratives Spielen
+ * 
+ * Sebastian Fahnenschreiber (sebastian.fahnenschreiber@stud.tu-darmstadt.de)
+ * Roman Neß (roman.ness@stud.tu-darmstadt.de)
+ * Philipp Pascal Battenberg (philipp.battenberg@stud.tu-darmstadt.de)
+ ******************************************************************************/
 package gt.general.character;
 
 import org.bukkit.Location;
@@ -12,8 +20,8 @@ public class ZombieCharacter extends Character {
 	private final PigZombie zombie;
 	private PotionEffect potionEffect;
 
-	private final static int POTION_DURATION = 20 * 60 * 20;
-	private final static int MAX_POTION_AMPLIFIER = 5;
+	private static final int POTION_DURATION = 20 * 60 * 20;
+	private static final int MAX_POTION_AMPLIFIER = 5;
 	
 	/**
 	 * create a new zombie
@@ -50,12 +58,18 @@ public class ZombieCharacter extends Character {
 		}
 	}
 
+	/**
+	 * @return a speeding Potion
+	 */
 	private PotionEffect getSpeedPotion() {
 		return new PotionEffect(PotionEffectType.SPEED,
 								POTION_DURATION,
 								speedToPotionAmplifier());
 	}
 
+	/**
+	 * @return a slowing Potion
+	 */
 	private PotionEffect getSlowPotion() {
 		
 		// ensure they dont move at 0.0
@@ -68,6 +82,9 @@ public class ZombieCharacter extends Character {
 		}
 	}
 	
+	/**
+	 * @return the right Potion amplifier of a specific speed
+	 */
 	private int speedToPotionAmplifier() {
 		Double speed = getCurrentSpeed();
 		Double defaultSpeed = getDefaultSpeed();
