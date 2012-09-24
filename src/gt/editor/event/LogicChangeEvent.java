@@ -16,6 +16,11 @@ public class LogicChangeEvent extends Event {
 	private final ObserveeParent type;
 	private final Object concrete;
 	
+	/**
+	 * Construct new LogicChangeEvent
+	 * @param type who has changed
+	 * @param concrete the Object that has changed
+	 */
 	public LogicChangeEvent(final ObserveeParent type, final Object concrete) {
 		this.type =  type;
 		this.concrete = concrete;
@@ -42,6 +47,9 @@ public class LogicChangeEvent extends Event {
 		return HANDLERS;
 	}
 	
+	/**
+	 * @return the global HanderList
+	 */
 	public static HandlerList getHandlerList() {
 		return HANDLERS;
 	}

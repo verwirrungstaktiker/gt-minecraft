@@ -25,7 +25,7 @@ public class EditorOverlay extends GenericPopup implements Listener {
 
 	/**
 	 * 
-	 * @param player the player who opened this overlay
+	 * @param evt event: Binding of a KeyShortcut
 	 * @param facade facade of the editor
 	 */
 	public EditorOverlay(final KeyBindingEvent evt, final EditorFacade facade) {

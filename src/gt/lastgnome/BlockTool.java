@@ -27,7 +27,7 @@ import gt.plugin.meta.Hello;
 public class BlockTool extends PortableItem{
 	
 	public static final Material MATERIAL = Material.OBSIDIAN;
-	/** the maximum allowed range between dispenser and blocktool */
+	/** the maximum allowed range between dispenser and blockTool */
 	private static final double MAX_RANGE = 40.0;
 	/** the dispenser that created this blockTool */
 	private BlocktoolDispenser dispenser;

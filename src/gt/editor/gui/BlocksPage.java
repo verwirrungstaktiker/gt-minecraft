@@ -15,6 +15,11 @@ import org.getspout.spoutapi.player.SpoutPlayer;
 
 public class BlocksPage extends OverlayPage {
 
+	/**
+	 * @param overlay the visual Overlay Box
+	 * @param player the corresponding SpoutPlayer
+	 * @param facade the corresponding EditorFacade
+	 */
 	protected BlocksPage(final EditorOverlay overlay, final SpoutPlayer player,
 			final EditorFacade facade) {
 		super(overlay, player, facade);

@@ -1,7 +1,5 @@
 package gt.editor.gui;
 
-import gt.editor.EditorPlayer.TriggerState;
-
 import org.bukkit.inventory.ItemStack;
 import org.getspout.spoutapi.event.screen.ButtonClickEvent;
 import org.getspout.spoutapi.gui.Color;
@@ -14,6 +12,10 @@ import org.getspout.spoutapi.gui.GenericWidget;
 
 public abstract  class BlockSet extends GenericContainer {
 
+	/**
+	 * @param name name of BlockSet
+	 * @param inventory items that correspond to a BlockSet
+	 */
 	public BlockSet(final String name, final ItemStack[] inventory) {		
 		setLayout(ContainerType.VERTICAL);
 		
@@ -73,5 +75,8 @@ public abstract  class BlockSet extends GenericContainer {
 		
 	}
 	
+	/**
+	 * is executed on selection of this BlockSet
+	 */
 	public abstract void onSelect();
 }
